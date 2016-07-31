@@ -1,0 +1,142 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.obj
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Compiled JavaScript #
+#######################
+AplPed.TACOP/AplPed.TACOP.ExplorerWidget/Scripts/apl/apl.commonwidgets.js
+AplPed.TACOP/AplPed.TACOP.ExplorerWidget/Scripts/apl/apl.earth.js
+
+# Don't ignore .Net 4.5 installer #
+###################################
+!NDP451-KB2858728-x86-x64-AllOS-ENU.exe
+
+# Don't ignore nuget.exe #
+###################################
+!NuGet/NuGet.exe
+
+# Don't ignore MrSID DLLs #
+###########################
+!lti_*.dll
+
+# Don't ignore swig #
+#####################
+!swig.exe
+
+# Don't ignore Ionic.Zip.Reduced.dll #
+######################################
+!Ionic.Zip.Reduced.dll
+
+# Don't ignore tomcat7 x64 binaries #
+#####################################
+!tomcat7.exe
+!tomcat7w.exe
+!tcnative-1.dll
+
+# Don't Ignore List Styling JS&CSS #
+####################################
+!source/widgets/PedWidgets/PedWidgets/Scripts/apl.ped.bs.js
+
+# build/edit artifacts #
+########################
+.vs
+x64
+Win32
+x86
+Debug
+Release
+obj
+bin
+*.vcxproj.*
+*.csproj.*
+*.xproj.*
+*.wixproj.*
+*.VC.db
+*.VC.opendb
+_ReSharper.*
+ipch
+*.suo
+*.opensdf
+*.sdf
+*.aps
+*.VC.opendb
+UpgradeLog.XML
+*.DotSettings.*
+StyleCop.Cache
+.vs
+*.VC.db
+*.VC.opendb
+*~
+*.pch
+*.pdb
+*.svclog
+third_party_libraries/mpir/yasm/gas-token.c
+third_party_libraries/mpir/yasm/lc3bid.c
+third_party_libraries/mpir/yasm/nasm-token.c
+third_party_libraries\gdal\gdal-1.9.0\frmts\jpeg\libjpeg12\*.c
+third_party_libraries\gdal\gdal-1.9.0\frmts\jpeg\libjpeg12\*.h
+third_party_libraries\gdal\gdal-1.10.0\frmts\jpeg\libjpeg12\*.c
+third_party_libraries\gdal\gdal-1.10.0\frmts\jpeg\libjpeg12\*.h
+Index.htm.js
+Layout.js
+MainWindow.js
+MapBrowser.js
+ProductBrowser.js
+WorkFlowEditor.js
+OWF-bundle-7-GA
+deploy/SetupOzonePlatform/owf
+deploy/SetupOzonePlatform/owfDir.wxs
+deploy/AplWidgetsInstaller/webapps
+deploy/AplWidgetsInstaller/webappsDir.wxs
+source/widgets/webapps
+source/widgets/PedWidgets/PedWidgets/PedWidgetsDeploy*
+third_party_libraries/gdal/gdal-1.9.0/swig/csharp/const
+third_party_libraries/gdal/gdal-1.9.0/swig/csharp/gdal
+third_party_libraries/gdal/gdal-1.9.0/swig/csharp/ogr
+third_party_libraries/gdal/gdal-1.9.0/swig/csharp/osr
+third_party_libraries/gdal/gdal-1.9.0/frmts/jpeg/libjpeg12/*.h
+third_party_libraries/gdal/gdal-1.9.0/frmts/jpeg/libjpeg12/*.c
+source/widgets/AplWidgets/res/AplWidgets.js
+source/widgets/webapps/cas.war
+source/widgets/webapps/owf.war
+source/widgets/PedWidgets/PedWidgets/Scripts/aplped.person.js
+source/widgets/PedWidgets/PedWidgets/Scripts/aplped.javascriptconfig.js
+source/widgets/PedWidgets/PedWidgets/Scripts/aplped.common.js
+
+dllFun.csv
+dllFun.xml
+TestResults
+

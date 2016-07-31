@@ -1,0 +1,31 @@
+{
+  "title": "Isopoh.Cryptography.Argon2",
+  "copyright": "Michael Heyman 2016",
+  "description": "Argon2 Password Hasher",
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Isopoh.Cryptography.Blake2b": "1.0.0-*",
+    "Isopoh.Cryptography.SecureArray": "1.0.0-*",
+    "NETStandard.Library": "1.6.0",
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+    },
+    "System.Runtime": "4.1.0",
+    "System.Threading.Thread": "4.0.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  },
+
+  "buildOptions": {
+    "xmlDoc": "true"
+  },
+
+
+  "additionalArguments": [ "/additionalfile:../stylecop.json" ]
+}

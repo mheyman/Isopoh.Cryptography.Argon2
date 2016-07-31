@@ -1,0 +1,10 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Isopoh",
+      "copyrightText": "To the extent possible under law, the author(s) have dedicated all copyright\nand related and neighboring rights to this software to the public domain\nworldwide. This software is distributed without any warranty.",
+      "xmlHeader": true
+    }
+  }
+}

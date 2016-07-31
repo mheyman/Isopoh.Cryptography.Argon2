@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98C3F5AC-1FDF-4AAF-B067-A9E9C663D87B}"
+	ProjectSection(SolutionItems) = preProject
+		COPYING.txt = COPYING.txt
+		README.md = README.md
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Isopoh.Cryptography.SecureArray", "Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.xproj", "{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Isopoh.Cryptography.Blake2b", "Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.xproj", "{249617D6-8291-4B2D-881F-3A6DE54DDCD3}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Isopoh.Cryptography.Argon2", "Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.xproj", "{0738ED69-6346-4143-B8EF-71AA8605A1A4}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Isopoh.Cryptography.Test", "Isopoh.Cryptography.Test\Isopoh.Cryptography.Test.xproj", "{7B863047-1FFC-415E-B08E-FE88608A2456}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{249617D6-8291-4B2D-881F-3A6DE54DDCD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249617D6-8291-4B2D-881F-3A6DE54DDCD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249617D6-8291-4B2D-881F-3A6DE54DDCD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249617D6-8291-4B2D-881F-3A6DE54DDCD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0738ED69-6346-4143-B8EF-71AA8605A1A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0738ED69-6346-4143-B8EF-71AA8605A1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0738ED69-6346-4143-B8EF-71AA8605A1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0738ED69-6346-4143-B8EF-71AA8605A1A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B863047-1FFC-415E-B08E-FE88608A2456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B863047-1FFC-415E-B08E-FE88608A2456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B863047-1FFC-415E-B08E-FE88608A2456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B863047-1FFC-415E-B08E-FE88608A2456}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,107 @@
+# Line endings with Git is a complicated topic. The usual recommended setting on the internet is to set core.autocrlf to true
+# on Windows and leave it false otherwise. In theory this should work, but Git doesn't correctly determine which files are binary
+# and which files are text (maybe due to the UTF-8 byte order mark?), which resulted in a mess in the repository. Maybe our original
+# TFS import also contributed to this issue. The solution for this is to manually normalize the repository and explicitly specify
+# which files are text and which are binary from then on. See the bottom of this files for details on how to update this file. 
+#
+# References:
+# - http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
+# - https://help.github.com/articles/dealing-with-line-endings#platform-all
+# - gitattributes(5) manpage
+# 
+# This requires git 1.7.2+ (released about two years ago), which hopefully should be standard by now. Contributions to existing files
+# should work fine with an earlier git, but new files which aren't detected properly might cause problems. 
+#
+# Try to do the sensible thing by default for new file types. This is effectively the same as setting core.autocrlf to true by default,
+# which has the nice side-effect that all our configuration is contained in the repository. 
+*                    text=auto
+#
+# these are all text files and should be treated as such
+*.asax               text
+*.bat                text
+*.c                  text diff=cpp
+*.cc                 text diff=cpp
+*.config             text
+*.cpp                text diff=cpp
+*.cs                 text diff=csharp
+*.cshtml             text diff=html
+*.csproj             text eol=crlf
+*.css                text
+*.filters            text
+*.gitignore          text
+*.h                  text diff=cpp
+*.hpp                text diff=cpp
+*.htm                text
+*.html               text
+*.i                  text
+*.js                 text
+*.jsp                text
+*.manifest           text
+*.nuspec             text
+*.ps1                text
+*.pubxml             text
+*.pubxml.user        text
+*.resx               text
+*.settings           text
+*.sln                text eol=crlf
+*.txt                text
+*.TXT                text
+*.vcxproj            text eol=crlf
+*.vcxproj.user       text eol=crlf
+*.wixproj            text eol=crlf
+*.wxl                text
+*.wxs                text
+*.xaml               text
+*.xml                text
+.gitattributes       text
+.gitignore           text
+README.*             text
+ANNOUNCE.*           text
+LICENCE.*            text
+LICENSE_minizip      text
+INSTALL.*            text
+NEWS.*               text
+NOTES.*              text
+NOTICE.*             text
+VERSION.*            text
+THANKS.*             text
+TEST.*               text
+#
+# These files are binary and shouldn't be touched by Git. Nice side-effect of the binary macro is that it suppresses diff output.
+*.bmp                binary
+*.dll                binary
+*.exe                binary
+*.gif                binary
+*.ico                binary
+*.mpe1               binary
+*.msm                binary
+*.pdb                binary
+*.png                binary
+*.psd                binary
+*.snk                binary
+*.swf                binary
+*.zip                binary
+#
+# I generated the list of extensions by searching for all files in my current working directory and typing it over manually:
+# $ find . -type f | grep -vE '^./.git/' | sed 's#\([^/]*/\)*##;s#^\(.*\.\)*##' | sort -u
+#
+# Getting a list of the current line endings of text files can be done with the following commands (preferably on Linux, where
+# Git doesn't change anything on checkout):
+# $ find . -type f | grep -v '^./.git' | while read line; do file $line; done > /tmp/line-endings
+# $ cat /tmp/line-endings | grep -vE '^./Libraries/((Artwork|Database|Installer|LICENSE.txt|Misc|MVC|Tools|TVEngine3|UI)/|Streaming/(ffmpeg|MediaInfo|segmenter|vlc-1.1.11))' > /tmp/text-line-ending
+#
+# You can get a list of files with wrong line-endings by grepping for CRLF in that file. 
+#
+# You can also get a list of text file extensions from that list, but it's contents should be contained in the output of all
+# extensions above: 
+# $ cat /tmp/text-line-endings | sed 's#^./.*\.\([a-zA-Z]*\):.*#\1#' | sort -u
+#
+# After editting this .gitattributes file, you need to re-normalize all files that have the wrong line-endings:
+# $ rm .git/index
+# $ git reset
+# $ git status                 # This lists all files that will be normalized
+# $ git add -u
+# $ git add .gitattributes
+# $ git commit
+# $ rm -rf *                   # Force Git to rewrite the working directory with correct line endings
+# $ git reset --hard
