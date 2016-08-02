@@ -23,6 +23,12 @@
   },
 
 
-  "additionalArguments": [ "/additionalfile:../stylecop.json" ]
+  "additionalArguments": [ "/additionalfile:../stylecop.json" ],
 
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
+
+  }
 }

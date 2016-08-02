@@ -17,5 +17,11 @@
 
   "buildOptions": {
     "xmlDoc": "true"
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
   }
 }
