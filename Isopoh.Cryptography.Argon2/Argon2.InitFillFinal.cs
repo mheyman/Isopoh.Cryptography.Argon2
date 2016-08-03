@@ -9,6 +9,7 @@ namespace Isopoh.Cryptography.Argon2
     using System;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
 
     using Isopoh.Cryptography.Blake2b;
     using Isopoh.Cryptography.SecureArray;
@@ -134,6 +135,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             if (this.config.Threads > 1)
             {
+#if false
                 var waitHandles =
                     Enumerable.Range(
                         0,
@@ -177,7 +179,63 @@ namespace Isopoh.Cryptography.Argon2
                             --remaining;
                         }
                     }
+#else
+                var tasks = new Task[this.config.Threads];
+                for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
+                {
+                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                    {
+                        int laneNumber = 0;
+                        int remaining = this.config.Lanes;
+                        for (; laneNumber < tasks.Length && laneNumber < this.config.Lanes; ++laneNumber)
+                        {
+                            var passNumber1 = passNumber;
+                            var laneNumber1 = laneNumber;
+                            var sliceNumber1 = sliceNumber;
+                            tasks[laneNumber] = Task.Factory.StartNew(
+                                () =>
+                                    {
+                                        this.FillSegment(
+                                            new Position
+                                                {
+                                                    Pass = passNumber1,
+                                                    Lane = laneNumber1,
+                                                    Slice = sliceNumber1,
+                                                    Index = 0
+                                                });
+                                    });
+                        }
 
+                        while (laneNumber < this.config.Lanes)
+                        {
+                            int i = Task.WaitAny(tasks);
+                            --remaining;
+                            var passNumber1 = passNumber;
+                            var laneNumber1 = laneNumber;
+                            var sliceNumber1 = sliceNumber;
+                            tasks[i] = Task.Factory.StartNew(
+                                () =>
+                                    {
+                                        this.FillSegment(
+                                            new Position
+                                                {
+                                                    Pass = passNumber1,
+                                                    Lane = laneNumber1,
+                                                    Slice = sliceNumber1,
+                                                    Index = 0
+                                                });
+                                    });
+                            ++laneNumber;
+                        }
+
+                        while (remaining > 0)
+                        {
+                            Task.WaitAny(tasks);
+                            --remaining;
+                        }
+                    }
+
+#endif
                     InternalKat(this, passNumber);
                 }
             }

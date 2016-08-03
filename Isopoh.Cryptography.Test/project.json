@@ -1,5 +1,11 @@
 {
   "version": "1.0.0-*",
+
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "xmlDoc": "true"
+  },
+
   "testRunner": "xunit",
   "dependencies": {
     "xunit": "2.2.0-beta2-build3300",
@@ -20,11 +26,6 @@
       }
     }
   },
-
-  "buildOptions": {
-    "xmlDoc": "true"
-  },
-
 
   "additionalArguments": [ "/additionalfile:../stylecop.json" ]
 
