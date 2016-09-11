@@ -7,6 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
+    using System.Threading;
 
     using Isopoh.Cryptography.SecureArray;
 

@@ -14,8 +14,8 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
-        //// private static readonly string VectorFileName = "argon2-test-vectors.txt";
-        private static readonly string VectorFileName = null;
+        private static readonly string VectorFileName = "argon2-test-vectors.txt";
+        //// private static readonly string VectorFileName = null;
 
         private static void InitialKat(byte[] buffer, Argon2 hasher)
         {
@@ -54,6 +54,7 @@ namespace Isopoh.Cryptography.Argon2
                         + $"{(hasher.config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.config.AssociatedData).ToLower().Replace('-', ' '))} ");
                     sout.WriteLine(
                         $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLower().Replace('-', ' ')} ");
+                    sout.Flush();
                 }
             }
         }
@@ -76,6 +77,7 @@ namespace Isopoh.Cryptography.Argon2
                             sout.WriteLine($"Block {i:D4} [{j, 3}]: {hasher.Memory[i][j] :x16}");
                         }
                     }
+                    sout.Flush();
                 }
             }
         }
@@ -88,6 +90,7 @@ namespace Isopoh.Cryptography.Argon2
                 using (var sout = new StreamWriter(fout))
                 {
                     sout.WriteLine($"Tag: {BitConverter.ToString(output).ToLower().Replace('-', ' ')} ");
+                    sout.Flush();
                 }
             }
         }

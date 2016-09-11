@@ -49,7 +49,6 @@ namespace Isopoh.Cryptography.Argon2
             b = (tmp >> 63) | (tmp << 1);
         }
 
-
         private static void BlakeRoundNoMsg2(
             ref ulong v0,
             ref ulong v1,
@@ -272,6 +271,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * i7) + 13];
             v14 = blockR[(16 * i7) + 14];
             v15 = blockR[(16 * i7) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             ulong tmp = v12 ^ v0;
@@ -401,7 +401,7 @@ namespace Isopoh.Cryptography.Argon2
             blockR[(16 * i7) + 15] = v15;
         }
 
-        private static void Blake2RowRoundNoMsg2(BlockValues blockR, int I7)
+        private static void Blake2RowRoundNoMsg2(BlockValues blockR, int i7)
         {
             ulong v0;
             ulong v1;
@@ -420,22 +420,23 @@ namespace Isopoh.Cryptography.Argon2
             ulong v14;
             ulong v15;
             ulong tmp;
-            v0 = blockR[2 * I7];
-            v1 = blockR[(2 * I7) + 1];
-            v2 = blockR[(2 * I7) + 16];
-            v3 = blockR[(2 * I7) + 17];
-            v4 = blockR[(2 * I7) + 32];
-            v5 = blockR[(2 * I7) + 33];
-            v6 = blockR[(2 * I7) + 48];
-            v7 = blockR[(2 * I7) + 49];
-            v8 = blockR[(2 * I7) + 64];
-            v9 = blockR[(2 * I7) + 65];
-            v10 = blockR[(2 * I7) + 80];
-            v11 = blockR[(2 * I7) + 81];
-            v12 = blockR[(2 * I7) + 96];
-            v13 = blockR[(2 * I7) + 97];
-            v14 = blockR[(2 * I7) + 112];
-            v15 = blockR[(2 * I7) + 113];
+            v0 = blockR[2 * i7];
+            v1 = blockR[(2 * i7) + 1];
+            v2 = blockR[(2 * i7) + 16];
+            v3 = blockR[(2 * i7) + 17];
+            v4 = blockR[(2 * i7) + 32];
+            v5 = blockR[(2 * i7) + 33];
+            v6 = blockR[(2 * i7) + 48];
+            v7 = blockR[(2 * i7) + 49];
+            v8 = blockR[(2 * i7) + 64];
+            v9 = blockR[(2 * i7) + 65];
+            v10 = blockR[(2 * i7) + 80];
+            v11 = blockR[(2 * i7) + 81];
+            v12 = blockR[(2 * i7) + 96];
+            v13 = blockR[(2 * i7) + 97];
+            v14 = blockR[(2 * i7) + 112];
+            v15 = blockR[(2 * i7) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -547,22 +548,22 @@ namespace Isopoh.Cryptography.Argon2
             v9 = v9 + v14 + (2 * (v9 & 0xFFFFFFFF) * (v14 & 0xFFFFFFFF));
             tmp = v4 ^ v9;
             v4 = (tmp >> 63) | (tmp << 1);
-            blockR[2 * I7] = v0;
-            blockR[(2 * I7) + 1] = v1;
-            blockR[(2 * I7) + 16] = v2;
-            blockR[(2 * I7) + 17] = v3;
-            blockR[(2 * I7) + 32] = v4;
-            blockR[(2 * I7) + 33] = v5;
-            blockR[(2 * I7) + 48] = v6;
-            blockR[(2 * I7) + 49] = v7;
-            blockR[(2 * I7) + 64] = v8;
-            blockR[(2 * I7) + 65] = v9;
-            blockR[(2 * I7) + 80] = v10;
-            blockR[(2 * I7) + 81] = v11;
-            blockR[(2 * I7) + 96] = v12;
-            blockR[(2 * I7) + 97] = v13;
-            blockR[(2 * I7) + 112] = v14;
-            blockR[(2 * I7) + 113] = v15;
+            blockR[2 * i7] = v0;
+            blockR[(2 * i7) + 1] = v1;
+            blockR[(2 * i7) + 16] = v2;
+            blockR[(2 * i7) + 17] = v3;
+            blockR[(2 * i7) + 32] = v4;
+            blockR[(2 * i7) + 33] = v5;
+            blockR[(2 * i7) + 48] = v6;
+            blockR[(2 * i7) + 49] = v7;
+            blockR[(2 * i7) + 64] = v8;
+            blockR[(2 * i7) + 65] = v9;
+            blockR[(2 * i7) + 80] = v10;
+            blockR[(2 * i7) + 81] = v11;
+            blockR[(2 * i7) + 96] = v12;
+            blockR[(2 * i7) + 97] = v13;
+            blockR[(2 * i7) + 112] = v14;
+            blockR[(2 * i7) + 113] = v15;
         }
 
         private static void Blake2ColumnRoundNoMsg(BlockValues blockR, int i)
@@ -703,6 +704,7 @@ namespace Isopoh.Cryptography.Argon2
             ulong v13 = blockR[(16 * I0) + 13];
             ulong v14 = blockR[(16 * I0) + 14];
             ulong v15 = blockR[(16 * I0) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -847,6 +849,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I1) + 13];
             v14 = blockR[(16 * I1) + 14];
             v15 = blockR[(16 * I1) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -991,6 +994,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I2) + 13];
             v14 = blockR[(16 * I2) + 14];
             v15 = blockR[(16 * I2) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1135,6 +1139,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I3) + 13];
             v14 = blockR[(16 * I3) + 14];
             v15 = blockR[(16 * I3) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1279,6 +1284,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I4) + 13];
             v14 = blockR[(16 * I4) + 14];
             v15 = blockR[(16 * I4) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1423,6 +1429,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I5) + 13];
             v14 = blockR[(16 * I5) + 14];
             v15 = blockR[(16 * I5) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1567,6 +1574,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I6) + 13];
             v14 = blockR[(16 * I6) + 14];
             v15 = blockR[(16 * I6) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1711,6 +1719,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(16 * I7) + 13];
             v14 = blockR[(16 * I7) + 14];
             v15 = blockR[(16 * I7) + 15];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -1859,6 +1868,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I0) + 97];
             v14 = blockR[(2 * I0) + 112];
             v15 = blockR[(2 * I0) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2003,6 +2013,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I1) + 97];
             v14 = blockR[(2 * I1) + 112];
             v15 = blockR[(2 * I1) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2147,6 +2158,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I2) + 97];
             v14 = blockR[(2 * I2) + 112];
             v15 = blockR[(2 * I2) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2291,6 +2303,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I3) + 97];
             v14 = blockR[(2 * I3) + 112];
             v15 = blockR[(2 * I3) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2435,6 +2448,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I4) + 97];
             v14 = blockR[(2 * I4) + 112];
             v15 = blockR[(2 * I4) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2579,6 +2593,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I5) + 97];
             v14 = blockR[(2 * I5) + 112];
             v15 = blockR[(2 * I5) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2723,6 +2738,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I6) + 97];
             v14 = blockR[(2 * I6) + 112];
             v15 = blockR[(2 * I6) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
@@ -2867,6 +2883,7 @@ namespace Isopoh.Cryptography.Argon2
             v13 = blockR[(2 * I7) + 97];
             v14 = blockR[(2 * I7) + 112];
             v15 = blockR[(2 * I7) + 113];
+
             // G(ref v0, ref v4, ref v8, ref v12);
             v0 = v0 + v4 + (2 * (v0 & 0xFFFFFFFF) * (v4 & 0xFFFFFFFF));
             tmp = v12 ^ v0;
