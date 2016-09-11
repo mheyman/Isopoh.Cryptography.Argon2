@@ -40,7 +40,7 @@ namespace Isopoh.Cryptography.Blake2b
             this.Init();
         }
 
-        public sealed override void Init()
+        public override sealed void Init()
         {
             this.core.Initialize(this.rawConfig.Buffer);
             if (this.key != null)
@@ -90,7 +90,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="disposing">
         /// Set to true if disposing.
         /// </param>
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             this.key?.Dispose();
             this.rawConfig?.Dispose();
