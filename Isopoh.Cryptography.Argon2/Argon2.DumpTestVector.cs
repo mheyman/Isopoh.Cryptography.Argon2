@@ -14,8 +14,8 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
-        private static readonly string VectorFileName = "argon2-test-vectors.txt";
-        //// private static readonly string VectorFileName = null;
+        /////private static readonly string VectorFileName = "argon2-test-vectors.txt";
+        private static readonly string VectorFileName = null;
 
         private static void InitialKat(byte[] buffer, Argon2 hasher)
         {
