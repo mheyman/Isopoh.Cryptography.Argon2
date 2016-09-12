@@ -230,38 +230,26 @@ namespace Isopoh.Cryptography.Argon2
                 int positionIndexDone = this.config.Lanes * SyncPoints * this.config.TimeCost;
                 int positionIndexSync = this.config.Lanes;
                 int positionIndexKat = this.config.Lanes * SyncPoints;
-                var pauseForSync = new ManualResetEvent(false);
-                var waitingForSync = new AutoResetEvent(false);
-                int atSyncCount = 0;
+                var pauseForSyncs =
+                    Enumerable.Range(0, SyncPoints * this.config.TimeCost)
+                    .Select(i => new ManualResetEvent(false))
+                    .ToArray();
+                int pauseForSyncIndex = 0;
+                int atSyncIndex = 0;
                 int threadCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
+                var waitingForSyncs =
+                    Enumerable.Range(0, threadCount - 1)
+                        .Select(i => new AutoResetEvent(false))
+                        .Cast<WaitHandle>()
+                        .ToArray();
 
                 Func<Position, bool> setPostion = toSet =>
                     {
-                        bool waitForOthersToSync = false;
                         while (true)
                         {
-                            bool waitForSync = false;
-                            lock (pauseForSync)
+                            int myPauseForSyncIndex = -1;
+                            lock (pauseForSyncs)
                             {
-                                if (waitForOthersToSync)
-                                {
-                                    // other threads waiting at pauseForSync
-                                    positionIndexSync += this.config.Lanes;
-                                    if (positionIndex == positionIndexKat)
-                                    {
-                                        InternalKat(this, positionIndex / (SyncPoints * this.config.Lanes));
-                                        positionIndexKat += this.config.Lanes * SyncPoints;
-                                    }
-
-                                    // release others
-                                    pauseForSync.Set();
-                                    toSet.Pass = positionIndex / (SyncPoints * this.config.Lanes);
-                                    toSet.Slice = (positionIndex / this.config.Lanes) % SyncPoints;
-                                    toSet.Lane = positionIndex % this.config.Lanes;
-                                    toSet.Index = 0;
-                                    return true;
-                                }
-
                                 if (positionIndex == positionIndexDone)
                                 {
                                     // done
@@ -271,9 +259,9 @@ namespace Isopoh.Cryptography.Argon2
                                 if (positionIndex == positionIndexSync)
                                 {
                                     // other thread wants this thread to wait for sync
-                                    ++atSyncCount;
-                                    waitingForSync.Set();
-                                    waitForSync = true;
+                                    ((AutoResetEvent)waitingForSyncs[atSyncIndex]).Set();
+                                    ++atSyncIndex;
+                                    myPauseForSyncIndex = pauseForSyncIndex;
                                 }
                                 else
                                 {
@@ -287,9 +275,7 @@ namespace Isopoh.Cryptography.Argon2
                                             return false;
                                         }
 
-                                        atSyncCount = 1;
-                                        pauseForSync.Reset();
-                                        waitForOthersToSync = true;
+                                        atSyncIndex = 0;
                                     }
                                     else
                                     {
@@ -302,83 +288,34 @@ namespace Isopoh.Cryptography.Argon2
                                 }
                             }
 
-                            if (waitForSync)
+                            if (myPauseForSyncIndex != -1)
                             {
-                                pauseForSync.WaitOne();
+                                pauseForSyncs[myPauseForSyncIndex].WaitOne();
                             }
                             else
                             {
-                                // waitForOthersToSync == true
-                                while (atSyncCount < threadCount)
+                                // Wait for others to sync
+                                WaitHandle.WaitAll(waitingForSyncs);
+                                lock (pauseForSyncs)
                                 {
-                                    waitingForSync.WaitOne();
+                                    // other threads waiting at pauseForSync
+                                    positionIndexSync += this.config.Lanes;
+                                    if (positionIndex == positionIndexKat)
+                                    {
+                                        InternalKat(this, positionIndex / (SyncPoints * this.config.Lanes));
+                                        positionIndexKat += this.config.Lanes * SyncPoints;
+                                    }
+
+                                    // release others
+                                    pauseForSyncs[pauseForSyncIndex].Set();
+                                    ++pauseForSyncIndex;
+                                    toSet.Pass = positionIndex / (SyncPoints * this.config.Lanes);
+                                    toSet.Slice = (positionIndex / this.config.Lanes) % SyncPoints;
+                                    toSet.Lane = positionIndex % this.config.Lanes;
+                                    toSet.Index = 0;
+                                    return true;
                                 }
                             }
-                        }
-
-
-
-                        Monitor.Enter(pauseForSync);
-                        try
-                        {
-                            if (positionIndex == positionIndexDone)
-                            {
-                                // done
-                                return false;
-                            }
-
-                            if (positionIndex == positionIndexSync)
-                            {
-                                ++atSyncCount;
-                                waitingForSync.Set();
-                                Monitor.Exit(pauseForSync);
-                                pauseForSync.WaitOne();
-                                Monitor.Enter(pauseForSync);
-                                if (positionIndex == positionIndexDone)
-                                {
-                                    // done
-                                    return false;
-                                }
-                            }
-
-                            Interlocked.Increment(ref positionIndex);
-
-                            if (positionIndex == positionIndexSync)
-                            {
-                                if (positionIndex == positionIndexDone)
-                                {
-                                    // done
-                                    return false;
-                                }
-
-                                atSyncCount = 1;
-                                pauseForSync.Reset();
-                                Monitor.Exit(pauseForSync);
-                                while (atSyncCount < threadCount)
-                                {
-                                    waitingForSync.WaitOne();
-                                }
-
-                                Monitor.Enter(pauseForSync);
-                                positionIndexSync += this.config.Lanes;
-                                if (positionIndex == positionIndexKat)
-                                {
-                                    InternalKat(this, positionIndex / (SyncPoints * this.config.Lanes));
-                                    positionIndexKat += this.config.Lanes * SyncPoints;
-                                }
-
-                                pauseForSync.Set();
-                            }
-
-                            toSet.Pass = positionIndex / (SyncPoints * this.config.Lanes);
-                            toSet.Slice = (positionIndex / this.config.Lanes) % SyncPoints;
-                            toSet.Lane = positionIndex % this.config.Lanes;
-                            toSet.Index = 0;
-                            return true;
-                        }
-                        finally
-                        {
-                            Monitor.Exit(pauseForSync);
                         }
                     };
 
