@@ -68,29 +68,37 @@ namespace Test
         [Fact]
         public void TestArgon2RoundTrip()
         {
-            var rng = new Random();
-            var password = "password1";
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] salt = new byte[16];
-            rng.NextBytes(salt);
-            var config = new Argon2Config
-                             {
-                                 Type = Argon2Type.DataIndependentAddressing,
-                                 Version = Argon2Version.Nineteen,
-                                 Password = passwordBytes,
-                                 Salt = salt,
-                                 TimeCost = 3,
-                                 MemoryCost = 65536,
-                                 Lanes = 4,
-                                 Threads = 2,
-                             };
-            var argon2 = new Argon2(config);
-            SecureArray<byte> hash = argon2.Hash();
-            var passwordHash = config.EncodeString(hash.Buffer);
-            this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
-            Assert.True(
-                Argon2.Verify(passwordHash, passwordBytes),
-                $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
+            foreach (ParallelismScheme ps in Enum.GetValues(typeof(ParallelismScheme)))
+            {
+                foreach (UnrollScheme us in Enum.GetValues(typeof(UnrollScheme)))
+                {
+                    var rng = new Random();
+                    var password = "password1";
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                    byte[] salt = new byte[16];
+                    rng.NextBytes(salt);
+                    var config = new Argon2Config
+                                     {
+                                         Type = Argon2Type.DataIndependentAddressing,
+                                         Version = Argon2Version.Nineteen,
+                                         Password = passwordBytes,
+                                         Salt = salt,
+                                         TimeCost = 3,
+                                         MemoryCost = 65536,
+                                         Lanes = 4,
+                                         Threads = 2,
+                                         ParallelismScheme = ps,
+                                         UnrollScheme = us
+                                     };
+                    var argon2 = new Argon2(config);
+                    SecureArray<byte> hash = argon2.Hash();
+                    var passwordHash = argon2.EncodeString(hash.Buffer);
+                    this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
+                    Assert.True(
+                        Argon2.Verify(passwordHash, passwordBytes),
+                        $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
+                }
+            }
         }
 
         /// <summary>
@@ -141,8 +149,8 @@ namespace Test
             using (var hashA = argon2A.Hash())
             using (var hashB = argon2B.Hash())
             {
-                var hashTextA = configA.EncodeString(hashA.Buffer);
-                var hashTextB = configB.EncodeString(hashB.Buffer);
+                var hashTextA = argon2A.EncodeString(hashA.Buffer);
+                var hashTextB = argon2B.EncodeString(hashB.Buffer);
                 Assert.Equal(hashTextA, hashTextB);
             }
         }
@@ -153,48 +161,57 @@ namespace Test
         [Fact]
         public void TestArgon2()
         {
-            foreach (var testVector in this.argon2TestVectors)
+            foreach (ParallelismScheme ps in Enum.GetValues(typeof(ParallelismScheme)))
             {
-                var encoded = new StringBuilder();
-                uint tagLength = (uint)testVector.TagLength;
-                try
+                foreach (UnrollScheme us in Enum.GetValues(typeof(UnrollScheme)))
                 {
-                    var config = new Argon2Config
-                                     {
-                                         Type = testVector.Type,
-                                         Version = testVector.Version,
-                                         TimeCost = testVector.Iterations,
-                                         MemoryCost = testVector.MemoryKBytes,
-                                         Lanes = testVector.Parallelism,
-                                         Threads = testVector.Parallelism,
-                                         Password = testVector.Password,
-                                         Salt = testVector.Salt,
-                                         Secret = testVector.Secret,
-                                         AssociatedData = testVector.AssociatedData,
-                                         HashLength = testVector.TagLength
-                                     };
-                    var argon2 = new Argon2(config);
-                    SecureArray<byte> hash = argon2.Hash();
-                    Assert.False(
-                        hash.Buffer.Where((b, i) => b != testVector.Tag[i]).Any(),
-                        $"Test {testVector.Name}: Got{Environment.NewLine}{BitConverter.ToString(hash.Buffer)}{Environment.NewLine}expected{Environment.NewLine}{BitConverter.ToString(testVector.Tag)}");
-                    this.output.WriteLine(
-                        "Passed Argon2:\r\n"
-                        + $"             Version 0x{(int)testVector.Version:X} ({(int)testVector.Version})\r\n"
-                        + $"                Type {testVector.Type}\r\n"
-                        + $"          Iterations {testVector.Iterations}\r\n"
-                        + $"       Memory KBytes {testVector.MemoryKBytes}\r\n"
-                        + $"         Parallelism {testVector.Parallelism}\r\n"
-                        + $"            Password {BitConverter.ToString(testVector.Password)}\r\n"
-                        + $"                Salt {BitConverter.ToString(testVector.Salt)}\r\n"
-                        + $"              Secret {BitConverter.ToString(testVector.Secret)}\r\n"
-                        + $"       AssciatedData {BitConverter.ToString(testVector.AssociatedData)}\r\n"
-                        + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}\r\n"
-                        + $"             encoded {encoded}");
-                }
-                catch (Exception e)
-                {
-                    Assert.False(true, e.Message);
+                    foreach (var testVector in this.argon2TestVectors)
+                    {
+                        var encoded = new StringBuilder();
+                        uint tagLength = (uint)testVector.TagLength;
+                        try
+                        {
+                            var config = new Argon2Config
+                                             {
+                                                 Type = testVector.Type,
+                                                 Version = testVector.Version,
+                                                 TimeCost = testVector.Iterations,
+                                                 MemoryCost = testVector.MemoryKBytes,
+                                                 Lanes = testVector.Parallelism,
+                                                 Threads = testVector.Parallelism,
+                                                 Password = testVector.Password,
+                                                 Salt = testVector.Salt,
+                                                 Secret = testVector.Secret,
+                                                 AssociatedData = testVector.AssociatedData,
+                                                 HashLength = testVector.TagLength,
+                                                 ParallelismScheme = ps,
+                                                 UnrollScheme = us
+                            };
+                            var argon2 = new Argon2(config);
+                            SecureArray<byte> hash = argon2.Hash();
+                            Assert.False(
+                                hash.Buffer.Where((b, i) => b != testVector.Tag[i]).Any(),
+                                $"Test {testVector.Name}: Got{Environment.NewLine}{BitConverter.ToString(hash.Buffer)}{Environment.NewLine}expected{Environment.NewLine}{BitConverter.ToString(testVector.Tag)}");
+                            this.output.WriteLine(
+                                "Passed Argon2:\r\n"
+                                + $"             Version 0x{(int)testVector.Version:X} ({(int)testVector.Version})\r\n"
+                                + $"                Type {testVector.Type}\r\n"
+                                + $"          Iterations {testVector.Iterations}\r\n"
+                                + $"       Memory KBytes {testVector.MemoryKBytes}\r\n"
+                                + $"         Parallelism {testVector.Parallelism}\r\n"
+                                + $"            Password {BitConverter.ToString(testVector.Password)}\r\n"
+                                + $"                Salt {BitConverter.ToString(testVector.Salt)}\r\n"
+                                + $"              Secret {BitConverter.ToString(testVector.Secret)}\r\n"
+                                + $"       AssciatedData {BitConverter.ToString(testVector.AssociatedData)}\r\n"
+                                + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}\r\n"
+                                + $"             encoded {encoded}");
+                        }
+                        catch (Exception e)
+                        {
+                            Assert.False(true, $"{e.Message}\r\n{e.StackTrace}");
+                        }
+                    }
+
                 }
             }
         }

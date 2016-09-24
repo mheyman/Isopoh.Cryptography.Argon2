@@ -37,6 +37,18 @@ namespace Isopoh.Cryptography.Argon2
         public Argon2Type Type { get; set; } = Argon2Type.DataIndependentAddressing;
 
         /// <summary>
+        /// Gets or sets the Argon2 parallelism scheme. Defaults to <see
+        /// cref="Cryptography.Argon2.ParallelismScheme.Tasks"/>.
+        /// </summary>
+        public ParallelismScheme ParallelismScheme { get; set; } = ParallelismScheme.Tasks;
+
+        /// <summary>
+        /// Gets or sets how much to unroll the block fill. Defaults to
+        /// <see cref="UnrollScheme.Full"/>.
+        /// </summary>
+        public UnrollScheme UnrollScheme { get; set; } = UnrollScheme.Full;
+
+        /// <summary>
         /// Gets or sets the hash length to output. Minimum of 4. Default 32.
         /// </summary>
         public int HashLength

@@ -71,7 +71,7 @@ namespace Isopoh.Cryptography.Argon2
                         });
                 using (var hash = argon2.Hash())
                 {
-                    return argon2.config.EncodeString(hash.Buffer);
+                    return argon2.EncodeString(hash.Buffer);
                 }
             }
         }

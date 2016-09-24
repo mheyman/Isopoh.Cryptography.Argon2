@@ -7,10 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -47,52 +44,52 @@ namespace Isopoh.Cryptography.Argon2
                         Result64ByteBuffer = ret.Buffer
                     });
             var value = new byte[4];
-            Store32(value, this.config.Lanes);
+            Store32(value, this.Lanes);
             blakeHash.Update(value);
-            Store32(value, this.config.HashLength);
+            Store32(value, this.HashLength);
             blakeHash.Update(value);
-            Store32(value, this.config.MemoryCost);
+            Store32(value, this.MemoryCost);
             blakeHash.Update(value);
-            Store32(value, this.config.TimeCost);
+            Store32(value, this.TimeCost);
             blakeHash.Update(value);
-            Store32(value, (uint)this.config.Version);
+            Store32(value, (uint)this.Version);
             blakeHash.Update(value);
-            Store32(value, (uint)this.config.Type);
+            Store32(value, (uint)this.Type);
             blakeHash.Update(value);
-            Store32(value, this.config.Password?.Length ?? 0);
+            Store32(value, this.Password?.Length ?? 0);
             blakeHash.Update(value);
-            if (this.config.Password != null)
+            if (this.Password != null)
             {
-                blakeHash.Update(this.config.Password);
-                if (this.config.ClearPassword)
+                blakeHash.Update(this.Password);
+                if (this.ClearPassword)
                 {
-                    SecureArray.Zero(this.config.Password);
+                    SecureArray.Zero(this.Password);
                 }
             }
 
-            Store32(value, this.config.Salt?.Length ?? 0);
+            Store32(value, this.Salt?.Length ?? 0);
             blakeHash.Update(value);
-            if (this.config.Salt != null)
+            if (this.Salt != null)
             {
-                blakeHash.Update(this.config.Salt);
+                blakeHash.Update(this.Salt);
             }
 
-            Store32(value, this.config.Secret?.Length ?? 0);
+            Store32(value, this.Secret?.Length ?? 0);
             blakeHash.Update(value);
-            if (this.config.Secret != null)
+            if (this.Secret != null)
             {
-                blakeHash.Update(this.config.Secret);
-                if (this.config.ClearSecret)
+                blakeHash.Update(this.Secret);
+                if (this.ClearSecret)
                 {
-                    SecureArray.Zero(this.config.Secret);
+                    SecureArray.Zero(this.Secret);
                 }
             }
 
-            Store32(value, this.config.AssociatedData?.Length ?? 0);
+            Store32(value, this.AssociatedData?.Length ?? 0);
             blakeHash.Update(value);
-            if (this.config.AssociatedData != null)
+            if (this.AssociatedData != null)
             {
-                blakeHash.Update(this.config.AssociatedData);
+                blakeHash.Update(this.AssociatedData);
             }
 
             blakeHash.Finish();
@@ -103,7 +100,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             using (var blockhashBytes = new SecureArray<byte>(BlockSize))
             {
-                for (int l = 0; l < this.config.Lanes; ++l)
+                for (int l = 0; l < this.Lanes; ++l)
                 {
                     Store32(blockhash, PrehashDigestLength, 0);
                     Store32(blockhash, PrehashDigestLength + 4, l);
@@ -116,246 +113,342 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
-        private void FillMemoryBlocks()
+        private void FillMemoryBlocksSingleThreaded()
         {
-            if (this.config.Threads > 1)
+            for (int passNumber = 0; passNumber < this.TimeCost; ++passNumber)
             {
-#if false
-                Func<Position, AutoResetEvent, Thread> startFillSegmentThread = (position, autoResetEvent) =>
-                    {
-                        var ret = new Thread(
-                            () =>
-                                {
-                                    this.FillSegment(position);
-                                    autoResetEvent.Set();
-                                });
-                        ret.Start();
-                        return ret;
-                    };
-                // Version of code ported from C reference that spawns a new
-                // thread for every segment fill. This is really slow, don't do
-                // this - with typical parameters, Argon2 is always faster with
-                // no parallelism rather than using this code.
-                var waitHandles =
-                    Enumerable.Range(
-                        0,
-                        this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads)
-                        .Select(i => new AutoResetEvent(false))
-                        .Cast<WaitHandle>()
-                        .ToArray();
-                var threads = new Thread[waitHandles.Length];
-                for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
+                for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
                 {
-                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                    for (int laneNumber = 0; laneNumber < this.Lanes; ++laneNumber)
                     {
-                        int laneNumber = 0;
-                        int remaining = this.config.Lanes;
-                        for (; laneNumber < threads.Length && laneNumber < this.config.Lanes; ++laneNumber)
-                        {
-                            threads[laneNumber] = startFillSegmentThread(
-                                new Position(passNumber, laneNumber, sliceNumber),
-                                (AutoResetEvent)waitHandles[laneNumber]);
-                        }
-
-                        while (laneNumber < this.config.Lanes)
-                        {
-                            int i = WaitHandle.WaitAny(waitHandles);
-                            threads[i].Join();
-                            --remaining;
-                            threads[i] = startFillSegmentThread(
-                                new Position(passNumber, laneNumber, sliceNumber),
-                                (AutoResetEvent)waitHandles[i]);
-                            ++laneNumber;
-                        }
-
-                        while (remaining > 0)
-                        {
-                            int i = WaitHandle.WaitAny(waitHandles);
-                            threads[i].Join();
-                            --remaining;
-                        }
+                        this.FillSegment(new Position(passNumber, laneNumber, sliceNumber));
                     }
-
-                    InternalKat(this, passNumber);
                 }
 
-#elif false
-                var tasks = new Task[this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads];
-                for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
+                InternalKat(this, passNumber);
+            }
+        }
+
+        private void FillMemoryBlocksTasked()
+        {
+            int positionIndex = -1;
+            int positionIndexDone = this.Lanes * SyncPoints * this.TimeCost;
+            int positionIndexSync = this.Lanes;
+            int positionIndexKat = this.Lanes * SyncPoints;
+            var pauseForSyncs =
+                Enumerable.Range(0, SyncPoints * this.TimeCost).Select(i => new ManualResetEvent(false)).ToArray();
+            int pauseForSyncIndex = 0;
+            int atSyncIndex = 0;
+            var waitingForSyncs =
+                Enumerable.Range(0, this.threadCount - 1).Select(i => new AutoResetEvent(false)).Cast<WaitHandle>().ToArray();
+
+            Func<Position, bool> setPostion = toSet =>
                 {
-                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                    while (true)
                     {
-                        int laneNumber = 0;
-                        for (; laneNumber < tasks.Length && laneNumber < this.config.Lanes; ++laneNumber)
+                        int myPauseForSyncIndex = -1;
+                        lock (pauseForSyncs)
                         {
-                            tasks[laneNumber] = Task.Factory.StartNew(
-                                p =>
-                                    {
-                                        this.FillSegment((Position)p);
-                                    },
-                                new Position(passNumber, laneNumber, sliceNumber));
-                        }
-
-                        while (laneNumber < this.config.Lanes)
-                        {
-                            int i = Task.WaitAny(tasks);
-                            tasks[i] = Task.Factory.StartNew(
-                                p =>
-                                    {
-                                        this.FillSegment((Position)p);
-                                    },
-                                new Position(passNumber, laneNumber, sliceNumber));
-                            ++laneNumber;
-                        }
-
-                        Task.WaitAll(tasks);
-                    }
-
-                    InternalKat(this, passNumber);
-                }
-#else
-                ////var positions = new Queue<Position>();
-                ////for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
-                ////{
-                ////    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
-                ////    {
-                ////        for (int laneNumber = 0; laneNumber < this.config.Lanes; ++laneNumber)
-                ////        {
-                ////            positions.Enqueue(new Position(passNumber, laneNumber, sliceNumber));
-                ////        }
-                ////    }
-                ////}
-
-                int positionIndex = -1;
-                int positionIndexDone = this.config.Lanes * SyncPoints * this.config.TimeCost;
-                int positionIndexSync = this.config.Lanes;
-                int positionIndexKat = this.config.Lanes * SyncPoints;
-                var pauseForSyncs =
-                    Enumerable.Range(0, SyncPoints * this.config.TimeCost)
-                    .Select(i => new ManualResetEvent(false))
-                    .ToArray();
-                int pauseForSyncIndex = 0;
-                int atSyncIndex = 0;
-                int threadCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
-                var waitingForSyncs =
-                    Enumerable.Range(0, threadCount - 1)
-                        .Select(i => new AutoResetEvent(false))
-                        .Cast<WaitHandle>()
-                        .ToArray();
-
-                Func<Position, bool> setPostion = toSet =>
-                    {
-                        while (true)
-                        {
-                            int myPauseForSyncIndex = -1;
-                            lock (pauseForSyncs)
+                            if (positionIndex == positionIndexDone)
                             {
-                                if (positionIndex == positionIndexDone)
-                                {
-                                    // done
-                                    return false;
-                                }
-
-                                if (positionIndex == positionIndexSync)
-                                {
-                                    // other thread wants this thread to wait for sync
-                                    ((AutoResetEvent)waitingForSyncs[atSyncIndex]).Set();
-                                    ++atSyncIndex;
-                                    myPauseForSyncIndex = pauseForSyncIndex;
-                                }
-                                else
-                                {
-                                    Interlocked.Increment(ref positionIndex);
-
-                                    if (positionIndex == positionIndexSync)
-                                    {
-                                        if (positionIndex == positionIndexDone)
-                                        {
-                                            // done
-                                            return false;
-                                        }
-
-                                        atSyncIndex = 0;
-                                    }
-                                    else
-                                    {
-                                        toSet.Pass = positionIndex / (SyncPoints * this.config.Lanes);
-                                        toSet.Slice = (positionIndex / this.config.Lanes) % SyncPoints;
-                                        toSet.Lane = positionIndex % this.config.Lanes;
-                                        toSet.Index = 0;
-                                        return true;
-                                    }
-                                }
+                                // done
+                                return false;
                             }
 
-                            if (myPauseForSyncIndex != -1)
+                            if (positionIndex == positionIndexSync)
                             {
-                                pauseForSyncs[myPauseForSyncIndex].WaitOne();
+                                // other thread wants this thread to wait for sync
+                                ((AutoResetEvent)waitingForSyncs[atSyncIndex]).Set();
+                                ++atSyncIndex;
+                                myPauseForSyncIndex = pauseForSyncIndex;
                             }
                             else
                             {
-                                // Wait for others to sync
-                                WaitHandle.WaitAll(waitingForSyncs);
-                                lock (pauseForSyncs)
+                                Interlocked.Increment(ref positionIndex);
+
+                                if (positionIndex == positionIndexSync)
                                 {
-                                    // other threads waiting at pauseForSync
-                                    positionIndexSync += this.config.Lanes;
-                                    if (positionIndex == positionIndexKat)
+                                    if (positionIndex == positionIndexDone)
                                     {
-                                        InternalKat(this, positionIndex / (SyncPoints * this.config.Lanes));
-                                        positionIndexKat += this.config.Lanes * SyncPoints;
+                                        // done
+                                        return false;
                                     }
 
-                                    // release others
-                                    pauseForSyncs[pauseForSyncIndex].Set();
-                                    ++pauseForSyncIndex;
-                                    toSet.Pass = positionIndex / (SyncPoints * this.config.Lanes);
-                                    toSet.Slice = (positionIndex / this.config.Lanes) % SyncPoints;
-                                    toSet.Lane = positionIndex % this.config.Lanes;
+                                    atSyncIndex = 0;
+                                }
+                                else
+                                {
+                                    toSet.Pass = positionIndex / (SyncPoints * this.Lanes);
+                                    toSet.Slice = (positionIndex / this.Lanes) % SyncPoints;
+                                    toSet.Lane = positionIndex % this.Lanes;
                                     toSet.Index = 0;
                                     return true;
                                 }
                             }
                         }
-                    };
 
-                var tasks = new Task[threadCount - 1];
-                for (int i = 0; i < tasks.Length; ++i)
-                {
-                    tasks[i] = Task.Factory.StartNew(() =>
-                    {
-                        Position p = new Position(0, 0, 0);
-                        while (setPostion(p))
+                        if (myPauseForSyncIndex != -1)
                         {
-                            this.FillSegment(p);
+                            pauseForSyncs[myPauseForSyncIndex].WaitOne();
                         }
-                    });
-                }
-
-                Position position = new Position(0, 0, 0);
-                while (setPostion(position))
-                {
-                    this.FillSegment(position);
-                }
-
-                Task.WaitAll(tasks);
-                InternalKat(this, this.config.TimeCost - 1);
-#endif
-            }
-            else
-            {
-                for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
-                {
-                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
-                    {
-                        for (int laneNumber = 0; laneNumber < this.config.Lanes; ++laneNumber)
+                        else
                         {
-                            this.FillSegment(new Position(passNumber, laneNumber, sliceNumber));
+                            // Wait for others to sync
+                            WaitHandle.WaitAll(waitingForSyncs);
+                            lock (pauseForSyncs)
+                            {
+                                // other threads waiting at pauseForSync
+                                positionIndexSync += this.Lanes;
+                                if (positionIndex == positionIndexKat)
+                                {
+                                    InternalKat(this, positionIndex / (SyncPoints * this.Lanes));
+                                    positionIndexKat += this.Lanes * SyncPoints;
+                                }
+
+                                // release others
+                                pauseForSyncs[pauseForSyncIndex].Set();
+                                ++pauseForSyncIndex;
+                                toSet.Pass = positionIndex / (SyncPoints * this.Lanes);
+                                toSet.Slice = (positionIndex / this.Lanes) % SyncPoints;
+                                toSet.Lane = positionIndex % this.Lanes;
+                                toSet.Index = 0;
+                                return true;
+                            }
                         }
                     }
+                };
 
-                    InternalKat(this, passNumber);
+            var tasks = new Task[this.threadCount - 1];
+            for (int i = 0; i < tasks.Length; ++i)
+            {
+                tasks[i] = Task.Factory.StartNew(
+                    () =>
+                        {
+                            Position p = new Position(0, 0, 0);
+                            while (setPostion(p))
+                            {
+                                this.FillSegment(p);
+                            }
+                        });
+            }
+
+            Position position = new Position(0, 0, 0);
+            while (setPostion(position))
+            {
+                this.FillSegment(position);
+            }
+
+            Task.WaitAll(tasks);
+            InternalKat(this, this.TimeCost - 1);
+        }
+
+        private void FillMemoryBlocksSimpleTasked()
+        {
+            var tasks = new Task[this.threadCount];
+            for (int passNumber = 0; passNumber < this.TimeCost; ++passNumber)
+            {
+                for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                {
+                    int laneNumber = 0;
+                    for (; laneNumber < tasks.Length && laneNumber < this.Lanes; ++laneNumber)
+                    {
+                        tasks[laneNumber] = Task.Factory.StartNew(
+                            p => { this.FillSegment((Position)p); },
+                            new Position(passNumber, laneNumber, sliceNumber));
+                    }
+
+                    while (laneNumber < this.Lanes)
+                    {
+                        int i = Task.WaitAny(tasks);
+                        tasks[i] = Task.Factory.StartNew(
+                            p => { this.FillSegment((Position)p); },
+                            new Position(passNumber, laneNumber, sliceNumber));
+                        ++laneNumber;
+                    }
+
+                    Task.WaitAll(tasks);
                 }
+
+                InternalKat(this, passNumber);
+            }
+        }
+
+        private void FillMemoryBlocksThreaded()
+        {
+            int positionIndex = -1;
+            int positionIndexDone = this.Lanes * SyncPoints * this.TimeCost;
+            int positionIndexSync = this.Lanes;
+            int positionIndexKat = this.Lanes * SyncPoints;
+            var pauseForSyncs =
+                Enumerable.Range(0, SyncPoints * this.TimeCost).Select(i => new ManualResetEvent(false)).ToArray();
+            int pauseForSyncIndex = 0;
+            int atSyncIndex = 0;
+            var waitingForSyncs =
+                Enumerable.Range(0, this.threadCount - 1).Select(i => new AutoResetEvent(false)).Cast<WaitHandle>().ToArray();
+
+            Func<Position, bool> setPostion = toSet =>
+                {
+                    while (true)
+                    {
+                        int myPauseForSyncIndex = -1;
+                        lock (pauseForSyncs)
+                        {
+                            if (positionIndex == positionIndexDone)
+                            {
+                                // done
+                                return false;
+                            }
+
+                            if (positionIndex == positionIndexSync)
+                            {
+                                // other thread wants this thread to wait for sync
+                                ((AutoResetEvent)waitingForSyncs[atSyncIndex]).Set();
+                                ++atSyncIndex;
+                                myPauseForSyncIndex = pauseForSyncIndex;
+                            }
+                            else
+                            {
+                                Interlocked.Increment(ref positionIndex);
+
+                                if (positionIndex == positionIndexSync)
+                                {
+                                    if (positionIndex == positionIndexDone)
+                                    {
+                                        // done
+                                        return false;
+                                    }
+
+                                    atSyncIndex = 0;
+                                }
+                                else
+                                {
+                                    toSet.Pass = positionIndex / (SyncPoints * this.Lanes);
+                                    toSet.Slice = (positionIndex / this.Lanes) % SyncPoints;
+                                    toSet.Lane = positionIndex % this.Lanes;
+                                    toSet.Index = 0;
+                                    return true;
+                                }
+                            }
+                        }
+
+                        if (myPauseForSyncIndex != -1)
+                        {
+                            pauseForSyncs[myPauseForSyncIndex].WaitOne();
+                        }
+                        else
+                        {
+                            // Wait for others to sync
+                            WaitHandle.WaitAll(waitingForSyncs);
+                            lock (pauseForSyncs)
+                            {
+                                // other threads waiting at pauseForSync
+                                positionIndexSync += this.Lanes;
+                                if (positionIndex == positionIndexKat)
+                                {
+                                    InternalKat(this, positionIndex / (SyncPoints * this.Lanes));
+                                    positionIndexKat += this.Lanes * SyncPoints;
+                                }
+
+                                // release others
+                                pauseForSyncs[pauseForSyncIndex].Set();
+                                ++pauseForSyncIndex;
+                                toSet.Pass = positionIndex / (SyncPoints * this.Lanes);
+                                toSet.Slice = (positionIndex / this.Lanes) % SyncPoints;
+                                toSet.Lane = positionIndex % this.Lanes;
+                                toSet.Index = 0;
+                                return true;
+                            }
+                        }
+                    }
+                };
+
+            var threads = new Thread[this.threadCount - 1];
+            for (int i = 0; i < threads.Length; ++i)
+            {
+                threads[i] = new Thread(
+                    () =>
+                        {
+                            Position p = new Position(0, 0, 0);
+                            while (setPostion(p))
+                            {
+                                this.FillSegment(p);
+                            }
+                        }) { Name = $"Argon2({i})" };
+
+                threads[i].Start();
+            }
+
+            Position position = new Position(0, 0, 0);
+            while (setPostion(position))
+            {
+                this.FillSegment(position);
+            }
+
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+
+            InternalKat(this, this.TimeCost - 1);
+        }
+
+        private void FillMemoryBlocksSimpleThreaded()
+        {
+            Func<Position, AutoResetEvent, Thread> startFillSegmentThread = (position, autoResetEvent) =>
+                {
+                    var ret = new Thread(
+                        () =>
+                            {
+                                this.FillSegment(position);
+                                autoResetEvent.Set();
+                            });
+                    ret.Start();
+                    return ret;
+                };
+
+            // Version of code ported from C reference that spawns a new
+            // thread for every segment fill. This is really slow, don't do
+            // this - with typical parameters, Argon2 is always faster with
+            // no parallelism rather than using this code.
+            var waitHandles =
+                Enumerable.Range(0, this.threadCount)
+                    .Select(i => new AutoResetEvent(false))
+                    .Cast<WaitHandle>()
+                    .ToArray();
+            var threads = new Thread[waitHandles.Length];
+            for (int passNumber = 0; passNumber < this.TimeCost; ++passNumber)
+            {
+                for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                {
+                    int laneNumber = 0;
+                    int remaining = this.Lanes;
+                    for (; laneNumber < threads.Length && laneNumber < this.Lanes; ++laneNumber)
+                    {
+                        threads[laneNumber] = startFillSegmentThread(
+                            new Position(passNumber, laneNumber, sliceNumber),
+                            (AutoResetEvent)waitHandles[laneNumber]);
+                    }
+
+                    while (laneNumber < this.Lanes)
+                    {
+                        int i = WaitHandle.WaitAny(waitHandles);
+                        threads[i].Join();
+                        --remaining;
+                        threads[i] = startFillSegmentThread(
+                            new Position(passNumber, laneNumber, sliceNumber),
+                            (AutoResetEvent)waitHandles[i]);
+                        ++laneNumber;
+                    }
+
+                    while (remaining > 0)
+                    {
+                        int i = WaitHandle.WaitAny(waitHandles);
+                        threads[i].Join();
+                        --remaining;
+                    }
+                }
+
+                InternalKat(this, passNumber);
             }
         }
 
@@ -367,7 +460,7 @@ namespace Isopoh.Cryptography.Argon2
                 blockhash.Copy(this.Memory[this.LaneLength - 1]);
 
                 // XOR last blocks
-                for (int l = 1; l < this.config.Lanes; ++l)
+                for (int l = 1; l < this.Lanes; ++l)
                 {
                     blockhash.Xor(this.Memory[(l * this.LaneLength) + (this.LaneLength - 1)]);
                 }
@@ -375,7 +468,7 @@ namespace Isopoh.Cryptography.Argon2
                 using (var blockhashBytes = new SecureArray<byte>(BlockSize))
                 {
                     StoreBlock(blockhashBytes.Buffer, blockhash);
-                    var ret = new SecureArray<byte>(this.config.HashLength);
+                    var ret = new SecureArray<byte>(this.HashLength);
                     Blake2BLong(ret.Buffer, blockhashBytes.Buffer);
                     PrintTag(ret.Buffer);
                     return ret;
@@ -385,7 +478,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private void FillSegment(Position position)
         {
-            bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing;
+            bool dataIndependentAddressing = this.Type == Argon2Type.DataIndependentAddressing;
             var pseudoRands = new ulong[this.SegmentLength];
             if (dataIndependentAddressing)
             {
@@ -411,7 +504,7 @@ namespace Isopoh.Cryptography.Argon2
                 int refLane =
                     (position.Pass == 0 && position.Slice == 0)
                     ? position.Lane
-                    : (int)((uint)(pseudoRand >> 32) % (uint)this.config.Lanes);
+                    : (int)((uint)(pseudoRand >> 32) % (uint)this.Lanes);
 
                 // compute possible number of reference blocks in lane
                 position.Index = i;
@@ -419,18 +512,18 @@ namespace Isopoh.Cryptography.Argon2
 
                 BlockValues refBlock = this.Memory[(this.LaneLength * refLane) + refIndex];
                 BlockValues curBlock = this.Memory[curOffset];
-                if (this.config.Version == Argon2Version.Sixteen)
+                if (this.Version == Argon2Version.Sixteen)
                 {
                     // version 1.2.1 and earlier: overwrite, not XOR
-                    FillBlock(this.Memory[prevOffset], refBlock, curBlock);
+                    FillBlock(this.blake2RowAndColumnRoundsNoMsg, this.Memory[prevOffset], refBlock, curBlock);
                 }
                 else if (position.Pass == 0)
                 {
-                    FillBlock(this.Memory[prevOffset], refBlock, curBlock);
+                    FillBlock(this.blake2RowAndColumnRoundsNoMsg, this.Memory[prevOffset], refBlock, curBlock);
                 }
                 else
                 {
-                    FillBlockWithXor(this.Memory[prevOffset], refBlock, curBlock);
+                    FillBlockWithXor(this.blake2RowAndColumnRoundsNoMsg, this.Memory[prevOffset], refBlock, curBlock);
                 }
             }
         }
@@ -505,8 +598,8 @@ namespace Isopoh.Cryptography.Argon2
             inputBlock[1] = (ulong)position.Lane;
             inputBlock[2] = (ulong)position.Slice;
             inputBlock[3] = (ulong)this.MemoryBlockCount;
-            inputBlock[4] = (ulong)this.config.TimeCost;
-            inputBlock[5] = (ulong)this.config.Type;
+            inputBlock[4] = (ulong)this.TimeCost;
+            inputBlock[5] = (ulong)this.Type;
             for (int i = 0; i < this.SegmentLength; ++i)
             {
                 if (i % QwordsInBlock == 0)
@@ -514,8 +607,8 @@ namespace Isopoh.Cryptography.Argon2
                     inputBlock[6] += 1;
                     tmpBlock.Init(0);
                     addressBlock.Init(0);
-                    FillBlockWithXor(zeroBlock, inputBlock, tmpBlock);
-                    FillBlockWithXor(zeroBlock, tmpBlock, addressBlock);
+                    FillBlockWithXor(this.blake2RowAndColumnRoundsNoMsg, zeroBlock, inputBlock, tmpBlock);
+                    FillBlockWithXor(this.blake2RowAndColumnRoundsNoMsg, zeroBlock, tmpBlock, addressBlock);
                 }
 
                 pseudoRands[i] = addressBlock[i % QwordsInBlock];

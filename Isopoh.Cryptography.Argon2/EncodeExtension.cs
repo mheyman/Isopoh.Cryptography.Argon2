@@ -48,7 +48,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The output length is always exactly 32 bytes.
         /// </para>
         /// </remarks>
-        public static string EncodeString(this Argon2Config config, byte[] hash)
+        public static string EncodeString(this Argon2 config, byte[] hash)
         {
             var dst = new StringBuilder();
             if (config.Type == Argon2Type.DataIndependentAddressing)

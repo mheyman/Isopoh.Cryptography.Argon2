@@ -25,33 +25,33 @@ namespace Isopoh.Cryptography.Argon2
                 using (var sout = new StreamWriter(fout))
                 {
                     sout.WriteLine("=======================================");
-                    switch (hasher.config.Type)
+                    switch (hasher.Type)
                     {
                         case Argon2Type.DataDependentAddressing:
-                            sout.WriteLine($"Argon2d version number {(int)hasher.config.Version}");
+                            sout.WriteLine($"Argon2d version number {(int)hasher.Version}");
                             break;
                         case Argon2Type.DataIndependentAddressing:
-                            sout.WriteLine($"Argon2i version number {(int)hasher.config.Version}");
+                            sout.WriteLine($"Argon2i version number {(int)hasher.Version}");
                             break;
                     }
 
                     sout.WriteLine("=======================================");
                     sout.WriteLine(
-                        $"Memory: {hasher.config.MemoryCost} KiB, Iterations: {hasher.config.TimeCost}, "
-                        + $"Parallelism: {hasher.config.Lanes} lanes, Tag length: " + $"{hasher.config.HashLength} bytes");
-                    var pwText = hasher.config.ClearPassword
+                        $"Memory: {hasher.MemoryCost} KiB, Iterations: {hasher.TimeCost}, "
+                        + $"Parallelism: {hasher.Lanes} lanes, Tag length: " + $"{hasher.HashLength} bytes");
+                    var pwText = hasher.ClearPassword
                                      ? "CLEARED"
-                                     : BitConverter.ToString(hasher.config.Password).ToLower().Replace('-', ' ');
-                    sout.WriteLine($"Password[{hasher.config.Password.Length}]: {pwText} ");
+                                     : BitConverter.ToString(hasher.Password).ToLower().Replace('-', ' ');
+                    sout.WriteLine($"Password[{hasher.Password.Length}]: {pwText} ");
                     sout.WriteLine(
-                        $"Salt[{hasher.config.Salt?.Length ?? 0}]: "
-                        + $"{(hasher.config.Salt == null ? string.Empty : BitConverter.ToString(hasher.config.Salt).ToLower().Replace('-', ' '))} ");
+                        $"Salt[{hasher.Salt?.Length ?? 0}]: "
+                        + $"{(hasher.Salt == null ? string.Empty : BitConverter.ToString(hasher.Salt).ToLower().Replace('-', ' '))} ");
                     sout.WriteLine(
-                        $"Secret[{hasher.config.Secret?.Length ?? 0}]: "
-                        + $"{(hasher.config.Secret == null ? string.Empty : BitConverter.ToString(hasher.config.Secret).ToLower().Replace('-', ' '))} ");
+                        $"Secret[{hasher.Secret?.Length ?? 0}]: "
+                        + $"{(hasher.Secret == null ? string.Empty : BitConverter.ToString(hasher.Secret).ToLower().Replace('-', ' '))} ");
                     sout.WriteLine(
-                        $"Associated data[{hasher.config.AssociatedData?.Length ?? 0}]: "
-                        + $"{(hasher.config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.config.AssociatedData).ToLower().Replace('-', ' '))} ");
+                        $"Associated data[{hasher.AssociatedData?.Length ?? 0}]: "
+                        + $"{(hasher.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.AssociatedData).ToLower().Replace('-', ' '))} ");
                     sout.WriteLine(
                         $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLower().Replace('-', ' ')} ");
                     sout.Flush();
@@ -77,6 +77,7 @@ namespace Isopoh.Cryptography.Argon2
                             sout.WriteLine($"Block {i:D4} [{j, 3}]: {hasher.Memory[i][j] :x16}");
                         }
                     }
+
                     sout.Flush();
                 }
             }
