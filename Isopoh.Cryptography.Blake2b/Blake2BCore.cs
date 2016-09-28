@@ -27,7 +27,7 @@ namespace Isopoh.Cryptography.Blake2b
     using System;
     using SecureArray;
 
-    public sealed partial class Blake2BCore
+    public sealed partial class Blake2BCore : IDisposable
     {
         private bool isInitialized;
 
@@ -234,5 +234,11 @@ namespace Isopoh.Cryptography.Blake2b
             return hash;
         }
 
+        public void Dispose()
+        {
+            this.buf?.Dispose();
+            this.mbuf?.Dispose();
+            this.hbuf?.Dispose();
+        }
     }
 }

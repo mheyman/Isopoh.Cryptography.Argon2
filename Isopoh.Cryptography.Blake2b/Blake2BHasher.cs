@@ -19,6 +19,7 @@ namespace Isopoh.Cryptography.Blake2b
         private readonly Blake2BCore core = new Blake2BCore();
         private readonly SecureArray<ulong> rawConfig;
         private readonly SecureArray<byte> key;
+        bool disposed;
 
         private readonly byte[] defaultOutputBuffer;
         private readonly int outputSizeInBytes;
@@ -92,8 +93,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         protected override void Dispose(bool disposing)
         {
-            this.key?.Dispose();
-            this.rawConfig?.Dispose();
+            if (disposing && !this.disposed)
+            {
+                this.core?.Dispose();
+                this.key?.Dispose();
+                this.rawConfig?.Dispose();
+                this.disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

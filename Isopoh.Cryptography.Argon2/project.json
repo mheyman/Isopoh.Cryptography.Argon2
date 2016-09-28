@@ -1,8 +1,9 @@
 {
+  "name": "Isopoh.Cryptography.Argon2",
   "title": "Isopoh.Cryptography.Argon2",
   "copyright": "Michael Heyman 2016",
   "description": "Argon2 Password Hasher",
-  "version": "1.0.0-*",
+  "version": "1.1.0-beta1",
 
   "dependencies": {
     "Isopoh.Cryptography.Blake2b": "1.0.0-*",
@@ -14,7 +15,6 @@
     },
     "System.Collections": "4.0.11",
     "System.IO": "4.1.0",
-    "System.Runtime": "4.0.20",
     "System.Security.Cryptography.Cng": "4.2.0",
     "System.Threading": "4.0.11",
     "System.Threading.Tasks": "4.0.11",
@@ -22,13 +22,30 @@
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
+    "netstandard1.3": {}
+  },
+
+  "packOptions": {
+    "summary": "Argon2 Password Hasher written in C#",
+    "tags": [ "argon2", "hash", "password", "crypto", "cryptography" ],
+    "owners": [ "mheyman" ],
+    "releaseNotes": "Performance options checking release",
+    "iconUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png",
+    "projectUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2",
+    "licenseUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mheyman/Isopoh.Cryptography.Argon2"
+    },
+    "files": {
+      "include": "*.cs"
     }
   },
 
   "buildOptions": {
-    "xmlDoc": "true"
+    "xmlDoc": "true",
+    "optimize": "true"
   },
 
 
@@ -36,7 +53,7 @@
 
   "scripts": {
     "postcompile": [
-      "dotnet pack --no-build --configuration %compile:Configuration%"
+      "dotnet pack --no-build --output ..\\nuget --configuration %compile:Configuration%"
     ]
   }
 }

@@ -141,3 +141,4 @@ dllFun.xml
 TestResults
 argon2-test-vectors.txt
 project.lock.json
+nuget
