@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Held in RAM and zeroed on Disposal</Description>
+    <Copyright>Michael Heyman 2016</Copyright>
+    <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <PlatformTarget>AnyCpu</PlatformTarget>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
+    <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
+    <PackageTags>sensitive;array</PackageTags>
+    <PackageReleaseNotes>Performance options checking release</PackageReleaseNotes>
+    <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</RepositoryUrl>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="*.cs">
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Target Name="PostcompileScript" AfterTargets="Build">
+    <Exec Command="dotnet pack --no-build --output ..\nuget --configuration $(Configuration)" />
+  </Target>
+
+</Project>

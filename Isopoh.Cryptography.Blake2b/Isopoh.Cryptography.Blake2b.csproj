@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Blake2 Hash</Description>
+    <Copyright>Michael Heyman 2016</Copyright>
+    <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
+    <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
+    <PackageTags>blake2;blake2b;hash;crypto;cryptography</PackageTags>
+    <PackageReleaseNotes>Performance options checking release</PackageReleaseNotes>
+    <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</RepositoryUrl>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="*.cs">
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
+  </ItemGroup>
+
+  <Target Name="PostcompileScript" AfterTargets="Build">
+    <Exec Command="dotnet pack --no-build --output ..\nuget --configuration $(Configuration)" />
+  </Target>
+
+</Project>

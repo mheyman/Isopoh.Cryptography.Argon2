@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Isopoh.Cryptography.Test</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Isopoh.Cryptography.Test</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj" />
+    <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+    <PackageReference Include="System.Runtime" Version="4.1.0" />
+  </ItemGroup>
+
+</Project>
