@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Description>Held in RAM and zeroed on Disposal</Description>
-        <Copyright>Michael Heyman 2016</Copyright>
+        <Title>Isopoh.Cryptography.SecureArray</Title>
+        <Description>A managed class that can hold an array in RAM and zero it on disposal</Description>
+        <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <Authors>Michael Heyman</Authors>
+        <Copyright>Michael Heyman 2017</Copyright>
+        <PackageTags>sensitive array</PackageTags>
+        <PackageReleaseNotes>Moved to .NETStandard 1.1</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
         <TargetFramework>netstandard1.1</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-        <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
-        <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+        <PackageVersion>1.0.1</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

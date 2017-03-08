@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Description>Blake2 Hash</Description>
-        <Copyright>Michael Heyman 2016</Copyright>
+        <Title>Isopoh.Cryptography.Blake2b</Title>
+        <Description>Blake2 hash for sensitive data</Description>
+        <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <Authors>Michael Heyman</Authors>
+        <Copyright>Michael Heyman 2017</Copyright>
+        <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
+        <PackageReleaseNotes>Moved to .NETStandard 1.3</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
-        <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+        <PackageVersion>1.0.1</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
