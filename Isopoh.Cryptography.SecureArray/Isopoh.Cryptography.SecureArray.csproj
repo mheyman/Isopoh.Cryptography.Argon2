@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Description>Held in RAM and zeroed on Disposal</Description>
+        <Copyright>Michael Heyman 2016</Copyright>
+        <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
+        <TargetFramework>netstandard1.1</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
+        <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
+        <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+        <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+    </ItemGroup>
+
+    <Target Name="PostcompileScript" AfterTargets="Build">
+        <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
+    </Target>
+
+</Project>

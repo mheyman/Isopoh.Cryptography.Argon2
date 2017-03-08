@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Description>Blake2 Hash</Description>
+        <Copyright>Michael Heyman 2016</Copyright>
+        <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
+        <TargetFramework>netstandard1.3</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
+        <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
+        <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+        <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+    </ItemGroup>
+
+    <Target Name="PostcompileScript" AfterTargets="Build">
+        <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
+    </Target>
+
+</Project>
