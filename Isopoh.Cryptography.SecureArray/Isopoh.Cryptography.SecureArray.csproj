@@ -29,6 +29,12 @@
         <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="System">
+        <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
     <Target Name="PostcompileScript" AfterTargets="Build">
         <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
     </Target>

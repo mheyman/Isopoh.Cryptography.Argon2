@@ -39,9 +39,72 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(bool), sizeof(bool) }
                 };
 
+        /// <summary>
+        /// Call to zero memory in a way that does not get optimized away.
+        /// </summary>
+        /// <remarks>
+        /// On Linux and OSX, simply calls memset() and hopes the P/Invoke
+        /// mechanism does not have special handling for memset calls (and
+        /// thus does not even think about optimizing the call away).
+        /// </remarks>
+        private static readonly Action<IntPtr, UIntPtr> ZeroMemory;
+
+        /// <summary>
+        /// Lock the given memory so it doesn't get swapped out to disk.
+        /// </summary>
+        /// <exception cref="UnauthorizedAccessException">
+        /// Operating system did not allow the memory to be locked.
+        /// </exception>
+        private static readonly Action<IntPtr, UIntPtr> LockMemory;
+
+        /// <summary>
+        /// Unlock memory previously locked by a call to <see cref="LockMemory"/>.
+        /// </summary>
+        private static readonly Action<IntPtr, UIntPtr> UnlockMemory;
+
         private GCHandle handle;
 
         private bool virtualLocked;
+
+        static SecureArray()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                ZeroMemory = (m, l) => LinuxMemset(m, 0, l);
+                LockMemory = (m, l) =>
+                    {
+                        if (LinuxMlock(m, l) != 0)
+                        {
+                            throw new UnauthorizedAccessException($"Failed to securely lock memory. Error code: {Marshal.GetLastWin32Error()}");
+                        }
+                    };
+                UnlockMemory = (m, l) => LinuxMunlock(m, l);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                ZeroMemory = (m, l) => OsxMemset(m, 0, l);
+                LockMemory = (m, l) =>
+                    {
+                        if (OsxMlock(m, l) != 0)
+                        {
+                            throw new UnauthorizedAccessException($"Failed to securely lock memory. Error code: {Marshal.GetLastWin32Error()}");
+                        }
+                    };
+                UnlockMemory = (m, l) => OsxMunlock(m, l);
+            }
+            else
+            {
+                ZeroMemory = RtlZeroMemory;
+                LockMemory = (m, l) =>
+                    {
+                        if (!VirtualLock(m, l))
+                        {
+                            throw new UnauthorizedAccessException($"Failed to securely lock memory. Error code: {Marshal.GetLastWin32Error()}");
+                        }
+                    };
+                UnlockMemory = (m, l) => VirtualUnlock(m, l);
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureArray"/> class.
@@ -98,7 +161,7 @@ namespace Isopoh.Cryptography.SecureArray
             {
                 IntPtr bufPtr = bufHandle.AddrOfPinnedObject();
                 UIntPtr cnt = new UIntPtr((uint)buffer.Length * (uint)BuiltInTypeElementSize(buffer));
-                RtlZeroMemory(bufPtr, cnt);
+                ZeroMemory(bufPtr, cnt);
             }
             finally
             {
@@ -128,10 +191,10 @@ namespace Isopoh.Cryptography.SecureArray
             {
                 IntPtr bufPtr = this.handle.AddrOfPinnedObject();
                 UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
-                RtlZeroMemory(bufPtr, cnt);
+                ZeroMemory(bufPtr, cnt);
                 if (this.virtualLocked)
                 {
-                    VirtualUnlock(bufPtr, cnt);
+                    UnlockMemory(bufPtr, cnt);
                 }
             }
             finally
@@ -154,6 +217,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="type">
         /// The type of secure array to initialize.
         /// </param>
+        /// <exception cref="UnauthorizedAccessException">
+        /// Operating system did not allow the memory to be locked.
+        /// </exception>
         protected void Init<T>(T[] buf, SecureArrayType type)
         {
             var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
@@ -164,7 +230,7 @@ namespace Isopoh.Cryptography.SecureArray
                 {
                     IntPtr bufPtr = this.handle.AddrOfPinnedObject();
                     UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
-                    VirtualLock(bufPtr, cnt);
+                    LockMemory(bufPtr, cnt);
                     this.virtualLocked = true;
                 }
             }
@@ -173,10 +239,28 @@ namespace Isopoh.Cryptography.SecureArray
         [DllImport("kernel32.dll")]
         private static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
 
-        [DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool VirtualLock(IntPtr lpAddress, UIntPtr dwSize);
 
-        [DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool VirtualUnlock(IntPtr lpAddress, UIntPtr dwSize);
+
+        [DllImport("libc", SetLastError = true, EntryPoint = "mlock")]
+        private static extern int LinuxMlock(IntPtr addr, UIntPtr len);
+
+        [DllImport("libc", SetLastError = true, EntryPoint = "munlock")]
+        private static extern int LinuxMunlock(IntPtr addr, UIntPtr len);
+
+        [DllImport("libc", EntryPoint = "memset")]
+        private static extern IntPtr LinuxMemset(IntPtr addr, int c, UIntPtr n);
+
+        [DllImport("libSystem", SetLastError = true, EntryPoint = "mlock")]
+        private static extern int OsxMlock(IntPtr addr, UIntPtr len);
+
+        [DllImport("libSystem", SetLastError = true, EntryPoint = "munlock")]
+        private static extern int OsxMunlock(IntPtr addr, UIntPtr len);
+
+        [DllImport("libSystem", EntryPoint = "memset")]
+        private static extern IntPtr OsxMemset(IntPtr addr, int c, UIntPtr n);
     }
 }
