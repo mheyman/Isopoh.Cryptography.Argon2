@@ -3,6 +3,7 @@ namespace Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text;
     using System.Linq;
 
@@ -10,6 +11,7 @@ namespace Test
     using Isopoh.Cryptography.SecureArray;
     using Xunit;
     using Xunit.Abstractions;
+    using Xunit.Sdk;
 
     /// <summary>
     /// Unit tests for Isopoh.Cryptography.Argon2
@@ -215,6 +217,43 @@ namespace Test
 
         ////    Assert.Equal(v1, v2);
         ////}
+
+        [Fact]
+        public void TestSecureArray()
+        {
+            int size = 100;
+            int max = int.MaxValue;
+            int prev = size;
+            for (;;)
+            {
+                try
+                {
+                    using (var buf = new SecureArray<ulong>(size))
+                    {
+                        this.output.WriteLine($"Passed size={size}");
+                        if (size == max)
+                        {
+                            break;
+                        }
+
+                        prev = size;
+                        long tmp = size;
+                        tmp += max;
+                        tmp /= 2;
+                        size = (int)tmp;
+                    }
+                }
+                catch (Exception)
+                {
+                    this.output.WriteLine($"Failed size={size}");
+                    max = size;
+                    long tmp = prev;
+                    tmp += max;
+                    tmp /= 2;
+                    size = (int)tmp;
+                }
+            }
+        }
 
         /// <summary>
         /// Makes useful binary from text Argon2 test vector information.
