@@ -80,6 +80,7 @@ Debug
 Release
 obj
 bin
+.vscode
 *.vcxproj.*
 *.csproj.*
 *.xproj.*
