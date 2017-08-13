@@ -27,7 +27,15 @@ namespace Isopoh.Cryptography.Blake2b
                 treeConfig = SequentialTreeConfig;
             }
 
-            var rawConfig = new SecureArray<ulong>(8);
+            SecureArray<ulong> rawConfig;
+            try
+            {
+                 rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+            }
+            catch (LockFailException)
+            {
+                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+            }
 
             //digest length
             if (config.OutputSizeInBytes <= 0 | config.OutputSizeInBytes > 64)

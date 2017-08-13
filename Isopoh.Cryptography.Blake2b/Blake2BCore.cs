@@ -27,15 +27,15 @@ namespace Isopoh.Cryptography.Blake2b
     using System;
     using SecureArray;
 
-    public sealed partial class Blake2BCore
+    public sealed partial class Blake2BCore : IDisposable
     {
         private bool isInitialized;
 
         private int bufferFilled;
-        private readonly SecureArray<byte> buf = new SecureArray<byte>(128);
+        private readonly SecureArray<byte> buf;
 
-        private readonly SecureArray<ulong> mbuf = new SecureArray<ulong>(16);
-        private readonly SecureArray<ulong> hbuf = new SecureArray<ulong>(8);
+        private readonly SecureArray<ulong> mbuf;
+        private readonly SecureArray<ulong> hbuf;
         private ulong counter0;
         private ulong counter1;
         private ulong finalizationFlag0;
@@ -51,6 +51,70 @@ namespace Isopoh.Cryptography.Blake2b
         private const ulong Iv5 = 0x9B05688C2B3E6C1FUL;
         private const ulong Iv6 = 0x1F83D9ABFB41BD6BUL;
         private const ulong Iv7 = 0x5BE0CD19137E2179UL;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Blake2BCore"/> class.
+        /// </summary>
+        /// <param name="lockMemory">
+        /// Used to set locking strategy for buffers used in creating the hash. The memory
+        /// will always be zeroed prior to destruction. The memory is also always pinned
+        /// so the CLR can't move it and leave extraneous copies floating around in RAM.
+        /// </param>
+        public Blake2BCore(LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
+        {
+            switch(lockMemory)
+            {
+                case LockMemoryPolicy.None:
+                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned);
+                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned);
+                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+                    break;
+                case LockMemoryPolicy.BestEffort:
+                    try
+                    {
+                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    }
+                    catch (LockFailException)
+                    {
+                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned);
+                    }
+
+                    try
+                    {
+                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    }
+                    catch (LockFailException)
+                    {
+                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned);
+                    }
+
+                    try
+                    {
+                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    }
+                    catch (LockFailException)
+                    {
+                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+                    }
+                    break;
+
+                default:
+                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Release unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.hbuf.Dispose();
+            this.mbuf.Dispose();
+            this.buf.Dispose();
+        }
 
         internal static ulong BytesToUInt64(byte[] buf, int offset)
         {

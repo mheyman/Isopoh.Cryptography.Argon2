@@ -28,7 +28,7 @@ namespace Isopoh.Cryptography.Argon2
         private static void Blake2BLong(byte[] hash, byte[] inbuf)
         {
             var outlenBytes = new byte[4];
-            using (var intermediateHash = new SecureArray<byte>(Blake2B.OutputLength))
+            using (var intermediateHash = BestSecureArray<byte>(Blake2B.OutputLength))
             {
                 var config = new Blake2BConfig
                 {
@@ -36,10 +36,13 @@ namespace Isopoh.Cryptography.Argon2
                     OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length
                 };
                 Store32(outlenBytes, hash.Length);
-                var blackHash = Blake2B.Create(config);
-                blackHash.Update(outlenBytes);
-                blackHash.Update(inbuf);
-                blackHash.Finish();
+                using(var blakeHash = Blake2B.Create(config))
+                {
+                    blakeHash.Update(outlenBytes);
+                    blakeHash.Update(inbuf);
+                    blakeHash.Finish();
+                }
+                
                 if (hash.Length <= intermediateHash.Buffer.Length)
                 {
                     Array.Copy(intermediateHash.Buffer, hash, hash.Length);

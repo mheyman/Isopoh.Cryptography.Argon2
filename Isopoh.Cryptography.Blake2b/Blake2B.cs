@@ -157,9 +157,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// </returns>
         public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig config)
         {
-            var hasher = Create(config);
-            hasher.Update(data, start, count);
-            return hasher.Finish();
+            using(var hasher = Create(config))
+            {
+                hasher.Update(data, start, count);
+                return hasher.Finish();
+            }
         }
         //public static byte[] ComputeParallelHash(byte[] data);
         //public static byte[] ComputeParallelHash(byte[] data, Blake2Config config);

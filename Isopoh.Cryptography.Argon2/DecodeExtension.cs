@@ -211,7 +211,16 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            var output = new SecureArray<byte>(hashlen);
+            SecureArray<byte> output;
+            try
+            {
+                output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedPinnedAndNoSwap);
+            }
+            catch(LockFailException)
+            {
+                output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedAndPinned);
+            }
+
             bool success = false;
             try
             {

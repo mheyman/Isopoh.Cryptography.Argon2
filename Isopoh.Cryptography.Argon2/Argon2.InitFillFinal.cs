@@ -18,9 +18,21 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
+        private static SecureArray<T> BestSecureArray<T>(int length)
+        {
+            try
+            {
+                return new SecureArray<T>(length, SecureArrayType.ZeroedPinnedAndNoSwap);
+            }
+            catch (LockFailException)
+            {
+                return new SecureArray<T>(length, SecureArrayType.ZeroedAndPinned);
+            }
+        }
+
         private void Initialize()
         {
-            using (var blockhash = new SecureArray<byte>(PrehashSeedLength))
+            using (var blockhash = BestSecureArray<byte>(PrehashSeedLength))
             {
                 using (var initialHash = this.InitialHash())
                 {
@@ -34,70 +46,73 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> InitialHash()
         {
-            var ret = new SecureArray<byte>(Blake2B.OutputLength);
-            var blakeHash =
+            var ret = BestSecureArray<byte>(Blake2B.OutputLength);
+            using(var blakeHash =
                 Blake2B.Create(
                     new Blake2BConfig
                     {
                         OutputSizeInBytes = PrehashDigestLength,
                         Result64ByteBuffer = ret.Buffer
-                    });
-            var value = new byte[4];
-            Store32(value, this.config.Lanes);
-            blakeHash.Update(value);
-            Store32(value, this.config.HashLength);
-            blakeHash.Update(value);
-            Store32(value, this.config.MemoryCost);
-            blakeHash.Update(value);
-            Store32(value, this.config.TimeCost);
-            blakeHash.Update(value);
-            Store32(value, (uint)this.config.Version);
-            blakeHash.Update(value);
-            Store32(value, (uint)this.config.Type);
-            blakeHash.Update(value);
-            Store32(value, this.config.Password?.Length ?? 0);
-            blakeHash.Update(value);
-            if (this.config.Password != null)
+                    }))
             {
-                blakeHash.Update(this.config.Password);
-                if (this.config.ClearPassword)
+                var value = new byte[4];
+                Store32(value, this.config.Lanes);
+                blakeHash.Update(value);
+                Store32(value, this.config.HashLength);
+                blakeHash.Update(value);
+                Store32(value, this.config.MemoryCost);
+                blakeHash.Update(value);
+                Store32(value, this.config.TimeCost);
+                blakeHash.Update(value);
+                Store32(value, (uint)this.config.Version);
+                blakeHash.Update(value);
+                Store32(value, (uint)this.config.Type);
+                blakeHash.Update(value);
+                Store32(value, this.config.Password?.Length ?? 0);
+                blakeHash.Update(value);
+                if (this.config.Password != null)
                 {
-                    SecureArray.Zero(this.config.Password);
+                    blakeHash.Update(this.config.Password);
+                    if (this.config.ClearPassword)
+                    {
+                        SecureArray.Zero(this.config.Password);
+                    }
                 }
-            }
 
-            Store32(value, this.config.Salt?.Length ?? 0);
-            blakeHash.Update(value);
-            if (this.config.Salt != null)
-            {
-                blakeHash.Update(this.config.Salt);
-            }
-
-            Store32(value, this.config.Secret?.Length ?? 0);
-            blakeHash.Update(value);
-            if (this.config.Secret != null)
-            {
-                blakeHash.Update(this.config.Secret);
-                if (this.config.ClearSecret)
+                Store32(value, this.config.Salt?.Length ?? 0);
+                blakeHash.Update(value);
+                if (this.config.Salt != null)
                 {
-                    SecureArray.Zero(this.config.Secret);
+                    blakeHash.Update(this.config.Salt);
                 }
-            }
 
-            Store32(value, this.config.AssociatedData?.Length ?? 0);
-            blakeHash.Update(value);
-            if (this.config.AssociatedData != null)
-            {
-                blakeHash.Update(this.config.AssociatedData);
-            }
+                Store32(value, this.config.Secret?.Length ?? 0);
+                blakeHash.Update(value);
+                if (this.config.Secret != null)
+                {
+                    blakeHash.Update(this.config.Secret);
+                    if (this.config.ClearSecret)
+                    {
+                        SecureArray.Zero(this.config.Secret);
+                    }
+                }
 
-            blakeHash.Finish();
+                Store32(value, this.config.AssociatedData?.Length ?? 0);
+                blakeHash.Update(value);
+                if (this.config.AssociatedData != null)
+                {
+                    blakeHash.Update(this.config.AssociatedData);
+                }
+
+                blakeHash.Finish();
+            }
+            
             return ret;
         }
 
         private void FillFirstBlocks(byte[] blockhash)
         {
-            using (var blockhashBytes = new SecureArray<byte>(BlockSize))
+            using (var blockhashBytes = BestSecureArray<byte>(BlockSize))
             {
                 for (int l = 0; l < this.config.Lanes; ++l)
                 {
@@ -207,7 +222,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> Final()
         {
-            using (var blockhashBuffer = new SecureArray<ulong>(BlockSize / 8))
+            using (var blockhashBuffer = BestSecureArray<ulong>(BlockSize / 8))
             {
                 var blockhash = new BlockValues(blockhashBuffer.Buffer, 0);
                 blockhash.Copy(this.Memory[this.LaneLength - 1]);
@@ -218,10 +233,10 @@ namespace Isopoh.Cryptography.Argon2
                     blockhash.Xor(this.Memory[(l * this.LaneLength) + (this.LaneLength - 1)]);
                 }
 
-                using (var blockhashBytes = new SecureArray<byte>(BlockSize))
+                using (var blockhashBytes = BestSecureArray<byte>(BlockSize))
                 {
                     StoreBlock(blockhashBytes.Buffer, blockhash);
-                    var ret = new SecureArray<byte>(this.config.HashLength);
+                    var ret = BestSecureArray<byte>(this.config.HashLength);
                     Blake2BLong(ret.Buffer, blockhashBytes.Buffer);
                     PrintTag(ret.Buffer);
                     return ret;

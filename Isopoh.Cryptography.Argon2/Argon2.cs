@@ -38,7 +38,7 @@ namespace Isopoh.Cryptography.Argon2
             // ensure that all segments have equal length
             this.LaneLength = this.SegmentLength * SyncPoints;
             this.MemoryBlockCount = this.LaneLength * this.config.Lanes;
-            this.memory = new SecureArray<ulong>(BlockSize * this.MemoryBlockCount / 8);
+            this.memory = BestSecureArray<ulong>(BlockSize * this.MemoryBlockCount / 8);
             this.Memory = new Blocks(this.memory.Buffer, this.MemoryBlockCount);
         }
 

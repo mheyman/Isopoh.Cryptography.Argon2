@@ -38,6 +38,11 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
+        /// Gets or sets the policy for created memory buffers.
+        /// </summary>
+        public LockMemoryPolicy LockMemoryPolicy { get; set; } = LockMemoryPolicy.BestEffort;
+
+        /// <summary>
         /// Gets or sets the personalization value used in the hash. If not null, must be 16 bytes.
         /// </summary>
         /// <exception cref="ArgumentException">

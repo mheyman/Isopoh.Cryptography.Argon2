@@ -16,7 +16,8 @@ namespace Isopoh.Cryptography.Blake2b
 
     internal class Blake2BHasher : Hasher
     {
-        private readonly Blake2BCore core = new Blake2BCore();
+        private bool disposed = false;
+        private readonly Blake2BCore core;
         private readonly SecureArray<ulong> rawConfig;
         private readonly SecureArray<byte> key;
 
@@ -28,6 +29,7 @@ namespace Isopoh.Cryptography.Blake2b
         {
             if (config == null)
                 config = DefaultConfig;
+            this.core = new Blake2BCore(config.LockMemoryPolicy);
             this.rawConfig = Blake2IvBuilder.ConfigB(config, null);
             if (config.Key != null && config.Key.Length != 0)
             {
@@ -42,6 +44,11 @@ namespace Isopoh.Cryptography.Blake2b
 
         public sealed override void Init()
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException("Called Blake2BHasher.Init() on disposed object");
+            }
+
             this.core.Initialize(this.rawConfig.Buffer);
             if (this.key != null)
             {
@@ -63,6 +70,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// </returns>
         public override byte[] Finish()
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException("Called Blake2BHasher.Finish() on disposed object");
+            }
+
             if (this.defaultOutputBuffer != null)
             {
                 return this.core.HashFinal(this.defaultOutputBuffer);
@@ -81,6 +93,11 @@ namespace Isopoh.Cryptography.Blake2b
 
         public override void Update(byte[] data, int start, int count)
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException("Called Blake2BHasher.Update() on disposed object");
+            }
+
             this.core.HashCore(data, start, count);
         }
 
@@ -90,10 +107,18 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="disposing">
         /// Set to true if disposing.
         /// </param>
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
+            if (disposed)
+            {
+                return;
+            }
+
             this.key?.Dispose();
             this.rawConfig?.Dispose();
+            this.core?.Dispose();
+            this.disposed = true;
+            base.Dispose(disposing);
         }
     }
 }
