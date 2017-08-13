@@ -14,7 +14,7 @@ namespace Isopoh.Cryptography.SecureArray
     /// <summary>
     /// Base class of all <see cref="SecureArray{T}"/> classes.
     /// </summary>
-    public class SecureArray
+    public partial class SecureArray
     {
         /// <summary>
         /// Cannot find a way to do a compile-time verification that the
@@ -52,10 +52,10 @@ namespace Isopoh.Cryptography.SecureArray
         /// <summary>
         /// Lock the given memory so it doesn't get swapped out to disk.
         /// </summary>
-        /// <exception cref="UnauthorizedAccessException">
-        /// Operating system did not allow the memory to be locked.
-        /// </exception>
-        private static readonly Action<IntPtr, UIntPtr> LockMemory;
+        /// <returns>
+        /// Null on success; otherwise an error message.
+        /// </returns>
+        private static readonly Func<IntPtr, UIntPtr, string> LockMemory;
 
         /// <summary>
         /// Unlock memory previously locked by a call to <see cref="LockMemory"/>.
@@ -71,80 +71,19 @@ namespace Isopoh.Cryptography.SecureArray
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 ZeroMemory = (m, l) => LinuxMemset(m, 0, l);
-                LockMemory = (m, l) =>
-                    {
-                        if (LinuxMlock(m, l) != 0)
-                        {
-                            throw new UnauthorizedAccessException($"Failed to securely lock memory. Error code: {Marshal.GetLastWin32Error()}");
-                        }
-                    };
+                LockMemory = LinuxLockMemory;
                 UnlockMemory = (m, l) => LinuxMunlock(m, l);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 ZeroMemory = (m, l) => OsxMemset(m, 0, l);
-                LockMemory = (m, l) =>
-                    {
-                        if (OsxMlock(m, l) != 0)
-                        {
-                            throw new UnauthorizedAccessException($"Failed to securely lock memory. Error code: {Marshal.GetLastWin32Error()}");
-                        }
-                    };
+                LockMemory = (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null;
                 UnlockMemory = (m, l) => OsxMunlock(m, l);
             }
             else
             {
                 ZeroMemory = RtlZeroMemory;
-                LockMemory = (m, l) =>
-                    {
-                        IntPtr processHandle = GetCurrentProcess();
-                        ulong prevMinVal = 0;
-                        ulong prevMaxVal = 0;
-                        uint prevFlags = 0;
-                        if (!GetProcessWorkingSetSizeEx(processHandle, ref prevMinVal, ref prevMaxVal, ref prevFlags))
-                        {
-                            var errcode = Marshal.GetLastWin32Error();
-                            throw new UnauthorizedAccessException($"Failed to get process working set size: Error: code={errcode}.");
-                        }
-
-                        ulong prevCur = GetWorkingSetSize(processHandle);
-
-                        var newMaxWorkingSetSize = (ulong)((prevCur + l.ToUInt64()) * 1.2);
-                        if (!SetProcessWorkingSetSizeEx(processHandle, prevMinVal, newMaxWorkingSetSize, prevFlags))
-                        {
-                            var errcode = Marshal.GetLastWin32Error();
-                            throw new UnauthorizedAccessException($"Failed to set process working set size to {newMaxWorkingSetSize} (min={prevMinVal}, max={prevMaxVal}, flags={prevFlags}, cur={prevCur}) bytes at 0x{m.ToInt64():X8}. Error: code={errcode}.");
-                        }
-
-                        ulong cur = GetWorkingSetSize(processHandle);
-
-                        ulong minVal = 0;
-                        ulong maxVal = 0;
-                        uint flags = 0;
-                        if (!GetProcessWorkingSetSizeEx(processHandle, ref minVal, ref maxVal, ref flags))
-                        {
-                            var errcode = Marshal.GetLastWin32Error();
-                            throw new UnauthorizedAccessException($"Failed to get process working set size: Error: code={errcode}.");
-                        }
-
-                        if (VirtualAlloc(m, l.ToUInt64(), 0x00001000, 0x04).ToInt64() == 0)
-                        {
-                            var errcode = Marshal.GetLastWin32Error();
-                            throw new UnauthorizedAccessException($"Failed to commit {l.ToUInt64()} bytes at 0x{m.ToInt64():X8}: Error: code={errcode}.");
-                        }
-
-                        if (!VirtualLock(m, l))
-                        {
-                            var errcode = Marshal.GetLastWin32Error();
-                            var err = errcode == 1453
-                                          ? "Insufficient quota to complete the requested service"
-                                          : $"code={errcode}";
-                            throw new UnauthorizedAccessException(
-                                $"Failed to securely lock {l.ToUInt64()} (prevMin={prevMinVal}, min={minVal}, "
-                                + $"prevMax={prevMaxVal}, max={maxVal}, prevFlags={prevFlags}, flags={flags}, "
-                                + $"prevCur={prevCur}, cur={cur}) bytes at 0x{m.ToInt64():X8}. Error: {err}.");
-                        }
-                    };
+                LockMemory = WindowsLockMemory;
                 UnlockMemory = (m, l) => VirtualUnlock(m, l);
             }
         }
@@ -260,7 +199,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="type">
         /// The type of secure array to initialize.
         /// </param>
-        /// <exception cref="UnauthorizedAccessException">
+        /// <exception cref="LockFailException">
         /// Operating system did not allow the memory to be locked.
         /// </exception>
         protected void Init<T>(T[] buf, SecureArrayType type)
@@ -274,87 +213,71 @@ namespace Isopoh.Cryptography.SecureArray
                     IntPtr bufPtr = this.handle.AddrOfPinnedObject();
                     UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
                     ZeroMemory(bufPtr, cnt);
-                    LockMemory(bufPtr, cnt);
+                    string err = LockMemory(bufPtr, cnt);
+                    if (err != null)
+                    {
+                        int max = GetMaxLockable();
+                        var msg = max > sizeInBytes ? $"Under current available value of {max} bytes (try again, it may work)" : $"Currently available: {max} bytes";
+                        throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.", max);
+                    }
+
                     this.virtualLocked = true;
                 }
             }
         }
 
-        private static ulong GetWorkingSetSize(IntPtr processHandle)
+        /// <summary>
+        /// Perform a binary search to find the current max lockable memory amount. Used
+        /// for error reporting.
+        /// </summary>
+        /// <returns>
+        /// The current number of bytes that can be locked. This is likely to change on
+        /// subsequent calls.
+        /// </returns>
+        private static int GetMaxLockable()
         {
-            var memoryCounters = new ProcessMemoryCounters()
+            ulong low = 0;
+            ulong high = int.MaxValue;
+            while (low < high)
             {
-                Cb = (uint)Marshal.SizeOf(typeof(ProcessMemoryCounters))
-            };
+                var cur = (high + low) / 2;
+                if (cur == low)
+                {
+                    break;
+                }
 
-            if (GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb))
-            {
-                return memoryCounters.WorkingSetSize;
+                try
+                {
+                    var buf = new byte[cur];
+                    var handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                    try
+                    {
+                        IntPtr bufPtr = handle.AddrOfPinnedObject();
+                        var len = new UIntPtr(cur);
+                        if(LockMemory(bufPtr, len) == null)
+                        {
+                            UnlockMemory(bufPtr, len);
+                            low = cur;
+                        }
+                        else
+                        {
+                            // lock failed
+                            high = cur - 1;
+                        }
+                    }
+                    finally
+                    {
+                        handle.Free();
+                    }
+                }
+                catch (OutOfMemoryException)
+                {
+                    // new failed. Act like lock failed
+                    high = cur - 1;
+                }
             }
 
-            return 0;
-        }
-
-        [DllImport("psapi.dll", SetLastError = true)]
-        private static extern bool GetProcessMemoryInfo(IntPtr hProcess, out ProcessMemoryCounters counters, uint size);
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr GetCurrentProcess();
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool GetProcessWorkingSetSizeEx(IntPtr processHandle, ref ulong minWorkingSetSize, ref ulong maxWorkingSetSize, ref uint flags);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool SetProcessWorkingSetSizeEx(IntPtr processHandle, ulong minWorkingSetSize, ulong maxWorkingSetSize, uint flags);
-
-        [DllImport("kernel32.dll")]
-        private static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr VirtualAlloc(IntPtr lpAddress, ulong size, uint allocationTypeFlags, uint protoectFlags);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool VirtualLock(IntPtr lpAddress, UIntPtr dwSize);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool VirtualUnlock(IntPtr lpAddress, UIntPtr dwSize);
-
-        [DllImport("libc", SetLastError = true, EntryPoint = "mlock")]
-        private static extern int LinuxMlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libc", SetLastError = true, EntryPoint = "munlock")]
-        private static extern int LinuxMunlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libc", EntryPoint = "memset")]
-        private static extern IntPtr LinuxMemset(IntPtr addr, int c, UIntPtr n);
-
-        [DllImport("libSystem", SetLastError = true, EntryPoint = "mlock")]
-        private static extern int OsxMlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libSystem", SetLastError = true, EntryPoint = "munlock")]
-        private static extern int OsxMunlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libSystem", EntryPoint = "memset")]
-        private static extern IntPtr OsxMemset(IntPtr addr, int c, UIntPtr n);
-
-        [StructLayout(LayoutKind.Sequential, Size = 72)]
-        private struct ProcessMemoryCounters
-        {
-            // ReSharper disable FieldCanBeMadeReadOnly.Local
-            // ReSharper disable MemberCanBePrivate.Local
-            public uint Cb;
-            public uint PageFaultCount;
-            public ulong PeakWorkingSetSize;
-            public ulong WorkingSetSize;
-            public ulong QuotaPeakPagedPoolUsage;
-            public ulong QuotaPagedPoolUsage;
-            public ulong QuotaPeakNonPagedPoolUsage;
-            public ulong QuotaNonPagedPoolUsage;
-            public ulong PagefileUsage;
-            public ulong PeakPagefileUsage;
-
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore FieldCanBeMadeReadOnly.Local
+            return (int)low;
         }
     }
 }
