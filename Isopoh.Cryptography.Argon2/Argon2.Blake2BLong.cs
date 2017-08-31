@@ -36,13 +36,13 @@ namespace Isopoh.Cryptography.Argon2
                     OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length
                 };
                 Store32(outlenBytes, hash.Length);
-                using(var blakeHash = Blake2B.Create(config))
+                using (var blakeHash = Blake2B.Create(config))
                 {
                     blakeHash.Update(outlenBytes);
                     blakeHash.Update(inbuf);
                     blakeHash.Finish();
                 }
-                
+
                 if (hash.Length <= intermediateHash.Buffer.Length)
                 {
                     Array.Copy(intermediateHash.Buffer, hash, hash.Length);
