@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98C3F5AC-1FDF-4AAF-B067-A9E9C663D87B}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Argon2", "Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj", "{0738ED69-6346-4143-B8EF-71AA8605A1A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Test", "Isopoh.Cryptography.Test\Isopoh.Cryptography.Test.csproj", "{7B863047-1FFC-415E-B08E-FE88608A2456}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{CE126BCD-1530-4704-917D-EB804478331D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,8 +42,15 @@ Global
 		{7B863047-1FFC-415E-B08E-FE88608A2456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B863047-1FFC-415E-B08E-FE88608A2456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B863047-1FFC-415E-B08E-FE88608A2456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE126BCD-1530-4704-917D-EB804478331D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE126BCD-1530-4704-917D-EB804478331D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE126BCD-1530-4704-917D-EB804478331D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE126BCD-1530-4704-917D-EB804478331D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB3AF224-A8C2-431C-996A-0AAA5B5AFE5B}
 	EndGlobalSection
 EndGlobal
