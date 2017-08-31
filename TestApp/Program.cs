@@ -1,17 +1,28 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+// <summary>
+//   Test because unit tests seem to be hard to get running.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace TestApp
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     using Isopoh.Cryptography.Argon2;
     using Isopoh.Cryptography.SecureArray;
 
-    class Program
+    /// <summary>
+    /// Run the program.
+    /// </summary>
+    public class Program
     {
         /// <summary>
         /// Test vectors for Argon2. From https://github.com/P-H-C/phc-winner-argon2/tree/master/kats
@@ -137,14 +148,10 @@ namespace TestApp
             {
                 var hashTextA = configA.EncodeString(hashA.Buffer);
                 var hashTextB = configB.EncodeString(hashB.Buffer);
-                if (string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0)
-                {
-                    Console.WriteLine("ThreadsDontMatter Passed");
-                }
-                else
-                {
-                    Console.WriteLine("ThreadsDontMatter FAILED");
-                }
+                Console.WriteLine(
+                    string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0
+                        ? "ThreadsDontMatter Passed"
+                        : "ThreadsDontMatter FAILED");
             }
         }
 
@@ -158,7 +165,6 @@ namespace TestApp
             foreach (var testVector in Argon2TestVectors)
             {
                 var encoded = new StringBuilder();
-                uint tagLength = (uint)testVector.TagLength;
                 try
                 {
                     var config = new Argon2Config
@@ -189,7 +195,7 @@ namespace TestApp
                             + $"            Password {BitConverter.ToString(testVector.Password)}{nl}"
                             + $"                Salt {BitConverter.ToString(testVector.Salt)}{nl}"
                             + $"              Secret {BitConverter.ToString(testVector.Secret)}{nl}"
-                            + $"       AssciatedData {BitConverter.ToString(testVector.AssociatedData)}{nl}"
+                            + $"      AssociatedData {BitConverter.ToString(testVector.AssociatedData)}{nl}"
                             + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}{nl}"
                             + $"             encoded {encoded}");
                     }
@@ -203,32 +209,33 @@ namespace TestApp
                         passed = false;
                     }
                 }
+
+                // ReSharper disable once CatchAllClause
                 catch (Exception e)
                 {
                     Console.WriteLine($"Test {testVector.Name}: {e.Message} ({e.GetType()})");
                 }
             }
 
-            if (passed)
-            {
-                Console.WriteLine("Argon2 Passed");
-            }
-            else
-            {
-                Console.WriteLine("Argon2 FAILED");
-            }
+            Console.WriteLine(passed ? "Argon2 Passed" : "Argon2 FAILED");
         }
 
+        /// <summary>
+        /// Test the buffer size <see cref="SecureArray"/> allows.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="SecureArray"/> does this to some extent internally when throwing its failed exception.
+        /// </remarks>
         public static void TestSecureArray()
         {
             int size = 100;
             int max = int.MaxValue;
-            int prev = size;
-            for (;;)
+            int previous = size;
+            while (true)
             {
                 try
                 {
-                    using (var buf = new SecureArray<ulong>(size))
+                    using (new SecureArray<ulong>(size))
                     {
                         Console.WriteLine($"SecureArray: Passed size={size}");
                         if (size == max)
@@ -236,25 +243,31 @@ namespace TestApp
                             break;
                         }
 
-                        prev = size;
+                        previous = size;
                         long tmp = size;
                         tmp += max;
                         tmp /= 2;
                         size = (int)tmp;
                     }
                 }
+
+                // ReSharper disable once CatchAllClause
                 catch (Exception e)
                 {
                     Console.WriteLine($"SecureArray: Failed size={size}: {e.Message}");
                     max = size;
-                    long tmp = prev;
+                    long tmp = previous;
                     tmp += max;
                     tmp /= 2;
                     size = (int)tmp;
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Program entry.
+        /// </summary>
+        /// <param name="args">Command line arguments - unused.</param>
         public static void Main(string[] args)
         {
             Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
@@ -344,7 +357,7 @@ namespace TestApp
             public string Name { get; }
 
             /// <summary>
-            /// Gets the Argon2 type - data dependant or independant.
+            /// Gets the Argon2 type - data dependent or independent.
             /// </summary>
             public Argon2Type Type { get; }
 
@@ -398,6 +411,18 @@ namespace TestApp
             /// </summary>
             public byte[] Tag { get; }
 
+            /// <summary>
+            /// Convert a hex string to bytes
+            /// </summary>
+            /// <param name="s">
+            /// The hex string.
+            /// </param>
+            /// <returns>
+            /// The byte array.
+            /// </returns>
+            /// <exception cref="ArgumentException">
+            /// Invalid hex string.
+            /// </exception>
             private static byte[] ToBytes(string s)
             {
                 var ret = new List<byte>();
@@ -419,6 +444,8 @@ namespace TestApp
 
                     byte val;
 #pragma warning disable SA1131 // Use readable conditions
+
+                    // ReSharper disable StyleCop.SA1131
                     if ('0' <= ch && ch <= '9')
                     {
                         val = (byte)((uint)(ch - '0') << 4);
@@ -452,6 +479,8 @@ namespace TestApp
                     {
                         throw new ArgumentException($"Invalid character '{cl}' found in hex string");
                     }
+
+                    // ReSharper restore StyleCop.SA1131
 #pragma warning restore SA1131 // Use readable conditions
 
                     ret.Add(val);
@@ -460,6 +489,5 @@ namespace TestApp
                 return ret.ToArray();
             }
         }
-
     }
 }

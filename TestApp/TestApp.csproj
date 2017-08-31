@@ -1,17 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
-    <ProjectReference Include="..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj" />
-    <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp1.1</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DocumentationFile>bin\Debug\netcoreapp1.1\TestApp.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DocumentationFile>bin\Release\netcoreapp1.1\TestApp.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+        <ProjectReference Include="..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj" />
+        <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="System.Runtime" Version="4.3.0" />
+    </ItemGroup>
 </Project>
