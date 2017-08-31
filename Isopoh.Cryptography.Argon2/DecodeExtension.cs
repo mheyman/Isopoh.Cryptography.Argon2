@@ -216,7 +216,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedPinnedAndNoSwap);
             }
-            catch(LockFailException)
+            catch (LockFailException)
             {
                 output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedAndPinned);
             }
