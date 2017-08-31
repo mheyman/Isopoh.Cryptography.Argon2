@@ -1,8 +1,17 @@
+// <copyright file="SecureArray.Windows.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+
 namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Runtime.InteropServices;
 
+    /// <content>
+    /// The Windows-specific parts of <see cref="SecureArray"/>.
+    /// </content>
     public partial class SecureArray
     {
         private static string WindowsLockMemory(IntPtr m, UIntPtr l)
@@ -115,6 +124,5 @@ namespace Isopoh.Cryptography.SecureArray
             // ReSharper restore MemberCanBePrivate.Local
             // ReSharper restore FieldCanBeMadeReadOnly.Local
         }
-        
     }
 }

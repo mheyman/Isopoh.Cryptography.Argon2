@@ -1,4 +1,4 @@
-// <copyright file="SecureArray.cs" company="Isopoh">
+// <copyright file="SecureArray.Linux.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
@@ -8,6 +8,10 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Runtime.InteropServices;
+
+    /// <content>
+    /// The Linux-specific parts of <see cref="SecureArray"/>.
+    /// </content>
     public partial class SecureArray
     {
         private static string LinuxLockMemory(IntPtr m, UIntPtr l)
@@ -31,11 +35,11 @@ namespace Isopoh.Cryptography.SecureArray
             }
 
             return null;
-            
         }
+
         private static bool LinuxTryRaiseCurrentMlockLimit(out string error)
         {
-            var rlimit = new LinuxRlimit { RlimCur = 0, RlimMax = 0}; // not sure always 64-bit RlimCur and RLimMax values
+            var rlimit = new LinuxRlimit { RlimCur = 0, RlimMax = 0 }; // not sure always 64-bit RlimCur and RLimMax values
             int rlimitMemlock = 8; // not sure RLIMIT_MEMLOCK is always 8
             bool ret = false;
             if (LinuxGetRLimit(rlimitMemlock, ref rlimit) != 0)
@@ -65,7 +69,7 @@ namespace Isopoh.Cryptography.SecureArray
                 error = null;
                 return true;
             }
-            
+
             error = $"attempted setrlimit(RLIMIT_MEMLOCK, {{{rlimit.RlimCur}, {rlimit.RlimMax}}}) on current max {currentMax} bytes, got error: {LinuxStrError(Marshal.GetLastWin32Error())}.";
             return ret;
         }

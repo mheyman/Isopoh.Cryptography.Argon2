@@ -254,7 +254,7 @@ namespace Isopoh.Cryptography.SecureArray
                     {
                         IntPtr bufPtr = handle.AddrOfPinnedObject();
                         var len = new UIntPtr(cur);
-                        if(LockMemory(bufPtr, len) == null)
+                        if (LockMemory(bufPtr, len) == null)
                         {
                             UnlockMemory(bufPtr, len);
                             low = cur;
