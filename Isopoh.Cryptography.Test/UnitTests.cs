@@ -218,6 +218,12 @@ namespace Test
         ////    Assert.Equal(v1, v2);
         ////}
 
+        /// <summary>
+        /// Test the size of buffer <see cref="SecureArray"/> allows.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="SecureArray"/> already tends to try to figure this out under the hood.
+        /// </remarks>
         [Fact]
         public void TestSecureArray()
         {
