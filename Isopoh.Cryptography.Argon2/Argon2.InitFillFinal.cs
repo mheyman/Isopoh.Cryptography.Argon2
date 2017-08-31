@@ -47,7 +47,7 @@ namespace Isopoh.Cryptography.Argon2
         private SecureArray<byte> InitialHash()
         {
             var ret = BestSecureArray<byte>(Blake2B.OutputLength);
-            using(var blakeHash =
+            using (var blakeHash =
                 Blake2B.Create(
                     new Blake2BConfig
                     {
@@ -106,7 +106,7 @@ namespace Isopoh.Cryptography.Argon2
 
                 blakeHash.Finish();
             }
-            
+
             return ret;
         }
 
