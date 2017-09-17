@@ -1,13 +1,12 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Program.cs" company="Isopoh">
+﻿// <copyright file="Program.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 // <summary>
-//   Test because unit tests seem to be hard to get running.
+// Tests because unit tests seem to be hard to get running.
 // </summary>
-// --------------------------------------------------------------------------------------------------------------------
+
 
 namespace TestApp
 {
@@ -20,7 +19,7 @@ namespace TestApp
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// Run the program.
+    /// The test program
     /// </summary>
     public class Program
     {
@@ -60,7 +59,10 @@ namespace TestApp
         /// <summary>
         /// Test <see cref="Argon2"/>.
         /// </summary>
-        public static void TestArgon2RoundTrip()
+        /// <returns>
+        /// The result text.
+        /// </returns>
+        public static string TestArgon2RoundTrip()
         {
             var rng = new Random();
             var password = "password1";
@@ -68,55 +70,71 @@ namespace TestApp
             byte[] salt = new byte[16];
             rng.NextBytes(salt);
             var config = new Argon2Config
-                             {
-                                 Type = Argon2Type.DataIndependentAddressing,
-                                 Version = Argon2Version.Nineteen,
-                                 Password = passwordBytes,
-                                 Salt = salt,
-                                 TimeCost = 3,
-                                 MemoryCost = 65536,
-                                 Lanes = 4,
-                                 Threads = 2,
-                             };
+            {
+                Type = Argon2Type.DataIndependentAddressing,
+                Version = Argon2Version.Nineteen,
+                Password = passwordBytes,
+                Salt = salt,
+                TimeCost = 3,
+                MemoryCost = 65536,
+                Lanes = 4,
+                Threads = 2,
+            };
             var argon2 = new Argon2(config);
             SecureArray<byte> hash = argon2.Hash();
             var passwordHash = config.EncodeString(hash.Buffer);
             Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
+            string res;
             if (Argon2.Verify(passwordHash, passwordBytes))
             {
-                Console.WriteLine("Round Trip Passed");
+                res = "Round Trip Passed";
+                Console.WriteLine(res);
             }
             else
             {
-                Console.WriteLine("Round Trip FAILED");
+                res = "Round Trip FAILED";
+                Console.WriteLine(res);
                 Console.WriteLine($"    expected verify to work for {passwordHash} (Argon2 hash of {password}");
             }
+
+            return res;
         }
 
         /// <summary>
         /// Test <see cref="Argon2"/>.
         /// </summary>
-        public static void TestArgon2RoundTrip2()
+        /// <returns>
+        /// Result text.
+        /// </returns>
+        public static string TestArgon2RoundTrip2()
         {
             var password = "password1";
             var passwordHash = Argon2.Hash(password);
             Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
 
+            string res;
             if (Argon2.Verify(passwordHash, password))
             {
-                Console.WriteLine("RoundTrip2 Passed");
+                res = "RoundTrip2 Passed";
+                Console.WriteLine(res);
             }
             else
             {
-                Console.WriteLine("RoundTrip2 FAILED");
+                res = "RoundTrip2 FAILED";
+                Console.WriteLine(res);
                 Console.WriteLine($"    expected verify to work for {passwordHash} (Argon2 hash of {password}");
             }
+
+            return res;
         }
 
         /// <summary>
         /// Test <see cref="Argon2"/>.
         /// </summary>
-        public static void TestArgon2ThreadsDontMatter()
+        /// <returns>
+        /// The result text.
+        /// </returns>
+        public static string TestArgon2ThreadsDontMatter()
         {
             var password = "password1";
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -148,17 +166,21 @@ namespace TestApp
             {
                 var hashTextA = configA.EncodeString(hashA.Buffer);
                 var hashTextB = configB.EncodeString(hashB.Buffer);
-                Console.WriteLine(
-                    string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0
-                        ? "ThreadsDontMatter Passed"
-                        : "ThreadsDontMatter FAILED");
+                var res = string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0
+                                 ? "ThreadsDontMatter Passed"
+                                 : "ThreadsDontMatter FAILED";
+                Console.WriteLine(res);
+                return res;
             }
         }
 
         /// <summary>
         /// Test <see cref="Argon2"/>.
         /// </summary>
-        public static void TestArgon2()
+        /// <returns>
+        /// Result text.
+        /// </returns>
+        public static string TestArgon2()
         {
             var passed = true;
             var nl = Environment.NewLine;
@@ -168,19 +190,19 @@ namespace TestApp
                 try
                 {
                     var config = new Argon2Config
-                                     {
-                                         Type = testVector.Type,
-                                         Version = testVector.Version,
-                                         TimeCost = testVector.Iterations,
-                                         MemoryCost = testVector.MemoryKBytes,
-                                         Lanes = testVector.Parallelism,
-                                         Threads = testVector.Parallelism,
-                                         Password = testVector.Password,
-                                         Salt = testVector.Salt,
-                                         Secret = testVector.Secret,
-                                         AssociatedData = testVector.AssociatedData,
-                                         HashLength = testVector.TagLength
-                                     };
+                    {
+                        Type = testVector.Type,
+                        Version = testVector.Version,
+                        TimeCost = testVector.Iterations,
+                        MemoryCost = testVector.MemoryKBytes,
+                        Lanes = testVector.Parallelism,
+                        Threads = testVector.Parallelism,
+                        Password = testVector.Password,
+                        Salt = testVector.Salt,
+                        Secret = testVector.Secret,
+                        AssociatedData = testVector.AssociatedData,
+                        HashLength = testVector.TagLength
+                    };
                     var argon2 = new Argon2(config);
                     SecureArray<byte> hash = argon2.Hash();
                     if (!hash.Buffer.Where((b, i) => b != testVector.Tag[i]).Any())
@@ -217,16 +239,21 @@ namespace TestApp
                 }
             }
 
-            Console.WriteLine(passed ? "Argon2 Passed" : "Argon2 FAILED");
+            var res = passed ? "Argon2 Passed" : "Argon2 FAILED";
+            Console.WriteLine(res);
+            return res;
         }
 
         /// <summary>
         /// Test the buffer size <see cref="SecureArray"/> allows.
         /// </summary>
+        /// <returns>
+        /// Result string.
+        /// </returns>
         /// <remarks>
         /// <see cref="SecureArray"/> does this to some extent internally when throwing its failed exception.
         /// </remarks>
-        public static void TestSecureArray()
+        public static string TestSecureArray()
         {
             int size = 100;
             int max = int.MaxValue;
@@ -235,7 +262,7 @@ namespace TestApp
             {
                 try
                 {
-                    using (new SecureArray<ulong>(size))
+                    using (new SecureArray<byte>(size))
                     {
                         Console.WriteLine($"SecureArray: Passed size={size}");
                         if (size == max)
@@ -262,6 +289,8 @@ namespace TestApp
                     size = (int)tmp;
                 }
             }
+
+            return $"Made a {size}-byte secure array";
         }
 
         /// <summary>
@@ -271,12 +300,15 @@ namespace TestApp
         public static void Main(string[] args)
         {
             Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
-            TestSecureArray();
-            TestArgon2RoundTrip();
-            TestArgon2RoundTrip2();
-            TestArgon2ThreadsDontMatter();
-            TestArgon2();
-            Console.WriteLine("Tests complete");
+            var resultTexts = new List<string>
+                                  {
+                                      TestSecureArray(),
+                                      TestArgon2RoundTrip(),
+                                      TestArgon2RoundTrip2(),
+                                      TestArgon2ThreadsDontMatter(),
+                                      TestArgon2()
+                                  };
+            Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
         }
 
         /// <summary>
