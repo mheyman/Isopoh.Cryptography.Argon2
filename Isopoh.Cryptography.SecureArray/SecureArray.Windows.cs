@@ -8,12 +8,78 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Runtime.InteropServices;
+    using System.Threading;
 
     /// <content>
     /// The Windows-specific parts of <see cref="SecureArray"/>.
     /// </content>
     public partial class SecureArray
     {
+        private delegate bool GetProcessWorkingSetSizeExDelegate(IntPtr processHandle, ref ulong minWorkingSetSize, ref ulong maxWorkingSetSize, ref uint flags);
+
+        private static bool Is32BitSubsystem { get; } = new Lazy<bool>(
+            () =>
+                {
+                    if (IntPtr.Size == 4)
+                    {
+                        return true;
+                    }
+
+                    IntPtr kernelModuleHandle = GetModuleHandle("kernel32");
+                    if (kernelModuleHandle == IntPtr.Zero)
+                    {
+                        return true; // much worse problems then just saying it is 32-bit so it is okay to lie here
+                    }
+
+                    if (GetProcAddress(kernelModuleHandle, "IsWow64Process") == IntPtr.Zero)
+                    {
+                        return true; // kernel32.dll in 32-bit OS doesn't have IsWowProcess()
+                    }
+
+                    bool isWow64Process;
+                    bool ret = IsWow64Process(GetCurrentProcess(), out isWow64Process) && isWow64Process;
+                    return ret;
+                },
+            LazyThreadSafetyMode.ExecutionAndPublication).Value;
+
+        /// <summary>
+        /// Gets a delegate GetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems
+        /// </summary>
+        private static GetProcessWorkingSetSizeExDelegate GetProcessWorkingSetSizeEx { get; } = new Lazy<GetProcessWorkingSetSizeExDelegate>(
+            () => Is32BitSubsystem ? (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64 : GetProcessWorkingSetSizeEx32Wrapper,
+            LazyThreadSafetyMode.ExecutionAndPublication).Value;
+
+        /// <summary>
+        /// Gets a delegate SetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems
+        /// </summary>
+        private static Func<IntPtr, ulong, ulong, uint, bool> SetProcessWorkingSetSizeEx { get; } = new Lazy<Func<IntPtr, ulong, ulong, uint, bool>>(
+            () => Is32BitSubsystem ?
+                      (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64 :
+                      ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
+                          {
+                              uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
+                              uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
+                              return SetProcessWorkingSetSizeEx32(processHandle, min, max, flags);
+                          }), LazyThreadSafetyMode.ExecutionAndPublication).Value;
+
+        /// <summary>
+        /// Gets a delegate VirtualAlloc() that works on 32-bit or 64-bit operating systems
+        /// </summary>
+        private static Func<IntPtr, ulong, uint, uint, IntPtr> VirtualAlloc { get; } =
+            new Lazy<Func<IntPtr, ulong, uint, uint, IntPtr>>(
+                () => Is32BitSubsystem
+                          ? (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64
+                          : (lpAddress, size, allocationTypeFlags, protectFlags) =>
+                              {
+                                  if (size > uint.MaxValue)
+                                  {
+                                      SetLastError(8); // ERROR_NOT_ENOUGH_MEMORY
+                                      return IntPtr.Zero;
+                                  }
+
+                                  return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
+                              }, LazyThreadSafetyMode.ExecutionAndPublication).Value;
+
         private static string WindowsLockMemory(IntPtr m, UIntPtr l)
         {
             IntPtr processHandle = GetCurrentProcess();
@@ -68,42 +134,74 @@ namespace Isopoh.Cryptography.SecureArray
 
         private static ulong GetWorkingSetSize(IntPtr processHandle)
         {
+            // ReSharper disable once InlineOutVariableDeclaration
             var memoryCounters = new ProcessMemoryCounters()
             {
                 Cb = (uint)Marshal.SizeOf(typeof(ProcessMemoryCounters))
             };
 
-            if (GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb))
-            {
-                return memoryCounters.WorkingSetSize;
-            }
-
-            return 0;
+            return GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb) ? memoryCounters.WorkingSetSize : 0;
         }
 
-        [DllImport("psapi.dll", SetLastError = true)]
+        [DllImport("psapi.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
         private static extern bool GetProcessMemoryInfo(IntPtr hProcess, out ProcessMemoryCounters counters, uint size);
 
-        [DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
         private static extern IntPtr GetCurrentProcess();
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool GetProcessWorkingSetSizeEx(IntPtr processHandle, ref ulong minWorkingSetSize, ref ulong maxWorkingSetSize, ref uint flags);
+        [DllImport("kernel32.dll", EntryPoint = "GetProcessWorkingSetSizeEx", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern bool GetProcessWorkingSetSizeEx64(IntPtr processHandle, ref ulong minWorkingSetSize, ref ulong maxWorkingSetSize, ref uint flags);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool SetProcessWorkingSetSizeEx(IntPtr processHandle, ulong minWorkingSetSize, ulong maxWorkingSetSize, uint flags);
+        [DllImport("kernel32.dll", EntryPoint = "GetProcessWorkingSetSizeEx", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern bool GetProcessWorkingSetSizeEx32(IntPtr processHandle, ref uint minWorkingSetSize, ref uint maxWorkingSetSize, ref uint flags);
 
-        [DllImport("kernel32.dll")]
+        private static bool GetProcessWorkingSetSizeEx32Wrapper(
+            IntPtr processHandle,
+            ref ulong minWorkingSetSize,
+            ref ulong maxWorkingSetSize,
+            ref uint flags)
+        {
+            uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
+            uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
+            bool ret = GetProcessWorkingSetSizeEx32(processHandle, ref min, ref max, ref flags);
+            minWorkingSetSize = min;
+            maxWorkingSetSize = max;
+            return ret;
+        }
+
+        [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSizeEx", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern bool SetProcessWorkingSetSizeEx64(IntPtr processHandle, ulong minWorkingSetSize, ulong maxWorkingSetSize, uint flags);
+
+        [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSizeEx", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern bool SetProcessWorkingSetSizeEx32(IntPtr processHandle, uint minWorkingSetSize, uint maxWorkingSetSize, uint flags);
+
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
         private static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr VirtualAlloc(IntPtr lpAddress, ulong size, uint allocationTypeFlags, uint protoectFlags);
+        [DllImport("kernel32.dll", EntryPoint = "VirtualAlloc", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern IntPtr VirtualAlloc64(IntPtr lpAddress, ulong size, uint allocationTypeFlags, uint protoectFlags);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", EntryPoint = "VirtualAlloc", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern IntPtr VirtualAlloc32(IntPtr lpAddress, uint size, uint allocationTypeFlags, uint protoectFlags);
+
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
         private static extern bool VirtualLock(IntPtr lpAddress, UIntPtr dwSize);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
         private static extern bool VirtualUnlock(IntPtr lpAddress, UIntPtr dwSize);
+
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern void SetLastError(uint dwErrorCode);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Ansi)]
+        private static extern IntPtr GetModuleHandle(string moduleName);
+
+        [DllImport("kernel32", CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWow64Process(IntPtr hProcess, out bool wow64Process);
 
         [StructLayout(LayoutKind.Sequential, Size = 72)]
         private struct ProcessMemoryCounters
