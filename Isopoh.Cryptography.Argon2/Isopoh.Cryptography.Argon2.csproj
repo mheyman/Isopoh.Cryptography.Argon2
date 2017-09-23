@@ -4,22 +4,24 @@
         <Title>Isopoh.Cryptography.Argon2</Title>
         <Description>Argon2 Password Hasher written in C#</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
+        <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2017</Copyright>
         <PackageTags>argon2 hash password crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Signed Assembly</PackageReleaseNotes>
+        <PackageReleaseNotes>Match SecureArray package version.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Argon2</AssemblyName>
         <PackageId>Isopoh.Cryptography.Argon2</PackageId>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
         <SignAssembly>true</SignAssembly>
         <DelaySign>false</DelaySign>
-        <AssemblyOriginatorKeyFile>$(SolutionDir)isopoh.pfx</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>C:\Users\User\.babun\cygwin\home\User\Isopoh.Cryptography.Argon2\isopoh.pfx</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>

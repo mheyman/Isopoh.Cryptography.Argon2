@@ -4,16 +4,18 @@
         <Title>Isopoh.Cryptography.Blake2b</Title>
         <Description>Blake2 hash for sensitive data</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
+        <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2017</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Signed assembly.</PackageReleaseNotes>
+        <PackageReleaseNotes>Match SecureArray package version.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

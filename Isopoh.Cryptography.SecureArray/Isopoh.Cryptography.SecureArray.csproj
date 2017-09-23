@@ -4,16 +4,18 @@
         <Title>Isopoh.Cryptography.SecureArray</Title>
         <Description>A managed class that can hold an array in RAM and zero it on disposal</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
+        <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2017</Copyright>
         <PackageTags>sensitive array</PackageTags>
-        <PackageReleaseNotes>Added Linux (and maybe OSX) support. Signed assembly.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added code to work on Windows 32-bit and 64-bit OSes.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
         <TargetFramework>netstandard1.1</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
