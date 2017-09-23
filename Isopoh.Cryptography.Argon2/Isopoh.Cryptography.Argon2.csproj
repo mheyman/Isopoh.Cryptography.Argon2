@@ -9,13 +9,13 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2017</Copyright>
         <PackageTags>argon2 hash password crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Match SecureArray package version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Use cryptographic random number generator to create salt.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Argon2</AssemblyName>
         <PackageId>Isopoh.Cryptography.Argon2</PackageId>
-        <PackageVersion>1.0.3</PackageVersion>
+        <PackageVersion>1.0.4</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

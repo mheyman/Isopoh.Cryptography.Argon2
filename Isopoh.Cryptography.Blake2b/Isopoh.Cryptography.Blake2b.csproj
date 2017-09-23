@@ -9,13 +9,13 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2017</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Match SecureArray package version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Match Argon2 package version.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.0.3</PackageVersion>
+        <PackageVersion>1.0.4</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
