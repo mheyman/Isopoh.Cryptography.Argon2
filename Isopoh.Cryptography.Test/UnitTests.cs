@@ -1,27 +1,37 @@
-﻿
-namespace Test
+﻿// <copyright file="UnitTests.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+// <summary>
+// Tests because unit tests seem to be hard to get running.
+// </summary>
+
+namespace Isopoh.Cryptography.Test
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Text;
     using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
 
     using Isopoh.Cryptography.Argon2;
     using Isopoh.Cryptography.SecureArray;
+
     using Xunit;
     using Xunit.Abstractions;
-    using Xunit.Sdk;
 
     /// <summary>
     /// Unit tests for Isopoh.Cryptography.Argon2
     /// </summary>
     public class UnitTests
     {
+        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+
         /// <summary>
         /// Test vectors for Argon2. From https://github.com/P-H-C/phc-winner-argon2/tree/master/kats
         /// </summary>
-        private readonly Argon2TestVector[] argon2TestVectors =
+        private static readonly Argon2TestVector[] Argon2TestVectors =
             {
                 new Argon2TestVector(
                     "Data dependent",
@@ -70,11 +80,10 @@ namespace Test
         [Fact]
         public void TestArgon2RoundTrip()
         {
-            var rng = new Random();
             var password = "password1";
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] salt = new byte[16];
-            rng.NextBytes(salt);
+            Rng.GetBytes(salt);
             var config = new Argon2Config
                              {
                                  Type = Argon2Type.DataIndependentAddressing,
@@ -155,7 +164,7 @@ namespace Test
         [Fact]
         public void TestArgon2()
         {
-            foreach (var testVector in this.argon2TestVectors)
+            foreach (var testVector in Argon2TestVectors)
             {
                 var encoded = new StringBuilder();
                 uint tagLength = (uint)testVector.TagLength;
@@ -207,7 +216,7 @@ namespace Test
         ////    var v1 = new byte[8];
         ////    var v2 = new byte[8];
 
-        ////    new Random().NextBytes(v1);
+        ////    rng.GetBytes(salt);
         ////    ulong tmp = Hasher.Load64(v1, 0);
         ////    Hasher.Store64(v2, 0, tmp);
         ////    this.output.WriteLine($"{BitConverter.ToString(v1)}");

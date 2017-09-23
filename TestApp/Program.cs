@@ -7,12 +7,12 @@
 // Tests because unit tests seem to be hard to get running.
 // </summary>
 
-
 namespace TestApp
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
 
     using Isopoh.Cryptography.Argon2;
@@ -56,6 +56,8 @@ namespace TestApp
                     "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8")
             };
 
+        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+
         /// <summary>
         /// Test <see cref="Argon2"/>.
         /// </summary>
@@ -64,11 +66,10 @@ namespace TestApp
         /// </returns>
         public static string TestArgon2RoundTrip()
         {
-            var rng = new Random();
             var password = "password1";
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] salt = new byte[16];
-            rng.NextBytes(salt);
+            Rng.GetBytes(salt);
             var config = new Argon2Config
             {
                 Type = Argon2Type.DataIndependentAddressing,

@@ -24,7 +24,11 @@ Setting everything:
 var password = "password1";
 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
 byte[] salt = new byte[16];
-new Random().NextBytes(salt);
+
+// somewhere in the class definition:
+//   private static readonly RandomNumberGenerator Rng = 
+//       System.Security.Cryptography.RandomNumberGenerator.Create();
+Rng.GetBytes(salt); 
 
 var config = new Argon2Config
 {
