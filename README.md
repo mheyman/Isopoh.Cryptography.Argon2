@@ -46,7 +46,7 @@ var config = new Argon2Config
 };
 var argon2A = new Argon2(config);
 string hashString;
-using(SecureArray<byte> hashA = argon2.Hash())
+using(SecureArray<byte> hashA = argon2A.Hash())
 {
     hashString = config.EncodeString(hashA.Buffer);
 }
@@ -65,7 +65,7 @@ try
     if (configOfPasswordToVerify.DecodeString(hashString, out hashB) && hashB != null)
     {
         var argon2ToVerify = new Argon2(configOfPasswordToVerify);
-        using(var hashToVerify = argon2Verify.Hash())
+        using(var hashToVerify = argon2ToVerify.Hash())
         {
             if (!hashB.Buffer.Where((b, i) => b != hashToVerify[i]).Any())
             {
