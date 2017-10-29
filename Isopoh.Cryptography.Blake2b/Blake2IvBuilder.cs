@@ -17,9 +17,9 @@ namespace Isopoh.Cryptography.Blake2b
     using SecureArray;
     internal static class Blake2IvBuilder
     {
-        private static readonly Blake2BTreeConfig SequentialTreeConfig = new Blake2BTreeConfig() { IntermediateHashSize = 0, LeafSize = 0, FanOut = 1, MaxHeight = 1 };
+        private static readonly Blake2BTreeConfig SequentialTreeConfig = new Blake2BTreeConfig { IntermediateHashSize = 0, LeafSize = 0, FanOut = 1, MaxHeight = 1 };
 
-        public static SecureArray<ulong> ConfigB(Blake2BConfig config, Blake2BTreeConfig treeConfig)
+        public static SecureArray<ulong> ConfigB(Blake2BConfig config, Blake2BTreeConfig treeConfig, SecureArrayCall secureArrayCall)
         {
             bool isSequential = treeConfig == null;
             if (isSequential)
@@ -30,11 +30,11 @@ namespace Isopoh.Cryptography.Blake2b
             SecureArray<ulong> rawConfig;
             try
             {
-                 rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+                 rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
             }
             catch (LockFailException)
             {
-                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
             }
 
             //digest length

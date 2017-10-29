@@ -25,15 +25,15 @@ namespace Isopoh.Cryptography.Blake2b
         private readonly int outputSizeInBytes;
         private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
 
-        public Blake2BHasher(Blake2BConfig config)
+        public Blake2BHasher(Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
             if (config == null)
                 config = DefaultConfig;
-            this.core = new Blake2BCore(config.LockMemoryPolicy);
-            this.rawConfig = Blake2IvBuilder.ConfigB(config, null);
+            this.core = new Blake2BCore(secureArrayCall, config.LockMemoryPolicy);
+            this.rawConfig = Blake2IvBuilder.ConfigB(config, null, secureArrayCall);
             if (config.Key != null && config.Key.Length != 0)
             {
-                this.key = new SecureArray<byte>(128);
+                this.key = new SecureArray<byte>(128, secureArrayCall);
                 Array.Copy(config.Key, this.key.Buffer, config.Key.Length);
             }
 
@@ -109,7 +109,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         protected override void Dispose(bool disposing)
         {
-            if (disposed)
+            if (this.disposed)
             {
                 return;
             }

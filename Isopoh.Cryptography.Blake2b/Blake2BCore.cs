@@ -27,6 +27,9 @@ namespace Isopoh.Cryptography.Blake2b
     using System;
     using SecureArray;
 
+    /// <summary>
+    /// The core of the Blake2 hash
+    /// </summary>
     public sealed partial class Blake2BCore : IDisposable
     {
         private bool isInitialized;
@@ -55,53 +58,56 @@ namespace Isopoh.Cryptography.Blake2b
         /// <summary>
         /// Initializes a new instance of the <see cref="Blake2BCore"/> class.
         /// </summary>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <param name="lockMemory">
         /// Used to set locking strategy for buffers used in creating the hash. The memory
         /// will always be zeroed prior to destruction. The memory is also always pinned
         /// so the CLR can't move it and leave extraneous copies floating around in RAM.
         /// </param>
-        public Blake2BCore(LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
+        public Blake2BCore(SecureArrayCall secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
         {
             switch(lockMemory)
             {
                 case LockMemoryPolicy.None:
-                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned);
-                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned);
-                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
+                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned, secureArrayCall);
+                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                     break;
                 case LockMemoryPolicy.BestEffort:
                     try
                     {
-                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap);
+                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
                     }
                     catch (LockFailException)
                     {
-                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned);
+                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                     }
 
                     try
                     {
-                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap);
+                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
                     }
                     catch (LockFailException)
                     {
-                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned);
+                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                     }
 
                     try
                     {
-                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
                     }
                     catch (LockFailException)
                     {
-                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned);
+                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                     }
                     break;
 
                 default:
-                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap);
-                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap);
-                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap);
+                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
+                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
+                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
                     break;
             }
         }
@@ -143,6 +149,10 @@ namespace Isopoh.Cryptography.Blake2b
 
         partial void Compress(byte[] block, int start);
 
+        /// <summary>
+        /// Initialize the hash
+        /// </summary>
+        /// <param name="config"></param>
         public void Initialize(ulong[] config)
         {
             if (config == null)
@@ -179,6 +189,18 @@ namespace Isopoh.Cryptography.Blake2b
                 this.hbuf[i] ^= config[i];
         }
 
+        /// <summary>
+        /// Update the hash state
+        /// </summary>
+        /// <param name="array">
+        /// Data to use to update the hash state.
+        /// </param>
+        /// <param name="start">
+        /// Index of the first byte in <paramref name="array"/> to use.
+        /// </param>
+        /// <param name="count">
+        /// Number of bytes in <paramref name="array"/> to use.
+        /// </param>
         public void HashCore(byte[] array, int start, int count)
         {
             if (!this.isInitialized)
@@ -246,11 +268,32 @@ namespace Isopoh.Cryptography.Blake2b
             }
         }
 
+        /// <summary>
+        /// Compute the hash
+        /// </summary>
+        /// <param name="hash">
+        /// Loaded with the hash
+        /// </param>
+        /// <returns>
+        /// <paramref name="hash"/>.
+        /// </returns>
         public byte[] HashFinal(byte[] hash)
         {
             return this.HashFinal(hash, false);
         }
 
+        /// <summary>
+        /// Compute the hash
+        /// </summary>
+        /// <param name="hash">
+        /// Loaded with the hash
+        /// </param>
+        /// <param name="isEndOfLayer">
+        /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
+        /// </param>
+        /// <returns>
+        /// <paramref name="hash"/>.
+        /// </returns>
         public byte[] HashFinal(byte[] hash, bool isEndOfLayer)
         {
             if (!this.isInitialized)
@@ -286,11 +329,26 @@ namespace Isopoh.Cryptography.Blake2b
             return hash;
         }
 
+        /// <summary>
+        /// Return the hash
+        /// </summary>
+        /// <returns>
+        /// The 64-byte hash.
+        /// </returns>
         public byte[] HashFinal()
         {
             return this.HashFinal(false);
         }
 
+        /// <summary>
+        /// Return the hash
+        /// </summary>
+        /// <param name="isEndOfLayer">
+        /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
+        /// </param>
+        /// <returns>
+        /// The 64-byte hash.
+        /// </returns>
         public byte[] HashFinal(bool isEndOfLayer)
         {
             byte[] hash = new byte[64];

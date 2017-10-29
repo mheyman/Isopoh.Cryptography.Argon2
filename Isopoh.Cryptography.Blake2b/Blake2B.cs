@@ -14,6 +14,8 @@ namespace Isopoh.Cryptography.Blake2b
 {
     using System.Security.Cryptography;
 
+    using Isopoh.Cryptography.SecureArray;
+
     /// <summary>
     /// Convenience calls for performing Blake2 hashes.
     /// </summary>
@@ -42,12 +44,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <summary>
         /// Create a default Blake2 hash.
         /// </summary>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
         /// </returns>
-        public static Hasher Create()
+        public static Hasher Create(SecureArrayCall secureArrayCall)
         {
-            return Create(new Blake2BConfig());
+            return Create(new Blake2BConfig(), secureArrayCall);
         }
 
         /// <summary>
@@ -56,33 +61,16 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="config">
         /// The configuration to use.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
         /// </returns>
-        public static Hasher Create(Blake2BConfig config)
+        public static Hasher Create(Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
-            return new Blake2BHasher(config);
+            return new Blake2BHasher(config, secureArrayCall);
         }
-
-        /*public static Hasher CreateParallel(int parallelism = 4)
-        {
-            return CreateParallel(null, parallelism);
-        }
-
-        public static Hasher CreateParallel(Blake2Config config, int parallelism = 4)
-        {
-            if (parallelism < 2)
-                throw new ArgumentOutOfRangeException("parallelism", "parallism must be at least 2");
-            throw new NotImplementedException();
-        }
-
-        public static Hasher CreateTreeHasher(Blake2BConfig config, Blake2TreeConfig treeConfig)
-        {
-        }
-
-        public static NodeHasher CreateNodeHasher(Blake2BConfig config, Blake2TreeConfig treeConfig)
-        {
-        }*/
 
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
@@ -96,12 +84,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="count">
         /// The number of bytes to hash.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, int start, int count)
+        public static byte[] ComputeHash(byte[] data, int start, int count, SecureArrayCall secureArrayCall)
         {
-            return ComputeHash(data, start, count, null);
+            return ComputeHash(data, start, count, null, secureArrayCall);
         }
 
         /// <summary>
@@ -110,12 +101,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="data">
         /// The buffer to hash.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data)
+        public static byte[] ComputeHash(byte[] data, SecureArrayCall secureArrayCall)
         {
-            return ComputeHash(data, 0, data.Length, null);
+            return ComputeHash(data, 0, data.Length, null, secureArrayCall);
         }
 
         /// <summary>
@@ -128,12 +122,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="config">
         /// The configuration to use.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, Blake2BConfig config)
+        public static byte[] ComputeHash(byte[] data, Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
-            return ComputeHash(data, 0, data.Length, config);
+            return ComputeHash(data, 0, data.Length, config, secureArrayCall);
         }
 
         /// <summary>
@@ -152,12 +149,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="config">
         /// The configuration to use.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig config)
+        public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
-            using(var hasher = Create(config))
+            using(var hasher = Create(config, secureArrayCall))
             {
                 hasher.Update(data, start, count);
                 return hasher.Finish();
