@@ -18,21 +18,22 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
-        private static SecureArray<T> BestSecureArray<T>(int length)
+        private static SecureArray<T> BestSecureArray<T>(int length, SecureArrayCall secureArrayCall)
         {
             try
             {
-                return new SecureArray<T>(length, SecureArrayType.ZeroedPinnedAndNoSwap);
+                // ReSharper disable once RedundantArgumentDefaultValue
+                return new SecureArray<T>(length, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
             }
             catch (LockFailException)
             {
-                return new SecureArray<T>(length, SecureArrayType.ZeroedAndPinned);
+                return new SecureArray<T>(length, SecureArrayType.ZeroedAndPinned, secureArrayCall);
             }
         }
 
         private void Initialize()
         {
-            using (var blockhash = BestSecureArray<byte>(PrehashSeedLength))
+            using (var blockhash = BestSecureArray<byte>(PrehashSeedLength, this.config.SecureArrayCall))
             {
                 using (var initialHash = this.InitialHash())
                 {
@@ -46,14 +47,15 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> InitialHash()
         {
-            var ret = BestSecureArray<byte>(Blake2B.OutputLength);
+            var ret = BestSecureArray<byte>(Blake2B.OutputLength, this.config.SecureArrayCall);
             using (var blakeHash =
                 Blake2B.Create(
                     new Blake2BConfig
                     {
                         OutputSizeInBytes = PrehashDigestLength,
                         Result64ByteBuffer = ret.Buffer
-                    }))
+                    },
+                    this.config.SecureArrayCall))
             {
                 var value = new byte[4];
                 Store32(value, this.config.Lanes);
@@ -112,16 +114,16 @@ namespace Isopoh.Cryptography.Argon2
 
         private void FillFirstBlocks(byte[] blockhash)
         {
-            using (var blockhashBytes = BestSecureArray<byte>(BlockSize))
+            using (var blockhashBytes = BestSecureArray<byte>(BlockSize, this.config.SecureArrayCall))
             {
                 for (int l = 0; l < this.config.Lanes; ++l)
                 {
                     Store32(blockhash, PrehashDigestLength, 0);
                     Store32(blockhash, PrehashDigestLength + 4, l);
-                    Blake2BLong(blockhashBytes.Buffer, blockhash);
+                    Blake2BLong(blockhashBytes.Buffer, blockhash, this.config.SecureArrayCall);
                     LoadBlock(this.Memory[l * this.LaneLength], blockhashBytes.Buffer);
                     Store32(blockhash, PrehashDigestLength, 1);
-                    Blake2BLong(blockhashBytes.Buffer, blockhash);
+                    Blake2BLong(blockhashBytes.Buffer, blockhash, this.config.SecureArrayCall);
                     LoadBlock(this.Memory[(l * this.LaneLength) + 1], blockhashBytes.Buffer);
                 }
             }
@@ -222,7 +224,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> Final()
         {
-            using (var blockhashBuffer = BestSecureArray<ulong>(BlockSize / 8))
+            using (var blockhashBuffer = BestSecureArray<ulong>(BlockSize / 8, this.config.SecureArrayCall))
             {
                 var blockhash = new BlockValues(blockhashBuffer.Buffer, 0);
                 blockhash.Copy(this.Memory[this.LaneLength - 1]);
@@ -233,11 +235,11 @@ namespace Isopoh.Cryptography.Argon2
                     blockhash.Xor(this.Memory[(l * this.LaneLength) + (this.LaneLength - 1)]);
                 }
 
-                using (var blockhashBytes = BestSecureArray<byte>(BlockSize))
+                using (var blockhashBytes = BestSecureArray<byte>(BlockSize, this.config.SecureArrayCall))
                 {
                     StoreBlock(blockhashBytes.Buffer, blockhash);
-                    var ret = BestSecureArray<byte>(this.config.HashLength);
-                    Blake2BLong(ret.Buffer, blockhashBytes.Buffer);
+                    var ret = BestSecureArray<byte>(this.config.HashLength, this.config.SecureArrayCall);
+                    Blake2BLong(ret.Buffer, blockhashBytes.Buffer, this.config.SecureArrayCall);
                     PrintTag(ret.Buffer);
                     return ret;
                 }

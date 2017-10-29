@@ -100,7 +100,7 @@ namespace Isopoh.Cryptography.Test
             var passwordHash = config.EncodeString(hash.Buffer);
             this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
             Assert.True(
-                Argon2.Verify(passwordHash, passwordBytes),
+                Argon2.Verify(passwordHash, passwordBytes, SecureArray.DefaultCall),
                 $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
         }
 
@@ -114,7 +114,7 @@ namespace Isopoh.Cryptography.Test
             var passwordHash = Argon2.Hash(password);
             this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
             Assert.True(
-                Argon2.Verify(passwordHash, password),
+                Argon2.Verify(passwordHash, password, SecureArray.DefaultCall),
                 $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
         }
 
@@ -243,7 +243,7 @@ namespace Isopoh.Cryptography.Test
             {
                 try
                 {
-                    using (var buf = new SecureArray<ulong>(size))
+                    using (var buf = new SecureArray<ulong>(size, SecureArray.DefaultCall))
                     {
                         this.output.WriteLine($"Passed size={size}");
                         if (size == max)

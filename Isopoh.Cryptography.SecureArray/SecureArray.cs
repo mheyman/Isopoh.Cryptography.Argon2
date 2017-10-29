@@ -39,29 +39,6 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(bool), sizeof(bool) }
                 };
 
-        /// <summary>
-        /// Call to zero memory in a way that does not get optimized away.
-        /// </summary>
-        /// <remarks>
-        /// On Linux and OSX, simply calls memset() and hopes the P/Invoke
-        /// mechanism does not have special handling for memset calls (and
-        /// thus does not even think about optimizing the call away).
-        /// </remarks>
-        private static readonly Action<IntPtr, UIntPtr> ZeroMemory;
-
-        /// <summary>
-        /// Lock the given memory so it doesn't get swapped out to disk.
-        /// </summary>
-        /// <returns>
-        /// Null on success; otherwise an error message.
-        /// </returns>
-        private static readonly Func<IntPtr, UIntPtr, string> LockMemory;
-
-        /// <summary>
-        /// Unlock memory previously locked by a call to <see cref="LockMemory"/>.
-        /// </summary>
-        private static readonly Action<IntPtr, UIntPtr> UnlockMemory;
-
         private GCHandle handle;
 
         private bool virtualLocked;
@@ -70,34 +47,51 @@ namespace Isopoh.Cryptography.SecureArray
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                ZeroMemory = (m, l) => LinuxMemset(m, 0, l);
-                LockMemory = LinuxLockMemory;
-                UnlockMemory = (m, l) => LinuxMunlock(m, l);
+                DefaultCall = new SecureArrayCall(
+                    (m, l) => LinuxMemset(m, 0, l),
+                    LinuxLockMemory,
+                    (m, l) => LinuxMunlock(m, l));
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                ZeroMemory = (m, l) => OsxMemset(m, 0, l);
-                LockMemory = (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null;
-                UnlockMemory = (m, l) => OsxMunlock(m, l);
+                DefaultCall = new SecureArrayCall(
+                    (m, l) => OsxMemset(m, 0, l),
+                    (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
+                    (m, l) => OsxMunlock(m, l));
             }
             else
             {
-                ZeroMemory = RtlZeroMemory;
-                LockMemory = WindowsLockMemory;
-                UnlockMemory = (m, l) => VirtualUnlock(m, l);
+                DefaultCall = new SecureArrayCall(
+                    RtlZeroMemory,
+                    WindowsLockMemory,
+                    (m, l) => VirtualUnlock(m, l));
             }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureArray"/> class.
         /// </summary>
+        /// <param name="call">
+        /// The methods that get called to secure the array. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <remarks>
         /// You cannot create a <see cref="SecureArray"/> directly, you must
         /// derive from this class like <see cref="SecureArray{T}"/> does.
         /// </remarks>
-        protected SecureArray()
+        protected SecureArray(SecureArrayCall call)
         {
+            this.Call = call ?? DefaultCall;
         }
+
+        /// <summary>
+        /// Gets the default methods that get called to secure the array.
+        /// </summary>
+        public static SecureArrayCall DefaultCall { get; }
+
+        /// <summary>
+        /// Gets or sets the methods that get called to secure the array
+        /// </summary>
+        public SecureArrayCall Call { get; set; }
 
         /// <summary>
         /// Gets the size of the buffer element. Will throw a
@@ -115,8 +109,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// </returns>
         public static int BuiltInTypeElementSize<T>(T[] buffer)
         {
-            int elementSize;
-            if (!TypeSizes.TryGetValue(typeof(T), out elementSize))
+            if (!TypeSizes.TryGetValue(typeof(T), out int elementSize))
             {
                 throw new NotSupportedException(
                     $"Type {typeof(T).Name} not a built in type. "
@@ -135,7 +128,10 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="buffer">
         /// The buffer to zero.
         /// </param>
-        public static void Zero<T>(T[] buffer)
+        /// <param name="call">
+        /// The methods to call to secure the array. Defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        public static void Zero<T>(T[] buffer, SecureArrayCall call = null)
             where T : struct
         {
             var bufHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -143,7 +139,7 @@ namespace Isopoh.Cryptography.SecureArray
             {
                 IntPtr bufPtr = bufHandle.AddrOfPinnedObject();
                 UIntPtr cnt = new UIntPtr((uint)buffer.Length * (uint)BuiltInTypeElementSize(buffer));
-                ZeroMemory(bufPtr, cnt);
+                (call?.ZeroMemory ?? DefaultCall.ZeroMemory)(bufPtr, cnt);
             }
             finally
             {
@@ -173,10 +169,10 @@ namespace Isopoh.Cryptography.SecureArray
             {
                 IntPtr bufPtr = this.handle.AddrOfPinnedObject();
                 UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
-                ZeroMemory(bufPtr, cnt);
+                this.Call.ZeroMemory(bufPtr, cnt);
                 if (this.virtualLocked)
                 {
-                    UnlockMemory(bufPtr, cnt);
+                    this.Call.UnlockMemory(bufPtr, cnt);
                 }
             }
             finally
@@ -207,21 +203,33 @@ namespace Isopoh.Cryptography.SecureArray
             var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
             if (type == SecureArrayType.ZeroedAndPinned || type == SecureArrayType.ZeroedPinnedAndNoSwap)
             {
-                this.handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
-                if (type == SecureArrayType.ZeroedPinnedAndNoSwap)
+                var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                try
                 {
-                    IntPtr bufPtr = this.handle.AddrOfPinnedObject();
-                    UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
-                    ZeroMemory(bufPtr, cnt);
-                    string err = LockMemory(bufPtr, cnt);
-                    if (err != null)
+                    if (type == SecureArrayType.ZeroedPinnedAndNoSwap)
                     {
-                        int max = GetMaxLockable();
-                        var msg = max > sizeInBytes ? $"Under current available value of {max} bytes (try again, it may work)" : $"Currently available: {max} bytes";
-                        throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.", max);
-                    }
+                        IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
+                        UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
+                        this.Call.ZeroMemory(bufPtr, cnt);
+                        string err = this.Call.LockMemory(bufPtr, cnt);
+                        if (err != null)
+                        {
+                            int max = this.GetMaxLockable();
+                            var msg = max > sizeInBytes ? $"Under current available value of {max} bytes (try again, it may work)" : $"Currently available: {max} bytes";
+                            throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.", max);
+                        }
 
-                    this.virtualLocked = true;
+                        this.virtualLocked = true;
+                        this.handle = tmpHandle;
+                        tmpHandle = default(GCHandle);
+                    }
+                }
+                finally
+                {
+                    if (tmpHandle != default(GCHandle))
+                    {
+                        tmpHandle.Free();
+                    }
                 }
             }
         }
@@ -234,7 +242,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// The current number of bytes that can be locked. This is likely to change on
         /// subsequent calls.
         /// </returns>
-        private static int GetMaxLockable()
+        private int GetMaxLockable()
         {
             ulong low = 0;
             ulong high = int.MaxValue;
@@ -249,14 +257,14 @@ namespace Isopoh.Cryptography.SecureArray
                 try
                 {
                     var buf = new byte[cur];
-                    var handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                    var maxLockableHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
                     try
                     {
-                        IntPtr bufPtr = handle.AddrOfPinnedObject();
+                        IntPtr bufPtr = maxLockableHandle.AddrOfPinnedObject();
                         var len = new UIntPtr(cur);
-                        if (LockMemory(bufPtr, len) == null)
+                        if (this.Call.LockMemory(bufPtr, len) == null)
                         {
-                            UnlockMemory(bufPtr, len);
+                            this.Call.UnlockMemory(bufPtr, len);
                             low = cur;
                         }
                         else
@@ -267,7 +275,7 @@ namespace Isopoh.Cryptography.SecureArray
                     }
                     finally
                     {
-                        handle.Free();
+                        maxLockableHandle.Free();
                     }
                 }
                 catch (OutOfMemoryException)

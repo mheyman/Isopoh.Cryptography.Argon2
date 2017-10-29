@@ -22,16 +22,76 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
         /// </summary>
         /// <param name="size">
-        /// The number of elements in the secure array.
+        ///     The number of elements in the secure array.
         /// </param>
         /// <param name="type">
-        /// The type of secure array to initialize. Defaults to <see cref="SecureArrayType"/>.<see
-        /// cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>.
+        ///     The type of secure array to initialize.
         /// </param>
-        public SecureArray(int size, SecureArrayType type = SecureArrayType.ZeroedPinnedAndNoSwap)
+        /// <param name="call">
+        ///     The methods that get called to secure the array. A null value
+        ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        public SecureArray(int size, SecureArrayType type, SecureArrayCall call)
+            : base(call)
         {
             this.buf = new T[size];
             this.Init(this.buf, type);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
+        /// </summary>
+        /// <param name="size">
+        ///     The number of elements in the secure array.
+        /// </param>
+        /// <param name="type">
+        ///     The type of secure array to initialize.
+        /// </param>
+        /// <remarks>
+        /// Uses <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </remarks>
+        public SecureArray(int size, SecureArrayType type)
+            : base(DefaultCall)
+        {
+            this.buf = new T[size];
+            this.Init(this.buf, type);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
+        /// </summary>
+        /// <param name="size">
+        ///     The number of elements in the secure array.
+        /// </param>
+        /// <param name="call">
+        ///     The methods that get called to secure the array. A null value
+        ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <remarks>
+        /// Uses <see cref="SecureArrayType"/>.<see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>
+        /// </remarks>
+        public SecureArray(int size, SecureArrayCall call)
+            : base(call)
+        {
+            this.buf = new T[size];
+            this.Init(this.buf, SecureArrayType.ZeroedPinnedAndNoSwap);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
+        /// </summary>
+        /// <param name="size">
+        ///     The number of elements in the secure array.
+        /// </param>
+        /// <remarks>
+        /// Uses <see cref="SecureArrayType"/>.<see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>
+        /// and <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </remarks>
+        public SecureArray(int size)
+            : base(DefaultCall)
+        {
+            this.buf = new T[size];
+            this.Init(this.buf, SecureArrayType.ZeroedPinnedAndNoSwap);
         }
 
         /// <summary>
@@ -50,15 +110,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// </returns>
         public T this[int i]
         {
-            get
-            {
-                return this.buf[i];
-            }
+            get => this.buf[i];
 
-            set
-            {
-                this.buf[i] = value;
-            }
+            set => this.buf[i] = value;
         }
 
         /// <summary>

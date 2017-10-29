@@ -8,6 +8,8 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
+    using Isopoh.Cryptography.SecureArray;
+
     /// <summary>
     /// Holds configuration needed to perform an Argon2 hash.
     /// </summary>
@@ -229,5 +231,11 @@ namespace Isopoh.Cryptography.Argon2
         /// (unless you want an all zero secret).
         /// </remarks>
         public bool ClearSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the methods that get called to secure arrays. Defaults
+        /// to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </summary>
+        public SecureArrayCall SecureArrayCall { get; set; } = SecureArray.DefaultCall;
     }
 }

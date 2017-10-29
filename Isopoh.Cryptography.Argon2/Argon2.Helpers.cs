@@ -40,6 +40,9 @@ namespace Isopoh.Cryptography.Argon2
         /// encodes this with other parameters so the resulting string is
         /// significantly longer.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// The Argon2 hash of the given password.
         /// </returns>
@@ -49,9 +52,10 @@ namespace Isopoh.Cryptography.Argon2
             int memoryCost = 65536,
             int parallelism = 1,
             Argon2Type type = Argon2Type.DataIndependentAddressing,
-            int hashLength = 32)
+            int hashLength = 32,
+            SecureArrayCall secureArrayCall = null)
         {
-            using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password)))
+            using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
             {
                 byte[] salt = new byte[16];
                 System.Security.Cryptography.RandomNumberGenerator.Create().GetBytes(salt);
@@ -85,25 +89,33 @@ namespace Isopoh.Cryptography.Argon2
         /// <param name="password">
         /// The password to verify
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// True on success; false otherwise.
         /// </returns>
         public static bool Verify(
             string encoded,
-            byte[] password)
+            byte[] password,
+            SecureArrayCall secureArrayCall = null)
         {
             SecureArray<byte> hash = null;
             try
             {
-                var configToVerify = new Argon2Config { Password = password };
+                var configToVerify = new Argon2Config { Password = password, SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall };
                 if (!configToVerify.DecodeString(encoded, out hash) || hash == null)
                 {
                     return false;
                 }
 
-                var hasherToVerify = new Argon2(configToVerify);
-                var hashToVerify = hasherToVerify.Hash();
-                return !hash.Buffer.Where((b, i) => b != hashToVerify[i]).Any();
+                using (var hasherToVerify = new Argon2(configToVerify))
+                {
+                    using (var hashToVerify = hasherToVerify.Hash())
+                    {
+                        return !hash.Buffer.Where((b, i) => b != hashToVerify[i]).Any();
+                    }
+                }
             }
             finally
             {
@@ -120,17 +132,21 @@ namespace Isopoh.Cryptography.Argon2
         /// <param name="password">
         /// The password to verify. This gets UTF-8 encoded.
         /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
         /// <returns>
         /// True on success; false otherwise.
         /// </returns>
         public static bool Verify(
             string encoded,
-            string password)
+            string password,
+            SecureArrayCall secureArrayCall = null)
         {
-            using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password)))
+            using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
             {
                 Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
-                return Verify(encoded, passwordBuf.Buffer);
+                return Verify(encoded, passwordBuf.Buffer, secureArrayCall);
             }
         }
     }
