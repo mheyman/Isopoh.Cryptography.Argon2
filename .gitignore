@@ -141,3 +141,7 @@ dllFun.csv
 dllFun.xml
 TestResults
 /nuget
+# copied around code signing keys
+Isopoh.Cryptography.Argon2/isopoh.pfx
+Isopoh.Cryptography.Blake2b/isopoh.pfx
+Isopoh.Cryptography.SecureArray/isopoh.pfx

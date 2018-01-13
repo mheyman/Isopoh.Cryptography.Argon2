@@ -23,27 +23,27 @@ namespace Isopoh.Cryptography.SecureArray
 
         private static bool Is32BitSubsystem { get; } = new Lazy<bool>(
             () =>
+            {
+                if (IntPtr.Size == 4)
                 {
-                    if (IntPtr.Size == 4)
-                    {
-                        return true;
-                    }
+                    return true;
+                }
 
-                    IntPtr kernelModuleHandle = GetModuleHandle("kernel32");
-                    if (kernelModuleHandle == IntPtr.Zero)
-                    {
-                        return true; // much worse problems then just saying it is 32-bit so it is okay to lie here
-                    }
+                IntPtr kernelModuleHandle = GetModuleHandle("kernel32");
+                if (kernelModuleHandle == IntPtr.Zero)
+                {
+                    return true; // much worse problems then just saying it is 32-bit so it is okay to lie here
+                }
 
-                    if (GetProcAddress(kernelModuleHandle, "IsWow64Process") == IntPtr.Zero)
-                    {
-                        return true; // kernel32.dll in 32-bit OS doesn't have IsWowProcess()
-                    }
+                if (GetProcAddress(kernelModuleHandle, "IsWow64Process") == IntPtr.Zero)
+                {
+                    return true; // kernel32.dll in 32-bit OS doesn't have IsWowProcess()
+                }
 
-                    bool isWow64Process;
-                    bool ret = IsWow64Process(GetCurrentProcess(), out isWow64Process) && isWow64Process;
-                    return ret;
-                },
+                bool isWow64Process;
+                bool ret = IsWow64Process(GetCurrentProcess(), out isWow64Process) && isWow64Process;
+                return ret;
+            },
             LazyThreadSafetyMode.ExecutionAndPublication).Value;
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace Isopoh.Cryptography.SecureArray
         private static GetProcessWorkingSetSizeExDelegate GetProcessWorkingSetSizeEx { get; } =
             new Lazy<GetProcessWorkingSetSizeExDelegate>(
                 () => Is32BitSubsystem
-                          ? (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64
-                          : GetProcessWorkingSetSizeEx32Wrapper,
+                          ? GetProcessWorkingSetSizeEx32Wrapper
+                          : (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64,
                 LazyThreadSafetyMode.ExecutionAndPublication).Value;
 
         /// <summary>
@@ -62,8 +62,7 @@ namespace Isopoh.Cryptography.SecureArray
         private static Func<IntPtr, ulong, ulong, uint, bool> SetProcessWorkingSetSizeEx { get; } =
             new Lazy<Func<IntPtr, ulong, ulong, uint, bool>>(
                 () => Is32BitSubsystem
-                          ? (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64
-                          : ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
+                          ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
                               {
                                   uint min = minWorkingSetSize > uint.MaxValue
                                                  ? uint.MaxValue
@@ -72,7 +71,8 @@ namespace Isopoh.Cryptography.SecureArray
                                                  ? uint.MaxValue
                                                  : (uint)maxWorkingSetSize;
                                   return SetProcessWorkingSetSizeEx32(processHandle, min, max, flags);
-                              }),
+                              })
+                          : (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64,
                 LazyThreadSafetyMode.ExecutionAndPublication).Value;
 
         /// <summary>
@@ -81,8 +81,7 @@ namespace Isopoh.Cryptography.SecureArray
         private static Func<IntPtr, ulong, uint, uint, IntPtr> VirtualAlloc { get; } =
             new Lazy<Func<IntPtr, ulong, uint, uint, IntPtr>>(
                 () => Is32BitSubsystem
-                          ? (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64
-                          : (lpAddress, size, allocationTypeFlags, protectFlags) =>
+                          ? (lpAddress, size, allocationTypeFlags, protectFlags) =>
                               {
                                   if (size > uint.MaxValue)
                                   {
@@ -91,7 +90,8 @@ namespace Isopoh.Cryptography.SecureArray
                                   }
 
                                   return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
-                              },
+                              }
+                          : (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64,
                 LazyThreadSafetyMode.ExecutionAndPublication).Value;
 
         private static string WindowsLockMemory(IntPtr m, UIntPtr l)

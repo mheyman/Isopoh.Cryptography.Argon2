@@ -21,7 +21,7 @@
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
         <SignAssembly>true</SignAssembly>
         <DelaySign>false</DelaySign>
-        <AssemblyOriginatorKeyFile>$(SolutionDir)isopoh.pfx</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>isopoh.pfx</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
