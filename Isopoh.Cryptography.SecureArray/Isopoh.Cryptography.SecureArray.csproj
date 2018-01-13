@@ -7,15 +7,15 @@
         <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
         <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2017</Copyright>
+        <Copyright>Michael Heyman 2018</Copyright>
         <PackageTags>sensitive array</PackageTags>
-        <PackageReleaseNotes>Allow passing of user-specified calls used to secure the SecureArray. Fix leaks.</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix reversed 32/64 bit logic for P/Invoke calls.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
         <TargetFramework>netstandard1.1</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-        <PackageVersion>1.0.5</PackageVersion>
+        <PackageVersion>1.0.6</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -28,7 +28,6 @@
         <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
