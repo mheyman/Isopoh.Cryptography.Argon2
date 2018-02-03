@@ -8,6 +8,7 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
 
@@ -45,15 +46,38 @@ namespace Isopoh.Cryptography.SecureArray
 
         static SecureArray()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            // OS decision logic from https://stackoverflow.com/a/38795621
+            // The System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform returns the platform
+            // compiled under which makes mistakes depending on deployment method. Boo. See
+            // https://github.com/dotnet/corefx/issues/3032
+            string windir = Environment.GetEnvironmentVariable("windir");
+            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
             {
                 DefaultCall = new SecureArrayCall(
-                    (m, l) => LinuxMemset(m, 0, l),
-                    LinuxLockMemory,
-                    (m, l) => LinuxMunlock(m, l));
+                    RtlZeroMemory,
+                    WindowsLockMemory,
+                    (m, l) => VirtualUnlock(m, l));
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (File.Exists(@"/proc/sys/kernel/ostype"))
             {
+                string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
+                if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Note: Android gets here too
+                    DefaultCall = new SecureArrayCall(
+                        (m, l) => LinuxMemset(m, 0, l),
+                        LinuxLockMemory,
+                        (m, l) => LinuxMunlock(m, l));
+                }
+                else
+                {
+                    throw new NotSupportedException(
+                        $"Only understand Linux-ostype values that start with \"Linux\", got \"{osType}\"");
+                }
+            }
+            else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+            {
+                // Note: iOS gets here too
                 DefaultCall = new SecureArrayCall(
                     (m, l) => OsxMemset(m, 0, l),
                     (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
@@ -61,10 +85,9 @@ namespace Isopoh.Cryptography.SecureArray
             }
             else
             {
-                DefaultCall = new SecureArrayCall(
-                    RtlZeroMemory,
-                    WindowsLockMemory,
-                    (m, l) => VirtualUnlock(m, l));
+                throw new NotSupportedException(
+                    "No windir environment variable, no /proc/sys/kernel/ostype file and " +
+                    "no /System/Library/CoreServices/SystemVersion.plist file");
             }
         }
 
