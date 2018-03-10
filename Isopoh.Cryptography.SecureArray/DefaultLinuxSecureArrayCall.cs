@@ -1,4 +1,4 @@
-// <copyright file="SecureArray.Linux.cs" company="Isopoh">
+﻿// <copyright file="DefaultLinuxSecureArrayCall.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
@@ -9,11 +9,19 @@ namespace Isopoh.Cryptography.SecureArray
     using System;
     using System.Runtime.InteropServices;
 
-    /// <content>
-    /// The Linux-specific parts of <see cref="SecureArray"/>.
-    /// </content>
-    public partial class SecureArray
+    /// <summary>
+    /// A <see cref="SecureArrayCall"/> with defaults for the Linux operating system.
+    /// </summary>
+    public class DefaultLinuxSecureArrayCall : SecureArrayCall
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultLinuxSecureArrayCall"/> class.
+        /// </summary>
+        public DefaultLinuxSecureArrayCall()
+            : base((m, l) => LinuxMemset(m, 0, l), LinuxLockMemory, (m, l) => LinuxMunlock(m, l))
+        {
+        }
+
         private static string LinuxLockMemory(IntPtr m, UIntPtr l)
         {
             if (LinuxMlock(m, l) != 0)
@@ -25,10 +33,8 @@ namespace Isopoh.Cryptography.SecureArray
                     {
                         return null;
                     }
-                    else
-                    {
-                        errcode = Marshal.GetLastWin32Error();
-                    }
+
+                    errcode = Marshal.GetLastWin32Error();
                 }
 
                 return $"mlock error: {LinuxStrError(errcode)}{(raiseError == null ? string.Empty : $" ({raiseError})")}";
@@ -98,13 +104,13 @@ namespace Isopoh.Cryptography.SecureArray
         [DllImport("libc", EntryPoint = "memset")]
         private static extern IntPtr LinuxMemset(IntPtr addr, int c, UIntPtr n);
 
-        [DllImport("libc", EntryPoint = "getrlimit", SetLastError=true)]
+        [DllImport("libc", EntryPoint = "getrlimit", SetLastError = true)]
         private static extern int LinuxGetRLimit(int resource, ref LinuxRlimit rlimit);
 
-        [DllImport("libc", EntryPoint = "setrlimit", SetLastError=true)]
+        [DllImport("libc", EntryPoint = "setrlimit", SetLastError = true)]
         private static extern int LinuxSetRLimit(int resource, ref LinuxRlimit rlimit);
 
-        [DllImport("libc", EntryPoint = "strerror_r", CharSet=CharSet.Ansi)]
+        [DllImport("libc", EntryPoint = "strerror_r", CharSet = CharSet.Ansi)]
         private static extern IntPtr LinuxSterrorR(int errno, IntPtr buf, ulong buflen);
 
         /// <summary>

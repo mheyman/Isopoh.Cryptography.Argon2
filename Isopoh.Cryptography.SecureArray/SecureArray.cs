@@ -15,7 +15,7 @@ namespace Isopoh.Cryptography.SecureArray
     /// <summary>
     /// Base class of all <see cref="SecureArray{T}"/> classes.
     /// </summary>
-    public partial class SecureArray
+    public class SecureArray
     {
         /// <summary>
         /// Cannot find a way to do a compile-time verification that the
@@ -40,55 +40,16 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(bool), sizeof(bool) }
                 };
 
+        private static readonly object DefaultCallLock = new object();
+        private static SecureArrayCall defaultCall;
+
         private GCHandle handle;
 
         private bool virtualLocked;
 
         static SecureArray()
         {
-            // OS decision logic from https://stackoverflow.com/a/38795621
-            // The System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform returns the platform
-            // compiled under which makes mistakes depending on deployment method. Boo. See
-            // https://github.com/dotnet/corefx/issues/3032
-            string windir = Environment.GetEnvironmentVariable("windir");
-            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
-            {
-                DefaultCall = new SecureArrayCall(
-                    RtlZeroMemory,
-                    WindowsLockMemory,
-                    (m, l) => VirtualUnlock(m, l));
-            }
-            else if (File.Exists(@"/proc/sys/kernel/ostype"))
-            {
-                string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
-                if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Note: Android gets here too
-                    DefaultCall = new SecureArrayCall(
-                        (m, l) => LinuxMemset(m, 0, l),
-                        LinuxLockMemory,
-                        (m, l) => LinuxMunlock(m, l));
-                }
-                else
-                {
-                    throw new NotSupportedException(
-                        $"Only understand Linux-ostype values that start with \"Linux\", got \"{osType}\"");
-                }
-            }
-            else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
-            {
-                // Note: iOS gets here too
-                DefaultCall = new SecureArrayCall(
-                    (m, l) => OsxMemset(m, 0, l),
-                    (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
-                    (m, l) => OsxMunlock(m, l));
-            }
-            else
-            {
-                throw new NotSupportedException(
-                    "No windir environment variable, no /proc/sys/kernel/ostype file and " +
-                    "no /System/Library/CoreServices/SystemVersion.plist file");
-            }
+            Console.WriteLine("SecureArray static constructor");
         }
 
         /// <summary>
@@ -109,7 +70,61 @@ namespace Isopoh.Cryptography.SecureArray
         /// <summary>
         /// Gets the default methods that get called to secure the array.
         /// </summary>
-        public static SecureArrayCall DefaultCall { get; }
+        public static SecureArrayCall DefaultCall
+        {
+            get
+            {
+                if (defaultCall == null)
+                {
+                    lock (DefaultCallLock)
+                    {
+                        if (defaultCall == null)
+                        {
+                            // OS decision logic from https://stackoverflow.com/a/38795621
+                            // The System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform returns the platform
+                            // compiled under which makes mistakes depending on deployment method. Boo. See
+                            // https://github.com/dotnet/corefx/issues/3032
+                            string windir = Environment.GetEnvironmentVariable("windir");
+                            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
+                            {
+                                Console.WriteLine($"SecureArray.DefaultCall windir={windir}");
+                                defaultCall = new DefaultWindowsSecureArrayCall();
+                            }
+                            else if (File.Exists(@"/proc/sys/kernel/ostype"))
+                            {
+                                string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
+                                Console.WriteLine($"SecureArray.DefaultCall osType={osType}");
+                                if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    // Note: Android gets here too
+                                    defaultCall = new DefaultLinuxSecureArrayCall();
+                                }
+                                else
+                                {
+                                    throw new NotSupportedException(
+                                        $"Only understand Linux-ostype values that start with \"Linux\", got \"{osType}\"");
+                                }
+                            }
+                            else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+                            {
+                                Console.WriteLine("SecureArray.DefaultCall OSX or iOS");
+
+                                // Note: iOS gets here too
+                                defaultCall = new DefaultOsxSecureArrayCall();
+                            }
+                            else
+                            {
+                                throw new NotSupportedException(
+                                    "No windir environment variable, no /proc/sys/kernel/ostype file and " +
+                                    "no /System/Library/CoreServices/SystemVersion.plist file");
+                            }
+                        }
+                    }
+                }
+
+                return defaultCall;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the methods that get called to secure the array

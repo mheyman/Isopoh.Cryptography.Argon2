@@ -1,4 +1,4 @@
-// <copyright file="SecureArray.Osx.cs" company="Isopoh">
+﻿// <copyright file="OsxDefaultSecureArrayCall.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
@@ -9,11 +9,22 @@ namespace Isopoh.Cryptography.SecureArray
     using System;
     using System.Runtime.InteropServices;
 
-    /// <content>
-    /// The OSX-specific parts of <see cref="SecureArray"/>.
-    /// </content>
-    public partial class SecureArray
+    /// <summary>
+    /// A <see cref="SecureArrayCall"/> with defaults for the OSX operating system
+    /// </summary>
+    public class DefaultOsxSecureArrayCall : SecureArrayCall
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultOsxSecureArrayCall"/> class.
+        /// </summary>
+        public DefaultOsxSecureArrayCall()
+            : base(
+                  (m, l) => OsxMemset(m, 0, l),
+                  (m, l) => OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
+                  (m, l) => OsxMunlock(m, l))
+        {
+        }
+
         [DllImport("libSystem", SetLastError = true, EntryPoint = "mlock")]
         private static extern int OsxMlock(IntPtr addr, UIntPtr len);
 

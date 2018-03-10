@@ -43,7 +43,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// mechanism does not have special handling for memset calls (and
         /// thus does not even think about optimizing the call away).
         /// </remarks>
-        public Action<IntPtr, UIntPtr> ZeroMemory { get; }
+        public Action<IntPtr, UIntPtr> ZeroMemory { get; protected set; }
 
         /// <summary>
         /// Gets a method that locks the given memory so it doesn't get swapped out to disk.
@@ -51,11 +51,11 @@ namespace Isopoh.Cryptography.SecureArray
         /// <returns>
         /// Null on success; otherwise an error message.
         /// </returns>
-        public Func<IntPtr, UIntPtr, string> LockMemory { get; }
+        public Func<IntPtr, UIntPtr, string> LockMemory { get; protected set; }
 
         /// <summary>
         /// Gets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.
         /// </summary>
-        public Action<IntPtr, UIntPtr> UnlockMemory { get; }
+        public Action<IntPtr, UIntPtr> UnlockMemory { get; protected set; }
     }
 }
