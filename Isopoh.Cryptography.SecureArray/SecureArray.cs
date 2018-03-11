@@ -107,8 +107,8 @@ namespace Isopoh.Cryptography.SecureArray
                                         catch (DllNotFoundException)
                                         {
                                             throw new NotSupportedException(
-                                                "No DefaultCall support for current operating system (whatever that " +
-                                                "is, I think I know Windows, Linux, and OSX - and maybe iOS...). You " +
+                                                "No SecureArray.DefaultCall support for current operating system (whatever " +
+                                                "that is, I think I know Windows, Linux, and OSX - and maybe iOS...). You " +
                                                 "don't have to use the default SecureArrayCall - you can pass in a " +
                                                 "version of the calls that work for your operating system.");
                                         }
