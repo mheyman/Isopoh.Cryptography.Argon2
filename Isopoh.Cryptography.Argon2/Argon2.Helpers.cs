@@ -89,6 +89,9 @@ namespace Isopoh.Cryptography.Argon2
         /// <param name="password">
         /// The password to verify
         /// </param>
+        /// <param name="secret">
+        /// The secret hashed into the password.
+        /// </param>
         /// <param name="secureArrayCall">
         /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
@@ -98,12 +101,18 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
+            byte[] secret,
             SecureArrayCall secureArrayCall = null)
         {
             SecureArray<byte> hash = null;
             try
             {
-                var configToVerify = new Argon2Config { Password = password, SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall };
+                var configToVerify = new Argon2Config
+                {
+                    Password = password,
+                    Secret = secret,
+                    SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall
+                };
                 if (!configToVerify.DecodeString(encoded, out hash) || hash == null)
                 {
                     return false;
@@ -130,6 +139,73 @@ namespace Isopoh.Cryptography.Argon2
         /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
         /// </param>
         /// <param name="password">
+        /// The password to verify
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            byte[] password,
+            SecureArrayCall secureArrayCall = null)
+        {
+            return Verify(encoded, password, null, secureArrayCall);
+        }
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
+        /// The password to verify. This gets UTF-8 encoded.
+        /// </param>
+        /// <param name="secret">
+        /// The secret used in the creation of <paramref name="encoded"/>. UTF-8 encoded to create the byte-buffer actually used in the verification.
+        /// May be null for no secret. <see cref="string"/>.<see cref="string.Empty"/> is treated as null.
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            string password,
+            string secret,
+            SecureArrayCall secureArrayCall = null)
+        {
+            var secretBuf = string.IsNullOrEmpty(secret)
+                                ? null
+                                : new SecureArray<byte>(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+
+            try
+            {
+                using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
+                {
+                    Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
+                    return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);
+                }
+
+            }
+            finally
+            {
+                secretBuf?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
         /// The password to verify. This gets UTF-8 encoded.
         /// </param>
         /// <param name="secureArrayCall">
@@ -143,11 +219,7 @@ namespace Isopoh.Cryptography.Argon2
             string password,
             SecureArrayCall secureArrayCall = null)
         {
-            using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
-            {
-                Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
-                return Verify(encoded, passwordBuf.Buffer, secureArrayCall);
-            }
+            return Verify(encoded, password, null, secureArrayCall);
         }
     }
 }

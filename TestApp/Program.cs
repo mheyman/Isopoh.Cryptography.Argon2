@@ -70,12 +70,15 @@ namespace TestApp
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] salt = new byte[16];
             Rng.GetBytes(salt);
+            var secret = "secret1";
+            byte[] secretBytes = Encoding.UTF8.GetBytes(secret);
             var config = new Argon2Config
             {
                 Type = Argon2Type.DataIndependentAddressing,
                 Version = Argon2Version.Nineteen,
                 Password = passwordBytes,
                 Salt = salt,
+                Secret = secretBytes,
                 TimeCost = 3,
                 MemoryCost = 65536,
                 Lanes = 4,
@@ -86,7 +89,7 @@ namespace TestApp
             var passwordHash = config.EncodeString(hash.Buffer);
             Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
             string res;
-            if (Argon2.Verify(passwordHash, passwordBytes, SecureArray.DefaultCall))
+            if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
             {
                 res = "Round Trip Passed";
                 Console.WriteLine(res);

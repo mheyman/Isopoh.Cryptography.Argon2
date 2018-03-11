@@ -43,10 +43,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         public int HashLength
         {
-            get
-            {
-                return this.hashlen;
-            }
+            get => this.hashlen;
 
             set
             {
@@ -69,10 +66,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         public byte[] Salt
         {
-            get
-            {
-                return this.salt;
-            }
+            get => this.salt;
 
             set
             {
@@ -107,10 +101,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </remarks>
         public int TimeCost
         {
-            get
-            {
-                return this.timeCost;
-            }
+            get => this.timeCost;
 
             set
             {
@@ -134,10 +125,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </remarks>
         public int MemoryCost
         {
-            get
-            {
-                return this.memoryCost;
-            }
+            get => this.memoryCost;
 
             set
             {
@@ -161,10 +149,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </remarks>
         public int Lanes
         {
-            get
-            {
-                return this.lanes;
-            }
+            get => this.lanes;
 
             set
             {
@@ -194,10 +179,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </remarks>
         public int Threads
         {
-            get
-            {
-                return this.threads;
-            }
+            get => this.threads;
 
             set
             {
