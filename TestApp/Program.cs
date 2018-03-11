@@ -113,11 +113,12 @@ namespace TestApp
         public static string TestArgon2RoundTrip2()
         {
             var password = "password1";
-            var passwordHash = Argon2.Hash(password);
+            var secret = "secret1";
+            var passwordHash = Argon2.Hash(password, secret);
             Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
 
             string res;
-            if (Argon2.Verify(passwordHash, password, SecureArray.DefaultCall))
+            if (Argon2.Verify(passwordHash, password, secret))
             {
                 res = "RoundTrip2 Passed";
                 Console.WriteLine(res);
