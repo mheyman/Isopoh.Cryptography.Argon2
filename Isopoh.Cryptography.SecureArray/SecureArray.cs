@@ -8,7 +8,6 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
 
@@ -80,43 +79,45 @@ namespace Isopoh.Cryptography.SecureArray
                     {
                         if (defaultCall == null)
                         {
-                            // OS decision logic from https://stackoverflow.com/a/38795621
-                            // The System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform returns the platform
-                            // compiled under which makes mistakes depending on deployment method. Boo. See
-                            // https://github.com/dotnet/corefx/issues/3032
-                            string windir = Environment.GetEnvironmentVariable("windir");
-                            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
+                            var buf = new byte[1];
+                            var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                            try
                             {
-                                Console.WriteLine($"SecureArray.DefaultCall windir={windir}");
-                                defaultCall = new DefaultWindowsSecureArrayCall();
-                            }
-                            else if (File.Exists(@"/proc/sys/kernel/ostype"))
-                            {
-                                string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
-                                Console.WriteLine($"SecureArray.DefaultCall osType={osType}");
-                                if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
+                                IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
+                                UIntPtr cnt = new UIntPtr(1);
+                                try
                                 {
-                                    // Note: Android gets here too
-                                    defaultCall = new DefaultLinuxSecureArrayCall();
+                                    defaultCall = new DefaultOsxSecureArrayCall();
+                                    defaultCall.ZeroMemory(bufPtr, cnt);
                                 }
-                                else
+                                catch (DllNotFoundException)
                                 {
-                                    throw new NotSupportedException(
-                                        $"Only understand Linux-ostype values that start with \"Linux\", got \"{osType}\"");
+                                    try
+                                    {
+                                        defaultCall = new DefaultLinuxSecureArrayCall();
+                                        defaultCall.ZeroMemory(bufPtr, cnt);
+                                    }
+                                    catch (DllNotFoundException)
+                                    {
+                                        try
+                                        {
+                                            defaultCall = new DefaultWindowsSecureArrayCall();
+                                            defaultCall.ZeroMemory(bufPtr, cnt);
+                                        }
+                                        catch (DllNotFoundException)
+                                        {
+                                            throw new NotSupportedException(
+                                                "No DefaultCall support for current operating system (whatever that " +
+                                                "is, I think I know Windows, Linux, and OSX - and maybe iOS...). You " +
+                                                "don't have to use the default SecureArrayCall - you can pass in a " +
+                                                "version of the calls that work for your operating system.");
+                                        }
+                                    }
                                 }
                             }
-                            else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+                            finally
                             {
-                                Console.WriteLine("SecureArray.DefaultCall OSX or iOS");
-
-                                // Note: iOS gets here too
-                                defaultCall = new DefaultOsxSecureArrayCall();
-                            }
-                            else
-                            {
-                                throw new NotSupportedException(
-                                    "No windir environment variable, no /proc/sys/kernel/ostype file and " +
-                                    "no /System/Library/CoreServices/SystemVersion.plist file");
+                                tmpHandle.Free();
                             }
                         }
                     }
