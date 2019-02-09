@@ -46,15 +46,9 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public ulong this[int i]
         {
-            get
-            {
-                return this.memory[this.offset + i];
-            }
+            get => this.memory[this.offset + i];
 
-            set
-            {
-                this.memory[this.offset + i] = value;
-            }
+            set => this.memory[this.offset + i] = value;
         }
 
         /// <summary>

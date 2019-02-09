@@ -38,6 +38,8 @@ namespace Isopoh.Cryptography.SecureArray
             this.Init(this.buf, type);
         }
 
+        // ReSharper disable once UnusedMember.Global
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
         /// </summary>
@@ -77,6 +79,8 @@ namespace Isopoh.Cryptography.SecureArray
             this.Init(this.buf, SecureArrayType.ZeroedPinnedAndNoSwap);
         }
 
+        // ReSharper disable once UnusedMember.Global
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
         /// </summary>
@@ -113,6 +117,36 @@ namespace Isopoh.Cryptography.SecureArray
             get => this.buf[i];
 
             set => this.buf[i] = value;
+        }
+
+        /// <summary>
+        /// Returns the "best" secure array it can. Tries first for <see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>
+        /// and, if that fails, returns a <see cref="SecureArrayType.ZeroedAndPinned"/> secure array.
+        /// </summary>
+        /// <param name="size">The number of elements in the returned <see cref="SecureArray{T}"/>.</param>
+        /// <param name="secureArrayCall">
+        ///     The methods that get called to secure the array. A null value
+        ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="SecureArray{T}"/>.
+        /// </returns>
+        /// <remarks>
+        /// Whether a no-swap <see cref="SecureArray{T}"/> can be returned is up to the operating system.
+        /// You can query <see cref="SecureArray.ProtectionType"/> to find the type of <see cref="SecureArray{T}"/>
+        /// returned.
+        /// </remarks>
+        public static SecureArray<T> Best(int size, SecureArrayCall secureArrayCall)
+        {
+            try
+            {
+                // ReSharper disable once RedundantArgumentDefaultValue
+                return new SecureArray<T>(size, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
+            }
+            catch (LockFailException)
+            {
+                return new SecureArray<T>(size, SecureArrayType.ZeroedAndPinned, secureArrayCall);
+            }
         }
 
         /// <summary>

@@ -15,8 +15,8 @@ namespace Isopoh.Cryptography.Test
     using System.Security.Cryptography;
     using System.Text;
 
-    using Isopoh.Cryptography.Argon2;
-    using Isopoh.Cryptography.SecureArray;
+    using Argon2;
+    using SecureArray;
 
     using Xunit;
     using Xunit.Abstractions;
@@ -167,7 +167,6 @@ namespace Isopoh.Cryptography.Test
             foreach (var testVector in Argon2TestVectors)
             {
                 var encoded = new StringBuilder();
-                uint tagLength = (uint)testVector.TagLength;
                 try
                 {
                     var config = new Argon2Config
@@ -243,7 +242,7 @@ namespace Isopoh.Cryptography.Test
             {
                 try
                 {
-                    using (var buf = new SecureArray<ulong>(size, SecureArray.DefaultCall))
+                    using (new SecureArray<ulong>(size, SecureArray.DefaultCall))
                     {
                         this.output.WriteLine($"Passed size={size}");
                         if (size == max)

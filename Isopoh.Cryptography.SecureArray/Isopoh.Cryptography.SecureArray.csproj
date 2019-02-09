@@ -25,7 +25,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.1-rc.94">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />

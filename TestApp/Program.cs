@@ -298,6 +298,10 @@ namespace TestApp
             return $"Made a {size}-byte secure array";
         }
 
+        /// <summary>
+        /// Look for leaks.
+        /// </summary>
+        /// <returns>String with pass/fail message.</returns>
         public static string TestLeaks()
         {
             var locks = new Dictionary<IntPtr, int>();
@@ -345,11 +349,11 @@ namespace TestApp
 
             var hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
             var password = "b";
-            const int MaxIteration = 4;
-            var memoryDiff = new long[MaxIteration];
-            for (int i = 0; i < MaxIteration; i++)
+            const int maxIteration = 10;
+            var memoryDiff = new long[maxIteration];
+            for (int i = 0; i < maxIteration; i++)
             {
-                Console.WriteLine($"Iteration {i + 1} of {MaxIteration}");
+                Console.WriteLine($"TestLeaks: Iteration {i + 1} of {maxIteration}");
                 var prevTotalMemory = GC.GetTotalMemory(true);
                 Argon2.Verify(hashString, password, secureArrayCall);
                 var postTotalMemory = GC.GetTotalMemory(true);
@@ -357,7 +361,7 @@ namespace TestApp
             }
 
             var errs = new List<string>();
-            if (memoryDiff.All(v => v != 0))
+            if (memoryDiff.All(v => v > 0))
             {
                 errs.Add($"Leaked {memoryDiff.Min()} bytes");
             }

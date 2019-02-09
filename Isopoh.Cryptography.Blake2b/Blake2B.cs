@@ -14,7 +14,7 @@ namespace Isopoh.Cryptography.Blake2b
 {
     using System.Security.Cryptography;
 
-    using Isopoh.Cryptography.SecureArray;
+    using SecureArray;
 
     /// <summary>
     /// Convenience calls for performing Blake2 hashes.
@@ -41,6 +41,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </remarks>
         public const int OutputLength = 64;
 
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Create a default Blake2 hash.
         /// </summary>
@@ -72,6 +73,7 @@ namespace Isopoh.Cryptography.Blake2b
             return new Blake2BHasher(config, secureArrayCall);
         }
 
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
         /// </summary>
@@ -95,6 +97,7 @@ namespace Isopoh.Cryptography.Blake2b
             return ComputeHash(data, start, count, null, secureArrayCall);
         }
 
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
         /// </summary>

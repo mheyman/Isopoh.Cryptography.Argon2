@@ -31,7 +31,7 @@ namespace Isopoh.Cryptography.Argon2
         /// Resulting format:
         /// </para>
         /// <para>
-        /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]]
+        /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
         /// </para>
         /// <para>
         /// where &lt;T> is either 'd' or 'i', &lt;num> is a decimal integer (positive, fits in

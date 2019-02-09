@@ -17,13 +17,13 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="SecureArrayCall"/> class.
         /// </summary>
         /// <param name="zeroMemory">
-        /// Call that zeroes memory in a way that does not get optimized away
+        /// Call that zeroes memory in a way that does not get optimized away.
         /// </param>
         /// <param name="lockMemory">
         /// Call that locks the given memory so it doesn't get swapped out to disk.
         /// </param>
         /// <param name="unlockMemory">
-        /// Call that unlocks memory previously locked by a call to <paramref name="lockMemory"/>
+        /// Call that unlocks memory previously locked by a call to <paramref name="lockMemory"/>.
         /// </param>
         public SecureArrayCall(
             Action<IntPtr, UIntPtr> zeroMemory,
@@ -36,7 +36,7 @@ namespace Isopoh.Cryptography.SecureArray
         }
 
         /// <summary>
-        /// Gets a method that zeroes memory in a way that does not get optimized away.
+        /// Gets or sets a method that zeroes memory in a way that does not get optimized away.
         /// </summary>
         /// <remarks>
         /// On Linux and OSX, simply calls memset() and hopes the P/Invoke
@@ -46,7 +46,7 @@ namespace Isopoh.Cryptography.SecureArray
         public Action<IntPtr, UIntPtr> ZeroMemory { get; protected set; }
 
         /// <summary>
-        /// Gets a method that locks the given memory so it doesn't get swapped out to disk.
+        /// Gets or sets a method that locks the given memory so it doesn't get swapped out to disk.
         /// </summary>
         /// <returns>
         /// Null on success; otherwise an error message.
@@ -54,7 +54,7 @@ namespace Isopoh.Cryptography.SecureArray
         public Func<IntPtr, UIntPtr, string> LockMemory { get; protected set; }
 
         /// <summary>
-        /// Gets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.
+        /// Gets or sets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.
         /// </summary>
         public Action<IntPtr, UIntPtr> UnlockMemory { get; protected set; }
     }

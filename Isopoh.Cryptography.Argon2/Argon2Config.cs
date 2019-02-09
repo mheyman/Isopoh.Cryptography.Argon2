@@ -8,7 +8,7 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
-    using Isopoh.Cryptography.SecureArray;
+    using SecureArray;
 
     /// <summary>
     /// Holds configuration needed to perform an Argon2 hash.

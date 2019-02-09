@@ -8,7 +8,7 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
-    using Isopoh.Cryptography.SecureArray;
+    using SecureArray;
 
     /// <summary>
     /// Argon2 Hashing of passwords
@@ -38,7 +38,7 @@ namespace Isopoh.Cryptography.Argon2
             // ensure that all segments have equal length
             this.LaneLength = this.SegmentLength * SyncPoints;
             this.MemoryBlockCount = this.LaneLength * this.config.Lanes;
-            this.memory = BestSecureArray<ulong>(BlockSize * this.MemoryBlockCount / 8, config.SecureArrayCall);
+            this.memory = SecureArray<ulong>.Best(BlockSize * this.MemoryBlockCount / 8, config.SecureArrayCall);
             this.Memory = new Blocks(this.memory.Buffer, this.MemoryBlockCount);
         }
 

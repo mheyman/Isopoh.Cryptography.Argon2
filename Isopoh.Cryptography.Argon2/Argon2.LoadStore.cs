@@ -7,7 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {

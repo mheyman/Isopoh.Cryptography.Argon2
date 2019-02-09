@@ -57,6 +57,7 @@ namespace Isopoh.Cryptography.Blake2b
             this.Update(data, 0, data.Length);
         }
 
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Create a <see cref="HashAlgorithm"/> from this.
         /// </summary>

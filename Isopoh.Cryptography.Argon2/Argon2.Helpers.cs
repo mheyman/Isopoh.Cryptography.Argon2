@@ -142,7 +142,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
-                                : new SecureArray<byte>(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+                                : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
             try
             {
                 if (secretBuf != null)
@@ -150,7 +150,7 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
+                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
                 {
                     Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
                     return Hash(
@@ -334,7 +334,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
-                                : new SecureArray<byte>(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+                                : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
 
             try
             {
@@ -343,7 +343,7 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
+                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
                 {
                     Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
                     return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);
