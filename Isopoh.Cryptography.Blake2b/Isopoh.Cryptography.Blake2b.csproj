@@ -2,20 +2,24 @@
 
     <PropertyGroup>
         <Title>Isopoh.Cryptography.Blake2b</Title>
-        <Description>Blake2 hash for sensitive data</Description>
+        <Description>Blake2 hash for sensitive data. Uses
+          Isopoh.Cryptography.SecureArray to assure sensitive data gets wiped
+          from RAM and, if the operating system allows, never gets written to
+          disk.</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
-        <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
-        <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/images/isopoh.png</PackageIconUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/LICENSE</PackageLicenseUrl>
+        <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2018</Copyright>
+        <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Version update to match Argon2.</PackageReleaseNotes>
+        <PackageReleaseNotes>Update to match SecureArray version.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.0.8</PackageVersion>
+        <PackageVersion>1.0.10</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
