@@ -278,7 +278,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 Password = password,
                 Secret = secret,
-                SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall
+                SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
             };
 
             return Verify(encoded, configToVerify);
