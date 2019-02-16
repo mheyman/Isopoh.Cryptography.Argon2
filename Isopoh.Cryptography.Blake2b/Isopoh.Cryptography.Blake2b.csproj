@@ -13,7 +13,7 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Update to match SecureArray version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Update version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

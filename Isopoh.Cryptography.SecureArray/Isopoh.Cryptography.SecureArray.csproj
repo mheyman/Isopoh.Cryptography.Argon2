@@ -14,13 +14,13 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>sensitive array</PackageTags>
-        <PackageReleaseNotes>Remove SecureArray static constructor WriteLine.</PackageReleaseNotes>
+        <PackageReleaseNotes>Update version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
         <TargetFramework>netstandard1.2</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-        <PackageVersion>1.0.10</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
