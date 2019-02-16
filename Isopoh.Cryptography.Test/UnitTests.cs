@@ -58,7 +58,20 @@ namespace Isopoh.Cryptography.Test
                     "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
                     "03 03 03 03 03 03 03 03",
                     "04 04 04 04 04 04 04 04 04 04 04 04",
-                    "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8")
+                    "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8"),
+                new Argon2TestVector(
+                    "Hybrid",
+                    Argon2Type.HybridAddressing,
+                    Argon2Version.Nineteen,
+                    3,
+                    32,
+                    4,
+                    32,
+                    "01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01",
+                    "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
+                    "03 03 03 03 03 03 03 03",
+                    "04 04 04 04 04 04 04 04 04 04 04 04",
+                    "0d 64 0d f5 8d 78 76 6c 08 c0 37 a3 4a 8b 53 c9 d0 1e f0 45 2d 75 b6 5e b5 25 20 e9 6b 01 e6 59"),
             };
 
         private readonly ITestOutputHelper output;

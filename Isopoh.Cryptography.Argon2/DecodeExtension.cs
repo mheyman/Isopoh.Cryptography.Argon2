@@ -58,7 +58,12 @@ namespace Isopoh.Cryptography.Argon2
         {
             int pos;
             Argon2Type type;
-            if (str.StartsWith("$argon2i"))
+            if (str.StartsWith("$argon2id"))
+            {
+                type = Argon2Type.HybridAddressing;
+                pos = 9;
+            }
+            else if (str.StartsWith("$argon2i"))
             {
                 type = Argon2Type.DataIndependentAddressing;
                 pos = 8;

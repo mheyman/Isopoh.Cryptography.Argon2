@@ -16,7 +16,7 @@
         <PackageTags>sensitive array</PackageTags>
         <PackageReleaseNotes>Remove SecureArray static constructor WriteLine.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
-        <TargetFramework>netstandard1.3</TargetFramework>
+        <TargetFramework>netstandard1.2</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
@@ -34,7 +34,6 @@
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.1-rc.94">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
         <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     </ItemGroup>
 

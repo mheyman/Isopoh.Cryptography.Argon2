@@ -235,7 +235,9 @@ namespace Isopoh.Cryptography.Argon2
 
         private void FillSegment(Position position)
         {
-            bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing;
+            bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing ||
+                                             (this.config.Type == Argon2Type.HybridAddressing && position.Pass == 0 &&
+                                              position.Slice < SyncPoints / 2);
             var pseudoRands = new ulong[this.SegmentLength];
             if (dataIndependentAddressing)
             {

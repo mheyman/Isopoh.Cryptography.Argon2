@@ -59,11 +59,16 @@ namespace Isopoh.Cryptography.Argon2
             {
                 dst.Append("$argon2d$v=");
             }
+            else if (config.Type == Argon2Type.HybridAddressing)
+            {
+                dst.Append("$argon2id$v=");
+            }
             else
             {
                 throw new ArgumentException(
-                    $"Expected one of {config.Type == Argon2Type.DataIndependentAddressing} or "
-                    + $"{config.Type == Argon2Type.DataDependentAddressing}, got {config.Type}", nameof(config));
+                    $"Expected one of {Argon2Type.DataDependentAddressing}, "
+                    + $"{Argon2Type.DataIndependentAddressing}, or {Argon2Type.HybridAddressing}, "
+                    + $"got {config.Type}", nameof(config));
             }
 
             dst.AppendFormat("{0:D}", (int)config.Version);

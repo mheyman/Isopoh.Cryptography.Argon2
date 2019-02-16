@@ -53,7 +53,20 @@ namespace TestApp
                     "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
                     "03 03 03 03 03 03 03 03",
                     "04 04 04 04 04 04 04 04 04 04 04 04",
-                    "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8")
+                    "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8"),
+                new Argon2TestVector(
+                    "Hybrid",
+                    Argon2Type.HybridAddressing,
+                    Argon2Version.Nineteen,
+                    3,
+                    32,
+                    4,
+                    32,
+                    "01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01",
+                    "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
+                    "03 03 03 03 03 03 03 03",
+                    "04 04 04 04 04 04 04 04 04 04 04 04",
+                    "0d 64 0d f5 8d 78 76 6c 08 c0 37 a3 4a 8b 53 c9 d0 1e f0 45 2d 75 b6 5e b5 25 20 e9 6b 01 e6 59"),
             };
 
         private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
@@ -72,36 +85,43 @@ namespace TestApp
             Rng.GetBytes(salt);
             var secret = "secret1";
             byte[] secretBytes = Encoding.UTF8.GetBytes(secret);
-            var config = new Argon2Config
+            var failedResults = new List<string>();
+            var passedResults = new List<string>();
+            foreach (var argon2Type in new[] { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing})
             {
-                Type = Argon2Type.DataIndependentAddressing,
-                Version = Argon2Version.Nineteen,
-                Password = passwordBytes,
-                Salt = salt,
-                Secret = secretBytes,
-                TimeCost = 3,
-                MemoryCost = 65536,
-                Lanes = 4,
-                Threads = 2,
-            };
-            var argon2 = new Argon2(config);
-            SecureArray<byte> hash = argon2.Hash();
-            var passwordHash = config.EncodeString(hash.Buffer);
-            Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
-            string res;
-            if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
-            {
-                res = "Round Trip Passed";
-                Console.WriteLine(res);
-            }
-            else
-            {
-                res = "Round Trip FAILED";
-                Console.WriteLine(res);
-                Console.WriteLine($"    expected verify to work for {passwordHash} (Argon2 hash of {password}");
+                var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
+                    argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
+                var config = new Argon2Config
+                {
+                    Type = argon2Type,
+                    Version = Argon2Version.Nineteen,
+                    Password = passwordBytes,
+                    Salt = salt,
+                    Secret = secretBytes,
+                    TimeCost = 3,
+                    MemoryCost = 65536,
+                    Lanes = 4,
+                    Threads = 2,
+                };
+                var argon2 = new Argon2(config);
+                SecureArray<byte> hash = argon2.Hash();
+                var passwordHash = config.EncodeString(hash.Buffer);
+                Console.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
+                if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
+                {
+                    passedResults.Add(argon2Name);
+                    Console.WriteLine($"Round Trip {argon2Name} Passed");
+                }
+                else
+                {
+                    failedResults.Add(argon2Name);
+                    Console.WriteLine($"Round Trip {argon2Name} FAILED");
+                    Console.WriteLine($"    expected verify to work for {passwordHash} (Argon2 hash of {password})");
+                }
             }
 
-            return res;
+            return failedResults.Any() ? $"RoundTrip FAILED: [{string.Join(", ", failedResults)}] (passed: [{string.Join(", ", passedResults)}])"
+                : "RoundTrip Passed";
         }
 
         /// <summary>
@@ -114,23 +134,32 @@ namespace TestApp
         {
             var password = "password1";
             var secret = "secret1";
-            var passwordHash = Argon2.Hash(password, secret);
-            Console.WriteLine($"Argon2 of {password} --> {passwordHash}");
-
-            string res;
-            if (Argon2.Verify(passwordHash, password, secret))
+            var passedResults = new List<string>();
+            var failedResults = new List<string>();
+            foreach (var argon2Type in new[]
+                { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing })
             {
-                res = "RoundTrip2 Passed";
-                Console.WriteLine(res);
-            }
-            else
-            {
-                res = "RoundTrip2 FAILED";
-                Console.WriteLine(res);
-                Console.WriteLine($"    expected verify to work for {passwordHash} (Argon2 hash of {password}");
+                var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
+                    argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
+
+                var passwordHash = Argon2.Hash(password, secret, type: argon2Type);
+                Console.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
+
+                if (Argon2.Verify(passwordHash, password, secret))
+                {
+                    passedResults.Add(argon2Name);
+                    Console.WriteLine($"RoundTrip2 {argon2Name} Passed");
+                }
+                else
+                {
+                    failedResults.Add(argon2Name);
+                    Console.WriteLine($"RoundTrip2 {argon2Name} FAILED");
+                    Console.WriteLine($"    expected verify to work for {passwordHash} ({argon2Name} hash of {password})");
+                }
             }
 
-            return res;
+            return failedResults.Any() ? $"RoundTrip2 FAILED: [{string.Join(", ", failedResults)}] (passed: [{string.Join(", ", passedResults)}])"
+                : "RoundTrip2 Passed";
         }
 
         /// <summary>
@@ -261,8 +290,8 @@ namespace TestApp
         public static string TestSecureArray()
         {
             int size = 100;
-            int max = int.MaxValue;
-            int previous = size;
+            int smallestFailedSize = int.MaxValue;
+            int largestSuccessfulSize = size;
             while (true)
             {
                 try
@@ -270,14 +299,14 @@ namespace TestApp
                     using (new SecureArray<byte>(size, SecureArray.DefaultCall))
                     {
                         Console.WriteLine($"SecureArray: Passed size={size}");
-                        if (size == max)
+                        if (size == smallestFailedSize)
                         {
                             break;
                         }
 
-                        previous = size;
+                        largestSuccessfulSize = size;
                         long tmp = size;
-                        tmp += max;
+                        tmp += smallestFailedSize;
                         tmp /= 2;
                         size = (int)tmp;
                     }
@@ -287,9 +316,15 @@ namespace TestApp
                 catch (Exception e)
                 {
                     Console.WriteLine($"SecureArray: Failed size={size}: {e.Message}");
-                    max = size;
-                    long tmp = previous;
-                    tmp += max;
+                    if (size >= largestSuccessfulSize)
+                    {
+                        size = largestSuccessfulSize;
+                        break;
+                    }
+
+                    smallestFailedSize = size;
+                    long tmp = largestSuccessfulSize;
+                    tmp += smallestFailedSize;
                     tmp /= 2;
                     size = (int)tmp;
                 }
@@ -384,6 +419,108 @@ namespace TestApp
             return errs.Any() ? $"Leaks: FAILED: {string.Join(" ", errs)}" : "Leaks: Passed";
         }
 
+        private static string TestFromDraft()
+        {
+            // from draft-irtf-cfrg-argon2-03
+            // They have this code in version 3 of the draft but it is gone in version 4.
+            var testPwd = Encoding.ASCII.GetBytes("pasword");
+            var testSalt = Encoding.ASCII.GetBytes("somesalt");
+            const int testTimeCost = 3;
+            const int testMemoryCost = 1 << 12;
+            const int testParallelism = 1;
+            const Argon2Version testArgon2VersionNumber = Argon2Version.Nineteen;
+            bool Run(byte[] pwd, byte[] salt, int timeCost, int memoryCost, int threads,
+                Argon2Type argon2Type, Argon2Version version, byte[] expectedHash)
+            {
+                using (var hash = new Argon2(
+                    new Argon2Config
+                    {
+                        HashLength = expectedHash.Length,
+                        TimeCost = timeCost,
+                        MemoryCost = memoryCost,
+                        Lanes = threads,
+                        Threads = threads,
+                        Password = pwd,
+                        Salt = salt,
+                        Version = version,
+                        Type = argon2Type,
+                    }).Hash())
+                {
+                    Console.WriteLine($"     Actual Hash:   {BitConverter.ToString(hash.Buffer)}");
+                    Console.WriteLine($"     Expected Hash: {BitConverter.ToString(expectedHash)}");
+                    return !hash.Buffer.Where((b, i) => b != expectedHash[i]).Any();
+                }
+            }
+
+            bool Argon2ISelftest()
+            {
+                byte[] expectedHash =
+                {
+                    0x95, 0x7f, 0xc0, 0x72, 0x7d, 0x83, 0xf4, 0x06,
+                    0x0b, 0xb0, 0xf1, 0x07, 0x1e, 0xb5, 0x90, 0xa1,
+                    0x9a, 0x8c, 0x44, 0x8f, 0xc0, 0x20, 0x94, 0x97,
+                    0xee, 0x4f, 0x54, 0xca, 0x24, 0x1f, 0x3c, 0x90,
+                };
+                return Run(
+                    testPwd,
+                    testSalt,
+                    testTimeCost,
+                    testMemoryCost,
+                    testParallelism,
+                    Argon2Type.DataIndependentAddressing,
+                    testArgon2VersionNumber,
+                    expectedHash);
+            }
+
+            bool Argon2DSelftest()
+            {
+                byte[] expectedHash =
+                {
+                    0x0b, 0x3f, 0x09, 0xe7, 0xb8, 0xd0, 0x36, 0xe5,
+                    0x8c, 0xcd, 0x08, 0xf0, 0x8c, 0xb6, 0xba, 0xbf,
+                    0x7e, 0x5e, 0x24, 0x63, 0xc2, 0x6b, 0xcf, 0x2a,
+                    0x9e, 0x4e, 0xa7, 0x0d, 0x74, 0x7c, 0x40, 0x98,
+                };
+                return Run(
+                    testPwd,
+                    testSalt,
+                    testTimeCost,
+                    testMemoryCost,
+                    testParallelism,
+                    Argon2Type.DataDependentAddressing,
+                    testArgon2VersionNumber,
+                    expectedHash);
+            }
+
+            bool Argon2IdSelftest()
+            {
+                byte[] expectedHash =
+                {
+                    0xf5, 0x55, 0x35, 0xbf, 0xe9, 0x48, 0x71, 0x00,
+                    0x51, 0x42, 0x4c, 0x74, 0x24, 0xb1, 0x1b, 0xa9,
+                    0xa1, 0x3a, 0x50, 0x23, 0x9b, 0x04, 0x59, 0xf5,
+                    0x6c, 0xa6, 0x95, 0xea, 0x14, 0xbc, 0x19, 0x5e,
+                };
+                return Run(
+                    testPwd,
+                    testSalt,
+                    testTimeCost,
+                    testMemoryCost,
+                    testParallelism,
+                    Argon2Type.HybridAddressing,
+                    testArgon2VersionNumber,
+                    expectedHash);
+            }
+
+            var argon2IResult = $"draft-irtf-cfrg-argon2-03 Argon2i  - {(Argon2ISelftest() ? "Passed" : "FAIL")}";
+            Console.WriteLine(argon2IResult);
+            var argon2DResult = $"draft-irtf-cfrg-argon2-03 Argon2d  - {(Argon2DSelftest() ? "Passed" : "FAIL")}";
+            Console.WriteLine(argon2DResult);
+            var argon2IdResult = $"draft-irtf-cfrg-argon2-03 Argon2id - {(Argon2IdSelftest() ? "Passed" : "FAIL")}";
+            Console.WriteLine(argon2IdResult);
+            return string.Join($"{Environment.NewLine}  ", argon2IResult, argon2DResult, argon2IdResult);
+        }
+
         /// <summary>
         /// Program entry.
         /// </summary>
@@ -398,7 +535,8 @@ namespace TestApp
                                       TestArgon2RoundTrip(),
                                       TestArgon2RoundTrip2(),
                                       TestArgon2ThreadsDontMatter(),
-                                      TestArgon2()
+                                      TestArgon2(),
+                                      TestFromDraft(),
                                   };
             Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
         }
