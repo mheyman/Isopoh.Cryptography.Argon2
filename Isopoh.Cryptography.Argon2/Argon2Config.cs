@@ -34,9 +34,9 @@ namespace Isopoh.Cryptography.Argon2
         public Argon2Version Version { get; set; } = Argon2Version.Nineteen;
 
         /// <summary>
-        /// Gets or sets the Argon2 type. Default to data independent.
+        /// Gets or sets the Argon2 type. Default to hybrid.
         /// </summary>
-        public Argon2Type Type { get; set; } = Argon2Type.DataIndependentAddressing;
+        public Argon2Type Type { get; set; } = Argon2Type.HybridAddressing;
 
         /// <summary>
         /// Gets or sets the hash length to output. Minimum of 4. Default 32.

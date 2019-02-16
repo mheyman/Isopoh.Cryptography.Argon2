@@ -19,7 +19,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>1.1.1</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

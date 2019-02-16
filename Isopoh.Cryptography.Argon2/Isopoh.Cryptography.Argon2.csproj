@@ -12,13 +12,13 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>argon2 hash password crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Argon2Type.HybridAddressing (argon2id) mode now supported.</PackageReleaseNotes>
+        <PackageReleaseNotes>Argon2Type.HybridAddressing (argon2id) mode now supported and the default.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFramework>netstandard1.3</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Argon2</AssemblyName>
         <PackageId>Isopoh.Cryptography.Argon2</PackageId>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>1.1.1</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
