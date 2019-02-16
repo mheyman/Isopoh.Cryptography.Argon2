@@ -316,17 +316,18 @@ namespace TestApp
                 catch (Exception e)
                 {
                     Console.WriteLine($"SecureArray: Failed size={size}: {e.Message}");
-                    if (size >= largestSuccessfulSize)
-                    {
-                        size = largestSuccessfulSize;
-                        break;
-                    }
 
                     smallestFailedSize = size;
                     long tmp = largestSuccessfulSize;
                     tmp += smallestFailedSize;
                     tmp /= 2;
                     size = (int)tmp;
+
+                    if (smallestFailedSize <= largestSuccessfulSize)
+                    {
+                        size = largestSuccessfulSize;
+                        break;
+                    }
                 }
             }
 
