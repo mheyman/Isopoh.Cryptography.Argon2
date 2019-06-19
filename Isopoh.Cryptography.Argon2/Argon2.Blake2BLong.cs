@@ -8,8 +8,8 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
-    using Isopoh.Cryptography.Blake2b;
-    using Isopoh.Cryptography.SecureArray;
+    using Blake2b;
+    using SecureArray;
 
     /// <summary>
     /// Argon2 Hashing of passwords
@@ -31,7 +31,7 @@ namespace Isopoh.Cryptography.Argon2
         private static void Blake2BLong(byte[] hash, byte[] inbuf, SecureArrayCall secureArrayCall)
         {
             var outlenBytes = new byte[4];
-            using (var intermediateHash = BestSecureArray<byte>(Blake2B.OutputLength, secureArrayCall))
+            using (var intermediateHash = SecureArray<byte>.Best(Blake2B.OutputLength, secureArrayCall))
             {
                 var config = new Blake2BConfig
                 {
@@ -52,17 +52,17 @@ namespace Isopoh.Cryptography.Argon2
                     return;
                 }
 
-                const int B2B2 = Blake2B.OutputLength / 2;
-                Array.Copy(intermediateHash.Buffer, hash, B2B2);
-                int pos = B2B2;
+                const int b2B2 = Blake2B.OutputLength / 2;
+                Array.Copy(intermediateHash.Buffer, hash, b2B2);
+                int pos = b2B2;
                 int lastHashIndex = hash.Length - Blake2B.OutputLength;
                 var toHash = new byte[Blake2B.OutputLength];
                 while (pos < lastHashIndex)
                 {
                     Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);
                     Blake2B.ComputeHash(toHash, config, secureArrayCall);
-                    Array.Copy(intermediateHash.Buffer, 0, hash, pos, B2B2);
-                    pos += B2B2;
+                    Array.Copy(intermediateHash.Buffer, 0, hash, pos, b2B2);
+                    pos += b2B2;
                 }
 
                 Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);

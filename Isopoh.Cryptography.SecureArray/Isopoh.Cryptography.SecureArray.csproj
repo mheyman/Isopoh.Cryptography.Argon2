@@ -2,33 +2,38 @@
 
     <PropertyGroup>
         <Title>Isopoh.Cryptography.SecureArray</Title>
-        <Description>A managed class that can hold an array in RAM and zero it on disposal</Description>
+        <Description>A managed class that can hold an array in RAM and zero it
+          on disposal. The code has the capability to throw if it cannot lock
+          the array in RAM or gracefully degrade to merely pinning the memory
+          to prevent the CLR from moving it and risking exposure to other part
+          of the executable.</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
-        <PackageIconUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh.png</PackageIconUrl>
-        <PackageLicenseUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/images/isopoh.png</PackageIconUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/LICENSE</PackageLicenseUrl>
+        <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2018</Copyright>
+        <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>sensitive array</PackageTags>
-        <PackageReleaseNotes>Version update to match Argon2.</PackageReleaseNotes>
+        <PackageReleaseNotes>Update version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
-        <TargetFramework>netstandard1.3</TargetFramework>
+        <TargetFramework>netstandard1.2</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
         <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-        <PackageVersion>1.0.8</PackageVersion>
+        <PackageVersion>1.1.2</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
         <SignAssembly>true</SignAssembly>
         <DelaySign>false</DelaySign>
         <AssemblyOriginatorKeyFile>isopoh.pfx</AssemblyOriginatorKeyFile>
+        <NuspecProperties>$summary$='la la la';summary='ho ho ho'</NuspecProperties>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.1-rc.94">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
         <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     </ItemGroup>
 

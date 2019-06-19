@@ -10,30 +10,17 @@ namespace Isopoh.Cryptography.Argon2
     using System.Linq;
     using System.Threading;
 
-    using Isopoh.Cryptography.Blake2b;
-    using Isopoh.Cryptography.SecureArray;
+    using Blake2b;
+    using SecureArray;
 
     /// <summary>
     /// Argon2 Hashing of passwords
     /// </summary>
     public sealed partial class Argon2
     {
-        private static SecureArray<T> BestSecureArray<T>(int length, SecureArrayCall secureArrayCall)
-        {
-            try
-            {
-                // ReSharper disable once RedundantArgumentDefaultValue
-                return new SecureArray<T>(length, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-            }
-            catch (LockFailException)
-            {
-                return new SecureArray<T>(length, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-            }
-        }
-
         private void Initialize()
         {
-            using (var blockhash = BestSecureArray<byte>(PrehashSeedLength, this.config.SecureArrayCall))
+            using (var blockhash = SecureArray<byte>.Best(PrehashSeedLength, this.config.SecureArrayCall))
             {
                 using (var initialHash = this.InitialHash())
                 {
@@ -47,7 +34,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> InitialHash()
         {
-            var ret = BestSecureArray<byte>(Blake2B.OutputLength, this.config.SecureArrayCall);
+            var ret = SecureArray<byte>.Best(Blake2B.OutputLength, this.config.SecureArrayCall);
             using (var blakeHash =
                 Blake2B.Create(
                     new Blake2BConfig
@@ -114,7 +101,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private void FillFirstBlocks(byte[] blockhash)
         {
-            using (var blockhashBytes = BestSecureArray<byte>(BlockSize, this.config.SecureArrayCall))
+            using (var blockhashBytes = SecureArray<byte>.Best(BlockSize, this.config.SecureArrayCall))
             {
                 for (int l = 0; l < this.config.Lanes; ++l)
                 {
@@ -224,7 +211,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private SecureArray<byte> Final()
         {
-            using (var blockhashBuffer = BestSecureArray<ulong>(BlockSize / 8, this.config.SecureArrayCall))
+            using (var blockhashBuffer = SecureArray<ulong>.Best(BlockSize / 8, this.config.SecureArrayCall))
             {
                 var blockhash = new BlockValues(blockhashBuffer.Buffer, 0);
                 blockhash.Copy(this.Memory[this.LaneLength - 1]);
@@ -235,10 +222,10 @@ namespace Isopoh.Cryptography.Argon2
                     blockhash.Xor(this.Memory[(l * this.LaneLength) + (this.LaneLength - 1)]);
                 }
 
-                using (var blockhashBytes = BestSecureArray<byte>(BlockSize, this.config.SecureArrayCall))
+                using (var blockhashBytes = SecureArray<byte>.Best(BlockSize, this.config.SecureArrayCall))
                 {
                     StoreBlock(blockhashBytes.Buffer, blockhash);
-                    var ret = BestSecureArray<byte>(this.config.HashLength, this.config.SecureArrayCall);
+                    var ret = SecureArray<byte>.Best(this.config.HashLength, this.config.SecureArrayCall);
                     Blake2BLong(ret.Buffer, blockhashBytes.Buffer, this.config.SecureArrayCall);
                     PrintTag(ret.Buffer);
                     return ret;
@@ -248,7 +235,9 @@ namespace Isopoh.Cryptography.Argon2
 
         private void FillSegment(Position position)
         {
-            bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing;
+            bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing ||
+                                             (this.config.Type == Argon2Type.HybridAddressing && position.Pass == 0 &&
+                                              position.Slice < SyncPoints / 2);
             var pseudoRands = new ulong[this.SegmentLength];
             if (dataIndependentAddressing)
             {

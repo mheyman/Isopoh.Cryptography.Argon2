@@ -64,7 +64,7 @@ namespace Isopoh.Cryptography.Argon2
         private static void FillBlock(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock)
         {
             // TODO: figure out and lift the code from Blake2BCore-FullyUnrolled.cs
-            var buf = new ulong[Argon2.QwordsInBlock * 2];
+            var buf = new ulong[QwordsInBlock * 2];
             var blockR = new BlockValues(buf, 0);
             var blockTmp = new BlockValues(buf, 1);
             blockR.Copy(refBlock);
@@ -191,7 +191,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private static void FillBlockWithXor(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock)
         {
-            var buf = new ulong[Argon2.QwordsInBlock * 2];
+            var buf = new ulong[QwordsInBlock * 2];
             var blockR = new BlockValues(buf, 0);
             var blockTmp = new BlockValues(buf, 1);
             blockR.Copy(refBlock);

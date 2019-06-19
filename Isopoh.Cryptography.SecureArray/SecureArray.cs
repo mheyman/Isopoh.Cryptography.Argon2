@@ -36,7 +36,7 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(float), sizeof(float) },
                     { typeof(double), sizeof(double) },
                     { typeof(decimal), sizeof(decimal) },
-                    { typeof(bool), sizeof(bool) }
+                    { typeof(bool), sizeof(bool) },
                 };
 
         private static readonly object DefaultCallLock = new object();
@@ -48,13 +48,15 @@ namespace Isopoh.Cryptography.SecureArray
 
         static SecureArray()
         {
+            // Console.WriteLine("SecureArray static constructor");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureArray"/> class.
         /// </summary>
         /// <param name="call">
-        /// The methods that get called to secure the array. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// The methods that get called to secure the array. A null value defaults
+        /// to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
         /// <remarks>
         /// You cannot create a <see cref="SecureArray"/> directly, you must
@@ -127,7 +129,16 @@ namespace Isopoh.Cryptography.SecureArray
         }
 
         /// <summary>
-        /// Gets or sets the methods that get called to secure the array
+        /// Gets the <see cref="SecureArrayType"/> of protection this <see cref="SecureArray"/> has.
+        /// </summary>
+        public SecureArrayType ProtectionType => this.virtualLocked
+            ? SecureArrayType.ZeroedPinnedAndNoSwap
+            : this.handle == default(GCHandle)
+                ? SecureArrayType.Zeroed
+                : SecureArrayType.ZeroedAndPinned;
+
+        /// <summary>
+        /// Gets or sets the methods that get called to secure the array.
         /// </summary>
         public SecureArrayCall Call { get; set; }
 
@@ -238,7 +249,6 @@ namespace Isopoh.Cryptography.SecureArray
         /// </exception>
         protected void Init<T>(T[] buf, SecureArrayType type)
         {
-            var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
             if (type == SecureArrayType.ZeroedAndPinned || type == SecureArrayType.ZeroedPinnedAndNoSwap)
             {
                 var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
@@ -246,6 +256,7 @@ namespace Isopoh.Cryptography.SecureArray
                 {
                     if (type == SecureArrayType.ZeroedPinnedAndNoSwap)
                     {
+                        var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
                         IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
                         UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
                         this.Call.ZeroMemory(bufPtr, cnt);

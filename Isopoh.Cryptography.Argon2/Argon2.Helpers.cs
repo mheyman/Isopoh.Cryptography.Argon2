@@ -10,10 +10,11 @@ namespace Isopoh.Cryptography.Argon2
     using System.Security.Cryptography;
     using System.Text;
 
-    using SecureArray;
+    // ReSharper disable once RedundantNameQualifier
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {
@@ -55,7 +56,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The parallelism to use. Default to 1 (single threaded).
         /// </param>
         /// <param name="type">
-        /// Data-dependent or data-independent. Defaults to data-independent
+        /// Data-dependent, data-independent, or hybrid. Defaults to hybrid
         /// (as recommended for password hashing).
         /// </param>
         /// <param name="hashLength">
@@ -75,7 +76,7 @@ namespace Isopoh.Cryptography.Argon2
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
-            Argon2Type type = Argon2Type.DataIndependentAddressing,
+            Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
             SecureArrayCall secureArrayCall = null)
         {
@@ -92,7 +93,8 @@ namespace Isopoh.Cryptography.Argon2
                     Secret = secret,
                     Salt = salt,
                     HashLength = hashLength,
-                    Version = Argon2Version.Nineteen
+                    Version = Argon2Version.Nineteen,
+                    Type = type,
                 });
         }
 
@@ -116,7 +118,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The parallelism to use. Default to 1 (single threaded).
         /// </param>
         /// <param name="type">
-        /// Data-dependent or data-independent. Defaults to data-independent
+        /// Data-dependent, data-independent, or hybrid. Defaults to hybrid
         /// (as recommended for password hashing).
         /// </param>
         /// <param name="hashLength">
@@ -136,13 +138,13 @@ namespace Isopoh.Cryptography.Argon2
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
-            Argon2Type type = Argon2Type.DataIndependentAddressing,
+            Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
             SecureArrayCall secureArrayCall = null)
         {
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
-                                : new SecureArray<byte>(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+                                : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
             try
             {
                 if (secretBuf != null)
@@ -150,7 +152,7 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
+                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
                 {
                     Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
                     return Hash(
@@ -186,7 +188,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The parallelism to use. Default to 1 (single threaded).
         /// </param>
         /// <param name="type">
-        /// Data-dependent or data-independent. Defaults to data-independent
+        /// Data-dependent, data-independent, or hybrid. Defaults to hybrid
         /// (as recommended for password hashing).
         /// </param>
         /// <param name="hashLength">
@@ -205,7 +207,7 @@ namespace Isopoh.Cryptography.Argon2
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
-            Argon2Type type = Argon2Type.DataIndependentAddressing,
+            Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
             SecureArrayCall secureArrayCall = null)
         {
@@ -257,7 +259,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
         /// </param>
         /// <param name="password">
-        /// The password to verify
+        /// The password to verify.
         /// </param>
         /// <param name="secret">
         /// The secret hashed into the password.
@@ -278,7 +280,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 Password = password,
                 Secret = secret,
-                SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall
+                SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
             };
 
             return Verify(encoded, configToVerify);
@@ -291,7 +293,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
         /// </param>
         /// <param name="password">
-        /// The password to verify
+        /// The password to verify.
         /// </param>
         /// <param name="secureArrayCall">
         /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
@@ -334,7 +336,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
-                                : new SecureArray<byte>(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+                                : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
 
             try
             {
@@ -343,7 +345,7 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = new SecureArray<byte>(Encoding.UTF8.GetByteCount(password), secureArrayCall))
+                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
                 {
                     Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
                     return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);

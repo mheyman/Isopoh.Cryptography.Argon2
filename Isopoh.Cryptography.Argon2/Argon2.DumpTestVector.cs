@@ -33,6 +33,9 @@ namespace Isopoh.Cryptography.Argon2
                         case Argon2Type.DataIndependentAddressing:
                             sout.WriteLine($"Argon2i version number {(int)hasher.config.Version}");
                             break;
+                        case Argon2Type.HybridAddressing:
+                            sout.WriteLine($"Argon2id version number {(int)hasher.config.Version}");
+                            break;
                     }
 
                     sout.WriteLine("=======================================");

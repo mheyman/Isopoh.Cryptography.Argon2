@@ -50,10 +50,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </exception>
         public byte[] Personalization
         {
-            get
-            {
-                return this.personalization;
-            }
+            get => this.personalization;
 
             set
             {
@@ -74,10 +71,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </exception>
         public byte[] Salt
         {
-            get
-            {
-                return this.salt;
-            }
+            get => this.salt;
 
             set
             {
@@ -102,10 +96,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </exception>
         public byte[] Key
         {
-            get
-            {
-                return this.key;
-            }
+            get => this.key;
 
             set
             {
@@ -134,10 +125,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </remarks>
         public int OutputSizeInBytes
         {
-            get
-            {
-                return this.outputSizeInBytes;
-            }
+            get => this.outputSizeInBytes;
 
             set
             {
@@ -150,6 +138,7 @@ namespace Isopoh.Cryptography.Blake2b
             }
         }
 
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Gets or sets the output size in bits. Must be a multiple of 8.
         /// </summary>
@@ -158,10 +147,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </exception>
         public int OutputSizeInBits
         {
-            get
-            {
-                return this.OutputSizeInBytes * 8;
-            }
+            get => this.OutputSizeInBytes * 8;
 
             set
             {
@@ -184,10 +170,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </exception>
         public byte[] Result64ByteBuffer
         {
-            get
-            {
-                return this.outputBuffer;
-            }
+            get => this.outputBuffer;
 
             set
             {

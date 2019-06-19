@@ -8,8 +8,8 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-using System;
 
+// ReSharper disable once EmptyNamespace
 namespace Isopoh.Cryptography.Blake2b
 {
 #if false

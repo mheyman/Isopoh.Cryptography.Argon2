@@ -31,12 +31,17 @@ namespace Isopoh.Cryptography.Argon2
         /// Use data-dependent addressing. This is faster but susceptible to
         /// side-channel attacks.
         /// </summary>
-        DataDependentAddressing,
+        DataDependentAddressing = 0,
 
         /// <summary>
         /// Use data-independent addressing. This is slower and recommended for password
         /// hashing and password-based key derivation.
         /// </summary>
-        DataIndependentAddressing
+        DataIndependentAddressing = 1,
+
+        /// <summary>
+        /// Use a hybrid of data-dependent and data-independent addressing.
+        /// </summary>
+        HybridAddressing = 2,
     }
 }

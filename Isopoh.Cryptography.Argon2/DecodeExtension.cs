@@ -37,7 +37,7 @@ namespace Isopoh.Cryptography.Argon2
         /// Expected format:
         /// </para>
         /// <para>
-        /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]]
+        /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
         /// </para>
         /// <para>
         /// where &lt;T> is either 'd' or 'i', &lt;num> is a decimal integer (positive, fits in
@@ -58,7 +58,12 @@ namespace Isopoh.Cryptography.Argon2
         {
             int pos;
             Argon2Type type;
-            if (str.StartsWith("$argon2i"))
+            if (str.StartsWith("$argon2id"))
+            {
+                type = Argon2Type.HybridAddressing;
+                pos = 9;
+            }
+            else if (str.StartsWith("$argon2i"))
             {
                 type = Argon2Type.DataIndependentAddressing;
                 pos = 8;
@@ -81,8 +86,7 @@ namespace Isopoh.Cryptography.Argon2
                 if (string.Compare(str, pos, check, 0, check.Length) == 0)
                 {
                     pos += check.Length;
-                    uint decX;
-                    pos = DecodeDecimal(str, pos, out decX);
+                    pos = DecodeDecimal(str, pos, out var decX);
                     if (pos < 0)
                     {
                         hash = null;
@@ -93,24 +97,21 @@ namespace Isopoh.Cryptography.Argon2
                 }
             }
 
-            uint memoryCost;
-            pos = DecodeDecimal(out memoryCost, "$m=", str, pos);
+            pos = DecodeDecimal(out var memoryCost, "$m=", str, pos);
             if (pos < 0)
             {
                 hash = null;
                 return false;
             }
 
-            uint timeCost;
-            pos = DecodeDecimal(out timeCost, ",t=", str, pos);
+            pos = DecodeDecimal(out var timeCost, ",t=", str, pos);
             if (pos < 0)
             {
                 hash = null;
                 return false;
             }
 
-            uint lanes;
-            pos = DecodeDecimal(out lanes, ",p=", str, pos);
+            pos = DecodeDecimal(out var lanes, ",p=", str, pos);
             if (pos < 0)
             {
                 hash = null;
@@ -160,8 +161,7 @@ namespace Isopoh.Cryptography.Argon2
                 return true;
             }
 
-            byte[] salt;
-            pos = DecodeBase64(out salt, "$", str, pos);
+            pos = DecodeBase64(out var salt, "$", str, pos);
             if (pos < 0)
             {
                 hash = null;
@@ -288,9 +288,9 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Decode Base64 chars into bytes.
         /// </summary>
-        /// <param name="dst">results stored here</param>
-        /// <param name="src">to decode</param>
-        /// <param name="pos">where to start decoding from</param>
+        /// <param name="dst">results stored here.</param>
+        /// <param name="src">to decode.</param>
+        /// <param name="pos">where to start decoding from.</param>
         /// <returns>
         /// Next position in src to look at.
         /// </returns>
@@ -340,7 +340,7 @@ namespace Isopoh.Cryptography.Argon2
              * otherwise, only 0, 2 or 4 bits are buffered. The buffered
              * bits must also all be zero.
              */
-            if (accLen > 4 || (acc & (((uint)1 << (int)accLen) - 1)) != 0)
+            if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 dst = null;
                 return -1;
@@ -353,9 +353,9 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Decode Base64 chars into bytes.
         /// </summary>
-        /// <param name="dst">results stored here</param>
-        /// <param name="src">to decode</param>
-        /// <param name="pos">where to start decoding from</param>
+        /// <param name="dst">results stored here.</param>
+        /// <param name="src">to decode.</param>
+        /// <param name="pos">where to start decoding from.</param>
         /// <returns>
         /// Next position in src to look at.
         /// </returns>
@@ -411,7 +411,7 @@ namespace Isopoh.Cryptography.Argon2
              * otherwise, only 0, 2 or 4 bits are buffered. The buffered
              * bits must also all be zero.
              */
-            if (accLen > 4 || (acc & (((uint)1 << (int)accLen) - 1)) != 0)
+            if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 return -1;
             }
@@ -422,8 +422,8 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Decode Base64 chars into bytes.
         /// </summary>
-        /// <param name="src">to decode</param>
-        /// <param name="pos">where to start decoding from</param>
+        /// <param name="src">to decode.</param>
+        /// <param name="pos">where to start decoding from.</param>
         /// <returns>
         /// The length of the buffer needed to hold the decoded value.
         /// </returns>
@@ -473,7 +473,7 @@ namespace Isopoh.Cryptography.Argon2
              * otherwise, only 0, 2 or 4 bits are buffered. The buffered
              * bits must also all be zero.
              */
-            if (accLen > 4 || (acc & (((uint)1 << (int)accLen) - 1)) != 0)
+            if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 return -1;
             }
@@ -485,8 +485,8 @@ namespace Isopoh.Cryptography.Argon2
         /// Convert character c to the corresponding 6-bit value. If
         /// character c is not a Base64 character, then 0xFF (255) is returned.
         /// </summary>
-        /// <param name="c">to convert</param>
-        /// <returns>converted value</returns>
+        /// <param name="c">to convert.</param>
+        /// <returns>converted value.</returns>
         private static uint Base64CharToByte(int c)
         {
             // constant time (although I don't think that is important here)
@@ -505,11 +505,11 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Decode decimal integer from <paramref name="str"/> with the given prefix <paramref name="check"/>.
         /// </summary>
-        /// <param name="dst">the decoded value</param>
-        /// <param name="check">the expected prefix</param>
-        /// <param name="str">where to decode from</param>
-        /// <param name="pos">where to start decoding</param>
-        /// <returns>the next position to look at; -1 on failure</returns>
+        /// <param name="dst">the decoded value.</param>
+        /// <param name="check">the expected prefix.</param>
+        /// <param name="str">where to decode from.</param>
+        /// <param name="pos">where to start decoding.</param>
+        /// <returns>the next position to look at; -1 on failure.</returns>
         private static int DecodeDecimal(out uint dst, string check, string str, int pos)
         {
             if (string.Compare(str, pos, check, 0, check.Length) != 0)
@@ -525,10 +525,10 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Decode decimal integer from <paramref name="str"/>.
         /// </summary>
-        /// <param name="str">where to decode from</param>
-        /// <param name="pos">where to start decoding</param>
-        /// <param name="val">the decoded value</param>
-        /// <returns>the next position to look at; -1 on failure</returns>
+        /// <param name="str">where to decode from.</param>
+        /// <param name="pos">where to start decoding.</param>
+        /// <param name="val">the decoded value.</param>
+        /// <returns>the next position to look at; -1 on failure.</returns>
         private static int DecodeDecimal(string str, int pos, out uint val)
         {
             int i = pos;
