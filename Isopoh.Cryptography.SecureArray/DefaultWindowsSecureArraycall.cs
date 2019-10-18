@@ -309,8 +309,9 @@ namespace Isopoh.Cryptography.SecureArray
             uint minWorkingSetSize,
             uint maxWorkingSetSize,
             uint flags);
-
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
+        // FROM https://github.com/dotnet/coreclr/pull/5554/commits/2a1187d9344639cc343d1e227ee03c6d1eb1e9ca
+        //[DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
+        [DllImport("ntdll.dll", CallingConvention = CallingConvention.Winapi)]
         private static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
 
         [DllImport(
