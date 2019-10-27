@@ -249,37 +249,48 @@ namespace Isopoh.Cryptography.Test
         public void TestSecureArray()
         {
             int size = 100;
-            int max = int.MaxValue;
-            int prev = size;
-            for (;;)
+            int smallestFailedSize = int.MaxValue;
+            int largestSuccessfulSize = size;
+            while (true)
             {
                 try
                 {
-                    using (new SecureArray<ulong>(size, SecureArray.DefaultCall))
+                    using (new SecureArray<byte>(size, SecureArray.DefaultCall))
                     {
-                        this.output.WriteLine($"Passed size={size}");
-                        if (size == max)
+                        this.output.WriteLine($"SecureArray: Passed size={size}");
+                        if (size == smallestFailedSize)
                         {
                             break;
                         }
 
-                        prev = size;
+                        largestSuccessfulSize = size;
                         long tmp = size;
-                        tmp += max;
+                        tmp += smallestFailedSize;
                         tmp /= 2;
                         size = (int)tmp;
                     }
                 }
-                catch (Exception)
+
+                // ReSharper disable once CatchAllClause
+                catch (Exception e)
                 {
-                    this.output.WriteLine($"Failed size={size}");
-                    max = size;
-                    long tmp = prev;
-                    tmp += max;
+                    this.output.WriteLine($"SecureArray: Failed size={size}: {e.Message}");
+
+                    smallestFailedSize = size;
+                    long tmp = largestSuccessfulSize;
+                    tmp += smallestFailedSize;
                     tmp /= 2;
                     size = (int)tmp;
+
+                    if (smallestFailedSize <= largestSuccessfulSize)
+                    {
+                        size = largestSuccessfulSize;
+                        break;
+                    }
                 }
             }
+
+            this.output.WriteLine($"SecureArray: Made a {size}-byte secure array");
         }
 
         /// <summary>

@@ -8,10 +8,10 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
-    using SecureArray;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2 : IDisposable
     {
@@ -53,12 +53,12 @@ namespace Isopoh.Cryptography.Argon2
         public int MemoryBlockCount { get; }
 
         /// <summary>
-        /// Gets the segment length
+        /// Gets the segment length.
         /// </summary>
         public int SegmentLength { get; }
 
         /// <summary>
-        /// Gets the lane length
+        /// Gets the lane length.
         /// </summary>
         public int LaneLength { get; }
 

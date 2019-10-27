@@ -7,7 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {
@@ -17,12 +17,12 @@ namespace Isopoh.Cryptography.Argon2
         public const int BlockSize = 1024;
 
         /// <summary>
-        /// The number of 8-byte words in an Argon2 block
+        /// The number of 8-byte words in an Argon2 block.
         /// </summary>
         public const int QwordsInBlock = BlockSize / 8;
 
         /// <summary>
-        /// The number of bytes hashed in initializing Argon2
+        /// The number of bytes hashed in initializing Argon2.
         /// </summary>
         public const int PrehashDigestLength = 64;
 
@@ -32,7 +32,7 @@ namespace Isopoh.Cryptography.Argon2
         public const int PrehashSeedLength = 72;
 
         /// <summary>
-        /// Number of synchronization points between lanes per pass
+        /// Number of synchronization points between lanes per pass.
         /// </summary>
         public const int SyncPoints = 4;
     }

@@ -70,7 +70,7 @@ namespace Isopoh.Cryptography.SecureArray
         ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
         /// <remarks>
-        /// Uses <see cref="SecureArrayType"/>.<see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>
+        /// Uses <see cref="SecureArrayType"/>.<see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>.
         /// </remarks>
         public SecureArray(int size, SecureArrayCall call)
             : base(call)

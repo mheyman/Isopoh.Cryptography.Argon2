@@ -7,7 +7,6 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
-    using System.Globalization;
     using System.Text;
 
     /// <summary>
@@ -16,7 +15,7 @@ namespace Isopoh.Cryptography.Argon2
     public static class EncodeExtension
     {
         private static readonly int[] B64Extra = { 0, 2, 3 };
-        private static readonly char[] b64Chars =
+        private static readonly char[] B64Chars =
         {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
@@ -26,7 +25,6 @@ namespace Isopoh.Cryptography.Argon2
             'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7',
             '8', '9', '+', '/',
         };
-
 
         /// <summary>
         /// Encodes an Argon2 instance into a string.
@@ -134,10 +132,10 @@ namespace Isopoh.Cryptography.Argon2
                 int c1 = buf[i];
                 int c2 = buf[++i];
                 int c3 = buf[++i];
-                ret.Append(b64Chars[(c1 & 0xFC) >> 2]);
-                ret.Append(b64Chars[((c1 & 0x03) << 4) | ((c2 & 0xF0) >> 4)]);
-                ret.Append(b64Chars[((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6)]);
-                ret.Append(b64Chars[c3 & 0x3F]);
+                ret.Append(B64Chars[(c1 & 0xFC) >> 2]);
+                ret.Append(B64Chars[((c1 & 0x03) << 4) | ((c2 & 0xF0) >> 4)]);
+                ret.Append(B64Chars[((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6)]);
+                ret.Append(B64Chars[c3 & 0x3F]);
             }
 
             switch (lengthMod3)
@@ -145,14 +143,14 @@ namespace Isopoh.Cryptography.Argon2
                 case 2:
                     int c1 = buf[i];
                     int c2 = buf[++i];
-                    ret.Append(b64Chars[(c1 & 0xFC) >> 2]);
-                    ret.Append(b64Chars[((c1 & 0x03) << 4) | ((c2 & 0xF0) >> 4)]);
-                    ret.Append(b64Chars[(c2 & 0xF) << 2]);
+                    ret.Append(B64Chars[(c1 & 0xFC) >> 2]);
+                    ret.Append(B64Chars[((c1 & 0x03) << 4) | ((c2 & 0xF0) >> 4)]);
+                    ret.Append(B64Chars[(c2 & 0xF) << 2]);
                     break;
                 case 1:
                     c1 = buf[i];
-                    ret.Append(b64Chars[(c1 & 0xFC) >> 2]);
-                    ret.Append(b64Chars[(c1 & 0x03) << 4]);
+                    ret.Append(B64Chars[(c1 & 0xFC) >> 2]);
+                    ret.Append(B64Chars[(c1 & 0x03) << 4]);
                     break;
             }
 

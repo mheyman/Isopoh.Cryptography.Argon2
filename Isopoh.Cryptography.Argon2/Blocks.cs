@@ -9,7 +9,7 @@ namespace Isopoh.Cryptography.Argon2
     using System.Linq;
 
     /// <summary>
-    /// Break a byte array into blocks for Argon2 to use
+    /// Break a byte array into blocks for Argon2 to use.
     /// </summary>
     public class Blocks
     {

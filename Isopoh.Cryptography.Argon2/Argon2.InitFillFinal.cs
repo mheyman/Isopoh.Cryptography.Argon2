@@ -10,11 +10,11 @@ namespace Isopoh.Cryptography.Argon2
     using System.Linq;
     using System.Threading;
 
-    using Blake2b;
-    using SecureArray;
+    using Isopoh.Cryptography.Blake2b;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {
@@ -40,7 +40,7 @@ namespace Isopoh.Cryptography.Argon2
                     new Blake2BConfig
                     {
                         OutputSizeInBytes = PrehashDigestLength,
-                        Result64ByteBuffer = ret.Buffer
+                        Result64ByteBuffer = ret.Buffer,
                     },
                     this.config.SecureArrayCall))
             {
@@ -126,7 +126,7 @@ namespace Isopoh.Cryptography.Argon2
                         Pass = pass,
                         Lane = lane,
                         Slice = slice,
-                        Index = 0
+                        Index = 0,
                     });
                 are.Set();
             });
@@ -199,7 +199,7 @@ namespace Isopoh.Cryptography.Argon2
                                     Pass = passNumber,
                                     Lane = laneNumber,
                                     Slice = sliceNumber,
-                                    Index = 0
+                                    Index = 0,
                                 });
                         }
                     }

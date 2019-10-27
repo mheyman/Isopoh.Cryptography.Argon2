@@ -45,7 +45,7 @@ namespace Isopoh.Cryptography.SecureArray
             ref ulong maxWorkingSetSize,
             ref uint flags);
 
-        private bool Is32BitSubsystem
+        private static bool Is32BitSubsystem
         {
             get
             {
@@ -71,8 +71,7 @@ namespace Isopoh.Cryptography.SecureArray
                                 {
                                     if (GetProcAddress(kernelModuleHandle, "IsWow64Process") == IntPtr.Zero)
                                     {
-                                        is32BitSubsystem =
-                                            true; // kernel32.dll in 32-bit OS doesn't have IsWowProcess()
+                                        is32BitSubsystem = true; // kernel32.dll in 32-bit OS doesn't have IsWowProcess()
                                     }
                                     else
                                     {
@@ -82,7 +81,6 @@ namespace Isopoh.Cryptography.SecureArray
                                     }
                                 }
                             }
-
                         }
                     }
                 }
@@ -92,7 +90,73 @@ namespace Isopoh.Cryptography.SecureArray
         }
 
         /// <summary>
-        /// Gets a delegate GetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems
+        /// Gets a delegate VirtualAlloc() that works on 32-bit or 64-bit operating systems.
+        /// </summary>
+        private Func<IntPtr, ulong, uint, uint, IntPtr> VirtualAlloc
+        {
+            get
+            {
+                if (virtualAlloc == null)
+                {
+                    lock (VirtualAllocLock)
+                    {
+                        if (virtualAlloc == null)
+                        {
+                            virtualAlloc = Is32BitSubsystem
+                                ? (lpAddress, size, allocationTypeFlags, protectFlags) =>
+                                {
+                                    if (size > uint.MaxValue)
+                                    {
+                                        SetLastError(8); // ERROR_NOT_ENOUGH_MEMORY
+                                        return IntPtr.Zero;
+                                    }
+
+                                    return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
+                                }
+                                : (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64;
+                        }
+                    }
+                }
+
+                return virtualAlloc;
+            }
+        }
+
+        /// <summary>
+        /// Gets a delegate SetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems.
+        /// </summary>
+        private Func<IntPtr, ulong, ulong, uint, bool> SetProcessWorkingSetSizeEx
+        {
+            get
+            {
+                if (setProcessWorkingSetSize == null)
+                {
+                    lock (SetProcessWorkingSetSizeLock)
+                    {
+                        if (setProcessWorkingSetSize == null)
+                        {
+                            setProcessWorkingSetSize = Is32BitSubsystem
+                                ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
+                                {
+                                    uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
+                                    uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
+                                    return SetProcessWorkingSetSizeEx32(
+                                        processHandle,
+                                        min,
+                                        max,
+                                        flags);
+                                })
+                                : (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64;
+                        }
+                    }
+                }
+
+                return setProcessWorkingSetSize;
+            }
+        }
+
+        /// <summary>
+        /// Gets a delegate GetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems.
         /// </summary>
         private GetProcessWorkingSetSizeExDelegate GetProcessWorkingSetSizeEx
         {
@@ -105,7 +169,7 @@ namespace Isopoh.Cryptography.SecureArray
                         if (getProcessWorkingSetSize == null)
                         {
                             getProcessWorkingSetSize =
-                                this.Is32BitSubsystem
+                                Is32BitSubsystem
                                     ? GetProcessWorkingSetSizeEx32Wrapper
                                     : (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64;
                         }
@@ -114,136 +178,6 @@ namespace Isopoh.Cryptography.SecureArray
 
                 return getProcessWorkingSetSize;
             }
-        }
-
-        /// <summary>
-        /// Gets a delegate SetProcessWorkingSetSizeEx() that works on 32-bit or 64-bit operating systems
-        /// </summary>
-        private Func<IntPtr, ulong, ulong, uint, bool> SetProcessWorkingSetSizeEx
-        {
-            get
-            {
-                if (setProcessWorkingSetSize == null)
-                {
-                    lock (SetProcessWorkingSetSizeLock)
-                    {
-                        if (setProcessWorkingSetSize == null)
-                        {
-                            setProcessWorkingSetSize = this.Is32BitSubsystem
-                                                           ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
-                                                                     {
-                                                                         uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
-                                                                         uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
-                                                                         return SetProcessWorkingSetSizeEx32(
-                                                                             processHandle,
-                                                                             min,
-                                                                             max,
-                                                                             flags);
-                                                                     })
-                                                           : (Func<IntPtr, ulong, ulong, uint, bool>)
-                                                           SetProcessWorkingSetSizeEx64;
-                        }
-                    }
-                }
-
-                return setProcessWorkingSetSize;
-            }
-        }
-
-        /// <summary>
-        /// Gets a delegate VirtualAlloc() that works on 32-bit or 64-bit operating systems
-        /// </summary>
-        // ReSharper disable once UnusedMember.Local
-        private Func<IntPtr, ulong, uint, uint, IntPtr> VirtualAlloc {
-            get
-            {
-                if (virtualAlloc == null)
-                {
-                    lock (VirtualAllocLock)
-                    {
-                        if (virtualAlloc == null)
-                        {
-                            virtualAlloc = this.Is32BitSubsystem
-                                               ? (lpAddress, size, allocationTypeFlags, protectFlags) =>
-                                                   {
-                                                       if (size > uint.MaxValue)
-                                                       {
-                                                           SetLastError(8); // ERROR_NOT_ENOUGH_MEMORY
-                                                           return IntPtr.Zero;
-                                                       }
-
-                                                       return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
-                                                   }
-                                               : (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64;
-                        }
-                    }
-                }
-
-                return virtualAlloc;
-            }
-        }
-
-        private static ulong GetWorkingSetSize(IntPtr processHandle)
-        {
-            // ReSharper disable once InlineOutVariableDeclaration
-            var memoryCounters =
-                new ProcessMemoryCounters { Cb = (uint)Marshal.SizeOf<ProcessMemoryCounters>() };
-
-            return GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb)
-                       ? memoryCounters.WorkingSetSize
-                       : 0;
-        }
-
-        private string WindowsLockMemory(IntPtr m, UIntPtr l)
-        {
-            IntPtr processHandle = GetCurrentProcess();
-            ulong prevMinVal = 0;
-            ulong prevMaxVal = 0;
-            uint prevFlags = 0;
-            if (!this.GetProcessWorkingSetSizeEx(processHandle, ref prevMinVal, ref prevMaxVal, ref prevFlags))
-            {
-                return $"Failed to get process working set size: Error: code={Marshal.GetLastWin32Error()}.";
-            }
-
-            ulong prevCur = GetWorkingSetSize(processHandle);
-
-            var newMaxWorkingSetSize = (ulong)((prevCur + l.ToUInt64()) * 1.2);
-            if (!this.SetProcessWorkingSetSizeEx(processHandle, prevMinVal, newMaxWorkingSetSize, prevFlags))
-            {
-                var errcode = Marshal.GetLastWin32Error();
-                return
-                    $"Failed to set process working set size to {newMaxWorkingSetSize} (min={prevMinVal}, max={prevMaxVal}, flags={prevFlags}, cur={prevCur}) bytes at 0x{m.ToInt64():X8}. Error: code={errcode}.";
-            }
-
-            ulong cur = GetWorkingSetSize(processHandle);
-
-            ulong minVal = 0;
-            ulong maxVal = 0;
-            uint flags = 0;
-            if (!this.GetProcessWorkingSetSizeEx(processHandle, ref minVal, ref maxVal, ref flags))
-            {
-                var errcode = Marshal.GetLastWin32Error();
-                return $"Failed to get process working set size: Error: code={errcode}.";
-            }
-
-            ////VirtualQuery(m, out MemoryBasicInformation mbi, (uint)Marshal.SizeOf<MemoryBasicInformation>());
-
-            ////if (VirtualAlloc(m, l.ToUInt64(), 0x00001000, 0x04).ToInt64() == 0)
-            ////{
-            ////    var errcode = Marshal.GetLastWin32Error();
-            ////    return $"Failed to commit {l.ToUInt64()} bytes at 0x{m.ToInt64():X8}: Error: code={errcode}.";
-            ////}
-
-            if (!VirtualLock(m, l))
-            {
-                var errcode = Marshal.GetLastWin32Error();
-                var err = errcode == 1453 ? "Insufficient quota to complete the requested service" : $"code={errcode}";
-                return $"Failed to securely lock {l.ToUInt64()} (prevMin={prevMinVal}, min={minVal}, "
-                       + $"prevMax={prevMaxVal}, max={maxVal}, prevFlags={prevFlags}, flags={flags}, "
-                       + $"prevCur={prevCur}, cur={cur}) bytes at 0x{m.ToInt64():X8}. Error: {err}.";
-            }
-
-            return null;
         }
 
         [DllImport("psapi.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
@@ -355,32 +289,130 @@ namespace Isopoh.Cryptography.SecureArray
         private static extern bool IsWow64Process(IntPtr hProcess, out bool wow64Process);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        // ReSharper disable once UnusedMember.Local
         private static extern int VirtualQuery(IntPtr lpAddress, out MemoryBasicInformation lpBuffer, uint dwLength);
 
+        private static ulong GetWorkingSetSize(IntPtr processHandle)
+        {
+            // ReSharper disable once InlineOutVariableDeclaration
+            var memoryCounters =
+                new ProcessMemoryCounters { Cb = (uint)Marshal.SizeOf<ProcessMemoryCounters>() };
+
+            return GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb)
+                       ? memoryCounters.WorkingSetSize
+                       : 0;
+        }
+
+        private string WindowsLockMemory(IntPtr m, UIntPtr l)
+        {
+            IntPtr processHandle = GetCurrentProcess();
+            ulong prevMinVal = 0;
+            ulong prevMaxVal = 0;
+            uint prevFlags = 0;
+            if (!this.GetProcessWorkingSetSizeEx(processHandle, ref prevMinVal, ref prevMaxVal, ref prevFlags))
+            {
+                return $"Failed to get process working set size: Error: code={Marshal.GetLastWin32Error()}.";
+            }
+
+            ulong prevCur = GetWorkingSetSize(processHandle);
+
+            var newMaxWorkingSetSize = (ulong)((prevCur + l.ToUInt64()) * 1.2);
+            if (!this.SetProcessWorkingSetSizeEx(processHandle, prevMinVal, newMaxWorkingSetSize, prevFlags))
+            {
+                var errcode = Marshal.GetLastWin32Error();
+                return
+                    $"Failed to set process working set size to {newMaxWorkingSetSize} (min={prevMinVal}, max={prevMaxVal}, flags={prevFlags}, cur={prevCur}) bytes at 0x{m.ToInt64():X8}. Error: code={errcode}.";
+            }
+
+            ulong cur = GetWorkingSetSize(processHandle);
+
+            ulong minVal = 0;
+            ulong maxVal = 0;
+            uint flags = 0;
+            if (!this.GetProcessWorkingSetSizeEx(processHandle, ref minVal, ref maxVal, ref flags))
+            {
+                var errcode = Marshal.GetLastWin32Error();
+                return $"Failed to get process working set size: Error: code={errcode}.";
+            }
+
+            ////VirtualQuery(m, out MemoryBasicInformation mbi, (uint)Marshal.SizeOf<MemoryBasicInformation>());
+
+            ////if (VirtualAlloc(m, l.ToUInt64(), 0x00001000, 0x04).ToInt64() == 0)
+            ////{
+            ////    var errcode = Marshal.GetLastWin32Error();
+            ////    return $"Failed to commit {l.ToUInt64()} bytes at 0x{m.ToInt64():X8}: Error: code={errcode}.";
+            ////}
+
+            if (!VirtualLock(m, l))
+            {
+                var errcode = Marshal.GetLastWin32Error();
+                var err = errcode == 1453 ? "Insufficient quota to complete the requested service" : $"code={errcode}";
+                return $"Failed to securely lock {l.ToUInt64()} (prevMin={prevMinVal}, min={minVal}, "
+                       + $"prevMax={prevMaxVal}, max={maxVal}, prevFlags={prevFlags}, flags={flags}, "
+                       + $"prevCur={prevCur}, cur={cur}) bytes at 0x{m.ToInt64():X8}. Error: {err}.";
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Contains the memory statistics for a process.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Size = 72)]
-        public  struct ProcessMemoryCounters
+        public struct ProcessMemoryCounters
         {
             // ReSharper disable FieldCanBeMadeReadOnly.Local
             // ReSharper disable MemberCanBePrivate.Local
+
+            /// <summary>
+            /// The size of the structure in bytes.
+            /// </summary>
             public uint Cb;
 
+            /// <summary>
+            /// The number of page faults.
+            /// </summary>
             public uint PageFaultCount;
 
+            /// <summary>
+            /// The peak working set size, in bytes.
+            /// </summary>
             public ulong PeakWorkingSetSize;
 
+            /// <summary>
+            /// The current working set size, in bytes.
+            /// </summary>
             public ulong WorkingSetSize;
 
+            /// <summary>
+            /// The peak paged pool usage, in bytes.
+            /// </summary>
             public ulong QuotaPeakPagedPoolUsage;
 
+            /// <summary>
+            /// The current paged pool usage, in bytes.
+            /// </summary>
             public ulong QuotaPagedPoolUsage;
 
+            /// <summary>
+            /// The peak non-paged pool usage, in bytes.
+            /// </summary>
             public ulong QuotaPeakNonPagedPoolUsage;
 
+            /// <summary>
+            /// The current non-paged pool usage, in bytes.
+            /// </summary>
             public ulong QuotaNonPagedPoolUsage;
 
+            /// <summary>
+            /// The commit charge value in bytes for this process. Commit charge is
+            /// the total amount of memory that the memory manager has committed for
+            /// a running process.
+            /// </summary>
             public ulong PagefileUsage;
 
+            /// <summary>
+            /// The peak value in bytes of the commit charge during the lifetime of this process.
+            /// </summary>
             public ulong PeakPagefileUsage;
 
             // ReSharper restore MemberCanBePrivate.Local

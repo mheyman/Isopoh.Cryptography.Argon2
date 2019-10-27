@@ -7,25 +7,26 @@
           from RAM and, if the operating system allows, never gets written to
           disk.</Description>
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/images/isopoh.png</PackageIconUrl>
-        <PackageLicenseUrl>https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/LICENSE</PackageLicenseUrl>
+        <PackageIcon>isopoh.png</PackageIcon>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2019</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Update version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
+        <PackageReleaseNotes>Multiple targets.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
-        <TargetFramework>netstandard1.3</TargetFramework>
+        <TargetFrameworks>netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;netstandard2.0;netstandard2.1;net452;net462;net472;net48</TargetFrameworks>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.2</PackageVersion>
+        <PackageVersion>1.1.3</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
         <SignAssembly>true</SignAssembly>
         <DelaySign>false</DelaySign>
         <AssemblyOriginatorKeyFile>isopoh.pfx</AssemblyOriginatorKeyFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -36,8 +37,8 @@
         <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
     </ItemGroup>
 
-    <Target Name="PostcompileScript" AfterTargets="Build">
-        <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
-    </Target>
-
+  <ItemGroup>
+    <None Include="..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\"/>
+    <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>

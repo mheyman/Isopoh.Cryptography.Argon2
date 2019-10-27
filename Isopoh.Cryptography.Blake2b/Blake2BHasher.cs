@@ -44,7 +44,7 @@ namespace Isopoh.Cryptography.Blake2b
                             this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
 
                         }
-                        catch (LockFailException e)
+                        catch (LockFailException)
                         {
                             this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                         }

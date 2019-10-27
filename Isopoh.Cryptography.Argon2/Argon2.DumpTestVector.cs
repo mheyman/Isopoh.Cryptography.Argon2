@@ -10,7 +10,7 @@ namespace Isopoh.Cryptography.Argon2
     using System.IO;
 
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {
@@ -76,7 +76,7 @@ namespace Isopoh.Cryptography.Argon2
 
                         for (int j = 0; j < howManyWords; ++j)
                         {
-                            sout.WriteLine($"Block {i:D4} [{j, 3}]: {hasher.Memory[i][j] :x16}");
+                            sout.WriteLine($"Block {i:D4} [{j,3}]: {hasher.Memory[i][j]:x16}");
                         }
                     }
                 }

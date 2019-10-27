@@ -10,7 +10,7 @@ namespace Isopoh.Cryptography.SecureArray
 
     /// <inheritdoc />
     /// <summary>
-    /// Represents errors that occur trying to lock a buffer into memory
+    /// Represents errors that occur trying to lock a buffer into memory.
     /// </summary>
     public class LockFailException : Exception
     {
@@ -18,7 +18,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="LockFailException"/> class.
         /// </summary>
         /// <param name="message">
-        /// Text for the <see cref="P:System.Exception.Message" /> property
+        /// Text for the <see cref="P:System.Exception.Message" /> property.
         /// </param>
         /// <param name="currentMax">
         /// Number of bytes currently available to lock. Don't assume you can

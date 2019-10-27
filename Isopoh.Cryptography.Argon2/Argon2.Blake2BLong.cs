@@ -8,11 +8,11 @@ namespace Isopoh.Cryptography.Argon2
 {
     using System;
 
-    using Blake2b;
-    using SecureArray;
+    using Isopoh.Cryptography.Blake2b;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// Argon2 Hashing of passwords
+    /// Argon2 Hashing of passwords.
     /// </summary>
     public sealed partial class Argon2
     {
@@ -20,7 +20,7 @@ namespace Isopoh.Cryptography.Argon2
         /// Does a Blake2 hash with the ability to truncate or extend the hash to any length.
         /// </summary>
         /// <param name="hash">
-        /// The buffer to fill with the hash
+        /// The buffer to fill with the hash.
         /// </param>
         /// <param name="inbuf">
         /// What to hash.
@@ -36,7 +36,7 @@ namespace Isopoh.Cryptography.Argon2
                 var config = new Blake2BConfig
                 {
                     Result64ByteBuffer = intermediateHash.Buffer,
-                    OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length
+                    OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length,
                 };
                 Store32(outlenBytes, hash.Length);
                 using (var blakeHash = Blake2B.Create(config, secureArrayCall))

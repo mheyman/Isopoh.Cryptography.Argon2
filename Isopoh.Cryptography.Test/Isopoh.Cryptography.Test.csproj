@@ -1,43 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp1.1</TargetFramework>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <AssemblyName>Isopoh.Cryptography.Test</AssemblyName>
-        <PackageId>Isopoh.Cryptography.Test</PackageId>
-        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-        <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
-        <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
-        <ProjectReference Include="..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj" />
-        <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
-    </ItemGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-        <PackageReference Include="xunit" Version="2.3.0-beta2-build3683" />
-        <PackageReference Include="System.Runtime" Version="4.3.0" />
-    </ItemGroup>
 
-    <ItemGroup>
-      <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj" />
+    <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="xunit" Version="2.3.0-beta2-build3683" />
-      <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta2-build3683" />
-    </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit" Version="2.3.0-beta2-build3683" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta2-build3683" />
+  </ItemGroup>
 
 </Project>

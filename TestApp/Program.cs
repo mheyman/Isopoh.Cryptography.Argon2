@@ -19,12 +19,12 @@ namespace TestApp
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// The test program
+    /// The test program.
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// Test vectors for Argon2. From https://github.com/P-H-C/phc-winner-argon2/tree/master/kats
+        /// Test vectors for Argon2. From https://github.com/P-H-C/phc-winner-argon2/tree/master/kats.
         /// </summary>
         private static readonly Argon2TestVector[] Argon2TestVectors =
             {
@@ -87,7 +87,7 @@ namespace TestApp
             byte[] secretBytes = Encoding.UTF8.GetBytes(secret);
             var failedResults = new List<string>();
             var passedResults = new List<string>();
-            foreach (var argon2Type in new[] { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing})
+            foreach (var argon2Type in new[] { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing })
             {
                 var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
                     argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
@@ -137,7 +137,9 @@ namespace TestApp
             var passedResults = new List<string>();
             var failedResults = new List<string>();
             foreach (var argon2Type in new[]
-                { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing })
+            {
+                Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing,
+            })
             {
                 var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
                     argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
@@ -235,7 +237,7 @@ namespace TestApp
                         Salt = testVector.Salt,
                         Secret = testVector.Secret,
                         AssociatedData = testVector.AssociatedData,
-                        HashLength = testVector.TagLength
+                        HashLength = testVector.TagLength,
                     };
                     var argon2 = new Argon2(config);
                     SecureArray<byte> hash = argon2.Hash();
@@ -420,6 +422,26 @@ namespace TestApp
             return errs.Any() ? $"Leaks: FAILED: {string.Join(" ", errs)}" : "Leaks: Passed";
         }
 
+        /// <summary>
+        /// Program entry.
+        /// </summary>
+        /// <param name="args">Command line arguments - unused.</param>
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
+            var resultTexts = new List<string>
+            {
+                TestLeaks(),
+                TestSecureArray(),
+                TestArgon2RoundTrip(),
+                TestArgon2RoundTrip2(),
+                TestArgon2ThreadsDontMatter(),
+                TestArgon2(),
+                TestFromDraft(),
+            };
+            Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
+        }
+
         private static string TestFromDraft()
         {
             // from draft-irtf-cfrg-argon2-03
@@ -430,8 +452,15 @@ namespace TestApp
             const int testMemoryCost = 1 << 12;
             const int testParallelism = 1;
             const Argon2Version testArgon2VersionNumber = Argon2Version.Nineteen;
-            bool Run(byte[] pwd, byte[] salt, int timeCost, int memoryCost, int threads,
-                Argon2Type argon2Type, Argon2Version version, byte[] expectedHash)
+            bool Run(
+                byte[] pwd,
+                byte[] salt,
+                int timeCost,
+                int memoryCost,
+                int threads,
+                Argon2Type argon2Type,
+                Argon2Version version,
+                byte[] expectedHash)
             {
                 using (var hash = new Argon2(
                     new Argon2Config
@@ -523,26 +552,6 @@ namespace TestApp
         }
 
         /// <summary>
-        /// Program entry.
-        /// </summary>
-        /// <param name="args">Command line arguments - unused.</param>
-        public static void Main(string[] args)
-        {
-            Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
-            var resultTexts = new List<string>
-                                  {
-                                      TestLeaks(),
-                                      TestSecureArray(),
-                                      TestArgon2RoundTrip(),
-                                      TestArgon2RoundTrip2(),
-                                      TestArgon2ThreadsDontMatter(),
-                                      TestArgon2(),
-                                      TestFromDraft(),
-                                  };
-            Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
-        }
-
-        /// <summary>
         /// Makes useful binary from text Argon2 test vector information.
         /// </summary>
         public sealed class Argon2TestVector
@@ -551,7 +560,7 @@ namespace TestApp
             /// Initializes a new instance of the <see cref="Argon2TestVector"/> class.
             /// </summary>
             /// <param name="name">
-            /// name of the vector
+            /// name of the vector.
             /// </param>
             /// <param name="type">
             /// Data-driven or independent.
@@ -675,7 +684,7 @@ namespace TestApp
             public byte[] Tag { get; }
 
             /// <summary>
-            /// Convert a hex string to bytes
+            /// Convert a hex string to bytes.
             /// </summary>
             /// <param name="s">
             /// The hex string.
