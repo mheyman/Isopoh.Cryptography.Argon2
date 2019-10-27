@@ -44,6 +44,8 @@ namespace Isopoh.Cryptography.Blake2b
             this.IntermediateHashSize = 64;
         }
 
+        // ReSharper disable once UnusedMember.Global
+
         /// <summary>
         /// Create an instance of the <see cref="Blake2BTreeConfig"/> for parallel hash computation.
         /// </summary>

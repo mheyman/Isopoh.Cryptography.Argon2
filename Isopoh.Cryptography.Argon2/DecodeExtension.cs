@@ -45,7 +45,7 @@ namespace Isopoh.Cryptography.Argon2
         /// characters, no newline or whitespace).
         /// The "keyid" is a binary identifier for a key (up to 8 bytes);
         /// "data" is associated data (up to 32 bytes). When the 'keyid'
-        /// (resp. the 'data') is empty, then it is ommitted from the output.
+        /// (resp. the 'data') is empty, then it is omitted from the output.
         /// </para>
         /// <para>
         /// The last two binary chunks (encoded in Base64) are, in that order,
@@ -204,8 +204,8 @@ namespace Isopoh.Cryptography.Argon2
             }
 
             ++pos;
-            int hashlen = Base64Length(str, pos);
-            if (hashlen < 0)
+            int hashLength = Base64Length(str, pos);
+            if (hashLength < 0)
             {
                 hash = null;
                 return false;
@@ -214,11 +214,11 @@ namespace Isopoh.Cryptography.Argon2
             SecureArray<byte> output;
             try
             {
-                output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedPinnedAndNoSwap, config.SecureArrayCall);
+                output = new SecureArray<byte>(hashLength, SecureArrayType.ZeroedPinnedAndNoSwap, config.SecureArrayCall);
             }
             catch (LockFailException)
             {
-                output = new SecureArray<byte>(hashlen, SecureArrayType.ZeroedAndPinned, config.SecureArrayCall);
+                output = new SecureArray<byte>(hashLength, SecureArrayType.ZeroedAndPinned, config.SecureArrayCall);
             }
 
             bool success = false;
@@ -367,7 +367,7 @@ namespace Isopoh.Cryptography.Argon2
         private static int FromBase64(byte[] dst, string src, int pos)
         {
             int i = pos;
-            int dstpos = 0;
+            int destPos = 0;
             uint acc = 0;
             uint accLen = 0;
             while (true)
@@ -395,13 +395,13 @@ namespace Isopoh.Cryptography.Argon2
                 if (accLen >= 8)
                 {
                     accLen -= 8;
-                    if (dstpos == dst.Length)
+                    if (destPos == dst.Length)
                     {
                         return -1;
                     }
 
-                    dst[dstpos] = (byte)((acc >> (int)accLen) & 0xFF);
-                    ++dstpos;
+                    dst[destPos] = (byte)((acc >> (int)accLen) & 0xFF);
+                    ++destPos;
                 }
             }
 

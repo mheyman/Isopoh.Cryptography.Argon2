@@ -51,7 +51,7 @@ namespace Isopoh.Cryptography.Argon2
         /// characters, no newline or whitespace).
         /// The "keyid" is a binary identifier for a key (up to 8 bytes);
         /// "data" is associated data (up to 32 bytes). When the 'keyid'
-        /// (resp. the 'data') is empty, then it is ommitted from the output.
+        /// (resp. the 'data') is empty, then it is omitted from the output.
         /// </para>
         /// <para>
         /// The last two binary chunks (encoded in Base64) are, in that order,
@@ -124,8 +124,8 @@ namespace Isopoh.Cryptography.Argon2
             var lengthMod3 = buf.Length % 3;
             var chunkCount = buf.Length / 3;
             var bufFullChunkLength = chunkCount * 3;
-            var b64len = (chunkCount * 4) + B64Extra[lengthMod3];
-            var ret = new StringBuilder(b64len);
+            var b64Len = (chunkCount * 4) + B64Extra[lengthMod3];
+            var ret = new StringBuilder(b64Len);
             int i = 0;
             for (; i < bufFullChunkLength; ++i)
             {

@@ -89,6 +89,8 @@ namespace Isopoh.Cryptography.SecureArray
             }
         }
 
+        // ReSharper disable once UnusedMember.Local
+
         /// <summary>
         /// Gets a delegate VirtualAlloc() that works on 32-bit or 64-bit operating systems.
         /// </summary>
@@ -256,7 +258,7 @@ namespace Isopoh.Cryptography.SecureArray
             IntPtr lpAddress,
             ulong size,
             uint allocationTypeFlags,
-            uint protoectFlags);
+            uint protectFlags);
 
         [DllImport(
             "kernel32.dll",
@@ -267,7 +269,7 @@ namespace Isopoh.Cryptography.SecureArray
             IntPtr lpAddress,
             uint size,
             uint allocationTypeFlags,
-            uint protoectFlags);
+            uint protectFlags);
 
         [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
         private static extern bool VirtualLock(IntPtr lpAddress, UIntPtr dwSize);
@@ -288,6 +290,7 @@ namespace Isopoh.Cryptography.SecureArray
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IsWow64Process(IntPtr hProcess, out bool wow64Process);
 
+        // ReSharper disable once UnusedMember.Local
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern int VirtualQuery(IntPtr lpAddress, out MemoryBasicInformation lpBuffer, uint dwLength);
 
@@ -318,9 +321,9 @@ namespace Isopoh.Cryptography.SecureArray
             var newMaxWorkingSetSize = (ulong)((prevCur + l.ToUInt64()) * 1.2);
             if (!this.SetProcessWorkingSetSizeEx(processHandle, prevMinVal, newMaxWorkingSetSize, prevFlags))
             {
-                var errcode = Marshal.GetLastWin32Error();
+                var errorCode = Marshal.GetLastWin32Error();
                 return
-                    $"Failed to set process working set size to {newMaxWorkingSetSize} (min={prevMinVal}, max={prevMaxVal}, flags={prevFlags}, cur={prevCur}) bytes at 0x{m.ToInt64():X8}. Error: code={errcode}.";
+                    $"Failed to set process working set size to {newMaxWorkingSetSize} (min={prevMinVal}, max={prevMaxVal}, flags={prevFlags}, cur={prevCur}) bytes at 0x{m.ToInt64():X8}. Error: code={errorCode}.";
             }
 
             ulong cur = GetWorkingSetSize(processHandle);
@@ -330,22 +333,22 @@ namespace Isopoh.Cryptography.SecureArray
             uint flags = 0;
             if (!this.GetProcessWorkingSetSizeEx(processHandle, ref minVal, ref maxVal, ref flags))
             {
-                var errcode = Marshal.GetLastWin32Error();
-                return $"Failed to get process working set size: Error: code={errcode}.";
+                var errorCode = Marshal.GetLastWin32Error();
+                return $"Failed to get process working set size: Error: code={errorCode}.";
             }
 
             ////VirtualQuery(m, out MemoryBasicInformation mbi, (uint)Marshal.SizeOf<MemoryBasicInformation>());
 
             ////if (VirtualAlloc(m, l.ToUInt64(), 0x00001000, 0x04).ToInt64() == 0)
             ////{
-            ////    var errcode = Marshal.GetLastWin32Error();
-            ////    return $"Failed to commit {l.ToUInt64()} bytes at 0x{m.ToInt64():X8}: Error: code={errcode}.";
+            ////    var errorCode = Marshal.GetLastWin32Error();
+            ////    return $"Failed to commit {l.ToUInt64()} bytes at 0x{m.ToInt64():X8}: Error: code={errorCode}.";
             ////}
 
             if (!VirtualLock(m, l))
             {
-                var errcode = Marshal.GetLastWin32Error();
-                var err = errcode == 1453 ? "Insufficient quota to complete the requested service" : $"code={errcode}";
+                var errorCode = Marshal.GetLastWin32Error();
+                var err = errorCode == 1453 ? "Insufficient quota to complete the requested service" : $"code={errorCode}";
                 return $"Failed to securely lock {l.ToUInt64()} (prevMin={prevMinVal}, min={minVal}, "
                        + $"prevMax={prevMaxVal}, max={maxVal}, prevFlags={prevFlags}, flags={flags}, "
                        + $"prevCur={prevCur}, cur={cur}) bytes at 0x{m.ToInt64():X8}. Error: {err}.";

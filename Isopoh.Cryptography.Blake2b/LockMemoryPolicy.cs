@@ -3,7 +3,7 @@ namespace Isopoh.Cryptography.Blake2b
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum LockMemoryPolicy
     {
@@ -17,6 +17,8 @@ namespace Isopoh.Cryptography.Blake2b
         /// if the operating system doesn't allow the memory to be locked.
         /// </summary>
         BestEffort,
+
+        // ReSharper disable once UnusedMember.Global
 
         /// <summary>
         /// Throw <see cref="LockFailException"/> exception on failure to lock Blake2B buffers into RAM.

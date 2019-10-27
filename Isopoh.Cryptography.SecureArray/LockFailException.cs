@@ -25,7 +25,6 @@ namespace Isopoh.Cryptography.SecureArray
         /// actually lock this exact amount the next time you request to lock
         /// bytes into RAM - this value changes constantly.
         /// </param>
-        // ReSharper disable once InheritdocConsiderUsage
         public LockFailException(string message, int currentMax)
             : base(message)
         {

@@ -160,15 +160,13 @@ namespace Isopoh.Cryptography.Test
                 Lanes = 4,
                 Threads = 1,
             };
-            using (var argon2A = new Argon2(configA))
-            using (var argon2B = new Argon2(configB))
-            using (var hashA = argon2A.Hash())
-            using (var hashB = argon2B.Hash())
-            {
-                var hashTextA = configA.EncodeString(hashA.Buffer);
-                var hashTextB = configB.EncodeString(hashB.Buffer);
-                Assert.Equal(hashTextA, hashTextB);
-            }
+            using var argon2A = new Argon2(configA);
+            using var argon2B = new Argon2(configB);
+            using var hashA = argon2A.Hash();
+            using var hashB = argon2B.Hash();
+            var hashTextA = configA.EncodeString(hashA.Buffer);
+            var hashTextB = configB.EncodeString(hashB.Buffer);
+            Assert.Equal(hashTextA, hashTextB);
         }
 
         /// <summary>
@@ -211,7 +209,7 @@ namespace Isopoh.Cryptography.Test
                         + $"            Password {BitConverter.ToString(testVector.Password)}\r\n"
                         + $"                Salt {BitConverter.ToString(testVector.Salt)}\r\n"
                         + $"              Secret {BitConverter.ToString(testVector.Secret)}\r\n"
-                        + $"       AssciatedData {BitConverter.ToString(testVector.AssociatedData)}\r\n"
+                        + $"      AssociatedData {BitConverter.ToString(testVector.AssociatedData)}\r\n"
                         + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}\r\n"
                         + $"             encoded {encoded}");
                 }
@@ -371,7 +369,7 @@ namespace Isopoh.Cryptography.Test
             public string Name { get; }
 
             /// <summary>
-            /// Gets the Argon2 type - data dependant or independant.
+            /// Gets the Argon2 type - data dependent or independent.
             /// </summary>
             public Argon2Type Type { get; }
 

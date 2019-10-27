@@ -30,10 +30,8 @@ namespace Isopoh.Cryptography.Argon2
         public static string Hash(Argon2Config configToHash)
         {
             var argon2 = new Argon2(configToHash);
-            using (var hash = argon2.Hash())
-            {
-                return argon2.config.EncodeString(hash.Buffer);
-            }
+            using var hash = argon2.Hash();
+            return argon2.config.EncodeString(hash.Buffer);
         }
 
         /// <summary>
@@ -152,19 +150,17 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
-                {
-                    Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
-                    return Hash(
-                        passwordBuf.Buffer,
-                        secretBuf?.Buffer,
-                        timeCost,
-                        memoryCost,
-                        parallelism,
-                        type,
-                        hashLength,
-                        secureArrayCall);
-                }
+                using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
+                Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
+                return Hash(
+                    passwordBuf.Buffer,
+                    secretBuf?.Buffer,
+                    timeCost,
+                    memoryCost,
+                    parallelism,
+                    type,
+                    hashLength,
+                    secureArrayCall);
             }
             finally
             {
@@ -238,13 +234,9 @@ namespace Isopoh.Cryptography.Argon2
                     return false;
                 }
 
-                using (var hasherToVerify = new Argon2(configToVerify))
-                {
-                    using (var hashToVerify = hasherToVerify.Hash())
-                    {
-                        return !hash.Buffer.Where((b, i) => b != hashToVerify[i]).Any();
-                    }
-                }
+                using var hasherToVerify = new Argon2(configToVerify);
+                using var hashToVerify = hasherToVerify.Hash();
+                return !hash.Buffer.Where((b, i) => b != hashToVerify[i]).Any();
             }
             finally
             {
@@ -285,6 +277,8 @@ namespace Isopoh.Cryptography.Argon2
 
             return Verify(encoded, configToVerify);
         }
+
+        // ReSharper disable once UnusedMember.Global
 
         /// <summary>
         /// Verify the given Argon2 hash as being that of the given password.
@@ -345,17 +339,17 @@ namespace Isopoh.Cryptography.Argon2
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
                 }
 
-                using (var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall))
-                {
-                    Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
-                    return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);
-                }
+                using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
+                Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
+                return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);
             }
             finally
             {
                 secretBuf?.Dispose();
             }
         }
+
+        // ReSharper disable once UnusedMember.Global
 
         /// <summary>
         /// Verify the given Argon2 hash as being that of the given password.

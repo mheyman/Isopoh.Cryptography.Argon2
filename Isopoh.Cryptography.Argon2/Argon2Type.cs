@@ -7,7 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     /// <summary>
-    /// Argon2 can hash in two different ways, data-depenedent and data-independent.
+    /// Argon2 can hash in two different ways, data-dependent and data-independent.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -16,7 +16,7 @@ namespace Isopoh.Cryptography.Argon2
     /// <para>
     /// Argon2 has two variants: Argon2d [data-dependent] and Argon2i [data-independent].
     /// Argon2d is faster and uses data-depending memory access, which makes it suitable
-    /// for cryptocurrencies and applications with no threats from side-channel timing
+    /// for crypto currencies and applications with no threats from side-channel timing
     /// attacks. Argon2i uses data-independent memory access, which is preferred for
     /// password hashing and password-based key derivation. Argon2i is slower as it
     /// makes more passes over the memory to protect from tradeoff attacks.

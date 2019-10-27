@@ -106,6 +106,7 @@ namespace Isopoh.Cryptography.Blake2b
             return rawConfig;
         }
 
+        // ReSharper disable once UnusedMember.Global
         public static void ConfigBSetNode(ulong[] rawConfig, byte depth, ulong nodeOffset)
         {
             rawConfig[1] = nodeOffset;

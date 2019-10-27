@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Title>Isopoh.Cryptography.Argon2</Title>
+      <LangVersion>8.0</LangVersion>
+      <NullableContextOptions>enable</NullableContextOptions>
+      <Title>Isopoh.Cryptography.Argon2</Title>
         <Description>Argon2 Password Hasher written in C#. Uses
           Isopoh.Cryptography.Blake2 for hashing and
           Isopoh.Cryptography.SecureArray to protect sensitive data.</Description>
@@ -33,7 +35,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,8 +55,8 @@
     </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\"/>
-    <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\"/>
+    <None Include="..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
+    <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

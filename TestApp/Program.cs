@@ -195,19 +195,17 @@ namespace TestApp
                 Lanes = 4,
                 Threads = 1,
             };
-            using (var argon2A = new Argon2(configA))
-            using (var argon2B = new Argon2(configB))
-            using (var hashA = argon2A.Hash())
-            using (var hashB = argon2B.Hash())
-            {
-                var hashTextA = configA.EncodeString(hashA.Buffer);
-                var hashTextB = configB.EncodeString(hashB.Buffer);
-                var res = string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0
-                                 ? "ThreadsDontMatter Passed"
-                                 : "ThreadsDontMatter FAILED";
-                Console.WriteLine(res);
-                return res;
-            }
+            using var argon2A = new Argon2(configA);
+            using var argon2B = new Argon2(configB);
+            using var hashA = argon2A.Hash();
+            using var hashB = argon2B.Hash();
+            var hashTextA = configA.EncodeString(hashA.Buffer);
+            var hashTextB = configB.EncodeString(hashB.Buffer);
+            var res = string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0
+                ? "ThreadsDontMatter Passed"
+                : "ThreadsDontMatter FAILED";
+            Console.WriteLine(res);
+            return res;
         }
 
         /// <summary>
@@ -462,7 +460,7 @@ namespace TestApp
                 Argon2Version version,
                 byte[] expectedHash)
             {
-                using (var hash = new Argon2(
+                using var hash = new Argon2(
                     new Argon2Config
                     {
                         HashLength = expectedHash.Length,
@@ -474,15 +472,13 @@ namespace TestApp
                         Salt = salt,
                         Version = version,
                         Type = argon2Type,
-                    }).Hash())
-                {
-                    Console.WriteLine($"     Actual Hash:   {BitConverter.ToString(hash.Buffer)}");
-                    Console.WriteLine($"     Expected Hash: {BitConverter.ToString(expectedHash)}");
-                    return !hash.Buffer.Where((b, i) => b != expectedHash[i]).Any();
-                }
+                    }).Hash();
+                Console.WriteLine($"     Actual Hash:   {BitConverter.ToString(hash.Buffer)}");
+                Console.WriteLine($"     Expected Hash: {BitConverter.ToString(expectedHash)}");
+                return !hash.Buffer.Where((b, i) => b != expectedHash[i]).Any();
             }
 
-            bool Argon2ISelftest()
+            bool Argon2ISelfTest()
             {
                 byte[] expectedHash =
                 {
@@ -502,7 +498,7 @@ namespace TestApp
                     expectedHash);
             }
 
-            bool Argon2DSelftest()
+            bool Argon2DSelfTest()
             {
                 byte[] expectedHash =
                 {
@@ -522,7 +518,7 @@ namespace TestApp
                     expectedHash);
             }
 
-            bool Argon2IdSelftest()
+            bool Argon2IdSelfTest()
             {
                 byte[] expectedHash =
                 {
@@ -542,11 +538,11 @@ namespace TestApp
                     expectedHash);
             }
 
-            var argon2IResult = $"draft-irtf-cfrg-argon2-03 Argon2i  - {(Argon2ISelftest() ? "Passed" : "FAIL")}";
+            var argon2IResult = $"draft-irtf-cfrg-argon2-03 Argon2i  - {(Argon2ISelfTest() ? "Passed" : "FAIL")}";
             Console.WriteLine(argon2IResult);
-            var argon2DResult = $"draft-irtf-cfrg-argon2-03 Argon2d  - {(Argon2DSelftest() ? "Passed" : "FAIL")}";
+            var argon2DResult = $"draft-irtf-cfrg-argon2-03 Argon2d  - {(Argon2DSelfTest() ? "Passed" : "FAIL")}";
             Console.WriteLine(argon2DResult);
-            var argon2IdResult = $"draft-irtf-cfrg-argon2-03 Argon2id - {(Argon2IdSelftest() ? "Passed" : "FAIL")}";
+            var argon2IdResult = $"draft-irtf-cfrg-argon2-03 Argon2id - {(Argon2IdSelfTest() ? "Passed" : "FAIL")}";
             Console.WriteLine(argon2IdResult);
             return string.Join($"{Environment.NewLine}  ", argon2IResult, argon2DResult, argon2IdResult);
         }

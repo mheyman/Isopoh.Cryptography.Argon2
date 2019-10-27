@@ -117,7 +117,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call will
         /// be this length unless the <see cref="Result64ByteBuffer"/> value is non-null.
         /// If that property is non-null, that buffer gets returned by the <see
-        /// cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call regarless of
+        /// cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call regardless of
         /// the <see cref="OutputSizeInBytes"/> property. In that case, you can copy the
         /// first <see cref="OutputSizeInBytes"/> bytes of the <see
         /// cref="Result64ByteBuffer"/> array to get the value that Blake2 would have
@@ -163,7 +163,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <remarks>
         /// If not null, this is the buffer that will get returned by the
         /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call
-        /// regarless of the value of <see cref="OutputSizeInBytes"/>.
+        /// regardless of the value of <see cref="OutputSizeInBytes"/>.
         /// </remarks>
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Result64ByteBuffer"/> to non-null other than 64 bytes.

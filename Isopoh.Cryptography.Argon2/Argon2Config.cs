@@ -15,7 +15,7 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed class Argon2Config
     {
-        private int hashlen = 32;
+        private int hashLength = 32;
 
         private int memoryCost = 65536;
 
@@ -43,7 +43,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         public int HashLength
         {
-            get => this.hashlen;
+            get => this.hashLength;
 
             set
             {
@@ -52,7 +52,7 @@ namespace Isopoh.Cryptography.Argon2
                     throw new ArgumentException($"HashLength must be 4 or more, got {value}");
                 }
 
-                this.hashlen = value;
+                this.hashLength = value;
             }
         }
 

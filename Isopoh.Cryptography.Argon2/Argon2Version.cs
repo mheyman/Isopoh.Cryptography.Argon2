@@ -7,7 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     /// <summary>
-    /// There are two versions, 16 and 19. 19 is 5%-15% slower but fixes a vulnerabilty
+    /// There are two versions, 16 and 19. 19 is 5%-15% slower but fixes a vulnerability
     /// where an attacker could take advantage of short time spans where memory blocks
     /// were not used to reduce the overall memory cost by up to a factor of about 3.5.
     /// </summary>

@@ -133,7 +133,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// </summary>
         public SecureArrayType ProtectionType => this.virtualLocked
             ? SecureArrayType.ZeroedPinnedAndNoSwap
-            : this.handle == default(GCHandle)
+            : this.handle == default
                 ? SecureArrayType.Zeroed
                 : SecureArrayType.ZeroedAndPinned;
 
@@ -209,7 +209,7 @@ namespace Isopoh.Cryptography.SecureArray
         protected void Cleanup<T>(T[] buf)
         {
             var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
-            if (this.handle == default(GCHandle))
+            if (this.handle == default)
             {
                 this.handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
             }
@@ -270,12 +270,12 @@ namespace Isopoh.Cryptography.SecureArray
 
                         this.virtualLocked = true;
                         this.handle = tmpHandle;
-                        tmpHandle = default(GCHandle);
+                        tmpHandle = default;
                     }
                 }
                 finally
                 {
-                    if (tmpHandle != default(GCHandle))
+                    if (tmpHandle != default)
                     {
                         tmpHandle.Free();
                     }
