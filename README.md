@@ -1,9 +1,46 @@
 # Fully Managed .Net Core Argon2 implementation
 
+Argon2 is a hash generator optimized to produce hashes suitable for
+credential storage, key derivation, or other situations requiring a
+cryptographically secure password hash. Argon2 was the winner of the
+2015 [Password Hashing Competition](https://password-hashing.net/).
+
+This fully managed implementation of Argon2 runs in .NET Core or .NET
+Framework applications.
+
+## Getting Started
+
+### NuGet
+
+The easiest way to get started is by use the NuGet package:
+
+```shell
+Install-Package Isopoh.Cryptography.Argon2
+```
+
+from [https://www.nuget.org/packages/Isopoh.Cryptography.Argon2](https://www.nuget.org/packages/Isopoh.Cryptography.Argon2).
+
+### Clone
+
+You can also, of course, clone the repo and link use the .csproj files directly:
+
+```shell
+git clone https://github.com/mheyman/Isopoh.Cryptography.Argon2.git
+```
+
+then add the `ProjectReference` lines to your .csproj to reference
+...`Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj`,
+...`Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj`, and
+...`Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj`.
+
+## Details
+
 Uses the C# implementation of Blake2 modified from https://github.com/BLAKE2.
 The Blake2 here uses SecureArray to protect potentially sensitive data.
 
 Uses a highly modified port of Argon2 from https://github.com/P-H-C/phc-winner-argon2.
+
+API Documentation at [https://mheyman.github.io/Isopoh.Cryptography.Argon2](https://mheyman.github.io/Isopoh.Cryptography.Argon2).
 
 ## Example Usage
 
@@ -26,9 +63,9 @@ byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
 byte[] salt = new byte[16];
 
 // somewhere in the class definition:
-//   private static readonly RandomNumberGenerator Rng = 
+//   private static readonly RandomNumberGenerator Rng =
 //       System.Security.Cryptography.RandomNumberGenerator.Create();
-Rng.GetBytes(salt); 
+Rng.GetBytes(salt);
 
 var config = new Argon2Config
 {
@@ -92,7 +129,7 @@ if (Argon2.Verify(hashString, passwordBytes))
 ## What is SecureArray?
 
 You can think of the `SecureArray` sort of like you would think of
-`SecureString` except that `SecureString` does crypto to protect 
+`SecureString` except that `SecureString` does crypto to protect
 its sensitive data and has windows of vulnerability. `SecureArray`
 protects its data by locking it into RAM to protect it from swapping
 to disk until disposed and also zeroing the buffer when disposed.
