@@ -26,7 +26,7 @@ just adding the NuGet package as a dependency.
 
 ### Clone
 
-You can also, of course, go old-school and clone the repo and link use
+You can also, of course, go old-school and clone the repository and link use
 the .csproj files directly:
 
 ```shell
@@ -45,12 +45,24 @@ then add the `ProjectReference` lines to your .csproj to reference
 
 ## Details
 
-Uses the C# implementation of Blake2 modified from https://github.com/BLAKE2.
-The Blake2 here uses SecureArray to protect potentially sensitive data.
+### Blake2b Pedigree
 
-Uses a highly modified port of Argon2 from https://github.com/P-H-C/phc-winner-argon2.
+Argon2 uses Blake2b as a cryptographic building block. This code uses the
+C# implementation of Blake2 modified from https://github.com/BLAKE2.
+The main modification is that the Blake2 here uses SecureArray to protect
+potentially sensitive data. Most other modifications are strictly cosmetic.
 
-API Documentation at [https://mheyman.github.io/Isopoh.Cryptography.Argon2](https://mheyman.github.io/Isopoh.Cryptography.Argon2).
+### Argon2 Pedigree
+
+The Argon2 comes from a highly modified port of the C-based Argon2 from
+https://github.com/P-H-C/phc-winner-argon2.
+
+### API Documentation
+
+The API Documentation at [https://mheyman.github.io/Isopoh.Cryptography.Argon2](https://mheyman.github.io/Isopoh.Cryptography.Argon2)
+gets generated automatically upon build. This happens via a dummy C# "Doc"
+project that uses the [*docfx*](https://github.com/dotnet/docfx) NuGet
+dependency to produce the API documentation.
 
 ## Example Usage
 

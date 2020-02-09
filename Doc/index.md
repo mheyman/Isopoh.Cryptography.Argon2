@@ -1,5 +1,11 @@
 # Isopoh.Cryptography.Argon2
 
+## GitHub Repository
+
+[https://github.com/mheyman/Isopoh.Cryptography.Argon2](https://github.com/mheyman/Isopoh.Cryptography.Argon2)
+
+## Introduction
+
 Fully managed .Net implementation of the
 [Argon2](https://en.wikipedia.org/wiki/Argon2)
 ([reference implementation](https://github.com/P-H-C/phc-winner-argon2))
