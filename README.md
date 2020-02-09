@@ -61,7 +61,7 @@ https://github.com/P-H-C/phc-winner-argon2.
 
 The API Documentation at [https://mheyman.github.io/Isopoh.Cryptography.Argon2](https://mheyman.github.io/Isopoh.Cryptography.Argon2)
 gets generated automatically upon build. This happens via a dummy C# "Doc"
-project that uses the [*docfx*](https://github.com/dotnet/docfx) NuGet
+project that uses the [*DocFx*](https://github.com/dotnet/docfx) NuGet
 dependency to produce the API documentation.
 
 ## Example Usage
