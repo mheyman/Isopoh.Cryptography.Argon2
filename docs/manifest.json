@@ -1,0 +1,432 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/Michael/source/repos/Isopoh.Cryptography.Argon2/Doc",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Readme.md",
+      "output": {
+        ".html": {
+          "relative_path": "Readme.html",
+          "hash": "Zemqq9Y1WLFlyITjs6U57Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
+          "hash": "viY9zt40ee2EGxd/NbCYIQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.html",
+          "hash": "CqXyhcXhLSE3cp0IOqwqQw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Type.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Type.html",
+          "hash": "LMpcgTfX/TVvgsR0hYCnEQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Version.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Version.html",
+          "hash": "99SuhAkWrJNZFPEKqjYPcw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.html",
+          "hash": "KZAtjihbtHyNW6TaN4Rlaw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.html",
+          "hash": "azwOLiyCHoEIdksKyBgH2Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.DecodeExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.DecodeExtension.html",
+          "hash": "PE5c3t+TCystv1SsrrIkvA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.EncodeExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.EncodeExtension.html",
+          "hash": "qf/LGEMXqUjv32WIcerL/A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.html",
+          "hash": "founP84uRJGoYaw7p6qsnA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2B.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2B.html",
+          "hash": "8Mp0hgVPzZRvaGLF9wMUWQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BConfig.html",
+          "hash": "dgHpj2L5trV+LTwZZOK6Gg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BCore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BCore.html",
+          "hash": "ufnqdvsUUCJLLIm3hHi1wQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.html",
+          "hash": "SCe8/BB+C0PUwDFdT2Zb3A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.Hasher.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.Hasher.html",
+          "hash": "EoiwHxq8ACvIIp0NYsP/bQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html",
+          "hash": "r9Awq/pFl1syNswt8n0J9A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Blake2b.html",
+          "hash": "VWD91AsUwO9PXclzKe8ZyA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultLinuxSecureArrayCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultLinuxSecureArrayCall.html",
+          "hash": "T0ZM7fBlCwXjn6RTcEowaw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultOsxSecureArrayCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultOsxSecureArrayCall.html",
+          "hash": "WdClQRw2YvrEEXdkIg6h+Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.ProcessMemoryCounters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.ProcessMemoryCounters.html",
+          "hash": "eo2++zsdW1tdlEowXSuWkA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.html",
+          "hash": "ycpn+YmQW5BkRV7G2cvmQg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.LockFailException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.LockFailException.html",
+          "hash": "MO80VLRru0Ik36fO8aBGLg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
+          "hash": "55C/hLC1Z7BM7P8d6+29jw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.html",
+          "hash": "ydXh6gPpk0K4mjl2h5Nj9A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayCall.html",
+          "hash": "tQjjrVJMD1DatZJ0xGVvJg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayType.html",
+          "hash": "Ps4kHBX/k3WRBCbLwwfsIQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.html",
+          "hash": "YkM9LicHvV6L8d2WMU1Onw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "ZI+Xdj95qON+/WcjrkS28w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "LNDNXTaHcBZ9eHIirm3/1A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "aex+SYxHz6ioTn4617Vh0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "EIhwD2+o19OxxQFCB6JJTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 26,
+          "skipped_file_count": 26
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

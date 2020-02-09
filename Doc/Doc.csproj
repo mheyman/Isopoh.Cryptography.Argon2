@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="docfx.console" Version="2.48.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DocFxOutputDir>$(SolutionDir)\Doc\_site</DocFxOutputDir>
+    <GitHubPagesDir>$(SolutionDir)\docs</GitHubPagesDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DocumentationFiles Include="$(DocFxOutputDir)\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="docfx.json" />
+    <None Remove="index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="docfx.json" />
+    <Content Include="index.md" />
+  </ItemGroup>
+
+  <Target Name="DeleteDoc" BeforeTargets="DocBuild">
+    <RemoveDir Directories="$(DocFxOutputDir);$(GitHubPagesDir)" />
+  </Target>
+
+
+  <Target Name="CopyDoc" AfterTargets="DocBuild">
+    <!-- copy all files from the source folder to the dest folder
+            that are newer or don't exist in the dest folder -->
+    <Copy SourceFiles="@(DocumentationFiles)" DestinationFiles="@(DocumentationFiles->'$(GitHubPagesDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="True">
+      <Output TaskParameter="CopiedFiles" ItemName="Copied" />
+    </Copy>
+    <ItemGroup>
+      <OutdatedFiles Include="$(GitHubPagesDir)\**" Exclude="@(Copied)" />
+    </ItemGroup>
+    <Delete Files="@(OutdatedFiles)" />
+    <Exec Command="echo hello world $(GitHubPagesDir)" />
+  </Target>
+
+</Project>
