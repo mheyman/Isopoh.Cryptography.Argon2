@@ -12,7 +12,7 @@
           "hash": "Zemqq9Y1WLFlyITjs6U57Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -273,10 +273,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
-          "hash": "55C/hLC1Z7BM7P8d6+29jw=="
+          "hash": "um++Yl70xDY5GJT+LiIxmg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -288,7 +288,7 @@
           "hash": "ydXh6gPpk0K4mjl2h5Nj9A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -324,7 +324,7 @@
           "hash": "YkM9LicHvV6L8d2WMU1Onw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -366,7 +366,7 @@
           "hash": "aex+SYxHz6ioTn4617Vh0Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -402,7 +402,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 26,
-          "skipped_file_count": 26
+          "skipped_file_count": 25
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,

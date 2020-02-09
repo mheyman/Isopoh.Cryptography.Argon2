@@ -14,6 +14,31 @@ namespace Isopoh.Cryptography.SecureArray
     /// <typeparam name="T">
     /// The type of the array. Limited to built in types.
     /// </typeparam>
+    /// <remarks>
+    /// <para>You can think of the <c>SecureArray</c> sort of like you would
+    /// think of
+    /// <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.securestring">SecureString</a>
+    /// except that <c>SecureString</c> (usually) does crypto to protect its
+    /// sensitive data and has windows of vulnerability when it decrypts the
+    /// string for use. <c>SecureArray</c> protects its data by locking the
+    /// data into RAM to keep it from swapping to disk and also zeroing the
+    /// buffer when disposed. So, unlike <c>SecureString</c>, any process with
+    /// access to your process's memory will be able to read the data in your
+    /// <c>SecureArray</c>, but you do not have to worry about your data
+    /// persisting anywhere or multiple copies of your data floating around
+    /// RAM due to C#'s memory management.
+    /// </para><para>
+    /// Because it locks the memory into RAM (and at a
+    /// non-movable-by-the-garbage-collector location), you need to use it as
+    /// infrequently as possible and for as short a time as possible. RAM
+    /// secured this way puts stress on the computer as a whole by denying
+    /// physical RAM for other processes and puts stress on your particular
+    /// executable by denying freedom to the garbage collector to reduce
+    /// fragmentation as needed for best performance.
+    /// </para><para>
+    /// <b><em>Always</em></b> dispose of your <c>SecureArray</c>s.
+    /// </para>
+    /// </remarks>
     public sealed class SecureArray<T> : SecureArray, IDisposable
     {
         private readonly T[] buf;
