@@ -1,4 +1,4 @@
-![Isopoh](/images/isopoh144png)
+![Isopoh](/images/isopoh144.png)
 
 # FULLY MANAGED .NET CORE ARGON2 IMPLEMENTATION
 [d]: #project
