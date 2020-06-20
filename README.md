@@ -144,7 +144,7 @@ try
         var argon2ToVerify = new Argon2(configOfPasswordToVerify);
         using(var hashToVerify = argon2ToVerify.Hash())
         {
-            if (!hashB.Buffer.Where((b, i) => b != hashToVerify[i]).Any())
+            if (Argon2.FixedTimeEquals(hashB, hashToVerify))
             {
                 // verified
             }

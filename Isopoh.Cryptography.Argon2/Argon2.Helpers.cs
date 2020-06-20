@@ -6,7 +6,7 @@
 
 namespace Isopoh.Cryptography.Argon2
 {
-    using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Security.Cryptography;
     using System.Text;
 
@@ -236,7 +236,8 @@ namespace Isopoh.Cryptography.Argon2
 
                 using var hasherToVerify = new Argon2(configToVerify);
                 using var hashToVerify = hasherToVerify.Hash();
-                return !hash.Buffer.Where((b, i) => b != hashToVerify[i]).Any();
+
+                return FixedTimeEquals(hash, hashToVerify);
             }
             finally
             {
@@ -372,6 +373,35 @@ namespace Isopoh.Cryptography.Argon2
             SecureArrayCall secureArrayCall = null)
         {
             return Verify(encoded, password, null, secureArrayCall);
+        }
+
+        /// <summary>
+        /// Compare two SecureArrays without leaking timing information.
+        /// </summary>
+        /// <param name="left">The first SecureArray to compare.</param>
+        /// <param name="right">The second SecureArray to compare.</param>
+        /// <returns>true if left and right have the same values for Length and the same contents; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public static bool FixedTimeEquals(SecureArray<byte> left, SecureArray<byte> right)
+        {
+#if NETCOREAPP2_1 || NETCOREAPP2_2 || NETCOREAPP3_0 || NETCOREAPP3_1 || NETSTANDARD2_1
+            return System.Security.Cryptography.CryptographicOperations.FixedTimeEquals(left.Buffer, right.Buffer);
+#else
+            if (left.Buffer.Length != right.Buffer.Length)
+            {
+                return false;
+            }
+
+            int length = left.Buffer.Length;
+            int accum = 0;
+
+            for (int i = 0; i < length; i++)
+            {
+                accum |= left[i] - right[i];
+            }
+
+            return accum == 0;
+#endif
         }
     }
 }
