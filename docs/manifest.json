@@ -12,7 +12,7 @@
           "hash": "Zemqq9Y1WLFlyITjs6U57Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "viY9zt40ee2EGxd/NbCYIQ=="
+          "hash": "sVBcXc8lZ15ejA9LDYfkWA=="
         }
       },
       "is_incremental": true,
@@ -237,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.ProcessMemoryCounters.html",
-          "hash": "eo2++zsdW1tdlEowXSuWkA=="
+          "hash": "tDRXlh4N7OMQyFbIXniyCg=="
         }
       },
       "is_incremental": true,
@@ -366,7 +366,7 @@
           "hash": "2WxnL1IIlNoIYx32zaOLNQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -398,17 +398,17 @@
           "total_file_count": 0,
           "skipped_file_count": 0
         },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 26,
           "skipped_file_count": 26
-        },
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 3,
-          "skipped_file_count": 2
         }
       }
     },

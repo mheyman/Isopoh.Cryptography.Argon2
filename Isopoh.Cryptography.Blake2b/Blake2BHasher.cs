@@ -27,8 +27,7 @@ namespace Isopoh.Cryptography.Blake2b
 
         public Blake2BHasher(Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
-            if (config == null)
-                config = DefaultConfig;
+            config ??= DefaultConfig;
             this.core = new Blake2BCore(secureArrayCall, config.LockMemoryPolicy);
             this.rawConfig = Blake2IvBuilder.ConfigB(config, null, secureArrayCall);
             if (config.Key != null && config.Key.Length != 0)

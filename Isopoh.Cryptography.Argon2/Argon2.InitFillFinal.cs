@@ -33,66 +33,64 @@ namespace Isopoh.Cryptography.Argon2
         private SecureArray<byte> InitialHash()
         {
             var ret = SecureArray<byte>.Best(Blake2B.OutputLength, this.config.SecureArrayCall);
-            using (var blakeHash =
+            using var blakeHash =
                 Blake2B.Create(
                     new Blake2BConfig
                     {
                         OutputSizeInBytes = PrehashDigestLength,
                         Result64ByteBuffer = ret.Buffer,
                     },
-                    this.config.SecureArrayCall))
+                    this.config.SecureArrayCall);
+            var value = new byte[4];
+            Store32(value, this.config.Lanes);
+            blakeHash.Update(value);
+            Store32(value, this.config.HashLength);
+            blakeHash.Update(value);
+            Store32(value, this.config.MemoryCost);
+            blakeHash.Update(value);
+            Store32(value, this.config.TimeCost);
+            blakeHash.Update(value);
+            Store32(value, (uint)this.config.Version);
+            blakeHash.Update(value);
+            Store32(value, (uint)this.config.Type);
+            blakeHash.Update(value);
+            Store32(value, this.config.Password?.Length ?? 0);
+            blakeHash.Update(value);
+            if (this.config.Password != null)
             {
-                var value = new byte[4];
-                Store32(value, this.config.Lanes);
-                blakeHash.Update(value);
-                Store32(value, this.config.HashLength);
-                blakeHash.Update(value);
-                Store32(value, this.config.MemoryCost);
-                blakeHash.Update(value);
-                Store32(value, this.config.TimeCost);
-                blakeHash.Update(value);
-                Store32(value, (uint)this.config.Version);
-                blakeHash.Update(value);
-                Store32(value, (uint)this.config.Type);
-                blakeHash.Update(value);
-                Store32(value, this.config.Password?.Length ?? 0);
-                blakeHash.Update(value);
-                if (this.config.Password != null)
+                blakeHash.Update(this.config.Password);
+                if (this.config.ClearPassword)
                 {
-                    blakeHash.Update(this.config.Password);
-                    if (this.config.ClearPassword)
-                    {
-                        SecureArray.Zero(this.config.Password);
-                    }
+                    SecureArray.Zero(this.config.Password);
                 }
-
-                Store32(value, this.config.Salt?.Length ?? 0);
-                blakeHash.Update(value);
-                if (this.config.Salt != null)
-                {
-                    blakeHash.Update(this.config.Salt);
-                }
-
-                Store32(value, this.config.Secret?.Length ?? 0);
-                blakeHash.Update(value);
-                if (this.config.Secret != null)
-                {
-                    blakeHash.Update(this.config.Secret);
-                    if (this.config.ClearSecret)
-                    {
-                        SecureArray.Zero(this.config.Secret);
-                    }
-                }
-
-                Store32(value, this.config.AssociatedData?.Length ?? 0);
-                blakeHash.Update(value);
-                if (this.config.AssociatedData != null)
-                {
-                    blakeHash.Update(this.config.AssociatedData);
-                }
-
-                blakeHash.Finish();
             }
+
+            Store32(value, this.config.Salt?.Length ?? 0);
+            blakeHash.Update(value);
+            if (this.config.Salt != null)
+            {
+                blakeHash.Update(this.config.Salt);
+            }
+
+            Store32(value, this.config.Secret?.Length ?? 0);
+            blakeHash.Update(value);
+            if (this.config.Secret != null)
+            {
+                blakeHash.Update(this.config.Secret);
+                if (this.config.ClearSecret)
+                {
+                    SecureArray.Zero(this.config.Secret);
+                }
+            }
+
+            Store32(value, this.config.AssociatedData?.Length ?? 0);
+            blakeHash.Update(value);
+            if (this.config.AssociatedData != null)
+            {
+                blakeHash.Update(this.config.AssociatedData);
+            }
+
+            blakeHash.Finish();
 
             return ret;
         }

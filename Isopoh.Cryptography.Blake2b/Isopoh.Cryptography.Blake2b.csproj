@@ -13,7 +13,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2019</Copyright>
+        <Copyright>Michael Heyman 2020</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
         <PackageReleaseNotes>Multiple targets.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
@@ -23,7 +23,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.3</PackageVersion>
+        <PackageVersion>1.1.4</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

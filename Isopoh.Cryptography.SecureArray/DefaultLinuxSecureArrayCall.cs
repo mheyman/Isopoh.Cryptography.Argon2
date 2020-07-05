@@ -26,7 +26,7 @@ namespace Isopoh.Cryptography.SecureArray
         {
             if (LinuxMlock(m, l) != 0)
             {
-                var errcode = Marshal.GetLastWin32Error();
+                var errorCode = Marshal.GetLastWin32Error();
                 if (LinuxTryRaiseCurrentMlockLimit(out string raiseError))
                 {
                     if (LinuxMlock(m, l) == 0)
@@ -34,10 +34,10 @@ namespace Isopoh.Cryptography.SecureArray
                         return null;
                     }
 
-                    errcode = Marshal.GetLastWin32Error();
+                    errorCode = Marshal.GetLastWin32Error();
                 }
 
-                return $"mlock error: {LinuxStrError(errcode)}{(raiseError == null ? string.Empty : $" ({raiseError})")}";
+                return $"mlock error: {LinuxStrError(errorCode)}{(raiseError == null ? string.Empty : $" ({raiseError})")}";
             }
 
             return null;

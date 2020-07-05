@@ -381,6 +381,12 @@ namespace Isopoh.Cryptography.Argon2
         /// <param name="left">The first SecureArray to compare.</param>
         /// <param name="right">The second SecureArray to compare.</param>
         /// <returns>true if left and right have the same values for Length and the same contents; otherwise, false.</returns>
+        /// <remarks>
+        /// Uses <see
+        /// href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptographicoperations.fixedtimeequals"
+        /// >System.Security.Cryptography.CryptographicOperations.FixedTimeEquals()</see>
+        /// when available; otherwise implements a similar algorithm.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static bool FixedTimeEquals(SecureArray<byte> left, SecureArray<byte> right)
         {
@@ -393,14 +399,14 @@ namespace Isopoh.Cryptography.Argon2
             }
 
             int length = left.Buffer.Length;
-            int accum = 0;
+            int accumulator = 0;
 
             for (int i = 0; i < length; i++)
             {
-                accum |= left[i] - right[i];
+                accumulator |= left[i] - right[i];
             }
 
-            return accum == 0;
+            return accumulator == 0;
 #endif
         }
     }

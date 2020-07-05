@@ -45,6 +45,22 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.Dispose
   nameWithType: Argon2.Dispose
+- uid: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray{System.Byte},Isopoh.Cryptography.SecureArray.SecureArray{System.Byte})
+  name: FixedTimeEquals(SecureArray<Byte>, SecureArray<Byte>)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray{System.Byte},Isopoh.Cryptography.SecureArray.SecureArray{System.Byte})
+  name.vb: FixedTimeEquals(SecureArray(Of Byte), SecureArray(Of Byte))
+  fullName: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray<System.Byte>, Isopoh.Cryptography.SecureArray.SecureArray<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray(Of System.Byte), Isopoh.Cryptography.SecureArray.SecureArray(Of System.Byte))
+  nameWithType: Argon2.FixedTimeEquals(SecureArray<Byte>, SecureArray<Byte>)
+  nameWithType.vb: Argon2.FixedTimeEquals(SecureArray(Of Byte), SecureArray(Of Byte))
+- uid: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals*
+  name: FixedTimeEquals
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals
+  nameWithType: Argon2.FixedTimeEquals
 - uid: Isopoh.Cryptography.Argon2.Argon2.Hash
   name: Hash()
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Hash

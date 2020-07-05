@@ -102,21 +102,18 @@ namespace Isopoh.Cryptography.SecureArray
                 {
                     lock (VirtualAllocLock)
                     {
-                        if (virtualAlloc == null)
-                        {
-                            virtualAlloc = Is32BitSubsystem
-                                ? (lpAddress, size, allocationTypeFlags, protectFlags) =>
+                        virtualAlloc ??= Is32BitSubsystem
+                            ? (lpAddress, size, allocationTypeFlags, protectFlags) =>
+                            {
+                                if (size > uint.MaxValue)
                                 {
-                                    if (size > uint.MaxValue)
-                                    {
-                                        SetLastError(8); // ERROR_NOT_ENOUGH_MEMORY
-                                        return IntPtr.Zero;
-                                    }
-
-                                    return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
+                                    SetLastError(8); // ERROR_NOT_ENOUGH_MEMORY
+                                    return IntPtr.Zero;
                                 }
-                                : (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64;
-                        }
+
+                                return VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
+                            }
+                            : (Func<IntPtr, ulong, uint, uint, IntPtr>)VirtualAlloc64;
                     }
                 }
 
@@ -135,21 +132,18 @@ namespace Isopoh.Cryptography.SecureArray
                 {
                     lock (SetProcessWorkingSetSizeLock)
                     {
-                        if (setProcessWorkingSetSize == null)
-                        {
-                            setProcessWorkingSetSize = Is32BitSubsystem
-                                ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
-                                {
-                                    uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
-                                    uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
-                                    return SetProcessWorkingSetSizeEx32(
-                                        processHandle,
-                                        min,
-                                        max,
-                                        flags);
-                                })
-                                : (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64;
-                        }
+                        setProcessWorkingSetSize ??= Is32BitSubsystem
+                            ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
+                            {
+                                uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
+                                uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
+                                return SetProcessWorkingSetSizeEx32(
+                                    processHandle,
+                                    min,
+                                    max,
+                                    flags);
+                            })
+                            : (Func<IntPtr, ulong, ulong, uint, bool>)SetProcessWorkingSetSizeEx64;
                     }
                 }
 
@@ -168,13 +162,9 @@ namespace Isopoh.Cryptography.SecureArray
                 {
                     lock (GetProcessWorkingSetSizeLock)
                     {
-                        if (getProcessWorkingSetSize == null)
-                        {
-                            getProcessWorkingSetSize =
-                                Is32BitSubsystem
-                                    ? GetProcessWorkingSetSizeEx32Wrapper
-                                    : (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64;
-                        }
+                        getProcessWorkingSetSize ??= Is32BitSubsystem
+                            ? GetProcessWorkingSetSizeEx32Wrapper
+                            : (GetProcessWorkingSetSizeExDelegate)GetProcessWorkingSetSizeEx64;
                     }
                 }
 
@@ -245,6 +235,7 @@ namespace Isopoh.Cryptography.SecureArray
             uint minWorkingSetSize,
             uint maxWorkingSetSize,
             uint flags);
+
         [DllImport("ntdll.dll", CallingConvention = CallingConvention.Winapi)]
         private static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
 
