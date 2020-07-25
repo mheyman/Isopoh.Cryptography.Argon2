@@ -18,7 +18,7 @@
     <Authors>Michael Heyman</Authors>
     <Copyright>Michael Heyman 2020</Copyright>
     <PackageTags>sensitive array</PackageTags>
-    <PackageReleaseNotes>Multiple targets.</PackageReleaseNotes>
+    <PackageReleaseNotes>Match Isopoh.Cryptography.Argon2 version.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
     <TargetFrameworks>
       netstandard1.2;netcoreapp1.0;netcoreapp1.1;netcoreapp2.0;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0
@@ -26,7 +26,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
     <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-    <PackageVersion>1.1.4</PackageVersion>
+    <PackageVersion>1.1.5</PackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
