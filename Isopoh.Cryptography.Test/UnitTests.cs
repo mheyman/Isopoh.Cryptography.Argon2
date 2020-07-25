@@ -291,6 +291,14 @@ namespace Isopoh.Cryptography.Test
             this.output.WriteLine($"SecureArray: Made a {size}-byte secure array");
         }
 
+        [Fact]
+        public void HashSize()
+        {
+            string password = "password";
+            string hash = Argon2.Hash(password, hashLength: 16);
+            Assert.True(Argon2.Verify(hash, password));
+        }
+
         /// <summary>
         /// Makes useful binary from text Argon2 test vector information.
         /// </summary>

@@ -240,6 +240,7 @@ namespace Isopoh.Cryptography.Argon2
                 try
                 {
                     validator.Type = type;
+                    validator.HashLength = hashLength;
                     validator.TimeCost = (int)timeCost;
                     validator.MemoryCost = (int)memoryCost;
                     validator.Lanes = (int)lanes;
@@ -254,6 +255,7 @@ namespace Isopoh.Cryptography.Argon2
                 }
 
                 config.Type = type;
+                config.HashLength = hashLength;
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
                 config.Lanes = (int)lanes;
