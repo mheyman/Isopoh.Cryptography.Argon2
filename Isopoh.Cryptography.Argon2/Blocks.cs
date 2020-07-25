@@ -6,6 +6,7 @@
 
 namespace Isopoh.Cryptography.Argon2
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -22,15 +23,25 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Initializes a new instance of the <see cref="Blocks"/> class.
         /// </summary>
-        /// <param name="memory">
-        /// The array to use under the blocks.
+        /// <param name="memories">
+        /// The arrays to use under the blocks.
         /// </param>
-        /// <param name="blockCount">
-        /// The number of blocks in the array.
-        /// </param>
-        public Blocks(ulong[] memory, int blockCount)
+        public Blocks(IEnumerable<ulong[]> memories)
         {
-            this.blockValues = Enumerable.Range(0, blockCount).Select(i => new BlockValues(memory, i)).ToArray();
+            var bvs = new List<BlockValues>();
+            int blockIndex = 0;
+            foreach (var memory in memories)
+            {
+                var maxBlockIndex = blockIndex + (memory.Length / Argon2.QwordsInBlock);
+                for (int i = blockIndex; i < maxBlockIndex; ++i)
+                {
+                    bvs.Add(new BlockValues(memory, i));
+                }
+
+                blockIndex = maxBlockIndex;
+            }
+
+            this.blockValues = bvs.ToArray();
         }
 
         /// <summary>

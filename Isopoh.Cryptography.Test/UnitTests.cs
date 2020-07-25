@@ -299,6 +299,14 @@ namespace Isopoh.Cryptography.Test
             Assert.True(Argon2.Verify(hash, password));
         }
 
+        [Fact]
+        public void HighMemoryCost()
+        {
+            string password = "password";
+            string hash = Argon2.Hash(password, memoryCost: 3000000);
+
+        }
+
         /// <summary>
         /// Makes useful binary from text Argon2 test vector information.
         /// </summary>

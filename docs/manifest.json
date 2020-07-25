@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "sVBcXc8lZ15ejA9LDYfkWA=="
+          "hash": "U7MAEK5h3P03rLH2mtjjiA=="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.html",
-          "hash": "azwOLiyCHoEIdksKyBgH2Q=="
+          "hash": "p4vZEQZ3Vp2bPbvPkZeUnQ=="
         }
       },
       "is_incremental": true,

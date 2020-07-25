@@ -4,10 +4,12 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+using System.Linq;
+
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
-
+    using System.Collections.Generic;
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -15,7 +17,7 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2 : IDisposable
     {
-        private readonly SecureArray<ulong> memory;
+        private readonly List<SecureArray<ulong>> memories = new List<SecureArray<ulong>>();
         private readonly Argon2Config config;
 
         /// <summary>
@@ -38,8 +40,15 @@ namespace Isopoh.Cryptography.Argon2
             // ensure that all segments have equal length
             this.LaneLength = this.SegmentLength * SyncPoints;
             this.MemoryBlockCount = this.LaneLength * this.config.Lanes;
-            this.memory = SecureArray<ulong>.Best(BlockSize * this.MemoryBlockCount / 8, config.SecureArrayCall);
-            this.Memory = new Blocks(this.memory.Buffer, this.MemoryBlockCount);
+            var blockCount = BlockSize * this.MemoryBlockCount / 8;
+            while (blockCount > CsharpMaxBlocksPerArray)
+            {
+                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * CsharpMaxBlocksPerArray, config.SecureArrayCall));
+                blockCount -= CsharpMaxBlocksPerArray;
+            }
+
+            this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * blockCount, config.SecureArrayCall));
+            this.Memory = new Blocks(this.memories.Select(m => m.Buffer));
         }
 
         /// <summary>
@@ -48,7 +57,7 @@ namespace Isopoh.Cryptography.Argon2
         public Blocks Memory { get; }
 
         /// <summary>
-        /// Gets the number of memory blocks (<see cref="Argon2Config.Lanes"/>*<see cref="LaneLength"/>).
+        /// Gets the number of memories blocks (<see cref="Argon2Config.Lanes"/>*<see cref="LaneLength"/>).
         /// </summary>
         public int MemoryBlockCount { get; }
 
@@ -76,11 +85,12 @@ namespace Isopoh.Cryptography.Argon2
         }
 
         /// <summary>
-        /// Zero sensitive memory and dispose of resources.
+        /// Zero sensitive memories and dispose of resources.
         /// </summary>
         public void Dispose()
         {
-            this.memory?.Dispose();
+            this.memories?.ForEach(m => m?.Dispose());
+            this.memories?.Clear();
         }
     }
 }

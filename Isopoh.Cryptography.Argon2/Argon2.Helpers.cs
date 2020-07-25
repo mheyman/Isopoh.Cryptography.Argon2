@@ -48,7 +48,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Default to 1 (single threaded).
@@ -110,7 +110,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Default to 1 (single threaded).
@@ -178,7 +178,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Default to 1 (single threaded).

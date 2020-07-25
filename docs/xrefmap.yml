@@ -32,6 +32,12 @@ references:
   commentId: F:Isopoh.Cryptography.Argon2.Argon2.BlockSize
   fullName: Isopoh.Cryptography.Argon2.Argon2.BlockSize
   nameWithType: Argon2.BlockSize
+- uid: Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
+  name: CsharpMaxBlocksPerArray
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_CsharpMaxBlocksPerArray
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
+  fullName: Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
+  nameWithType: Argon2.CsharpMaxBlocksPerArray
 - uid: Isopoh.Cryptography.Argon2.Argon2.Dispose
   name: Dispose()
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Dispose
@@ -456,15 +462,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.Blocks
   fullName: Isopoh.Cryptography.Argon2.Blocks
   nameWithType: Blocks
-- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.UInt64[],System.Int32)
-  name: Blocks(UInt64[], Int32)
-  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_UInt64___System_Int32_
-  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.UInt64[],System.Int32)
-  name.vb: Blocks(UInt64(), Int32)
-  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.UInt64[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.UInt64(), System.Int32)
-  nameWithType: Blocks.Blocks(UInt64[], Int32)
-  nameWithType.vb: Blocks.Blocks(UInt64(), Int32)
+- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
+  name: Blocks(IEnumerable<UInt64[]>)
+  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_IEnumerable_System_UInt64____
+  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
+  name.vb: Blocks(IEnumerable(Of UInt64()))
+  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable<System.UInt64[]>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable(Of System.UInt64()))
+  nameWithType: Blocks.Blocks(IEnumerable<UInt64[]>)
+  nameWithType.vb: Blocks.Blocks(IEnumerable(Of UInt64()))
 - uid: Isopoh.Cryptography.Argon2.Blocks.#ctor*
   name: Blocks
   href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_
