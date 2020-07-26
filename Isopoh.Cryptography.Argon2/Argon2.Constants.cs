@@ -38,9 +38,9 @@ namespace Isopoh.Cryptography.Argon2
 
         /// <summary>
         /// C# has a limit of 0X7FEFFFFF elements per array (0x7FFFFFC7 per byte array). The blocks are
-        /// 1024 bytes long, the elements are 8 bytes (ulong). This gives 0X7FEFFFFF / 1024 blocks per
+        /// 1024 bytes long, the elements are 8 bytes (ulong). This gives 0X7FEFFFFF / 128 blocks per
         /// C# array.
         /// </summary>
-        public const int CsharpMaxBlocksPerArray = 0X7FEFFFFF / 1024;
+        public const int CsharpMaxBlocksPerArray = 0X7FEFFFFF / QwordsInBlock;
     }
 }

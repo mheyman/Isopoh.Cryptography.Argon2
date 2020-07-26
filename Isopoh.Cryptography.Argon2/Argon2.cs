@@ -39,16 +39,16 @@ namespace Isopoh.Cryptography.Argon2
             // ensure that all segments have equal length
             this.LaneBlockCount = this.SegmentBlockCount * SyncPointCount;
             this.MemoryBlockCount = this.LaneBlockCount * config.Lanes;
-            var blockCount = (ulong)QwordsInBlock * (ulong)this.MemoryBlockCount;
+            var memoryBlockCount = (ulong)this.MemoryBlockCount;
             try
             {
-                while (blockCount > CsharpMaxBlocksPerArray)
+                while (memoryBlockCount > CsharpMaxBlocksPerArray)
                 {
                     this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * CsharpMaxBlocksPerArray, config.SecureArrayCall));
-                    blockCount -= CsharpMaxBlocksPerArray;
+                    memoryBlockCount -= CsharpMaxBlocksPerArray;
                 }
 
-                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * (int)blockCount, config.SecureArrayCall));
+                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * (int)memoryBlockCount, config.SecureArrayCall));
             }
             catch (OutOfMemoryException e)
             {
@@ -58,7 +58,7 @@ namespace Isopoh.Cryptography.Argon2
                 this.memories?.ForEach(m => m?.Dispose());
                 this.memories?.Clear();
                 throw new OutOfMemoryException(
-                    $"Failed to allocate {(blockCount > CsharpMaxBlocksPerArray ? CsharpMaxBlocksPerArray : blockCount) * QwordsInBlock}-byte Argon2 block array, " +
+                    $"Failed to allocate {(memoryBlockCount > CsharpMaxBlocksPerArray ? CsharpMaxBlocksPerArray : memoryBlockCount) * QwordsInBlock}-byte Argon2 block array, " +
                     $"{(memoryCount > 0 ? $" allocation {memoryCount + 1} of multiple-allocation," : string.Empty)}" +
                     $" memory cost {config.MemoryCost}, lane count {config.Lanes}.",
                     e);
@@ -72,6 +72,7 @@ namespace Isopoh.Cryptography.Argon2
             }
 
             this.Memory = new Blocks(this.memories.Select(m => m.Buffer));
+            // Console.WriteLine($"Memory Cost {config.MemoryCost}, Chunks {this.memories.Count}, Lanes {config.Lanes}, Memory {memoryBlockCount * 1024}, Block count {this.Memory.Length}, MemoryBlockCount {this.MemoryBlockCount}");
         }
 
         /// <summary>

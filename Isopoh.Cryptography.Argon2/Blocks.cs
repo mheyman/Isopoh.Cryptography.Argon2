@@ -35,7 +35,7 @@ namespace Isopoh.Cryptography.Argon2
                 var maxBlockIndex = blockIndex + (memory.Length / Argon2.QwordsInBlock);
                 for (int i = blockIndex; i < maxBlockIndex; ++i)
                 {
-                    bvs.Add(new BlockValues(memory, i));
+                    bvs.Add(new BlockValues(memory, i - blockIndex));
                 }
 
                 blockIndex = maxBlockIndex;
@@ -43,6 +43,11 @@ namespace Isopoh.Cryptography.Argon2
 
             this.blockValues = bvs.ToArray();
         }
+
+        /// <summary>
+        /// Gets the total number of <see cref="BlockValues"/> in the <see cref="Blocks"/>.
+        /// </summary>
+        public int Length => this.blockValues.Length;
 
         /// <summary>
         /// Gets or sets the <see cref="BlockValues"/> element at the specified index.
