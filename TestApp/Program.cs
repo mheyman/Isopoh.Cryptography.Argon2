@@ -420,6 +420,22 @@ namespace TestApp
             return errs.Any() ? $"Leaks: FAILED: {string.Join(" ", errs)}" : "Leaks: Passed";
         }
 
+        public static string TestHighMemoryCost()
+        {
+            // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
+            // this can take a long time depending on the multiplier
+            int multiplier = 10;
+            string password = "password";
+            var memoryCost = (multiplier * Argon2.CsharpMaxBlocksPerArray / Argon2.QwordsInBlock) + 271;
+            JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
+            string hash = Argon2.Hash(password, memoryCost: memoryCost, parallelism: 20, secureArrayCall: new InsecureArrayCall());
+            JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
+            bool ret = Argon2.Verify(hash, password);
+            JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
+
+            return !ret ? "HighMemoryCost: FAILED" : "HighMemoryCost: Passed";
+        }
+
         /// <summary>
         /// Program entry.
         /// </summary>
@@ -436,6 +452,7 @@ namespace TestApp
                 TestArgon2ThreadsDontMatter(),
                 TestArgon2(),
                 TestFromDraft(),
+                TestHighMemoryCost(),
             };
             Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
         }
@@ -756,6 +773,23 @@ namespace TestApp
 
                 return ret.ToArray();
             }
+        }
+
+        private sealed class InsecureArrayCall : SecureArrayCall
+        {
+            public InsecureArrayCall()
+                : base(NoZeroMemory, NoLockMemory, NoUnlockMemory)
+            {
+            }
+
+            private static void NoZeroMemory(IntPtr buf, UIntPtr len) { }
+
+            private static string NoLockMemory(IntPtr buf, UIntPtr len)
+            {
+                return null;
+            }
+
+            private static void NoUnlockMemory(IntPtr buf, UIntPtr len) { }
         }
     }
 }

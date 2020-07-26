@@ -139,39 +139,48 @@ namespace Isopoh.Cryptography.Argon2
                         .Select(i => new AutoResetEvent(false))
                         .Cast<WaitHandle>()
                         .ToArray();
-                var threads = new Thread[waitHandles.Length];
                 for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
                 {
                     for (int sliceNumber = 0; sliceNumber < SyncPointCount; ++sliceNumber)
                     {
                         int laneNumber = 0;
                         int remaining = this.config.Lanes;
-                        for (; laneNumber < threads.Length && laneNumber < this.config.Lanes; ++laneNumber)
+                        for (; laneNumber < waitHandles.Length && laneNumber < this.config.Lanes; ++laneNumber)
                         {
-                            threads[laneNumber] = this.StartFillSegmentThread(
-                                passNumber,
-                                laneNumber,
-                                sliceNumber,
-                                (AutoResetEvent)waitHandles[laneNumber]);
+                            ThreadPool.QueueUserWorkItem(
+                                (fs) =>
+                                {
+                                    this.FillSegment(((FillState)fs).Position);
+                                    ((FillState)fs).Are.Set();
+                                },
+                                new FillState
+                                {
+                                    Position = new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 },
+                                    Are = (AutoResetEvent)waitHandles[laneNumber],
+                                });
                         }
 
                         while (laneNumber < this.config.Lanes)
                         {
                             int i = WaitHandle.WaitAny(waitHandles);
-                            threads[i].Join();
                             --remaining;
-                            threads[i] = this.StartFillSegmentThread(
-                                passNumber,
-                                laneNumber,
-                                sliceNumber,
-                                (AutoResetEvent)waitHandles[i]);
+                            ThreadPool.QueueUserWorkItem(
+                                (fs) =>
+                                {
+                                    this.FillSegment(((FillState)fs).Position);
+                                    ((FillState)fs).Are.Set();
+                                },
+                                new FillState
+                                {
+                                    Position = new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 },
+                                    Are = (AutoResetEvent)waitHandles[i],
+                                });
                             ++laneNumber;
                         }
 
                         while (remaining > 0)
                         {
                             int i = WaitHandle.WaitAny(waitHandles);
-                            threads[i].Join();
                             --remaining;
                         }
                     }
@@ -373,6 +382,13 @@ namespace Isopoh.Cryptography.Argon2
             public int Slice { get; set; }
 
             public int Index { get; set; }
+        }
+
+        private class FillState
+        {
+            public Position Position { get; set; }
+
+            public AutoResetEvent Are { get; set; }
         }
     }
 }

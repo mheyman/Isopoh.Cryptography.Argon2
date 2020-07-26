@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "ie6R1BjT9rf9pYN3VXUcmg=="
+          "hash": "tsw1WqCLKgme6XvjAaBxkg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.html",
-          "hash": "pec2unkclIS6DNLu7d93Fw=="
+          "hash": "h/PasB0lZfYpg3zwsBxg2Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Type.html",
-          "hash": "LMpcgTfX/TVvgsR0hYCnEQ=="
+          "hash": "lyQ3n5YqhOSQZ14pVXPIpQ=="
         }
       },
       "is_incremental": true,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Version.html",
-          "hash": "99SuhAkWrJNZFPEKqjYPcw=="
+          "hash": "KxLJxj85s1RXciV9di6nYg=="
         }
       },
       "is_incremental": true,
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.html",
-          "hash": "KZAtjihbtHyNW6TaN4Rlaw=="
+          "hash": "TLTZloz59u9abfFNiJGc8A=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.html",
-          "hash": "p4vZEQZ3Vp2bPbvPkZeUnQ=="
+          "hash": "i7wgiJ3I9S+A7JscrU1xpg=="
         }
       },
       "is_incremental": true,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.DecodeExtension.html",
-          "hash": "PE5c3t+TCystv1SsrrIkvA=="
+          "hash": "yS4PVxbHUyLuZqetvsNaRQ=="
         }
       },
       "is_incremental": true,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.EncodeExtension.html",
-          "hash": "qf/LGEMXqUjv32WIcerL/A=="
+          "hash": "LrdwS0HpdIjT3JSM8pMxXQ=="
         }
       },
       "is_incremental": true,
@@ -120,7 +120,7 @@
           "hash": "founP84uRJGoYaw7p6qsnA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.LockFailException.html",
-          "hash": "MO80VLRru0Ik36fO8aBGLg=="
+          "hash": "iTWAHROKWKbNqld+cntpQg=="
         }
       },
       "is_incremental": true,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
-          "hash": "um++Yl70xDY5GJT+LiIxmg=="
+          "hash": "SHAYORfmf9z0ZUOQWaQCcw=="
         }
       },
       "is_incremental": true,
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.html",
-          "hash": "/lIEjbLIpXWV9TjbGWxVUw=="
+          "hash": "1hqCrWzw088bGM0tAW7WNg=="
         }
       },
       "is_incremental": true,
@@ -408,7 +408,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 26,
-          "skipped_file_count": 25
+          "skipped_file_count": 26
         }
       }
     },

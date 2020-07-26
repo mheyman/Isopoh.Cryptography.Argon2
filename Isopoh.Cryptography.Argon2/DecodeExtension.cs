@@ -142,6 +142,7 @@ namespace Isopoh.Cryptography.Argon2
                     validator.TimeCost = (int)timeCost;
                     validator.MemoryCost = (int)memoryCost;
                     validator.Lanes = (int)lanes;
+                    validator.Threads = (int)lanes;
                     validator.AssociatedData = associatedData;
                     validator.Version = version;
                 }
@@ -155,6 +156,7 @@ namespace Isopoh.Cryptography.Argon2
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
                 config.Lanes = (int)lanes;
+                config.Threads = (int)lanes;
                 config.AssociatedData = associatedData;
                 config.Version = version;
                 hash = null;
@@ -176,6 +178,7 @@ namespace Isopoh.Cryptography.Argon2
                     validator.TimeCost = (int)timeCost;
                     validator.MemoryCost = (int)memoryCost;
                     validator.Lanes = (int)lanes;
+                    validator.Threads = (int)lanes;
                     validator.Salt = salt;
                     validator.AssociatedData = associatedData;
                     validator.Version = version;
@@ -190,6 +193,7 @@ namespace Isopoh.Cryptography.Argon2
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
                 config.Lanes = (int)lanes;
+                config.Threads = (int)lanes;
                 config.Salt = salt;
                 config.AssociatedData = associatedData;
                 config.Version = version;
@@ -244,6 +248,7 @@ namespace Isopoh.Cryptography.Argon2
                     validator.TimeCost = (int)timeCost;
                     validator.MemoryCost = (int)memoryCost;
                     validator.Lanes = (int)lanes;
+                    validator.Threads = (int)lanes;
                     validator.Salt = salt;
                     validator.AssociatedData = associatedData;
                     validator.Version = version;
@@ -259,6 +264,7 @@ namespace Isopoh.Cryptography.Argon2
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
                 config.Lanes = (int)lanes;
+                config.Threads = (int)lanes;
                 config.Salt = salt;
                 config.AssociatedData = associatedData;
                 config.Version = version;

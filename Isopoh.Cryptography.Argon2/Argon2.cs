@@ -4,12 +4,11 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using System.Linq;
-
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -49,7 +48,7 @@ namespace Isopoh.Cryptography.Argon2
                     blockCount -= CsharpMaxBlocksPerArray;
                 }
 
-                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * (int) blockCount, config.SecureArrayCall));
+                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * (int)blockCount, config.SecureArrayCall));
             }
             catch (OutOfMemoryException e)
             {

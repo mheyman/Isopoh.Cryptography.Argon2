@@ -462,13 +462,13 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.Blocks
   fullName: Isopoh.Cryptography.Argon2.Blocks
   nameWithType: Blocks
-- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
+- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
   name: Blocks(IEnumerable<UInt64[]>)
-  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_IEnumerable_System_UInt64____
-  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
+  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_UInt64____
+  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
   name.vb: Blocks(IEnumerable(Of UInt64()))
-  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable<System.UInt64[]>)
-  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable(Of System.UInt64()))
+  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.UInt64[]>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.UInt64()))
   nameWithType: Blocks.Blocks(IEnumerable<UInt64[]>)
   nameWithType.vb: Blocks.Blocks(IEnumerable(Of UInt64()))
 - uid: Isopoh.Cryptography.Argon2.Blocks.#ctor*
@@ -1254,12 +1254,12 @@ references:
   commentId: T:Isopoh.Cryptography.SecureArray.LockFailException
   fullName: Isopoh.Cryptography.SecureArray.LockFailException
   nameWithType: LockFailException
-- uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String,System.Int32)
-  name: LockFailException(String, Int32)
-  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_System_Int32_
-  commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String,System.Int32)
-  fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException(System.String, System.Int32)
-  nameWithType: LockFailException.LockFailException(String, Int32)
+- uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)
+  name: LockFailException(String)
+  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_
+  commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)
+  fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException(System.String)
+  nameWithType: LockFailException.LockFailException(String)
 - uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor*
   name: LockFailException
   href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_
@@ -1267,19 +1267,6 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException
   nameWithType: LockFailException.LockFailException
-- uid: Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax
-  name: CurrentMax
-  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException_CurrentMax
-  commentId: P:Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax
-  fullName: Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax
-  nameWithType: LockFailException.CurrentMax
-- uid: Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax*
-  name: CurrentMax
-  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException_CurrentMax_
-  commentId: Overload:Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax
-  isSpec: "True"
-  fullName: Isopoh.Cryptography.SecureArray.LockFailException.CurrentMax
-  nameWithType: LockFailException.CurrentMax
 - uid: Isopoh.Cryptography.SecureArray.SecureArray
   name: SecureArray
   href: api/Isopoh.Cryptography.SecureArray.SecureArray.html
@@ -1386,6 +1373,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.SecureArray.SecureArray.ProtectionType
   nameWithType: SecureArray.ProtectionType
+- uid: Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail
+  name: ReportMaxLockableOnLockFail
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray.html#Isopoh_Cryptography_SecureArray_SecureArray_ReportMaxLockableOnLockFail
+  commentId: P:Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail
+  nameWithType: SecureArray.ReportMaxLockableOnLockFail
+- uid: Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail*
+  name: ReportMaxLockableOnLockFail
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray.html#Isopoh_Cryptography_SecureArray_SecureArray_ReportMaxLockableOnLockFail_
+  commentId: Overload:Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray.ReportMaxLockableOnLockFail
+  nameWithType: SecureArray.ReportMaxLockableOnLockFail
 - uid: Isopoh.Cryptography.SecureArray.SecureArray.Zero*
   name: Zero
   href: api/Isopoh.Cryptography.SecureArray.SecureArray.html#Isopoh_Cryptography_SecureArray_SecureArray_Zero_
