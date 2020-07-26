@@ -282,7 +282,7 @@ namespace Isopoh.Cryptography.SecureArray
                             }
                             else
                             {
-                                msg = "Finding maximum size takes too long (see SecureArray.cs:266 to enable reporting)";
+                                msg = "Set SecureArray.ReportMaxLockableOnLockFail=true to enable reporting";
                             }
 
                             throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.");
