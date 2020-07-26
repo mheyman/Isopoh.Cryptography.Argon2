@@ -120,8 +120,8 @@ namespace Isopoh.Cryptography.Argon2
         /// <remarks>
         /// This translates into the minimum memory used. The memory cost is the minimum number
         /// of 1024-byte blocks to used to perform the hash. If this value is less than
-        /// 2 * <see cref="Argon2.SyncPoints"/> * <see cref="Lanes"/> then that value is used
-        /// (<see cref="Argon2.SyncPoints"/> == 4).
+        /// 2 * <see cref="Argon2.SyncPointCount"/> * <see cref="Lanes"/> then that value is used
+        /// (<see cref="Argon2.SyncPointCount"/> == 4).
         /// </remarks>
         public int MemoryCost
         {
@@ -156,6 +156,11 @@ namespace Isopoh.Cryptography.Argon2
                 if (value < 1)
                 {
                     throw new ArgumentException($"Lanes must be 1 or more, got {value}");
+                }
+
+                if (value > int.MaxValue / (2 * Argon2.SyncPointCount))
+                {
+                    throw new ArgumentException($"Lanes must be less than {int.MaxValue / (2 * Argon2.SyncPointCount)}, got {value}");
                 }
 
                 this.lanes = value;

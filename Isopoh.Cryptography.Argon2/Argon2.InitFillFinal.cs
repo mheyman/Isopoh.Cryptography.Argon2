@@ -103,10 +103,10 @@ namespace Isopoh.Cryptography.Argon2
                 Store32(blockHash, PrehashDigestLength, 0);
                 Store32(blockHash, PrehashDigestLength + 4, l);
                 Blake2BLong(blockHashBytes.Buffer, blockHash, this.config.SecureArrayCall);
-                LoadBlock(this.Memory[l * this.LaneLength], blockHashBytes.Buffer);
+                LoadBlock(this.Memory[l * this.LaneBlockCount], blockHashBytes.Buffer);
                 Store32(blockHash, PrehashDigestLength, 1);
                 Blake2BLong(blockHashBytes.Buffer, blockHash, this.config.SecureArrayCall);
-                LoadBlock(this.Memory[(l * this.LaneLength) + 1], blockHashBytes.Buffer);
+                LoadBlock(this.Memory[(l * this.LaneBlockCount) + 1], blockHashBytes.Buffer);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Isopoh.Cryptography.Argon2
                 var threads = new Thread[waitHandles.Length];
                 for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
                 {
-                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                    for (int sliceNumber = 0; sliceNumber < SyncPointCount; ++sliceNumber)
                     {
                         int laneNumber = 0;
                         int remaining = this.config.Lanes;
@@ -183,7 +183,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)
                 {
-                    for (int sliceNumber = 0; sliceNumber < SyncPoints; ++sliceNumber)
+                    for (int sliceNumber = 0; sliceNumber < SyncPointCount; ++sliceNumber)
                     {
                         for (int laneNumber = 0; laneNumber < this.config.Lanes; ++laneNumber)
                         {
@@ -207,12 +207,12 @@ namespace Isopoh.Cryptography.Argon2
         {
             using var blockHashBuffer = SecureArray<ulong>.Best(BlockSize / 8, this.config.SecureArrayCall);
             var blockHash = new BlockValues(blockHashBuffer.Buffer, 0);
-            blockHash.Copy(this.Memory[this.LaneLength - 1]);
+            blockHash.Copy(this.Memory[this.LaneBlockCount - 1]);
 
             // XOR last blocks
             for (int l = 1; l < this.config.Lanes; ++l)
             {
-                blockHash.Xor(this.Memory[(l * this.LaneLength) + (this.LaneLength - 1)]);
+                blockHash.Xor(this.Memory[(l * this.LaneBlockCount) + (this.LaneBlockCount - 1)]);
             }
 
             using var blockHashBytes = SecureArray<byte>.Best(BlockSize, this.config.SecureArrayCall);
@@ -227,8 +227,8 @@ namespace Isopoh.Cryptography.Argon2
         {
             bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing ||
                                              (this.config.Type == Argon2Type.HybridAddressing && position.Pass == 0 &&
-                                              position.Slice < SyncPoints / 2);
-            var pseudoRands = new ulong[this.SegmentLength];
+                                              position.Slice < SyncPointCount / 2);
+            var pseudoRands = new ulong[this.SegmentBlockCount];
             if (dataIndependentAddressing)
             {
                 this.GenerateAddresses(position, pseudoRands);
@@ -236,12 +236,12 @@ namespace Isopoh.Cryptography.Argon2
 
             // 2 if already generated the first two blocks
             int startingIndex = position.Pass == 0 && position.Slice == 0 ? 2 : 0;
-            int curOffset = (position.Lane * this.LaneLength) + (position.Slice * this.SegmentLength) + startingIndex;
-            int prevOffset = curOffset % this.LaneLength == 0 ? curOffset + this.LaneLength - 1 : curOffset - 1;
+            int curOffset = (position.Lane * this.LaneBlockCount) + (position.Slice * this.SegmentBlockCount) + startingIndex;
+            int prevOffset = curOffset % this.LaneBlockCount == 0 ? curOffset + this.LaneBlockCount - 1 : curOffset - 1;
 
-            for (int i = startingIndex; i < this.SegmentLength; ++i, ++curOffset, ++prevOffset)
+            for (int i = startingIndex; i < this.SegmentBlockCount; ++i, ++curOffset, ++prevOffset)
             {
-                if (curOffset % this.LaneLength == 1)
+                if (curOffset % this.LaneBlockCount == 1)
                 {
                     prevOffset = curOffset - 1;
                 }
@@ -259,7 +259,7 @@ namespace Isopoh.Cryptography.Argon2
                 position.Index = i;
                 int refIndex = this.IndexAlpha(position, (uint)pseudoRand, refLane == position.Lane);
 
-                BlockValues refBlock = this.Memory[(this.LaneLength * refLane) + refIndex];
+                BlockValues refBlock = this.Memory[(this.LaneBlockCount * refLane) + refIndex];
                 BlockValues curBlock = this.Memory[curOffset];
                 if (this.config.Version == Argon2Version.Sixteen)
                 {
@@ -301,11 +301,11 @@ namespace Isopoh.Cryptography.Argon2
                     if (sameLane)
                     {
                         // same lane, add current segment
-                        referenceAreaSize = (position.Slice * this.SegmentLength) + position.Index - 1;
+                        referenceAreaSize = (position.Slice * this.SegmentBlockCount) + position.Index - 1;
                     }
                     else
                     {
-                        referenceAreaSize = (position.Slice * this.SegmentLength) + (position.Index == 0 ? -1 : 0);
+                        referenceAreaSize = (position.Slice * this.SegmentBlockCount) + (position.Index == 0 ? -1 : 0);
                     }
                 }
             }
@@ -314,11 +314,11 @@ namespace Isopoh.Cryptography.Argon2
                 // second pass
                 if (sameLane)
                 {
-                    referenceAreaSize = this.LaneLength - this.SegmentLength + position.Index - 1;
+                    referenceAreaSize = this.LaneBlockCount - this.SegmentBlockCount + position.Index - 1;
                 }
                 else
                 {
-                    referenceAreaSize = this.LaneLength - this.SegmentLength + (position.Index == 0 ? -1 : 0);
+                    referenceAreaSize = this.LaneBlockCount - this.SegmentBlockCount + (position.Index == 0 ? -1 : 0);
                 }
             }
 
@@ -327,11 +327,11 @@ namespace Isopoh.Cryptography.Argon2
             relativePosition = (uint)referenceAreaSize - 1 - (((uint)referenceAreaSize * relativePosition) >> 32);
 
             int startPosition = position.Pass != 0
-                                    ? position.Slice == (SyncPoints - 1)
+                                    ? position.Slice == (SyncPointCount - 1)
                                           ? 0
-                                          : (position.Slice + 1) * this.SegmentLength
+                                          : (position.Slice + 1) * this.SegmentBlockCount
                                     : 0;
-            int absolutePosition = (int)(((ulong)startPosition + relativePosition) % (ulong)this.LaneLength);
+            int absolutePosition = (int)(((ulong)startPosition + relativePosition) % (ulong)this.LaneBlockCount);
             return absolutePosition;
         }
 
@@ -349,7 +349,7 @@ namespace Isopoh.Cryptography.Argon2
             inputBlock[3] = (ulong)this.MemoryBlockCount;
             inputBlock[4] = (ulong)this.config.TimeCost;
             inputBlock[5] = (ulong)this.config.Type;
-            for (int i = 0; i < this.SegmentLength; ++i)
+            for (int i = 0; i < this.SegmentBlockCount; ++i)
             {
                 if (i % QwordsInBlock == 0)
                 {

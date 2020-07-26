@@ -34,12 +34,13 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Number of synchronization points between lanes per pass.
         /// </summary>
-        public const int SyncPoints = 4;
+        public const int SyncPointCount = 4;
 
         /// <summary>
-        /// C# has a limit of 2G elements per array. The blocks are 1024 bytes long, the elements are 8 bytes
-        /// (ulong). This gives (2^24 - 1) blocks per C# array.
+        /// C# has a limit of 0X7FEFFFFF elements per array (0x7FFFFFC7 per byte array). The blocks are
+        /// 1024 bytes long, the elements are 8 bytes (ulong). This gives 0X7FEFFFFF / 1024 blocks per
+        /// C# array.
         /// </summary>
-        public const int CsharpMaxBlocksPerArray = 16_777_215;
+        public const int CsharpMaxBlocksPerArray = 0X7FEFFFFF / 1024;
     }
 }

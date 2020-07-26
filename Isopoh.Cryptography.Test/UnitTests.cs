@@ -302,9 +302,12 @@ namespace Isopoh.Cryptography.Test
         [Fact]
         public void HighMemoryCost()
         {
+            // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
+            // this can take a long time depending on the multiplier
+            int multiplier = 3;
             string password = "password";
-            string hash = Argon2.Hash(password, memoryCost: 3000000);
-
+            string hash = Argon2.Hash(password, memoryCost: (multiplier * Argon2.CsharpMaxBlocksPerArray / Argon2.QwordsInBlock) + 271, parallelism: 8);
+            Assert.True(Argon2.Verify(hash, password));
         }
 
         /// <summary>

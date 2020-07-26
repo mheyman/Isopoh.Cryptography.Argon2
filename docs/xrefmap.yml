@@ -107,19 +107,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.Hash
   nameWithType: Argon2.Hash
-- uid: Isopoh.Cryptography.Argon2.Argon2.LaneLength
-  name: LaneLength
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_LaneLength
-  commentId: P:Isopoh.Cryptography.Argon2.Argon2.LaneLength
-  fullName: Isopoh.Cryptography.Argon2.Argon2.LaneLength
-  nameWithType: Argon2.LaneLength
-- uid: Isopoh.Cryptography.Argon2.Argon2.LaneLength*
-  name: LaneLength
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_LaneLength_
-  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.LaneLength
+- uid: Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount
+  name: LaneBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_LaneBlockCount
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount
+  nameWithType: Argon2.LaneBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount*
+  name: LaneBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_LaneBlockCount_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount
   isSpec: "True"
-  fullName: Isopoh.Cryptography.Argon2.Argon2.LaneLength
-  nameWithType: Argon2.LaneLength
+  fullName: Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount
+  nameWithType: Argon2.LaneBlockCount
 - uid: Isopoh.Cryptography.Argon2.Argon2.Memory
   name: Memory
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Memory
@@ -164,25 +164,25 @@ references:
   commentId: F:Isopoh.Cryptography.Argon2.Argon2.QwordsInBlock
   fullName: Isopoh.Cryptography.Argon2.Argon2.QwordsInBlock
   nameWithType: Argon2.QwordsInBlock
-- uid: Isopoh.Cryptography.Argon2.Argon2.SegmentLength
-  name: SegmentLength
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SegmentLength
-  commentId: P:Isopoh.Cryptography.Argon2.Argon2.SegmentLength
-  fullName: Isopoh.Cryptography.Argon2.Argon2.SegmentLength
-  nameWithType: Argon2.SegmentLength
-- uid: Isopoh.Cryptography.Argon2.Argon2.SegmentLength*
-  name: SegmentLength
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SegmentLength_
-  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.SegmentLength
+- uid: Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount
+  name: SegmentBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SegmentBlockCount
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount
+  nameWithType: Argon2.SegmentBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount*
+  name: SegmentBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SegmentBlockCount_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount
   isSpec: "True"
-  fullName: Isopoh.Cryptography.Argon2.Argon2.SegmentLength
-  nameWithType: Argon2.SegmentLength
-- uid: Isopoh.Cryptography.Argon2.Argon2.SyncPoints
-  name: SyncPoints
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SyncPoints
-  commentId: F:Isopoh.Cryptography.Argon2.Argon2.SyncPoints
-  fullName: Isopoh.Cryptography.Argon2.Argon2.SyncPoints
-  nameWithType: Argon2.SyncPoints
+  fullName: Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount
+  nameWithType: Argon2.SegmentBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2.SyncPointCount
+  name: SyncPointCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_SyncPointCount
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2.SyncPointCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2.SyncPointCount
+  nameWithType: Argon2.SyncPointCount
 - uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,Isopoh.Cryptography.Argon2.Argon2Config)
   name: Verify(String, Argon2Config)
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_Isopoh_Cryptography_Argon2_Argon2Config_
