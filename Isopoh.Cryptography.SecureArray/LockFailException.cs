@@ -20,25 +20,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="message">
         /// Text for the <see cref="P:System.Exception.Message" /> property.
         /// </param>
-        /// <param name="currentMax">
-        /// Number of bytes currently available to lock. Don't assume you can
-        /// actually lock this exact amount the next time you request to lock
-        /// bytes into RAM - this value changes constantly.
-        /// </param>
-        public LockFailException(string message, int currentMax)
+        public LockFailException(string message)
             : base(message)
         {
-            this.CurrentMax = currentMax;
         }
-
-        /// <summary>
-        /// Gets the current (as of when the exception was created) maximum number of
-        /// bytes that can be locked.
-        /// </summary>
-        /// <remarks>
-        /// Don't assume this amount of bytes will be lockable into RAM on the next
-        /// attempt - this value changes constantly.
-        /// </remarks>
-        public int CurrentMax { get; }
     }
 }

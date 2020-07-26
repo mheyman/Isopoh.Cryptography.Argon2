@@ -68,6 +68,17 @@ namespace Isopoh.Cryptography.SecureArray
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the maximum lockable memory
+        /// will be reported in the exception message upon lock failure.
+        /// </summary>
+        /// <remarks>
+        /// Only turn this on if you need this information because this
+        /// calculation can take a lot of time (over 90% of the time for
+        /// something like typical Argon2 hashing).
+        /// </remarks>
+        public static bool ReportMaxLockableOnLockFail { get; set; } = false;
+
+        /// <summary>
         /// Gets the default methods that get called to secure the array.
         /// </summary>
         public static SecureArrayCall DefaultCall
@@ -263,9 +274,18 @@ namespace Isopoh.Cryptography.SecureArray
                         string err = this.Call.LockMemory(bufPtr, cnt);
                         if (err != null)
                         {
-                            int max = this.GetMaxLockable();
-                            var msg = max > sizeInBytes ? $"Under current available value of {max} bytes (try again, it may work)" : $"Currently available: {max} bytes";
-                            throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.", max);
+                            string msg;
+                            if (ReportMaxLockableOnLockFail)
+                            {
+                                int max = this.GetMaxLockable();
+                                msg = max > sizeInBytes ? $"Under current available value of {max} bytes (try again, it may work)" : $"Currently available: {max} bytes";
+                            }
+                            else
+                            {
+                                msg = "Finding maximum size takes too long (see SecureArray.cs:266 to enable reporting)";
+                            }
+
+                            throw new LockFailException($"Failed to lock {sizeInBytes} bytes into RAM. {msg}. {err}.");
                         }
 
                         this.virtualLocked = true;
