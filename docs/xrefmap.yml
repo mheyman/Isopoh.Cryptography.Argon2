@@ -462,13 +462,13 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.Blocks
   fullName: Isopoh.Cryptography.Argon2.Blocks
   nameWithType: Blocks
-- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
+- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
   name: Blocks(IEnumerable<UInt64[]>)
-  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_UInt64____
-  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
+  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_IEnumerable_System_UInt64____
+  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(IEnumerable{System.UInt64[]})
   name.vb: Blocks(IEnumerable(Of UInt64()))
-  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.UInt64[]>)
-  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.UInt64()))
+  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable<System.UInt64[]>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(IEnumerable(Of System.UInt64()))
   nameWithType: Blocks.Blocks(IEnumerable<UInt64[]>)
   nameWithType.vb: Blocks.Blocks(IEnumerable(Of UInt64()))
 - uid: Isopoh.Cryptography.Argon2.Blocks.#ctor*

@@ -81,34 +81,6 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">Argon2</span></div>
   </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><span class="xref">System.IDisposable</span></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Isopoh.Cryptography.Argon2.html">Isopoh.Cryptography.Argon2</a></h6>
   <h6><strong>Assembly</strong>: Isopoh.Cryptography.Argon2.dll</h6>
   <h5 id="Isopoh_Cryptography_Argon2_Argon2_syntax">Syntax</h5>
@@ -166,7 +138,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int BlockSize = 1024</code></pre>
+    <pre><code class="lang-csharp hljs">public const int BlockSize = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -198,7 +170,7 @@ C# array.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int CsharpMaxBlocksPerArray = 2096127</code></pre>
+    <pre><code class="lang-csharp hljs">public const int CsharpMaxBlocksPerArray = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -228,7 +200,7 @@ C# array.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int PrehashDigestLength = 64</code></pre>
+    <pre><code class="lang-csharp hljs">public const int PrehashDigestLength = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -258,7 +230,7 @@ C# array.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int PrehashSeedLength = 72</code></pre>
+    <pre><code class="lang-csharp hljs">public const int PrehashSeedLength = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -288,7 +260,7 @@ C# array.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int QwordsInBlock = 128</code></pre>
+    <pre><code class="lang-csharp hljs">public const int QwordsInBlock = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -318,7 +290,7 @@ C# array.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int SyncPointCount = 4</code></pre>
+    <pre><code class="lang-csharp hljs">public const int SyncPointCount = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -641,7 +613,7 @@ when available; otherwise implements a similar algorithm.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Hash(byte[] password, byte[] secret, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = Argon2Type.HybridAddressing, int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string Hash(byte[] password, byte[] secret, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = default(Argon2Type), int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -663,7 +635,7 @@ when available; otherwise implements a similar algorithm.</p>
         <td><span class="xref">System.Byte</span>[]</td>
         <td><span class="parametername">secret</span></td>
         <td><p>The secret to use in creating the hash. UTF-8 encoded before hashing. May be null. A
-<span class="xref">System.String</span>.<span class="xref">System.String.Empty</span> is treated the same as null.</p>
+<see cref="!:System.String"></see>.<see cref="!:string.Empty"></see> is treated the same as null.</p>
 </td>
       </tr>
       <tr>
@@ -737,7 +709,7 @@ significantly longer.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Hash(string password, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = Argon2Type.HybridAddressing, int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string Hash(string password, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = default(Argon2Type), int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -826,7 +798,7 @@ significantly longer.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Hash(string password, string secret, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = Argon2Type.HybridAddressing, int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string Hash(string password, string secret, int timeCost = 3, int memoryCost = 65536, int parallelism = 1, Argon2Type type = default(Argon2Type), int hashLength = 32, SecureArrayCall secureArrayCall = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -848,7 +820,7 @@ significantly longer.</p>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">secret</span></td>
         <td><p>The secret to use in creating the hash. UTF-8 encoded before hashing. May be null. A
-<span class="xref">System.String</span>.<span class="xref">System.String.Empty</span> is treated the same as null.</p>
+<see cref="!:System.String"></see>.<see cref="!:string.Empty"></see> is treated the same as null.</p>
 </td>
       </tr>
       <tr>
@@ -1198,7 +1170,7 @@ significantly longer.</p>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">secret</span></td>
         <td><p>The secret used in the creation of <code data-dev-comment-type="paramref" class="paramref">encoded</code>. UTF-8 encoded to create the byte-buffer actually used in the verification.
-May be null for no secret. <span class="xref">System.String</span>.<span class="xref">System.String.Empty</span> is treated as null.</p>
+May be null for no secret. <see cref="!:System.String"></see>.<see cref="!:string.Empty"></see> is treated as null.</p>
 </td>
       </tr>
       <tr>
@@ -1225,10 +1197,6 @@ May be null for no secret. <span class="xref">System.String</span>.<span class="
       </tr>
     </tbody>
   </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <span class="xref">System.IDisposable</span>
-  </div>
 </article>
           </div>
           
