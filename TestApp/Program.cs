@@ -420,6 +420,10 @@ namespace TestApp
             return errs.Any() ? $"Leaks: FAILED: {string.Join(" ", errs)}" : "Leaks: Passed";
         }
 
+        /// <summary>
+        /// Make sure it works with more RAM than C# can allocate in a single chunk.
+        /// </summary>
+        /// <returns>String with pass/fail message.</returns>
         public static string TestHighMemoryCost()
         {
             // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
@@ -782,14 +786,18 @@ namespace TestApp
             {
             }
 
-            private static void NoZeroMemory(IntPtr buf, UIntPtr len) { }
+            private static void NoZeroMemory(IntPtr buf, UIntPtr len)
+            {
+            }
 
             private static string NoLockMemory(IntPtr buf, UIntPtr len)
             {
                 return null;
             }
 
-            private static void NoUnlockMemory(IntPtr buf, UIntPtr len) { }
+            private static void NoUnlockMemory(IntPtr buf, UIntPtr len)
+            {
+            }
         }
     }
 }
