@@ -12,7 +12,7 @@
           "hash": "g3k+1ZFBcupONxNk1jLPTg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "rLJkJ//NLvbZNpA/qgLlmA=="
+          "hash": "824s6jLK65Yl4kfkgEur1Q=="
         }
       },
       "is_incremental": false,
@@ -48,7 +48,7 @@
           "hash": "r9JC+WFlNOFh5hdwnBTVVw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -60,7 +60,7 @@
           "hash": "9ZMsgjpeAwF5LKYFBxAQPg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -84,7 +84,7 @@
           "hash": "AqEVBnar6JkNDM266aPbgg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -96,7 +96,7 @@
           "hash": "Xg6FpBNMJtCf2oTrbb4qmg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -108,7 +108,7 @@
           "hash": "PFoCSdtkPSAaHCX7diGidg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.html",
-          "hash": "c6l8DWiIVUKItmvgtewXAg=="
+          "hash": "DXGqghuccFtBK3kN5LNYnQ=="
         }
       },
       "is_incremental": false,
@@ -312,7 +312,7 @@
           "hash": "IX0I9frQPUlJ4vA2HBzAvw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -339,7 +339,7 @@
           "hash": "oLuzp+sd7jyyL7MX+VVT0g=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -363,7 +363,7 @@
           "hash": "hf2YVbQxuLYSFNBRmQSRNw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -401,7 +401,7 @@
           "hash": "eNGWJe0u3T5q4Je+jvuE3g=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -420,25 +420,23 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because docfx version changed from 2.47.0.0 to 2.56.2.0.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "DocfxVersionChanged"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 4,
-          "skipped_file_count": 0
+          "skipped_file_count": 4
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 26,
-          "skipped_file_count": 0
+          "skipped_file_count": 12
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

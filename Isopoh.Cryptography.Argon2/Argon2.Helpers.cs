@@ -41,8 +41,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The password to hash. Gets UTF-8 encoded before hashing.
         /// </param>
         /// <param name="secret">
-        /// The secret to use in creating the hash. UTF-8 encoded before hashing. May be null. A
-        /// <see cref="string"/>.<see cref="string.Empty"/> is treated the same as null.
+        /// The secret to use in creating the hash.
         /// </param>
         /// <param name="timeCost">
         /// The time cost to use. Defaults to 3.
@@ -109,7 +108,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </param>
         /// <param name="secret">
         /// The secret to use in creating the hash. UTF-8 encoded before hashing. May be null. A
-        /// <see cref="string"/>.<see cref="string.Empty"/> is treated the same as null.
+        /// <c>string.Empty</c> is treated the same as null.
         /// </param>
         /// <param name="timeCost">
         /// The time cost to use. Defaults to 3.
@@ -401,7 +400,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </param>
         /// <param name="secret">
         /// The secret used in the creation of <paramref name="encoded"/>. UTF-8 encoded to create the byte-buffer actually used in the verification.
-        /// May be null for no secret. <see cref="string"/>.<see cref="string.Empty"/> is treated as null.
+        /// May be null for no secret. <c>string.Empty</c> is treated as null.
         /// </param>
         /// <param name="secureArrayCall">
         /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
@@ -456,7 +455,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </param>
         /// <param name="secret">
         /// The secret used in the creation of <paramref name="encoded"/>. UTF-8 encoded to create the byte-buffer actually used in the verification.
-        /// May be null for no secret. <see cref="string"/>.<see cref="string.Empty"/> is treated as null.
+        /// May be null for no secret. <c>string.Empty</c> is treated as null.
         /// </param>
         /// <param name="threads">
         /// The number of threads to use. Setting this to a higher number than
