@@ -210,12 +210,36 @@ references:
   fullName.vb: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.Byte(), System.Byte(), Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Argon2.Verify(String, Byte[], Byte[], SecureArrayCall)
   nameWithType.vb: Argon2.Verify(String, Byte(), Byte(), SecureArrayCall)
+- uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Verify(String, Byte[], Byte[], Int32, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name.vb: Verify(String, Byte(), Byte(), Int32, SecureArrayCall)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.Byte[], System.Byte[], System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.Byte(), System.Byte(), System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Argon2.Verify(String, Byte[], Byte[], Int32, SecureArrayCall)
+  nameWithType.vb: Argon2.Verify(String, Byte(), Byte(), Int32, SecureArrayCall)
+- uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Verify(String, Byte[], Int32, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name.vb: Verify(String, Byte(), Int32, SecureArrayCall)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.Byte[], System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.Byte(), System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Argon2.Verify(String, Byte[], Int32, SecureArrayCall)
+  nameWithType.vb: Argon2.Verify(String, Byte(), Int32, SecureArrayCall)
 - uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: Verify(String, String, SecureArrayCall)
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_
   commentId: M:Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   fullName: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.String, Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Argon2.Verify(String, String, SecureArrayCall)
+- uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Verify(String, String, Int32, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.String, System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Argon2.Verify(String, String, Int32, SecureArrayCall)
 - uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Nullable{System.String},Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: Verify(String, String, Nullable<String>, SecureArrayCall)
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Nullable_System_String__Isopoh_Cryptography_SecureArray_SecureArrayCall_
@@ -225,6 +249,15 @@ references:
   fullName.vb: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.String, System.Nullable(Of System.String), Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Argon2.Verify(String, String, Nullable<String>, SecureArrayCall)
   nameWithType.vb: Argon2.Verify(String, String, Nullable(Of String), SecureArrayCall)
+- uid: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Nullable{System.String},System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Verify(String, String, Nullable<String>, Int32, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Nullable_System_String__System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Nullable{System.String},System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name.vb: Verify(String, String, Nullable(Of String), Int32, SecureArrayCall)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.String, System.Nullable<System.String>, System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.Verify(System.String, System.String, System.Nullable(Of System.String), System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Argon2.Verify(String, String, Nullable<String>, Int32, SecureArrayCall)
+  nameWithType.vb: Argon2.Verify(String, String, Nullable(Of String), Int32, SecureArrayCall)
 - uid: Isopoh.Cryptography.Argon2.Argon2.Verify*
   name: Verify
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_
@@ -1596,400 +1629,3 @@ references:
   commentId: F:Isopoh.Cryptography.SecureArray.SecureArrayType.ZeroedPinnedAndNoSwap
   fullName: Isopoh.Cryptography.SecureArray.SecureArrayType.ZeroedPinnedAndNoSwap
   nameWithType: SecureArrayType.ZeroedPinnedAndNoSwap
-- uid: TestBlazor.Client
-  name: TestBlazor.Client
-  href: api/TestBlazor.Client.html
-  commentId: N:TestBlazor.Client
-  fullName: TestBlazor.Client
-  nameWithType: TestBlazor.Client
-- uid: TestBlazor.Client.Argoner
-  name: Argoner
-  href: api/TestBlazor.Client.Argoner.html
-  commentId: T:TestBlazor.Client.Argoner
-  fullName: TestBlazor.Client.Argoner
-  nameWithType: Argoner
-- uid: TestBlazor.Client.Argoner.Calculating
-  name: Calculating
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Calculating
-  commentId: P:TestBlazor.Client.Argoner.Calculating
-  fullName: TestBlazor.Client.Argoner.Calculating
-  nameWithType: Argoner.Calculating
-- uid: TestBlazor.Client.Argoner.Calculating*
-  name: Calculating
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Calculating_
-  commentId: Overload:TestBlazor.Client.Argoner.Calculating
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.Calculating
-  nameWithType: Argoner.Calculating
-- uid: TestBlazor.Client.Argoner.CalculationSeconds
-  name: CalculationSeconds
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_CalculationSeconds
-  commentId: P:TestBlazor.Client.Argoner.CalculationSeconds
-  fullName: TestBlazor.Client.Argoner.CalculationSeconds
-  nameWithType: Argoner.CalculationSeconds
-- uid: TestBlazor.Client.Argoner.CalculationSeconds*
-  name: CalculationSeconds
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_CalculationSeconds_
-  commentId: Overload:TestBlazor.Client.Argoner.CalculationSeconds
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.CalculationSeconds
-  nameWithType: Argoner.CalculationSeconds
-- uid: TestBlazor.Client.Argoner.Hash
-  name: Hash
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Hash
-  commentId: P:TestBlazor.Client.Argoner.Hash
-  fullName: TestBlazor.Client.Argoner.Hash
-  nameWithType: Argoner.Hash
-- uid: TestBlazor.Client.Argoner.Hash*
-  name: Hash
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Hash_
-  commentId: Overload:TestBlazor.Client.Argoner.Hash
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.Hash
-  nameWithType: Argoner.Hash
-- uid: TestBlazor.Client.Argoner.HashLength
-  name: HashLength
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_HashLength
-  commentId: P:TestBlazor.Client.Argoner.HashLength
-  fullName: TestBlazor.Client.Argoner.HashLength
-  nameWithType: Argoner.HashLength
-- uid: TestBlazor.Client.Argoner.HashLength*
-  name: HashLength
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_HashLength_
-  commentId: Overload:TestBlazor.Client.Argoner.HashLength
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.HashLength
-  nameWithType: Argoner.HashLength
-- uid: TestBlazor.Client.Argoner.MemoryCost
-  name: MemoryCost
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_MemoryCost
-  commentId: P:TestBlazor.Client.Argoner.MemoryCost
-  fullName: TestBlazor.Client.Argoner.MemoryCost
-  nameWithType: Argoner.MemoryCost
-- uid: TestBlazor.Client.Argoner.MemoryCost*
-  name: MemoryCost
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_MemoryCost_
-  commentId: Overload:TestBlazor.Client.Argoner.MemoryCost
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.MemoryCost
-  nameWithType: Argoner.MemoryCost
-- uid: TestBlazor.Client.Argoner.Parallelism
-  name: Parallelism
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Parallelism
-  commentId: P:TestBlazor.Client.Argoner.Parallelism
-  fullName: TestBlazor.Client.Argoner.Parallelism
-  nameWithType: Argoner.Parallelism
-- uid: TestBlazor.Client.Argoner.Parallelism*
-  name: Parallelism
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Parallelism_
-  commentId: Overload:TestBlazor.Client.Argoner.Parallelism
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.Parallelism
-  nameWithType: Argoner.Parallelism
-- uid: TestBlazor.Client.Argoner.Secret
-  name: Secret
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Secret
-  commentId: P:TestBlazor.Client.Argoner.Secret
-  fullName: TestBlazor.Client.Argoner.Secret
-  nameWithType: Argoner.Secret
-- uid: TestBlazor.Client.Argoner.Secret*
-  name: Secret
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Secret_
-  commentId: Overload:TestBlazor.Client.Argoner.Secret
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.Secret
-  nameWithType: Argoner.Secret
-- uid: TestBlazor.Client.Argoner.SetSecret(System.String,System.Action)
-  name: SetSecret(String, Action)
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_SetSecret_System_String_System_Action_
-  commentId: M:TestBlazor.Client.Argoner.SetSecret(System.String,System.Action)
-  fullName: TestBlazor.Client.Argoner.SetSecret(System.String, System.Action)
-  nameWithType: Argoner.SetSecret(String, Action)
-- uid: TestBlazor.Client.Argoner.SetSecret*
-  name: SetSecret
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_SetSecret_
-  commentId: Overload:TestBlazor.Client.Argoner.SetSecret
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.SetSecret
-  nameWithType: Argoner.SetSecret
-- uid: TestBlazor.Client.Argoner.TimeCost
-  name: TimeCost
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_TimeCost
-  commentId: P:TestBlazor.Client.Argoner.TimeCost
-  fullName: TestBlazor.Client.Argoner.TimeCost
-  nameWithType: Argoner.TimeCost
-- uid: TestBlazor.Client.Argoner.TimeCost*
-  name: TimeCost
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_TimeCost_
-  commentId: Overload:TestBlazor.Client.Argoner.TimeCost
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.TimeCost
-  nameWithType: Argoner.TimeCost
-- uid: TestBlazor.Client.Argoner.Type
-  name: Type
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Type
-  commentId: P:TestBlazor.Client.Argoner.Type
-  fullName: TestBlazor.Client.Argoner.Type
-  nameWithType: Argoner.Type
-- uid: TestBlazor.Client.Argoner.Type*
-  name: Type
-  href: api/TestBlazor.Client.Argoner.html#TestBlazor_Client_Argoner_Type_
-  commentId: Overload:TestBlazor.Client.Argoner.Type
-  isSpec: "True"
-  fullName: TestBlazor.Client.Argoner.Type
-  nameWithType: Argoner.Type
-- uid: TestBlazor.Client.Program
-  name: Program
-  href: api/TestBlazor.Client.Program.html
-  commentId: T:TestBlazor.Client.Program
-  fullName: TestBlazor.Client.Program
-  nameWithType: Program
-- uid: TestBlazor.Client.Program.Main(System.String[])
-  name: Main(String[])
-  href: api/TestBlazor.Client.Program.html#TestBlazor_Client_Program_Main_System_String___
-  commentId: M:TestBlazor.Client.Program.Main(System.String[])
-  name.vb: Main(String())
-  fullName: TestBlazor.Client.Program.Main(System.String[])
-  fullName.vb: TestBlazor.Client.Program.Main(System.String())
-  nameWithType: Program.Main(String[])
-  nameWithType.vb: Program.Main(String())
-- uid: TestBlazor.Client.Program.Main*
-  name: Main
-  href: api/TestBlazor.Client.Program.html#TestBlazor_Client_Program_Main_
-  commentId: Overload:TestBlazor.Client.Program.Main
-  isSpec: "True"
-  fullName: TestBlazor.Client.Program.Main
-  nameWithType: Program.Main
-- uid: TestBlazor.Server
-  name: TestBlazor.Server
-  href: api/TestBlazor.Server.html
-  commentId: N:TestBlazor.Server
-  fullName: TestBlazor.Server
-  nameWithType: TestBlazor.Server
-- uid: TestBlazor.Server.Pages
-  name: TestBlazor.Server.Pages
-  href: api/TestBlazor.Server.Pages.html
-  commentId: N:TestBlazor.Server.Pages
-  fullName: TestBlazor.Server.Pages
-  nameWithType: TestBlazor.Server.Pages
-- uid: TestBlazor.Server.Pages.ErrorModel
-  name: ErrorModel
-  href: api/TestBlazor.Server.Pages.ErrorModel.html
-  commentId: T:TestBlazor.Server.Pages.ErrorModel
-  fullName: TestBlazor.Server.Pages.ErrorModel
-  nameWithType: ErrorModel
-- uid: TestBlazor.Server.Pages.ErrorModel.#ctor(Microsoft.Extensions.Logging.ILogger{TestBlazor.Server.Pages.ErrorModel})
-  name: ErrorModel(ILogger<ErrorModel>)
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel__ctor_Microsoft_Extensions_Logging_ILogger_TestBlazor_Server_Pages_ErrorModel__
-  commentId: M:TestBlazor.Server.Pages.ErrorModel.#ctor(Microsoft.Extensions.Logging.ILogger{TestBlazor.Server.Pages.ErrorModel})
-  name.vb: ErrorModel(ILogger(Of ErrorModel))
-  fullName: TestBlazor.Server.Pages.ErrorModel.ErrorModel(Microsoft.Extensions.Logging.ILogger<TestBlazor.Server.Pages.ErrorModel>)
-  fullName.vb: TestBlazor.Server.Pages.ErrorModel.ErrorModel(Microsoft.Extensions.Logging.ILogger(Of TestBlazor.Server.Pages.ErrorModel))
-  nameWithType: ErrorModel.ErrorModel(ILogger<ErrorModel>)
-  nameWithType.vb: ErrorModel.ErrorModel(ILogger(Of ErrorModel))
-- uid: TestBlazor.Server.Pages.ErrorModel.#ctor*
-  name: ErrorModel
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel__ctor_
-  commentId: Overload:TestBlazor.Server.Pages.ErrorModel.#ctor
-  isSpec: "True"
-  fullName: TestBlazor.Server.Pages.ErrorModel.ErrorModel
-  nameWithType: ErrorModel.ErrorModel
-- uid: TestBlazor.Server.Pages.ErrorModel.OnGet
-  name: OnGet()
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_OnGet
-  commentId: M:TestBlazor.Server.Pages.ErrorModel.OnGet
-  fullName: TestBlazor.Server.Pages.ErrorModel.OnGet()
-  nameWithType: ErrorModel.OnGet()
-- uid: TestBlazor.Server.Pages.ErrorModel.OnGet*
-  name: OnGet
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_OnGet_
-  commentId: Overload:TestBlazor.Server.Pages.ErrorModel.OnGet
-  isSpec: "True"
-  fullName: TestBlazor.Server.Pages.ErrorModel.OnGet
-  nameWithType: ErrorModel.OnGet
-- uid: TestBlazor.Server.Pages.ErrorModel.RequestId
-  name: RequestId
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_RequestId
-  commentId: P:TestBlazor.Server.Pages.ErrorModel.RequestId
-  fullName: TestBlazor.Server.Pages.ErrorModel.RequestId
-  nameWithType: ErrorModel.RequestId
-- uid: TestBlazor.Server.Pages.ErrorModel.RequestId*
-  name: RequestId
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_RequestId_
-  commentId: Overload:TestBlazor.Server.Pages.ErrorModel.RequestId
-  isSpec: "True"
-  fullName: TestBlazor.Server.Pages.ErrorModel.RequestId
-  nameWithType: ErrorModel.RequestId
-- uid: TestBlazor.Server.Pages.ErrorModel.ShowRequestId
-  name: ShowRequestId
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_ShowRequestId
-  commentId: P:TestBlazor.Server.Pages.ErrorModel.ShowRequestId
-  fullName: TestBlazor.Server.Pages.ErrorModel.ShowRequestId
-  nameWithType: ErrorModel.ShowRequestId
-- uid: TestBlazor.Server.Pages.ErrorModel.ShowRequestId*
-  name: ShowRequestId
-  href: api/TestBlazor.Server.Pages.ErrorModel.html#TestBlazor_Server_Pages_ErrorModel_ShowRequestId_
-  commentId: Overload:TestBlazor.Server.Pages.ErrorModel.ShowRequestId
-  isSpec: "True"
-  fullName: TestBlazor.Server.Pages.ErrorModel.ShowRequestId
-  nameWithType: ErrorModel.ShowRequestId
-- uid: TestBlazor.Server.Program
-  name: Program
-  href: api/TestBlazor.Server.Program.html
-  commentId: T:TestBlazor.Server.Program
-  fullName: TestBlazor.Server.Program
-  nameWithType: Program
-- uid: TestBlazor.Server.Program.CreateHostBuilder(System.String[])
-  name: CreateHostBuilder(String[])
-  href: api/TestBlazor.Server.Program.html#TestBlazor_Server_Program_CreateHostBuilder_System_String___
-  commentId: M:TestBlazor.Server.Program.CreateHostBuilder(System.String[])
-  name.vb: CreateHostBuilder(String())
-  fullName: TestBlazor.Server.Program.CreateHostBuilder(System.String[])
-  fullName.vb: TestBlazor.Server.Program.CreateHostBuilder(System.String())
-  nameWithType: Program.CreateHostBuilder(String[])
-  nameWithType.vb: Program.CreateHostBuilder(String())
-- uid: TestBlazor.Server.Program.CreateHostBuilder*
-  name: CreateHostBuilder
-  href: api/TestBlazor.Server.Program.html#TestBlazor_Server_Program_CreateHostBuilder_
-  commentId: Overload:TestBlazor.Server.Program.CreateHostBuilder
-  isSpec: "True"
-  fullName: TestBlazor.Server.Program.CreateHostBuilder
-  nameWithType: Program.CreateHostBuilder
-- uid: TestBlazor.Server.Program.Main(System.String[])
-  name: Main(String[])
-  href: api/TestBlazor.Server.Program.html#TestBlazor_Server_Program_Main_System_String___
-  commentId: M:TestBlazor.Server.Program.Main(System.String[])
-  name.vb: Main(String())
-  fullName: TestBlazor.Server.Program.Main(System.String[])
-  fullName.vb: TestBlazor.Server.Program.Main(System.String())
-  nameWithType: Program.Main(String[])
-  nameWithType.vb: Program.Main(String())
-- uid: TestBlazor.Server.Program.Main*
-  name: Main
-  href: api/TestBlazor.Server.Program.html#TestBlazor_Server_Program_Main_
-  commentId: Overload:TestBlazor.Server.Program.Main
-  isSpec: "True"
-  fullName: TestBlazor.Server.Program.Main
-  nameWithType: Program.Main
-- uid: TestBlazor.Server.Startup
-  name: Startup
-  href: api/TestBlazor.Server.Startup.html
-  commentId: T:TestBlazor.Server.Startup
-  fullName: TestBlazor.Server.Startup
-  nameWithType: Startup
-- uid: TestBlazor.Server.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
-  name: Startup(IConfiguration)
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup__ctor_Microsoft_Extensions_Configuration_IConfiguration_
-  commentId: M:TestBlazor.Server.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
-  fullName: TestBlazor.Server.Startup.Startup(Microsoft.Extensions.Configuration.IConfiguration)
-  nameWithType: Startup.Startup(IConfiguration)
-- uid: TestBlazor.Server.Startup.#ctor*
-  name: Startup
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup__ctor_
-  commentId: Overload:TestBlazor.Server.Startup.#ctor
-  isSpec: "True"
-  fullName: TestBlazor.Server.Startup.Startup
-  nameWithType: Startup.Startup
-- uid: TestBlazor.Server.Startup.Configuration
-  name: Configuration
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_Configuration
-  commentId: P:TestBlazor.Server.Startup.Configuration
-  fullName: TestBlazor.Server.Startup.Configuration
-  nameWithType: Startup.Configuration
-- uid: TestBlazor.Server.Startup.Configuration*
-  name: Configuration
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_Configuration_
-  commentId: Overload:TestBlazor.Server.Startup.Configuration
-  isSpec: "True"
-  fullName: TestBlazor.Server.Startup.Configuration
-  nameWithType: Startup.Configuration
-- uid: TestBlazor.Server.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)
-  name: Configure(IApplicationBuilder, IWebHostEnvironment)
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_Configure_Microsoft_AspNetCore_Builder_IApplicationBuilder_Microsoft_AspNetCore_Hosting_IWebHostEnvironment_
-  commentId: M:TestBlazor.Server.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)
-  fullName: TestBlazor.Server.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder, Microsoft.AspNetCore.Hosting.IWebHostEnvironment)
-  nameWithType: Startup.Configure(IApplicationBuilder, IWebHostEnvironment)
-- uid: TestBlazor.Server.Startup.Configure*
-  name: Configure
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_Configure_
-  commentId: Overload:TestBlazor.Server.Startup.Configure
-  isSpec: "True"
-  fullName: TestBlazor.Server.Startup.Configure
-  nameWithType: Startup.Configure
-- uid: TestBlazor.Server.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: ConfigureServices(IServiceCollection)
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_ConfigureServices_Microsoft_Extensions_DependencyInjection_IServiceCollection_
-  commentId: M:TestBlazor.Server.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName: TestBlazor.Server.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  nameWithType: Startup.ConfigureServices(IServiceCollection)
-- uid: TestBlazor.Server.Startup.ConfigureServices*
-  name: ConfigureServices
-  href: api/TestBlazor.Server.Startup.html#TestBlazor_Server_Startup_ConfigureServices_
-  commentId: Overload:TestBlazor.Server.Startup.ConfigureServices
-  isSpec: "True"
-  fullName: TestBlazor.Server.Startup.ConfigureServices
-  nameWithType: Startup.ConfigureServices
-- uid: TestBlazor.Shared
-  name: TestBlazor.Shared
-  href: api/TestBlazor.Shared.html
-  commentId: N:TestBlazor.Shared
-  fullName: TestBlazor.Shared
-  nameWithType: TestBlazor.Shared
-- uid: TestBlazor.Shared.WeatherForecast
-  name: WeatherForecast
-  href: api/TestBlazor.Shared.WeatherForecast.html
-  commentId: T:TestBlazor.Shared.WeatherForecast
-  fullName: TestBlazor.Shared.WeatherForecast
-  nameWithType: WeatherForecast
-- uid: TestBlazor.Shared.WeatherForecast.Date
-  name: Date
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_Date
-  commentId: P:TestBlazor.Shared.WeatherForecast.Date
-  fullName: TestBlazor.Shared.WeatherForecast.Date
-  nameWithType: WeatherForecast.Date
-- uid: TestBlazor.Shared.WeatherForecast.Date*
-  name: Date
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_Date_
-  commentId: Overload:TestBlazor.Shared.WeatherForecast.Date
-  isSpec: "True"
-  fullName: TestBlazor.Shared.WeatherForecast.Date
-  nameWithType: WeatherForecast.Date
-- uid: TestBlazor.Shared.WeatherForecast.Summary
-  name: Summary
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_Summary
-  commentId: P:TestBlazor.Shared.WeatherForecast.Summary
-  fullName: TestBlazor.Shared.WeatherForecast.Summary
-  nameWithType: WeatherForecast.Summary
-- uid: TestBlazor.Shared.WeatherForecast.Summary*
-  name: Summary
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_Summary_
-  commentId: Overload:TestBlazor.Shared.WeatherForecast.Summary
-  isSpec: "True"
-  fullName: TestBlazor.Shared.WeatherForecast.Summary
-  nameWithType: WeatherForecast.Summary
-- uid: TestBlazor.Shared.WeatherForecast.TemperatureC
-  name: TemperatureC
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_TemperatureC
-  commentId: P:TestBlazor.Shared.WeatherForecast.TemperatureC
-  fullName: TestBlazor.Shared.WeatherForecast.TemperatureC
-  nameWithType: WeatherForecast.TemperatureC
-- uid: TestBlazor.Shared.WeatherForecast.TemperatureC*
-  name: TemperatureC
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_TemperatureC_
-  commentId: Overload:TestBlazor.Shared.WeatherForecast.TemperatureC
-  isSpec: "True"
-  fullName: TestBlazor.Shared.WeatherForecast.TemperatureC
-  nameWithType: WeatherForecast.TemperatureC
-- uid: TestBlazor.Shared.WeatherForecast.TemperatureF
-  name: TemperatureF
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_TemperatureF
-  commentId: P:TestBlazor.Shared.WeatherForecast.TemperatureF
-  fullName: TestBlazor.Shared.WeatherForecast.TemperatureF
-  nameWithType: WeatherForecast.TemperatureF
-- uid: TestBlazor.Shared.WeatherForecast.TemperatureF*
-  name: TemperatureF
-  href: api/TestBlazor.Shared.WeatherForecast.html#TestBlazor_Shared_WeatherForecast_TemperatureF_
-  commentId: Overload:TestBlazor.Shared.WeatherForecast.TemperatureF
-  isSpec: "True"
-  fullName: TestBlazor.Shared.WeatherForecast.TemperatureF
-  nameWithType: WeatherForecast.TemperatureF

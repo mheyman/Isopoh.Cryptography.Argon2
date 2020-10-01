@@ -23,73 +23,39 @@ so.
 
 It builds a component that looks like this:
 
-![HashComponent](./HashComonent.PNG)
+> ![HashComponent](../images/HashComponent.PNG)
 
+To do the "a little more friendly" bits, it uses a helper class, `Argoner`.
+
+### Argoner Helper Class
+
+The important part of this class is the `SetSecret()` method towards the bottom
+that takes the new secret and a `Action` that can be called to notify the code
+when to update the web page with new information.
+
+[!code-csharp[Argoner](../../TestBlazor/Client/Argoner.cs?highlight=75-82)]
+
+### HashComponent.razor
+
+This is the component that uses the `Argoner` class above to render the hash.
+
+The only tricky bit is near the top where, to set the new text to hash, the
+method, `SetSecret()` gets called with the `this.StateHasChanged` method as a
+parameter so the hasher can notify the page when the hash has started and when
+it has finished.
 
 Create a component, **`HashComponent.razor`**:
-```html
-<div>
-    @if (argoner.Calculating)
-    {
-        <div>&nbsp;</div>
-        <div>Calculating &quot;@argoner.Secret&quot;</div>
-        <div>&nbsp;</div>
-    }
-    else
-    {
-        <div>Argon2 hash of &quot;@argoner.Secret&quot;</div>
-        <div>&quot;@argoner.Hash&quot;</div>
-        <div>(@argoner.CalculationSeconds seconds)</div>
-    }
-</div>
-<div>&nbsp;</div>
-<EditForm Model=@argoner>
-    <div>
-        <div>
-            <input value="@argoner.Secret" disabled="@argoner.Calculating" @onchange="@((ChangeEventArgs a) => argoner.SetSecret(a.Value.ToString(), this.StateHasChanged))" />
-            <label>The &quot;secret&quot; to hash.</label>
-        </div>
-        <div>Hashing occurs when leaving the secret input field, or when Enter is pressed and may take 2 minutes for a default hash.</div>
-        <div>&nbsp;</div>
-    </div>
-    <div>
-        <InputNumber @bind-Value=@argoner.TimeCost disabled=@argoner.Calculating />
-        <label>Time cost. Defaults to 3.</label>
-    </div>
-    <div>
-        <InputNumber @bind-Value=@argoner.MemoryCost disabled=@argoner.Calculating />
-        <label>Memory cost. Defaults to 65536 (65536 * 1024 = 64MB).</label>
-    </div>
-    <div>
-        <InputNumber @bind-Value=@argoner.Parallelism disabled=@argoner.Calculating />
-        <label>Parallelism. Defaults to 1. Blazor bug on WaitHandle.WaitAny() prevents this from working on any other value than 1.</label>
-    </div>
-    <div>
-        <InputSelect @bind-Value=@argoner.Type disabled=@argoner.Calculating>
-            <option value="DataDependentAddressing">dependent</option>
-            <option value="DataIndependentAddressing">independent</option>
-            <option value="HybridAddressing">hybrid</option>
-        </InputSelect>
-        <label>
-            &quot;dependent&quot; (faster but susceptible to side-channel
-            attacks), &quot;independent&quot; (slower and suitable for password
-            hashing and password-based key derivation), or &quot;hybrid&quot; (a
-            mixture of the two). Defaults to the recommended type:
-            &quot;hybrid&quot;.
-        </label>
-    </div>
-    <div>
-        <InputNumber @bind-Value=@argoner.HashLength disabled=@argoner.Calculating />
-        <label>
-            Hash length. The hash string base-64 encodes the hash of this
-            length along with other parameters so the length of the resulting
-            hash string is significantly longer.
-        </label>
-    </div>
-</EditForm>
+[!code-html[HashComponent.razor](../../TestBlazor/Client/Components/HashComponent.razor?highlight=19)]
 
+### Use HashComponent.razor
 
-@code {
-    private readonly Argoner argoner = new Argoner();
-}
-```
+To use the hash component, just include it in a page, for example you can just
+put it on the website root:
+
+[!code-html[HashComponent.razor](../../TestBlazor/Client/Pages/Index.razor)]
+
+## Example Source
+
+The source for this example can be found at:
+
+(github)[TestBlazor.Client](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestBlazor/Client)

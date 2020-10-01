@@ -1,6 +1,9 @@
 - name: Api Documentation
   href: api/
   homepage: api/index.md
+- name: Articles
+  href: articles/
+  homepage: articles/blazor.md
 - name: GitHub Repository
   href:
   homepage: https://github.com/mheyman/Isopoh.Cryptography.Argon2
