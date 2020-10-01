@@ -12,12 +12,43 @@ Fully managed .Net implementation of the
 hashing algorithm designed to be a good choice for hashing passwords for
 credential storage or key derivation because of its resistance to many attacks.
 
+### Typical Usage
+
+Hash with:
+
+> **var hash = [Argon2.Hash("my password")](
+api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Hash_System_String_System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_);**
+
+
+Verify with:
+
+> **if ([Argon2.Verify(hash, "my password")](
+api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_))<br/>
+> \{<br/>
+> &nbsp;&nbsp;&nbsp;&nbsp;// ...<br/>
+> }**<br/>
+
+or
+
+> **if ([Argon2.Verify(hash, "my password", Environment.ProcessorCount)](
+api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_))<br/>
+> \{<br/>
+> &nbsp;&nbsp;&nbsp;&nbsp;// ...<br/>
+> }**<br/>
+
+Note, using something like `(1 + Environment.ProcessorCount)/2` for the
+`threads` parameter can keep the hash calculation from hammering the system if
+it is performing a lot of hashes. Also, until it is working, _don't use a
+value other than `1` for the `threads` parameter_ when performing Argon2 hashes
+in a web page.
+
 ### SecureArray
 
 This library includes an implementation of a [SecureArray](api/Isopoh.Cryptography.SecureArray.SecureArray-1.html)
 which is designed to hold sensitive information. Depending on policy, data
 in a `SecureArray` will not be moved or swapped to disk and will always be
-zeroed when disposed.
+zeroed when disposed. WebAssembly doesn't allow for move or swap prevention
+so, when running in a web page, only zero-upon-disposal protection exists.
 
 ### Blake2b
 
