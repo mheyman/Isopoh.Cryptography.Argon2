@@ -25,7 +25,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private int timeCost = 3;
 
-        private byte[] salt;
+        private byte[]? salt;
 
         /// <summary>
         /// Gets or sets the Argon2 version used in the password hash. Defaults to
@@ -59,12 +59,12 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Gets or sets the password to hash.
         /// </summary>
-        public byte[] Password { get; set; }
+        public byte[]? Password { get; set; }
 
         /// <summary>
         /// Gets or sets the salt used in the password hash. If non-null, must be at least 8 bytes.
         /// </summary>
-        public byte[] Salt
+        public byte[]? Salt
         {
             get => this.salt;
 
@@ -82,12 +82,12 @@ namespace Isopoh.Cryptography.Argon2
         /// <summary>
         /// Gets or sets the secret used in the password hash.
         /// </summary>
-        public byte[] Secret { get; set; }
+        public byte[]? Secret { get; set; }
 
         /// <summary>
         /// Gets or sets the associated data used in the password hash.
         /// </summary>
-        public byte[] AssociatedData { get; set; }
+        public byte[]? AssociatedData { get; set; }
 
         /// <summary>
         /// Gets or sets the time cost used in the password hash. Minimum of 1. Defaults to 3.

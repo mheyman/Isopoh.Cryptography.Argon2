@@ -8,6 +8,7 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Runtime.InteropServices;
+    using Isopoh.Cryptography.SecureArray.LinuxNative;
 
     /// <summary>
     /// A <see cref="SecureArrayCall"/> with defaults for the Linux operating system.
@@ -18,18 +19,21 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="DefaultLinuxSecureArrayCall"/> class.
         /// </summary>
         public DefaultLinuxSecureArrayCall()
-            : base((m, l) => LinuxMemset(m, 0, l), LinuxLockMemory, (m, l) => LinuxMunlock(m, l))
+            : base((m, l) => UnsafeNativeMethods.LinuxMemset(m, 0, l), LinuxLockMemory, (m, l) =>
+            {
+                 _ = UnsafeNativeMethods.LinuxMunlock(m, l);
+            })
         {
         }
 
-        private static string LinuxLockMemory(IntPtr m, UIntPtr l)
+        private static string? LinuxLockMemory(IntPtr m, UIntPtr l)
         {
-            if (LinuxMlock(m, l) != 0)
+            if (UnsafeNativeMethods.LinuxMlock(m, l) != 0)
             {
                 var errorCode = Marshal.GetLastWin32Error();
-                if (LinuxTryRaiseCurrentMlockLimit(out string raiseError))
+                if (LinuxTryRaiseCurrentMlockLimit(out string? raiseError))
                 {
-                    if (LinuxMlock(m, l) == 0)
+                    if (UnsafeNativeMethods.LinuxMlock(m, l) == 0)
                     {
                         return null;
                     }
@@ -43,12 +47,12 @@ namespace Isopoh.Cryptography.SecureArray
             return null;
         }
 
-        private static bool LinuxTryRaiseCurrentMlockLimit(out string error)
+        private static bool LinuxTryRaiseCurrentMlockLimit(out string? error)
         {
-            var rlimit = new LinuxRlimit { RlimCur = 0, RlimMax = 0 }; // not sure always 64-bit RlimCur and RLimMax values
+            var rlimit = new UnsafeNativeMethods.LinuxRlimit { RlimCur = 0, RlimMax = 0 }; // not sure always 64-bit RlimCur and RLimMax values
             int rlimitMemlock = 8; // not sure RLIMIT_MEMLOCK is always 8
             bool ret = false;
-            if (LinuxGetRLimit(rlimitMemlock, ref rlimit) != 0)
+            if (UnsafeNativeMethods.LinuxGetRLimit(rlimitMemlock, ref rlimit) != 0)
             {
                 error = $"attempted getrlimit(RLIMIT_MEMLOCK), got error: {LinuxStrError(Marshal.GetLastWin32Error())}.";
                 return false;
@@ -57,7 +61,7 @@ namespace Isopoh.Cryptography.SecureArray
             if (rlimit.RlimCur < rlimit.RlimMax)
             {
                 rlimit.RlimCur = rlimit.RlimMax;
-                if (LinuxSetRLimit(rlimitMemlock, ref rlimit) != 0)
+                if (UnsafeNativeMethods.LinuxSetRLimit(rlimitMemlock, ref rlimit) != 0)
                 {
                     error = $"attempted setrlimit(RLIMIT_MEMLOCK, {{{rlimit.RlimCur}, {rlimit.RlimMax}}}), got error: {LinuxStrError(Marshal.GetLastWin32Error())}.";
                     return false;
@@ -70,7 +74,7 @@ namespace Isopoh.Cryptography.SecureArray
             var currentMax = rlimit.RlimMax;
             rlimit.RlimCur = ulong.MaxValue;
             rlimit.RlimMax = ulong.MaxValue;
-            if (LinuxSetRLimit(rlimitMemlock, ref rlimit) == 0)
+            if (UnsafeNativeMethods.LinuxSetRLimit(rlimitMemlock, ref rlimit) == 0)
             {
                 error = null;
                 return true;
@@ -86,51 +90,13 @@ namespace Isopoh.Cryptography.SecureArray
             var bufHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
             try
             {
-                IntPtr bufPtr = LinuxSterrorR(errno, bufHandle.AddrOfPinnedObject(), (ulong)buf.Length);
-                return Marshal.PtrToStringAnsi(bufPtr);
+                IntPtr bufPtr = UnsafeNativeMethods.LinuxSterrorR(errno, bufHandle.AddrOfPinnedObject(), (ulong)buf.Length);
+                return Marshal.PtrToStringAnsi(bufPtr) ?? $"Unknown error {errno}";
             }
             finally
             {
                 bufHandle.Free();
             }
-        }
-
-        [DllImport("libc", SetLastError = true, EntryPoint = "mlock")]
-        private static extern int LinuxMlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libc", SetLastError = true, EntryPoint = "munlock")]
-        private static extern int LinuxMunlock(IntPtr addr, UIntPtr len);
-
-        [DllImport("libc", EntryPoint = "memset")]
-        private static extern IntPtr LinuxMemset(IntPtr addr, int c, UIntPtr n);
-
-        [DllImport("libc", EntryPoint = "getrlimit", SetLastError = true)]
-        private static extern int LinuxGetRLimit(int resource, ref LinuxRlimit rlimit);
-
-        [DllImport("libc", EntryPoint = "setrlimit", SetLastError = true)]
-        private static extern int LinuxSetRLimit(int resource, ref LinuxRlimit rlimit);
-
-        [DllImport("libc", EntryPoint = "strerror_r", CharSet = CharSet.Ansi)]
-        private static extern IntPtr LinuxSterrorR(int errno, IntPtr buf, ulong buflen);
-
-        /// <summary>
-        /// The structure for the setrlimit() and getrlimit() calls.
-        /// </summary>
-        /// <remarks>
-        /// On Linux, I found a comment in /usr/include/x64_32-linux-gnu/bits/typesizes.h
-        /// that said "X32 kernel interface is 64-bit" and the code seemed to bare that out
-        /// so this should work for both 32-bit and 64-bit kernels.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential, Size = 16)]
-        private struct LinuxRlimit
-        {
-            // ReSharper disable FieldCanBeMadeReadOnly.Local
-            // ReSharper disable MemberCanBePrivate.Local
-            public ulong RlimCur;
-            public ulong RlimMax;
-
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore FieldCanBeMadeReadOnly.Local
         }
     }
 }

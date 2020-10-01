@@ -21,13 +21,13 @@ namespace Isopoh.Cryptography.Blake2b
     public sealed class Blake2BConfig
     {
         private int outputSizeInBytes;
-        private byte[] outputBuffer;
+        private byte[]? outputBuffer;
 
-        private byte[] personalization;
+        private byte[]? personalization;
 
-        private byte[] salt;
+        private byte[]? salt;
 
-        private byte[] key;
+        private byte[]? key;
 
         /// <summary>
         ///
@@ -48,7 +48,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Personalization"/> to non-null other than 16 bytes.
         /// </exception>
-        public byte[] Personalization
+        public byte[]? Personalization
         {
             get => this.personalization;
 
@@ -69,7 +69,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Salt"/> to non-null other than 16 bytes.
         /// </exception>
-        public byte[] Salt
+        public byte[]? Salt
         {
             get => this.salt;
 
@@ -94,7 +94,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Key"/> greater than 128 bytes.
         /// </exception>
-        public byte[] Key
+        public byte[]? Key
         {
             get => this.key;
 
@@ -168,7 +168,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Result64ByteBuffer"/> to non-null other than 64 bytes.
         /// </exception>
-        public byte[] Result64ByteBuffer
+        public byte[]? Result64ByteBuffer
         {
             get => this.outputBuffer;
 

@@ -54,21 +54,31 @@ namespace Isopoh.Cryptography.Argon2
         /// The output length is always exactly 32 bytes.
         /// </para>
         /// </remarks>
-        public static bool DecodeString(this Argon2Config config, string str, out SecureArray<byte> hash)
+        public static bool DecodeString(this Argon2Config config, string str, out SecureArray<byte>? hash)
         {
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
+            if (str == null)
+            {
+                throw new ArgumentNullException(nameof(str));
+            }
+
             int pos;
             Argon2Type type;
-            if (str.StartsWith("$argon2id"))
+            if (str.StartsWith("$argon2id", StringComparison.Ordinal))
             {
                 type = Argon2Type.HybridAddressing;
                 pos = 9;
             }
-            else if (str.StartsWith("$argon2i"))
+            else if (str.StartsWith("$argon2i", StringComparison.Ordinal))
             {
                 type = Argon2Type.DataIndependentAddressing;
                 pos = 8;
             }
-            else if (str.StartsWith("$argon2d"))
+            else if (str.StartsWith("$argon2d", StringComparison.Ordinal))
             {
                 type = Argon2Type.DataDependentAddressing;
                 pos = 8;
@@ -83,7 +93,7 @@ namespace Isopoh.Cryptography.Argon2
             /* Reading the version number if the default is suppressed */
             {
                 var check = "$v=";
-                if (string.Compare(str, pos, check, 0, check.Length) == 0)
+                if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
                 {
                     pos += check.Length;
                     pos = DecodeDecimal(str, pos, out var decX);
@@ -118,10 +128,10 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            byte[] associatedData = null;
+            byte[]? associatedData = null;
             {
                 var check = ",data=";
-                if (string.Compare(str, pos, check, 0, check.Length) == 0)
+                if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
                 {
                     pos += check.Length;
                     pos = FromBase64(out associatedData, str, pos);
@@ -281,9 +291,9 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
-        private static int DecodeBase64(out byte[] dst, string check, string str, int pos)
+        private static int DecodeBase64(out byte[]? dst, string check, string str, int pos)
         {
-            if (string.Compare(str, pos, check, 0, check.Length) != 0)
+            if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) != 0)
             {
                 dst = null;
                 return -1;
@@ -307,7 +317,7 @@ namespace Isopoh.Cryptography.Argon2
         /// error occurred then -1 is returned; otherwise, the returned index
         /// points to the first non-Base64 character in the source stream.
         /// </remarks>
-        private static int FromBase64(out byte[] dst, string src, int pos)
+        private static int FromBase64(out byte[]? dst, string src, int pos)
         {
             int i = pos;
             var buf = new List<byte>();
@@ -520,7 +530,7 @@ namespace Isopoh.Cryptography.Argon2
         /// <returns>the next position to look at; -1 on failure.</returns>
         private static int DecodeDecimal(out uint dst, string check, string str, int pos)
         {
-            if (string.Compare(str, pos, check, 0, check.Length) != 0)
+            if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) != 0)
             {
                 dst = 0;
                 return -1;

@@ -54,6 +54,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         public void Update(byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
             this.Update(data, 0, data.Length);
         }
 

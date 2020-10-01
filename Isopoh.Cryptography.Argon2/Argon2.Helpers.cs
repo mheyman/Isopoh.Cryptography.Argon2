@@ -29,7 +29,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public static string Hash(Argon2Config configToHash)
         {
-            var argon2 = new Argon2(configToHash);
+            using var argon2 = new Argon2(configToHash);
             using var hash = argon2.Hash();
             return argon2.config.EncodeString(hash.Buffer);
         }
@@ -70,16 +70,20 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public static string Hash(
             byte[] password,
-            byte[] secret,
+            byte[]? secret,
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
-            SecureArrayCall secureArrayCall = null)
+            SecureArrayCall? secureArrayCall = null)
         {
             byte[] salt = new byte[16];
-            RandomNumberGenerator.Create().GetBytes(salt);
+            {
+                using var randomNumberGenerator = RandomNumberGenerator.Create();
+                randomNumberGenerator.GetBytes(salt);
+            }
+
             return Hash(
                 new Argon2Config
                 {
@@ -93,6 +97,7 @@ namespace Isopoh.Cryptography.Argon2
                     HashLength = hashLength,
                     Version = Argon2Version.Nineteen,
                     Type = type,
+                    SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
                 });
         }
 
@@ -132,14 +137,19 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public static string Hash(
             string password,
-            string secret,
+            string? secret,
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
-            SecureArrayCall secureArrayCall = null)
+            SecureArrayCall? secureArrayCall = null)
         {
+            if (password == null)
+            {
+                throw new System.ArgumentNullException(nameof(password));
+            }
+
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
                                 : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
@@ -147,7 +157,11 @@ namespace Isopoh.Cryptography.Argon2
             {
                 if (secretBuf != null)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Dereference of a possibly null reference.
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
+#pragma warning restore CS8604 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
 
                 using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
@@ -181,7 +195,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
         /// </param>
         /// <param name="parallelism">
-        /// The parallelism to use. Default to 1 (single threaded).
+        /// The parallelism to use. Defaults to 1 (single threaded).
         /// </param>
         /// <param name="type">
         /// Data-dependent, data-independent, or hybrid. Defaults to hybrid
@@ -205,7 +219,7 @@ namespace Isopoh.Cryptography.Argon2
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
-            SecureArrayCall secureArrayCall = null)
+            SecureArrayCall? secureArrayCall = null)
         {
             return Hash(password, null, timeCost, memoryCost, parallelism, type, hashLength, secureArrayCall);
         }
@@ -226,7 +240,7 @@ namespace Isopoh.Cryptography.Argon2
             string encoded,
             Argon2Config configToVerify)
         {
-            SecureArray<byte> hash = null;
+            SecureArray<byte>? hash = null;
             try
             {
                 if (!configToVerify.DecodeString(encoded, out hash) || hash == null)
@@ -266,13 +280,54 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
-            byte[] secret,
-            SecureArrayCall secureArrayCall = null)
+            byte[]? secret,
+            SecureArrayCall? secureArrayCall = null)
         {
             var configToVerify = new Argon2Config
             {
                 Password = password,
                 Secret = secret,
+                SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
+            };
+
+            return Verify(encoded, configToVerify);
+        }
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
+        /// The password to verify.
+        /// </param>
+        /// <param name="secret">
+        /// The secret hashed into the password.
+        /// </param>
+        /// <param name="threads">
+        /// The number of threads to use. Setting this to a higher number than
+        /// the "p=" parameter in the <paramref name="encoded"/> string doesn't
+        /// cause even more parallelism.
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            byte[] password,
+            byte[]? secret,
+            int threads,
+            SecureArrayCall? secureArrayCall = null)
+        {
+            var configToVerify = new Argon2Config
+            {
+                Password = password,
+                Secret = secret,
+                Threads = threads,
                 SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
             };
 
@@ -299,9 +354,40 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
-            SecureArrayCall secureArrayCall = null)
+            SecureArrayCall? secureArrayCall = null)
         {
             return Verify(encoded, password, null, secureArrayCall);
+        }
+
+        // ReSharper disable once UnusedMember.Global
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
+        /// The password to verify.
+        /// </param>
+        /// <param name="threads">
+        /// The number of threads to use. Setting this to a higher number than
+        /// the "p=" parameter in the <paramref name="encoded"/> string doesn't
+        /// cause even more parallelism.
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            byte[] password,
+            int threads,
+            SecureArrayCall? secureArrayCall = null)
+        {
+            return Verify(encoded, password, null, threads, secureArrayCall);
         }
 
         /// <summary>
@@ -326,9 +412,14 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             string password,
-            string secret,
-            SecureArrayCall secureArrayCall = null)
+            string? secret,
+            SecureArrayCall? secureArrayCall = null)
         {
+            if (password == null)
+            {
+                throw new System.ArgumentNullException(nameof(password));
+            }
+
             var secretBuf = string.IsNullOrEmpty(secret)
                                 ? null
                                 : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
@@ -337,12 +428,77 @@ namespace Isopoh.Cryptography.Argon2
             {
                 if (secretBuf != null)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Dereference of a possibly null reference.
                     Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
+#pragma warning restore CS8604 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
 
                 using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
                 Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
                 return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, secureArrayCall);
+            }
+            finally
+            {
+                secretBuf?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
+        /// The password to verify. This gets UTF-8 encoded.
+        /// </param>
+        /// <param name="secret">
+        /// The secret used in the creation of <paramref name="encoded"/>. UTF-8 encoded to create the byte-buffer actually used in the verification.
+        /// May be null for no secret. <see cref="string"/>.<see cref="string.Empty"/> is treated as null.
+        /// </param>
+        /// <param name="threads">
+        /// The number of threads to use. Setting this to a higher number than
+        /// the "p=" parameter in the <paramref name="encoded"/> string doesn't
+        /// cause even more parallelism.
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            string password,
+            string? secret,
+            int threads,
+            SecureArrayCall? secureArrayCall = null)
+        {
+            if (password == null)
+            {
+                throw new System.ArgumentNullException(nameof(password));
+            }
+
+            var secretBuf = string.IsNullOrEmpty(secret)
+                                ? null
+                                : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
+
+            try
+            {
+                if (secretBuf != null)
+                {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Dereference of a possibly null reference.
+                    Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
+#pragma warning restore CS8604 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                }
+
+                using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
+                Encoding.UTF8.GetBytes(password, 0, password.Length, passwordBuf.Buffer, 0);
+                return Verify(encoded, passwordBuf.Buffer, secretBuf?.Buffer, threads, secureArrayCall);
             }
             finally
             {
@@ -370,9 +526,40 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             string password,
-            SecureArrayCall secureArrayCall = null)
+            SecureArrayCall? secureArrayCall = null)
         {
             return Verify(encoded, password, null, secureArrayCall);
+        }
+
+        // ReSharper disable once UnusedMember.Global
+
+        /// <summary>
+        /// Verify the given Argon2 hash as being that of the given password.
+        /// </summary>
+        /// <param name="encoded">
+        /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
+        /// </param>
+        /// <param name="password">
+        /// The password to verify. This gets UTF-8 encoded.
+        /// </param>
+        /// <param name="threads">
+        /// The number of threads to use. Setting this to a higher number than
+        /// the "p=" parameter in the <paramref name="encoded"/> string doesn't
+        /// cause even more parallelism.
+        /// </param>
+        /// <param name="secureArrayCall">
+        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <returns>
+        /// True on success; false otherwise.
+        /// </returns>
+        public static bool Verify(
+            string encoded,
+            string password,
+            int threads,
+            SecureArrayCall? secureArrayCall = null)
+        {
+            return Verify(encoded, password, null, threads, secureArrayCall);
         }
 
         /// <summary>
@@ -390,6 +577,16 @@ namespace Isopoh.Cryptography.Argon2
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static bool FixedTimeEquals(SecureArray<byte> left, SecureArray<byte> right)
         {
+            if (left == null)
+            {
+                throw new System.ArgumentNullException(nameof(left));
+            }
+
+            if (right == null)
+            {
+                throw new System.ArgumentNullException(nameof(right));
+            }
+
 #if NETCOREAPP2_1 || NETCOREAPP2_2 || NETCOREAPP3_0 || NETCOREAPP3_1 || NETSTANDARD2_1
             return System.Security.Cryptography.CryptographicOperations.FixedTimeEquals(left.Buffer, right.Buffer);
 #else

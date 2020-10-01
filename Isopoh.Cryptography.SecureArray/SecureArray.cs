@@ -40,7 +40,7 @@ namespace Isopoh.Cryptography.SecureArray
                 };
 
         private static readonly object DefaultCallLock = new object();
-        private static SecureArrayCall defaultCall;
+        private static SecureArrayCall defaultCall = DefaultCall;
 
         private GCHandle handle;
 
@@ -62,7 +62,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// You cannot create a <see cref="SecureArray"/> directly, you must
         /// derive from this class like <see cref="SecureArray{T}"/> does.
         /// </remarks>
-        protected SecureArray(SecureArrayCall call)
+        protected SecureArray(SecureArrayCall? call)
         {
             this.Call = call ?? DefaultCall;
         }
@@ -76,7 +76,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// calculation can take a lot of time (over 90% of the time for
         /// something like typical Argon2 hashing).
         /// </remarks>
-        public static bool ReportMaxLockableOnLockFail { get; set; } = false;
+        public static bool ReportMaxLockableOnLockFail { get; set; }
 
         /// <summary>
         /// Gets the default methods that get called to secure the array.
@@ -118,11 +118,20 @@ namespace Isopoh.Cryptography.SecureArray
                                         }
                                         catch (DllNotFoundException)
                                         {
-                                            throw new NotSupportedException(
-                                                "No SecureArray.DefaultCall support for current operating system (whatever " +
-                                                "that is, I think I know Windows, Linux, and OSX - and maybe iOS...). You " +
-                                                "don't have to use the default SecureArrayCall - you can pass in a " +
-                                                "version of the calls that work for your operating system.");
+                                            try
+                                            {
+                                                defaultCall = new DefaultWebSecureArrayCall();
+                                                defaultCall.ZeroMemory(bufPtr, cnt);
+                                            }
+                                            catch (DllNotFoundException)
+                                            {
+                                                throw new NotSupportedException(
+                                                    "No SecureArray.DefaultCall support for current operating system (whatever " +
+                                                    $"that is, maybe \"{RuntimeInformation.OSDescription}\", I think I know Windows, " +
+                                                    "Linux, OSX, and web - and maybe iOS...). You  don't have to use the default " +
+                                                    "SecureArrayCall - you can pass in a version of the calls that work for your " +
+                                                    "operating system.");
+                                            }
                                         }
                                     }
                                 }
@@ -191,9 +200,14 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="call">
         /// The methods to call to secure the array. Defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
-        public static void Zero<T>(T[] buffer, SecureArrayCall call = null)
+        public static void Zero<T>(T[] buffer, SecureArrayCall? call = null)
             where T : struct
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
             var bufHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {
@@ -219,6 +233,11 @@ namespace Isopoh.Cryptography.SecureArray
         /// </param>
         protected void Cleanup<T>(T[] buf)
         {
+            if (buf == null)
+            {
+                throw new System.ArgumentNullException(nameof(buf));
+            }
+
             var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
             if (this.handle == default)
             {
@@ -247,9 +266,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// instance is disposed.
         /// </summary>
         /// <typeparam name="T">
-        /// The type of the array elements in <paramref name="buf"/>.
+        /// The type of the array elements in <paramref name="buffer"/>.
         /// </typeparam>
-        /// <param name="buf">
+        /// <param name="buffer">
         /// The array to secure.
         /// </param>
         /// <param name="type">
@@ -258,20 +277,25 @@ namespace Isopoh.Cryptography.SecureArray
         /// <exception cref="LockFailException">
         /// Operating system did not allow the memory to be locked.
         /// </exception>
-        protected void Init<T>(T[] buf, SecureArrayType type)
+        protected void Init<T>(T[] buffer, SecureArrayType type)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
             if (type == SecureArrayType.ZeroedAndPinned || type == SecureArrayType.ZeroedPinnedAndNoSwap)
             {
-                var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                var tmpHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
                 try
                 {
                     if (type == SecureArrayType.ZeroedPinnedAndNoSwap)
                     {
-                        var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;
+                        var sizeInBytes = BuiltInTypeElementSize(buffer) * buffer.Length;
                         IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
                         UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
                         this.Call.ZeroMemory(bufPtr, cnt);
-                        string err = this.Call.LockMemory(bufPtr, cnt);
+                        string? err = this.Call.LockMemory(bufPtr, cnt);
                         if (err != null)
                         {
                             string msg;

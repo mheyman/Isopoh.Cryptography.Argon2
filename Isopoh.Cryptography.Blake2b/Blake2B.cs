@@ -68,7 +68,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
         /// </returns>
-        public static Hasher Create(Blake2BConfig config, SecureArrayCall secureArrayCall)
+        public static Hasher Create(Blake2BConfig? config, SecureArrayCall secureArrayCall)
         {
             return new Blake2BHasher(config, secureArrayCall);
         }
@@ -112,6 +112,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// </returns>
         public static byte[] ComputeHash(byte[] data, SecureArrayCall secureArrayCall)
         {
+            if (data == null)
+            {
+                throw new System.ArgumentNullException(nameof(data));
+            }
+
             return ComputeHash(data, 0, data.Length, null, secureArrayCall);
         }
 
@@ -133,6 +138,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// </returns>
         public static byte[] ComputeHash(byte[] data, Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
+            if (data == null)
+            {
+                throw new System.ArgumentNullException(nameof(data));
+            }
+
             return ComputeHash(data, 0, data.Length, config, secureArrayCall);
         }
 
@@ -158,7 +168,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig config, SecureArrayCall secureArrayCall)
+        public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig? config, SecureArrayCall secureArrayCall)
         {
             using var hasher = Create(config, secureArrayCall);
             hasher.Update(data, start, count);

@@ -300,7 +300,9 @@ namespace Isopoh.Cryptography.Blake2b
                 throw new InvalidOperationException("Not initialized");
             if (hash?.Length != 64)
             {
-                throw new ArgumentException($"Invalid hash length, got {hash?.Length.ToString() ?? "<null>"}, expected 64", nameof(hash));
+                throw new ArgumentException(
+                    $"Invalid hash length, got {hash?.Length.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "<null>"}, expected 64",
+                    nameof(hash));
             }
 
             this.isInitialized = false;

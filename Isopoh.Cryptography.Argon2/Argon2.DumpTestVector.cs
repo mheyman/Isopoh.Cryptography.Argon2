@@ -14,8 +14,8 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
-        //// private static readonly string VectorFileName = "argon2-test-vectors.txt";
-        private static readonly string VectorFileName = null;
+        // ReSharper disable once UnreachableCode
+        private static readonly string? VectorFileName = true ? null : "argon2-test-vectors.txt";
 
         private static void InitialKat(byte[] buffer, Argon2 hasher)
         {
@@ -43,19 +43,19 @@ namespace Isopoh.Cryptography.Argon2
                     + $"Parallelism: {hasher.config.Lanes} lanes, Tag length: " + $"{hasher.config.HashLength} bytes");
                 var pwText = hasher.config.ClearPassword
                     ? "CLEARED"
-                    : BitConverter.ToString(hasher.config.Password).ToLower().Replace('-', ' ');
-                streamOut.WriteLine($"Password[{hasher.config.Password.Length}]: {pwText} ");
+                    : BitConverter.ToString(hasher.config.Password ?? Array.Empty<byte>()).ToLowerInvariant().Replace('-', ' ');
+                streamOut.WriteLine($"Password[{hasher.config.Password?.Length ?? -1}]: {pwText} ");
                 streamOut.WriteLine(
                     $"Salt[{hasher.config.Salt?.Length ?? 0}]: "
-                    + $"{(hasher.config.Salt == null ? string.Empty : BitConverter.ToString(hasher.config.Salt).ToLower().Replace('-', ' '))} ");
+                    + $"{(hasher.config.Salt == null ? string.Empty : BitConverter.ToString(hasher.config.Salt).ToLowerInvariant().Replace('-', ' '))} ");
                 streamOut.WriteLine(
                     $"Secret[{hasher.config.Secret?.Length ?? 0}]: "
-                    + $"{(hasher.config.Secret == null ? string.Empty : BitConverter.ToString(hasher.config.Secret).ToLower().Replace('-', ' '))} ");
+                    + $"{(hasher.config.Secret == null ? string.Empty : BitConverter.ToString(hasher.config.Secret).ToLowerInvariant().Replace('-', ' '))} ");
                 streamOut.WriteLine(
                     $"Associated data[{hasher.config.AssociatedData?.Length ?? 0}]: "
-                    + $"{(hasher.config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.config.AssociatedData).ToLower().Replace('-', ' '))} ");
+                    + $"{(hasher.config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.config.AssociatedData).ToLowerInvariant().Replace('-', ' '))} ");
                 streamOut.WriteLine(
-                    $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLower().Replace('-', ' ')} ");
+                    $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
             }
         }
 
@@ -85,7 +85,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 using var fileOut = new FileStream(VectorFileName, FileMode.Append);
                 using var streamOut = new StreamWriter(fileOut);
-                streamOut.WriteLine($"Tag: {BitConverter.ToString(output).ToLower().Replace('-', ' ')} ");
+                streamOut.WriteLine($"Tag: {BitConverter.ToString(output).ToLowerInvariant().Replace('-', ' ')} ");
             }
         }
     }

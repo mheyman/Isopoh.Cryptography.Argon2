@@ -59,6 +59,11 @@ namespace Isopoh.Cryptography.Argon2
         /// </param>
         public void Copy(BlockValues other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             Array.Copy(other.memory, other.offset, this.memory, this.offset, Argon2.QwordsInBlock);
         }
 
@@ -70,6 +75,11 @@ namespace Isopoh.Cryptography.Argon2
         /// </param>
         public void Xor(BlockValues other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             for (int i = 0; i < Argon2.QwordsInBlock; ++i)
             {
                 this[i] ^= other[i];

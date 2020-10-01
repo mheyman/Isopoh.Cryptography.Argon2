@@ -1,0 +1,64 @@
+﻿<div>
+    @if (argoner.Calculating)
+    {
+        <div>&nbsp;</div>
+        <div>Calculating &quot;@argoner.Secret&quot;</div>
+        <div>&nbsp;</div>
+    }
+    else
+    {
+        <div>Argon2 hash of &quot;@argoner.Secret&quot;</div>
+        <div>&quot;@argoner.Hash&quot;</div>
+        <div>(@argoner.CalculationSeconds seconds)</div>
+    }
+</div>
+<div>&nbsp;</div>
+<EditForm Model=@argoner>
+    <div>
+        <div>
+            <input value="@argoner.Secret" disabled="@argoner.Calculating" @onchange="@((ChangeEventArgs a) => argoner.SetSecret(a.Value.ToString(), this.StateHasChanged))" />
+            <label>The &quot;secret&quot; to hash.</label>
+        </div>
+        <div>Hashing occurs when leaving the secret input field, or when Enter is pressed and may take 2 minutes for a default hash.</div>
+        <div>&nbsp;</div>
+    </div>
+    <div>
+        <InputNumber @bind-Value=@argoner.TimeCost disabled=@argoner.Calculating />
+        <label>Time cost. Defaults to 3.</label>
+    </div>
+    <div>
+        <InputNumber @bind-Value=@argoner.MemoryCost disabled=@argoner.Calculating />
+        <label>Memory cost. Defaults to 65536 (65536 * 1024 = 64MB).</label>
+    </div>
+    <div>
+        <InputNumber @bind-Value=@argoner.Parallelism disabled=@argoner.Calculating />
+        <label>Parallelism. Defaults to 1. Blazor bug on WaitHandle.WaitAny() prevents this from working on any other value than 1.</label>
+    </div>
+    <div>
+        <InputSelect @bind-Value=@argoner.Type disabled=@argoner.Calculating>
+            <option value="DataDependentAddressing">dependent</option>
+            <option value="DataIndependentAddressing">independent</option>
+            <option value="HybridAddressing">hybrid</option>
+        </InputSelect>
+        <label>
+            &quot;dependent&quot; (faster but susceptible to side-channel
+            attacks), &quot;independent&quot; (slower and suitable for password
+            hashing and password-based key derivation), or &quot;hybrid&quot; (a
+            mixture of the two). Defaults to the recommended type:
+            &quot;hybrid&quot;.
+        </label>
+    </div>
+    <div>
+        <InputNumber @bind-Value=@argoner.HashLength disabled=@argoner.Calculating />
+        <label>
+            Hash length. The hash string base-64 encodes the hash of this
+            length along with other parameters so the length of the resulting
+            hash string is significantly longer.
+        </label>
+    </div>
+</EditForm>
+
+
+@code {
+    private readonly Argoner argoner = new Argoner();
+}

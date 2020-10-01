@@ -56,7 +56,7 @@ namespace Isopoh.Cryptography.SecureArray
         ///     The methods that get called to secure the array. A null value
         ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
-        public SecureArray(int size, SecureArrayType type, SecureArrayCall call)
+        public SecureArray(int size, SecureArrayType type, SecureArrayCall? call)
             : base(call)
         {
             this.buf = new T[size];
@@ -161,7 +161,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// You can query <see cref="SecureArray.ProtectionType"/> to find the type of <see cref="SecureArray{T}"/>
         /// returned.
         /// </remarks>
-        public static SecureArray<T> Best(int size, SecureArrayCall secureArrayCall)
+        public static SecureArray<T> Best(int size, SecureArrayCall? secureArrayCall)
         {
             try
             {

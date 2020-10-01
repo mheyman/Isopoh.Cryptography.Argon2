@@ -19,13 +19,13 @@ namespace Isopoh.Cryptography.Blake2b
         private bool disposed;
         private readonly Blake2BCore core;
         private readonly SecureArray<ulong> rawConfig;
-        private readonly SecureArray<byte> key;
+        private readonly SecureArray<byte>? key;
 
-        private readonly byte[] defaultOutputBuffer;
+        private readonly byte[]? defaultOutputBuffer;
         private readonly int outputSizeInBytes;
         private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
 
-        public Blake2BHasher(Blake2BConfig config, SecureArrayCall secureArrayCall)
+        public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
         {
             config ??= DefaultConfig;
             this.core = new Blake2BCore(secureArrayCall, config.LockMemoryPolicy);

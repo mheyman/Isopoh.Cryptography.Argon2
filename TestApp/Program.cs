@@ -426,15 +426,20 @@ namespace TestApp
         /// <returns>String with pass/fail message.</returns>
         public static string TestHighMemoryCost()
         {
+            Console.WriteLine("HighMemoryCost");
+
             // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
             // this can take a long time depending on the multiplier
-            int multiplier = 10;
+            Console.WriteLine($"HighMemoryCost:");
             string password = "password";
-            var memoryCost = (multiplier * Argon2.CsharpMaxBlocksPerArray / Argon2.QwordsInBlock) + 271;
+            var memoryCost = Argon2.CsharpMaxBlocksPerArray + 271;
             JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
+            Console.WriteLine("HighMemoryCost: Hash");
             string hash = Argon2.Hash(password, memoryCost: memoryCost, parallelism: 20, secureArrayCall: new InsecureArrayCall());
             JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
+            Console.WriteLine("HighMemoryCost: Verify");
             bool ret = Argon2.Verify(hash, password);
+            Console.WriteLine($"HighMemoryCost: verify {(ret ? "Success" : "FAIL")}");
             JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
 
             return !ret ? "HighMemoryCost: FAILED" : "HighMemoryCost: Passed";

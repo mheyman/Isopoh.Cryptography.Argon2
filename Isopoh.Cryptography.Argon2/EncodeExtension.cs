@@ -7,6 +7,7 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
+    using System.Globalization;
     using System.Text;
 
     /// <summary>
@@ -62,6 +63,11 @@ namespace Isopoh.Cryptography.Argon2
         /// </remarks>
         public static string EncodeString(this Argon2Config config, byte[] hash)
         {
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
             var dst = new StringBuilder();
             if (config.Type == Argon2Type.DataIndependentAddressing)
             {
@@ -83,13 +89,13 @@ namespace Isopoh.Cryptography.Argon2
                     + $"got {config.Type}", nameof(config));
             }
 
-            dst.AppendFormat("{0:D}", (int)config.Version);
+            dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", (int)config.Version);
             dst.Append("$m=");
-            dst.AppendFormat("{0:D}", config.MemoryCost);
+            dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.MemoryCost);
             dst.Append(",t=");
-            dst.AppendFormat("{0:D}", config.TimeCost);
+            dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.TimeCost);
             dst.Append(",p=");
-            dst.AppendFormat("{0:D}", config.Lanes);
+            dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.Lanes);
             if (config.AssociatedData != null && config.AssociatedData.Length > 0)
             {
                 dst.Append(",data=");
@@ -101,7 +107,7 @@ namespace Isopoh.Cryptography.Argon2
                 return dst.ToString();
             }
 
-            dst.Append("$");
+            dst.Append('$');
             dst.Append(config.Salt.ToB64String());
 
             if (hash == null || hash.Length == 0)
@@ -109,7 +115,7 @@ namespace Isopoh.Cryptography.Argon2
                 return dst.ToString();
             }
 
-            dst.Append("$");
+            dst.Append('$');
             dst.Append(hash.ToB64String());
             return dst.ToString();
         }
@@ -121,6 +127,11 @@ namespace Isopoh.Cryptography.Argon2
         /// <returns>The Argon2 B64 string.</returns>
         public static string ToB64String(this byte[] buf)
         {
+            if (buf == null)
+            {
+                throw new ArgumentNullException(nameof(buf));
+            }
+
             var lengthMod3 = buf.Length % 3;
             var chunkCount = buf.Length / 3;
             var bufFullChunkLength = chunkCount * 3;

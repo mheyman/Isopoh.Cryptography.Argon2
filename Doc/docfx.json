@@ -13,6 +13,8 @@
             "Doc/**",
             "Isopoh.Cryptography.Test/**",
             "TestApp/**",
+            "TestBlazor.Client/**",
+            "TestBlazor.Server/**",
             "docfx_project/**",
             "docs/**",
             "**/obj/**",

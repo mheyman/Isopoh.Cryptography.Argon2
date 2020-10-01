@@ -9,8 +9,8 @@
 > cryptographically secure password hash. Argon2 was the winner of the
 > 2015 [Password Hashing Competition](https://password-hashing.net/).
 >
-> This fully managed implementation of Argon2 runs in .NET Core or .NET
-> Framework applications.
+> This fully managed implementation of Argon2 runs in .NET Core, .NET
+> Framework, or Blazor applications.
 
 Standard Argon2 Hashing:
 ```csharp
@@ -36,12 +36,12 @@ but that implementation is in C. Building a C# wrapper around the C
 implementation is possible but adds complexity.
 
 This 100% managed-code library allows you to use the Argon2 hash in any
-.NET application without added complexity.
+.NET (including Blazor) application without added complexity.
 
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
 
-This requires a .NET environment and runs on Windows, Linux, and MacOS.
+This requires a .NET environment and runs on Windows, Linux, MacOS, and WebAssembly (via Blazor).
 
 ### INSTALLATION
 [i]: #installation 'Installation guide'
@@ -114,7 +114,7 @@ var config = new Argon2Config
     TimeCost = 10,
     MemoryCost = 32768,
     Lanes = 5,
-    Threads = Environment.ProcessorCount,
+    Threads = Environment.ProcessorCount, // higher than "Lanes" doesn't help (or hurt)
     Password = passwordBytes,
     Salt = salt, // >= 8 bytes if not null
     Secret = secret, // from somewhere
@@ -157,9 +157,9 @@ finally
 }
 
 //
-// Or, more simply (but this doesn't allow setting "Threads")
+// Or, more simply (setting "Threads" to "5")
 //
-if (Argon2.Verify(hashString, passwordBytes))
+if (Argon2.Verify(hashString, passwordBytes, 5))
 {
     // verified
 }
@@ -212,6 +212,10 @@ this way puts stress on the computer as a whole by denying physical
 RAM for other processes and puts stress on your particular executable by
 denying freedom to the garbage collector to reduce fragmentation as needed
 for best performance.
+
+Note: when using SecureArray in the browser under Blazor, the memory cannot
+be locked into RAM so SecureArray does its best effort to protect the data
+by zeroing the buffer when it is disposed.
 
 ***Always*** dispose of your `SecureArray`s.
 

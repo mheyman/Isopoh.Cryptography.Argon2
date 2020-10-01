@@ -110,29 +110,11 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
-        private Thread StartFillSegmentThread(int pass, int lane, int slice, AutoResetEvent are)
-        {
-            var ret = new Thread(() =>
-            {
-                this.FillSegment(
-                    new Position
-                    {
-                        Pass = pass,
-                        Lane = lane,
-                        Slice = slice,
-                        Index = 0,
-                    });
-                are.Set();
-            });
-            ret.Start();
-            return ret;
-        }
-
         private void FillMemoryBlocks()
         {
             if (this.config.Threads > 1)
             {
-                var waitHandles =
+                WaitHandle[] waitHandles =
                     Enumerable.Range(
                         0,
                         this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads)
@@ -150,14 +132,14 @@ namespace Isopoh.Cryptography.Argon2
                             ThreadPool.QueueUserWorkItem(
                                 (fs) =>
                                 {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                                     this.FillSegment(((FillState)fs).Position);
                                     ((FillState)fs).Are.Set();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                                 },
-                                new FillState
-                                {
-                                    Position = new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 },
-                                    Are = (AutoResetEvent)waitHandles[laneNumber],
-                                });
+                                new FillState(new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 }, (AutoResetEvent)waitHandles[laneNumber]));
                         }
 
                         while (laneNumber < this.config.Lanes)
@@ -167,20 +149,20 @@ namespace Isopoh.Cryptography.Argon2
                             ThreadPool.QueueUserWorkItem(
                                 (fs) =>
                                 {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                                     this.FillSegment(((FillState)fs).Position);
                                     ((FillState)fs).Are.Set();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                                 },
-                                new FillState
-                                {
-                                    Position = new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 },
-                                    Are = (AutoResetEvent)waitHandles[i],
-                                });
+                                new FillState(new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 }, (AutoResetEvent)waitHandles[i]));
                             ++laneNumber;
                         }
 
                         while (remaining > 0)
                         {
-                            int i = WaitHandle.WaitAny(waitHandles);
+                            _ = WaitHandle.WaitAny(waitHandles);
                             --remaining;
                         }
                     }
@@ -386,9 +368,11 @@ namespace Isopoh.Cryptography.Argon2
 
         private class FillState
         {
-            public Position Position { get; set; }
+            public FillState(Position position, AutoResetEvent are) => (this.Position, this.Are) = (position, are);
 
-            public AutoResetEvent Are { get; set; }
+            public Position Position { get; }
+
+            public AutoResetEvent Are { get; }
         }
     }
 }

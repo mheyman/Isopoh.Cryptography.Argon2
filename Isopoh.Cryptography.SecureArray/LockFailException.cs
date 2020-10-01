@@ -17,11 +17,32 @@ namespace Isopoh.Cryptography.SecureArray
         /// <summary>
         /// Initializes a new instance of the <see cref="LockFailException"/> class.
         /// </summary>
+        public LockFailException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LockFailException"/> class.
+        /// </summary>
         /// <param name="message">
-        /// Text for the <see cref="P:System.Exception.Message" /> property.
+        /// Text for the <see cref="Exception.Message" /> property.
         /// </param>
-        public LockFailException(string message)
+        public LockFailException(string? message)
             : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LockFailException"/> class.
+        /// </summary>
+        /// <param name="message">
+        /// Text for the <see cref="Exception.Message" /> property.
+        /// </param>
+        /// <param name="innerException">
+        /// Exception that spawned this exception.
+        /// </param>
+        public LockFailException(string? message, Exception? innerException)
+            : base(message, innerException)
         {
         }
     }

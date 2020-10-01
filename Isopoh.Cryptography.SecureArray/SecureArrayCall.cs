@@ -27,7 +27,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// </param>
         public SecureArrayCall(
             Action<IntPtr, UIntPtr> zeroMemory,
-            Func<IntPtr, UIntPtr, string> lockMemory,
+            Func<IntPtr, UIntPtr, string?> lockMemory,
             Action<IntPtr, UIntPtr> unlockMemory)
         {
             this.ZeroMemory = zeroMemory;
@@ -51,7 +51,7 @@ namespace Isopoh.Cryptography.SecureArray
         /// <returns>
         /// Null on success; otherwise an error message.
         /// </returns>
-        public Func<IntPtr, UIntPtr, string> LockMemory { get; protected set; }
+        public Func<IntPtr, UIntPtr, string?> LockMemory { get; protected set; }
 
         /// <summary>
         /// Gets or sets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.
