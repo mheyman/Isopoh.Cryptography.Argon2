@@ -9,8 +9,9 @@
 > cryptographically secure password hash. Argon2 was the winner of the
 > 2015 [Password Hashing Competition](https://password-hashing.net/).
 >
-> This fully managed implementation of Argon2 runs in .NET Core, .NET
-> Framework, or Blazor applications.
+> This fully managed implementation of Argon2 runs in ***.NET Core***, ***.NET
+> Framework***, or ***WebAssembly*** (via [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+> or [Uno Platform](https://platform.uno/)).
 
 Standard Argon2 Hashing:
 ```csharp
