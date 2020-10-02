@@ -33,7 +33,7 @@ can be cached and only processed once.
 
 This Argon2 library can do threading to speed processing. The current state
 of .Net code running threaded in the browser is poor. _Blazor_ doesn't support
-it at all and I was not able to get the _Uno Platform__ build to use threading.
+it at all and I was not able to get the _Uno Platform_ build to use threading.
 
 ## Blazor and Uno Platform Specific Notes
 
