@@ -15,7 +15,7 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2020</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Match Isopoh.Cryptography.Argon2 version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Match Isopoh.Cryptography.SecureArray version.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFrameworks>
           netstandard2.0;netcoreapp2.0;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0
@@ -24,7 +24,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.8</PackageVersion>
+        <PackageVersion>1.1.9</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
