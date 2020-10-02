@@ -58,6 +58,7 @@ use `SecureArray` where appropriate.
 
 ### Running In A Web Page
 
-This library can be used to run in a web page via [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor).
+This library can be used to run in a web page via [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+or [Uno Platform](https://platform.uno/).
 
-A quick introduction to that is at [Argon2 Blazor](articles/blazor.html).
+A quick introduction to that is at [Argon2 in WebAssembly](articles/index.html).

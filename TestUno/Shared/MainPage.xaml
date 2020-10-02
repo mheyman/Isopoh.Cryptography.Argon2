@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="TestUno.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestUno"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:numeric="http://gu.se/NumericInput"
+    mc:Ignorable="d" d:DesignWidth="1000">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Name="HashTitle" Text="" Margin="5" FontSize="25" />
+        <TextBlock Name="HashValue" Text="" Margin="5" FontSize="25" />
+        <TextBlock Name="HashTime" Text="" Margin= "5" FontSize="25" />
+        <StackPanel Margin="0,20,0,20">
+            <StackPanel Orientation="Horizontal" Padding="4" Spacing="10">
+                <TextBox Name="Secret" Text="" Width="200" FontSize="25"/>
+                <TextBlock Text="The &quot;secret&quot; to hash" FontSize="25" />
+            </StackPanel>
+            <TextBlock Text="Hashing occurs when leaving the secret input field." Padding="4" FontSize="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Padding="4" Spacing="10">
+            <TextBox Name="TimeCost" Text="3" Width="200" FontSize="25"/>
+            <TextBlock Text="Time cost. Defaults to 3." FontSize="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Padding="4" Spacing="10">
+            <TextBox Name="MemoryCost" Text="65536" Width="200" FontSize="25" />
+            <TextBlock Text="Memory cost. Defaults to 65536 (65536 * 1024 = 64MB)." FontSize="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Padding="4" Spacing="10">
+            <TextBox Name="Parallelism" Text="1" Width="200" FontSize="25" />
+            <TextBlock Text="Parallelism. Defaults to 1." FontSize="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Padding="4" Spacing="10" >
+            <ComboBox Name="Type" Width="200" SelectedItem="hybrid" FontSize="25">
+                <ComboBoxItem IsSelected="False">dependent</ComboBoxItem>
+                <ComboBoxItem IsSelected="False">independent</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">hybrid</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="&quot;dependent&quot; (faster but susceptible to side-channel attacks), &quot;independent&quot; (slower and suitable for password hashing and password-based key derivation), or &quot;hybrid&quot; (a mixture of the two). Defaults to the recommended type: &quot;hybrid&quot;." TextWrapping="WrapWholeWords" MaxWidth="700"  FontSize="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Padding="4" Spacing="10">
+            <TextBox Name="HashLength" Text="32" Width="200" FontSize="25" />
+            <TextBlock Text="Hash length. The hash string base-64 encodes the hash of this length along with other parameters so the length of the resulting hash string is significantly longer." TextWrapping="WrapWholeWords" MaxWidth="700" FontSize="25" />
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -446,6 +446,52 @@ namespace TestApp
         }
 
         /// <summary>
+        /// Test-by-inspection that hash is slowest when parallelism is 1.
+        /// (Depending on core count, it may go down and back up after that).
+        /// </summary>
+        /// <returns>TestTimeToHash: Passed</returns>
+        public static string TestTimeToHash()
+        {
+            (double, string, string) check5(int p)
+            {
+                const string password = "hello world";
+                string ret = string.Empty;
+                var res = new List<double>();
+                for (int i = 0; i < 5; ++i)
+                {
+                    var tick = DateTimeOffset.UtcNow;
+                    ret = Argon2.Hash(password, parallelism: p);
+                    res.Add((DateTimeOffset.UtcNow - tick).TotalSeconds);
+                }
+
+                double max = double.MinValue;
+                double min = double.MaxValue;
+                foreach (var x in res)
+                {
+                    if (max < x)
+                    {
+                        max = x;
+                    }
+
+                    if (min > x)
+                    {
+                        min = x;
+                    }
+                }
+
+                return (res.Where(x => x != max && x != min).Average(), password, ret);
+            }
+
+            for (int parallelism = 1; parallelism <= 20; ++parallelism)
+            {
+                var (tick, pw, hash) = check5(parallelism);
+                Console.WriteLine($"Parallelism {parallelism:D2}: {tick:F3} seconds, \"{pw}\" => {hash}");
+            }
+
+            return "TestTimeToHash: Passed";
+        }
+
+        /// <summary>
         /// Program entry.
         /// </summary>
         /// <param name="args">Command line arguments - unused.</param>
@@ -462,6 +508,7 @@ namespace TestApp
                 TestArgon2(),
                 TestFromDraft(),
                 TestHighMemoryCost(),
+                TestTimeToHash(),
             };
             Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
         }

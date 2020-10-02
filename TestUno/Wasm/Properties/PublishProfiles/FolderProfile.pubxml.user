@@ -1,0 +1,3419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Michael\source\repos\Isopoh.Cryptography.Argon2\TestUno\Wasm\bin\Release\netstandard2.0\publish\</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="CommonServiceLocator.dll">
+      <publishTime>11/07/2019 02:33:46</publishTime>
+    </File>
+    <File Include="index.html">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Argon2.dll">
+      <publishTime>10/02/2020 12:41:07</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Argon2.pdb">
+      <publishTime>10/02/2020 12:41:07</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Argon2.xml">
+      <publishTime>10/02/2020 12:41:07</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Blake2b.dll">
+      <publishTime>10/02/2020 12:41:00</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Blake2b.pdb">
+      <publishTime>10/02/2020 12:41:00</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.Blake2b.xml">
+      <publishTime>10/02/2020 12:40:59</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.SecureArray.dll">
+      <publishTime>10/02/2020 12:40:53</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.SecureArray.pdb">
+      <publishTime>10/02/2020 12:40:53</publishTime>
+    </File>
+    <File Include="Isopoh.Cryptography.SecureArray.xml">
+      <publishTime>10/02/2020 12:40:51</publishTime>
+    </File>
+    <File Include="Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>04/14/2020 22:38:32</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Configuration.Abstractions.dll">
+      <publishTime>08/20/2020 23:49:42</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Configuration.Binder.dll">
+      <publishTime>08/20/2020 23:49:48</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Configuration.dll">
+      <publishTime>08/20/2020 23:49:46</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+      <publishTime>08/20/2020 23:49:48</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.DependencyInjection.dll">
+      <publishTime>08/20/2020 23:51:32</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Logging.Abstractions.dll">
+      <publishTime>08/20/2020 23:51:02</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Logging.Configuration.dll">
+      <publishTime>08/20/2020 23:53:18</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Logging.Console.dll">
+      <publishTime>08/20/2020 23:52:28</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Logging.dll">
+      <publishTime>08/20/2020 23:51:00</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Logging.Filter.dll">
+      <publishTime>04/27/2017 18:53:26</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Options.ConfigurationExtensions.dll">
+      <publishTime>08/20/2020 23:53:18</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Options.dll">
+      <publishTime>08/20/2020 23:49:32</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Primitives.dll">
+      <publishTime>08/20/2020 23:49:50</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/AppManifest.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/Assets/SplashScreen.png">
+      <publishTime>10/01/2020 11:31:06</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/corebindings.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.js">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.wasm">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/driver.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/Fonts.css">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/jquery-pep.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:08:56</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:08:56</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:08:57</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Wasm.TimezoneData.pdb">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:08:56</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:08:56</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/mono-config.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/normalize.css">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/pinvoke.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/Properties/launchSettings.json">
+      <publishTime>10/01/2020 15:29:46</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/require.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/runtime.js">
+      <publishTime>10/01/2020 16:08:42</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/setImmediate.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-config.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.css">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.js">
+      <publishTime>10/01/2020 16:08:58</publishTime>
+    </File>
+    <File Include="package_4e9fa01e6e9227582260766095c1aea82ab38c62/zlib-helper.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/AppManifest.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Assets/SplashScreen.png">
+      <publishTime>10/01/2020 11:31:06</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.js">
+      <publishTime>10/02/2020 10:00:34</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.wasm">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.worker.js">
+      <publishTime>08/07/2020 22:32:38</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Fonts.css">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/jquery-pep.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/aot-instances.clr">
+      <publishTime>10/02/2020 09:41:26</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 09:42:26</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 09:42:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 09:42:45</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 09:42:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 09:42:32</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 09:42:39</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 09:42:43</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 09:42:41</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 09:42:29</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 09:42:32</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 09:42:28</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 09:42:29</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 09:42:38</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 09:42:37</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 09:42:48</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 09:42:30</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 09:42:42</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 09:42:31</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 09:41:53</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/mscorlib.clr">
+      <publishTime>10/02/2020 09:41:54</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/netstandard.clr">
+      <publishTime>10/02/2020 09:41:53</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.clr">
+      <publishTime>10/02/2020 09:41:53</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.clr">
+      <publishTime>10/02/2020 09:42:18</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 09:42:09</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 09:41:58</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Core.clr">
+      <publishTime>10/02/2020 09:41:55</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.clr">
+      <publishTime>10/02/2020 09:41:56</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 09:41:57</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 09:42:19</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 09:41:57</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 09:42:24</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 09:41:57</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 09:41:58</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Linq.clr">
+      <publishTime>10/02/2020 09:42:21</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Memory.clr">
+      <publishTime>10/02/2020 09:41:55</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 09:41:59</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 09:41:59</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 09:41:54</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 09:42:34</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 09:42:27</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 09:42:27</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 09:41:57</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 09:42:12</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 09:42:32</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 09:42:21</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 09:41:59</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 09:42:00</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.clr">
+      <publishTime>10/02/2020 09:42:25</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 09:42:33</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 09:41:56</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.clr">
+      <publishTime>10/02/2020 09:41:54</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 09:42:00</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 09:42:01</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.clr">
+      <publishTime>10/02/2020 09:42:34</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 09:42:07</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 09:42:36</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 09:42:04</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 09:42:35</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 09:42:05</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 09:42:01</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 09:42:49</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 09:41:54</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 09:42:02</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 09:41:55</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 09:41:54</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/mono-config.js">
+      <publishTime>10/02/2020 09:41:23</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/normalize.css">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Properties/launchSettings.json">
+      <publishTime>10/01/2020 15:29:46</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/require.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/runtime.js">
+      <publishTime>10/02/2020 09:41:18</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/setImmediate.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-assets.txt">
+      <publishTime>10/02/2020 09:41:10</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.css">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-config.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.css">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.js">
+      <publishTime>10/02/2020 10:00:44</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/AppManifest.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Assets/SplashScreen.png">
+      <publishTime>10/01/2020 11:31:06</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/corebindings.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.js">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.wasm">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.worker.js">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/driver.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Fonts.css">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/jquery-pep.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:52:03</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:04</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Wasm.TimezoneData.pdb">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:52:03</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:52:03</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/mono-config.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/normalize.css">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/pinvoke.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Properties/launchSettings.json">
+      <publishTime>10/01/2020 15:29:46</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/require.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/runtime.js">
+      <publishTime>10/01/2020 16:51:49</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/setImmediate.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-config.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.css">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.js">
+      <publishTime>10/01/2020 16:52:05</publishTime>
+    </File>
+    <File Include="package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/zlib-helper.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/AppManifest.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Assets/SplashScreen.png">
+      <publishTime>10/01/2020 11:31:06</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.js">
+      <publishTime>10/02/2020 13:15:33</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.wasm">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.worker.js">
+      <publishTime>08/07/2020 22:32:38</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Fonts.css">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/jquery-pep.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/aot-instances.clr">
+      <publishTime>10/02/2020 12:58:59</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 12:59:57</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 13:00:20</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 13:00:22</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 13:00:21</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 13:00:06</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 13:00:15</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 13:00:19</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 13:00:17</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 13:00:02</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 13:00:05</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 13:00:00</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 13:00:01</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 13:00:13</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 13:00:12</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 13:00:26</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 13:00:03</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 13:00:18</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 13:00:04</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 12:59:24</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/mscorlib.clr">
+      <publishTime>10/02/2020 12:59:24</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/netstandard.clr">
+      <publishTime>10/02/2020 12:59:23</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.clr">
+      <publishTime>10/02/2020 12:59:24</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.clr">
+      <publishTime>10/02/2020 12:59:49</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 12:59:41</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 12:59:29</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Core.clr">
+      <publishTime>10/02/2020 12:59:25</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.clr">
+      <publishTime>10/02/2020 12:59:27</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 12:59:27</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 12:59:50</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 12:59:28</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 12:59:55</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 12:59:28</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 12:59:29</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Linq.clr">
+      <publishTime>10/02/2020 12:59:51</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Memory.clr">
+      <publishTime>10/02/2020 12:59:26</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 12:59:30</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 12:59:30</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 12:59:25</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 13:00:08</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 12:59:59</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 12:59:58</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 12:59:28</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 12:59:44</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 13:00:05</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 12:59:52</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 12:59:30</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 12:59:31</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.clr">
+      <publishTime>10/02/2020 12:59:56</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 13:00:06</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 12:59:27</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.clr">
+      <publishTime>10/02/2020 12:59:25</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 12:59:31</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 12:59:32</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.clr">
+      <publishTime>10/02/2020 13:00:07</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 12:59:39</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 13:00:10</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 12:59:35</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 13:00:09</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 12:59:37</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 12:59:32</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 13:00:27</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 12:59:24</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 12:59:34</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 12:59:26</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 12:59:25</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/mono-config.js">
+      <publishTime>10/02/2020 12:58:56</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/normalize.css">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Properties/launchSettings.json">
+      <publishTime>10/01/2020 15:29:46</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/require.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/runtime.js">
+      <publishTime>10/02/2020 12:58:52</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/setImmediate.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-assets.txt">
+      <publishTime>10/02/2020 12:58:43</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.css">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-config.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.css">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.js">
+      <publishTime>10/02/2020 13:15:42</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/AppManifest.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/Assets/SplashScreen.png">
+      <publishTime>10/01/2020 11:31:06</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/corebindings.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.js">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.wasm">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/driver.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/Fonts.css">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/jquery-pep.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:52</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Wasm.TimezoneData.pdb">
+      <publishTime>07/14/2020 12:36:08</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:58:51</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/mono-config.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/normalize.css">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/pinvoke.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/Properties/launchSettings.json">
+      <publishTime>10/01/2020 15:29:46</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/require.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/runtime.js">
+      <publishTime>10/01/2020 16:58:36</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/setImmediate.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-config.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.css">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.js">
+      <publishTime>10/01/2020 16:58:53</publishTime>
+    </File>
+    <File Include="package_f7319ee28f0982d7d06a33abec0319586addbc31/zlib-helper.o">
+      <publishTime>06/09/2020 20:13:14</publishTime>
+    </File>
+    <File Include="refs/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>04/14/2020 22:36:08</publishTime>
+    </File>
+    <File Include="refs/Microsoft.Win32.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/mscorlib.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/netstandard.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.AppContext.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Buffers.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="refs/System.Collections.Concurrent.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Collections.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Collections.NonGeneric.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Collections.Specialized.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.Annotations.dll">
+      <publishTime>05/15/2018 13:29:38</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.Composition.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.EventBasedAsync.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ComponentModel.TypeConverter.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Console.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Core.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Data.Common.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Data.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.Contracts.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.Debug.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.FileVersionInfo.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.Process.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.StackTrace.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.TextWriterTraceListener.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.Tools.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.TraceSource.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Diagnostics.Tracing.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Drawing.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Drawing.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Dynamic.Runtime.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Globalization.Calendars.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Globalization.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Globalization.Extensions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.Compression.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.Compression.FileSystem.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.Compression.ZipFile.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.FileSystem.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.FileSystem.DriveInfo.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.FileSystem.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.FileSystem.Watcher.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.IsolatedStorage.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.MemoryMappedFiles.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.Pipes.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.IO.UnmanagedMemoryStream.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Linq.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Linq.Expressions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Linq.Parallel.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Linq.Queryable.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Http.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.NameResolution.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.NetworkInformation.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Ping.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Requests.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Security.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.Sockets.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.WebHeaderCollection.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.WebSockets.Client.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Net.WebSockets.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Numerics.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
+    <File Include="refs/System.ObjectModel.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Reflection.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Reflection.Emit.ILGeneration.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Reflection.Emit.Lightweight.dll">
+      <publishTime>07/13/2019 09:58:46</publishTime>
+    </File>
+    <File Include="refs/System.Reflection.Extensions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Reflection.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Resources.Reader.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Resources.ResourceManager.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Resources.Writer.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>02/21/2020 03:54:40</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.CompilerServices.VisualC.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Extensions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Handles.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.InteropServices.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.InteropServices.RuntimeInformation.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.InteropServices.WindowsRuntime.dll">
+      <publishTime>11/05/2016 04:56:52</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Numerics.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Serialization.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Serialization.Formatters.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Serialization.Json.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Serialization.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Runtime.Serialization.Xml.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Claims.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Cryptography.Algorithms.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Cryptography.Csp.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Cryptography.Encoding.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Cryptography.Primitives.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Cryptography.X509Certificates.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.Principal.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Security.SecureString.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ServiceModel.Web.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Text.Encoding.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Text.Encoding.Extensions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Text.RegularExpressions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.Overlapped.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.Tasks.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.Tasks.Parallel.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.Thread.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.ThreadPool.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Threading.Timer.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Transactions.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.ValueTuple.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Web.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Windows.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.Linq.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.ReaderWriter.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.Serialization.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.XDocument.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.XmlDocument.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.XmlSerializer.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.XPath.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/System.Xml.XPath.XDocument.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="refs/Uno.dll">
+      <publishTime>10/02/2020 09:31:44</publishTime>
+    </File>
+    <File Include="refs/Uno.Foundation.dll">
+      <publishTime>10/02/2020 09:31:44</publishTime>
+    </File>
+    <File Include="refs/Uno.UI.dll">
+      <publishTime>10/02/2020 09:31:44</publishTime>
+    </File>
+    <File Include="refs/Uno.UI.FluentTheme.dll">
+      <publishTime>10/02/2020 09:31:46</publishTime>
+    </File>
+    <File Include="refs/Uno.UI.Toolkit.dll">
+      <publishTime>10/02/2020 09:31:46</publishTime>
+    </File>
+    <File Include="refs/Uno.Xaml.dll">
+      <publishTime>10/02/2020 09:31:46</publishTime>
+    </File>
+    <File Include="server.py">
+      <publishTime>08/07/2020 22:32:38</publishTime>
+    </File>
+    <File Include="service-worker.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="System.Buffers.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="System.Collections.Immutable.dll">
+      <publishTime>12/19/2016 12:17:42</publishTime>
+    </File>
+    <File Include="System.ComponentModel.Annotations.dll">
+      <publishTime>05/15/2018 13:29:36</publishTime>
+    </File>
+    <File Include="System.ComponentModel.dll">
+      <publishTime>11/05/2016 04:55:44</publishTime>
+    </File>
+    <File Include="System.Linq.dll">
+      <publishTime>11/05/2016 04:56:20</publishTime>
+    </File>
+    <File Include="System.Memory.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
+    <File Include="System.Reflection.Emit.ILGeneration.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="System.Reflection.Emit.Lightweight.dll">
+      <publishTime>07/13/2019 09:58:46</publishTime>
+    </File>
+    <File Include="System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>02/21/2020 03:57:46</publishTime>
+    </File>
+    <File Include="System.Runtime.InteropServices.RuntimeInformation.dll">
+      <publishTime>11/05/2016 04:57:00</publishTime>
+    </File>
+    <File Include="System.Runtime.InteropServices.WindowsRuntime.dll">
+      <publishTime>11/05/2016 04:56:52</publishTime>
+    </File>
+    <File Include="System.Threading.dll">
+      <publishTime>11/05/2016 04:57:30</publishTime>
+    </File>
+    <File Include="System.Threading.Tasks.Extensions.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="System.Threading.Thread.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="System.Threading.ThreadPool.dll">
+      <publishTime>07/13/2019 09:58:48</publishTime>
+    </File>
+    <File Include="Uno.Core.dll">
+      <publishTime>05/11/2020 12:30:56</publishTime>
+    </File>
+    <File Include="Uno.Diagnostics.Eventing.dll">
+      <publishTime>07/12/2020 19:57:08</publishTime>
+    </File>
+    <File Include="Uno.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.Foundation.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.Foundation.pdb">
+      <publishTime>10/02/2020 09:20:12</publishTime>
+    </File>
+    <File Include="Uno.Foundation.Runtime.WebAssembly.dll">
+      <publishTime>10/02/2020 09:33:04</publishTime>
+    </File>
+    <File Include="Uno.pdb">
+      <publishTime>10/02/2020 09:20:26</publishTime>
+    </File>
+    <File Include="Uno.UI.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.UI.FluentTheme.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.UI.FluentTheme.pdb">
+      <publishTime>10/02/2020 09:23:22</publishTime>
+    </File>
+    <File Include="Uno.UI.pdb">
+      <publishTime>10/02/2020 09:22:28</publishTime>
+    </File>
+    <File Include="Uno.UI.Runtime.WebAssembly.dll">
+      <publishTime>10/02/2020 09:32:48</publishTime>
+    </File>
+    <File Include="Uno.UI.Toolkit.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.UI.Toolkit.pdb">
+      <publishTime>10/02/2020 09:22:52</publishTime>
+    </File>
+    <File Include="Uno.UI.Wasm.deps.json">
+      <publishTime>09/09/2020 14:22:20</publishTime>
+    </File>
+    <File Include="Uno.UI.Wasm.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.UI.Wasm.dll.config">
+      <publishTime>09/09/2020 14:22:20</publishTime>
+    </File>
+    <File Include="Uno.UI.Wasm.pdb">
+      <publishTime>10/02/2020 09:22:52</publishTime>
+    </File>
+    <File Include="Uno.Xaml.dll">
+      <publishTime>10/02/2020 09:31:48</publishTime>
+    </File>
+    <File Include="Uno.Xaml.pdb">
+      <publishTime>10/02/2020 09:12:04</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>10/01/2020 12:36:14</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/AppManifest.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.wasm">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Fonts.css">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/jquery-pep.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:09:02</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:09:01</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:09:03</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:09:03</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:09:03</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:09:04</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/mono-config.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/normalize.css">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/require.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/runtime.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/setImmediate.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-config.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.css">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.js">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/AppManifest.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.js">
+      <publishTime>10/02/2020 10:00:51</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.wasm">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.worker.js">
+      <publishTime>10/02/2020 10:00:51</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Fonts.css">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/jquery-pep.js">
+      <publishTime>10/02/2020 10:00:51</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/aot-instances.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 10:01:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/mscorlib.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/netstandard.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Core.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Linq.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Memory.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 10:00:52</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 10:00:52</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/mono-config.js">
+      <publishTime>10/02/2020 10:00:51</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/normalize.css">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/require.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/runtime.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/setImmediate.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.css">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-config.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.css">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.js">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/AppManifest.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.wasm">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.worker.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Fonts.css">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/jquery-pep.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:52:09</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:52:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:52:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:52:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:52:11</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/mono-config.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/normalize.css">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/require.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/runtime.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/setImmediate.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-config.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.css">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.js">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/AppManifest.js">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.js">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.wasm">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.worker.js">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Fonts.css">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/jquery-pep.js">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/aot-instances.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 13:16:08</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/mscorlib.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/netstandard.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Core.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Linq.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Memory.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 13:15:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 13:15:50</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/mono-config.js">
+      <publishTime>10/02/2020 13:15:49</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/normalize.css">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/require.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/runtime.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/setImmediate.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.css">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-config.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.css">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.js">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/AppManifest.js">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.js">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.wasm">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/Fonts.css">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/jquery-pep.js">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:58:56</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:58:58</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:58</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:58:58</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:58:59</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/mono-config.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/normalize.css">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/require.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/runtime.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/setImmediate.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-config.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.css">
+      <publishTime>10/01/2020 16:58:55</publishTime>
+    </File>
+    <File Include="_compressed_br/package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/AppManifest.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/dotnet.wasm">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Fonts.css">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/jquery-pep.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:09:00</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/mono-config.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/normalize.css">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/require.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/runtime.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/setImmediate.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/uno-config.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.css">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_4e9fa01e6e9227582260766095c1aea82ab38c62/Uno.UI.js">
+      <publishTime>10/01/2020 16:08:59</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/AppManifest.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.wasm">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/dotnet.worker.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Fonts.css">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/jquery-pep.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/aot-instances.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 10:00:50</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/mscorlib.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/netstandard.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Core.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Linq.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Memory.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/mono-config.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/normalize.css">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/require.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/runtime.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/setImmediate.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.css">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-bootstrap.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/uno-config.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.css">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_5e174597d6cb50baec989e9c8f4fa36c8f330209/Uno.UI.js">
+      <publishTime>10/02/2020 10:00:47</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/AppManifest.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.wasm">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/dotnet.worker.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Fonts.css">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/jquery-pep.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:52:07</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/mono-config.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/normalize.css">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/require.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/runtime.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/setImmediate.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/uno-config.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.css">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_650c5f8ffc84fab9f5e1f0667964285495fa94b3/Uno.UI.js">
+      <publishTime>10/01/2020 16:52:06</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/AppManifest.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.wasm">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/dotnet.worker.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Fonts.css">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/jquery-pep.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/aot-instances.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/CommonServiceLocator.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Bcl.AsyncInterfaces.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Abstractions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.Binder.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Configuration.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.Abstractions.clr">
+      <publishTime>10/02/2020 13:15:48</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.DependencyInjection.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Configuration.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Options.ConfigurationExtensions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Microsoft.Extensions.Primitives.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Mono.Security.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/mscorlib.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/netstandard.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Collections.Immutable.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ComponentModel.Composition.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Core.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Data.DataSetExtensions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Diagnostics.Debug.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Drawing.Common.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Globalization.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.IO.Compression.FileSystem.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Linq.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Memory.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Numerics.Vectors.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.ILGeneration.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Reflection.Emit.Lightweight.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Resources.ResourceManager.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.CompilerServices.Unsafe.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Extensions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Runtime.Serialization.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.ServiceModel.Internals.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Threading.Tasks.Extensions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Transactions.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/System.Xml.Linq.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/TestUno.Wasm.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Core.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/Uno.Xaml.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/mono-config.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/normalize.css">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/require.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/runtime.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/setImmediate.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.css">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-bootstrap.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/uno-config.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.css">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_e76b6f4f977076ec7bf0c32c1d285149d20545b6/Uno.UI.js">
+      <publishTime>10/02/2020 13:15:45</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/AppManifest.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/dotnet.wasm">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/Fonts.css">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/jquery-pep.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/CommonServiceLocator.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Argon2.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.Blake2b.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Isopoh.Cryptography.SecureArray.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Abstractions.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Console.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Microsoft.Extensions.Logging.Filter.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Mono.Security.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/mscorlib.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/netstandard.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Collections.Immutable.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Core.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Drawing.Common.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Net.Http.WebAssemblyHttpHandler.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Numerics.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/System.Xml.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/TestUno.Wasm.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Core.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Diagnostics.Eventing.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Foundation.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Runtime.WebAssembly.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.UI.Toolkit.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Wasm.TimezoneData.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/Uno.Xaml.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Bindings.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/managed/WebAssembly.Net.WebSockets.clr">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/mono-config.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/normalize.css">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/require.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/runtime.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/setImmediate.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.css">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-bootstrap.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/uno-config.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.css">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+    <File Include="_compressed_gz/package_f7319ee28f0982d7d06a33abec0319586addbc31/Uno.UI.js">
+      <publishTime>10/01/2020 16:58:54</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
