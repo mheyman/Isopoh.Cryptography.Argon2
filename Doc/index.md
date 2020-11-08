@@ -4,7 +4,31 @@
 
 [https://github.com/mheyman/Isopoh.Cryptography.Argon2](https://github.com/mheyman/Isopoh.Cryptography.Argon2)
 
-## Introduction
+## Nuget Repositories
+
+| Library | Nuget Repository | Depends on
+|-----|-----|
+|[Argon2](https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/)|https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/| [Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/), [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)
+|[Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/)|https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/| [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)
+|[SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)|https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/
+
+To use Argon2 in your project, you can
+```powershell
+Install-Package Isopoh.Cryptography.Argon2
+```
+or
+```bash
+dotnet add package Isopoh.Cryptography.Argon2
+```
+or
+```bash
+paket add Isopoh.Cryptography.Argon2
+```
+This project uses [SourceLink](https://github.com/dotnet/sourcelink/blob/master/README.md)
+so you should be able to step into the source code for debugging even when just
+adding the NuGet package as a dependency.
+
+## Argon2 Package Introduction
 
 Fully managed .Net implementation of the
 [Argon2](https://en.wikipedia.org/wiki/Argon2)
