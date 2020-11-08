@@ -47,7 +47,9 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The target memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB). <see
+        /// cref="Argon2Config.MemoryCost"/> for detail on calculating the actual memory
+        /// used from this value.
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Default to 1 (single threaded).
@@ -62,7 +64,8 @@ namespace Isopoh.Cryptography.Argon2
         /// significantly longer.
         /// </param>
         /// <param name="secureArrayCall">
-        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// The methods that get called to secure arrays. A null value defaults to <see
+        /// cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
         /// <returns>
         /// The Argon2 hash of the given password.
@@ -114,7 +117,9 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The target memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB). <see
+        /// cref="Argon2Config.MemoryCost"/> for detail on calculating the actual memory
+        /// used from this value.
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Default to 1 (single threaded).
@@ -129,7 +134,8 @@ namespace Isopoh.Cryptography.Argon2
         /// significantly longer.
         /// </param>
         /// <param name="secureArrayCall">
-        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// The methods that get called to secure arrays. A null value defaults to <see
+        /// cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
         /// <returns>
         /// The Argon2 hash of the given password.
@@ -191,7 +197,9 @@ namespace Isopoh.Cryptography.Argon2
         /// The time cost to use. Defaults to 3.
         /// </param>
         /// <param name="memoryCost">
-        /// The memories cost to use. Defaults to 65536 (65536 * 1024 = 64MB).
+        /// The target memory cost to use. Defaults to 65536 (65536 * 1024 = 64MB). <see
+        /// cref="Argon2Config.MemoryCost"/> for detail on calculating the actual memory
+        /// used from this value.
         /// </param>
         /// <param name="parallelism">
         /// The parallelism to use. Defaults to 1 (single threaded).
@@ -206,7 +214,8 @@ namespace Isopoh.Cryptography.Argon2
         /// significantly longer.
         /// </param>
         /// <param name="secureArrayCall">
-        /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// The methods that get called to secure arrays. A null value defaults to <see
+        /// cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
         /// <returns>
         /// The Argon2 hash of the given password.

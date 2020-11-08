@@ -118,10 +118,19 @@ namespace Isopoh.Cryptography.Argon2
         /// Gets or sets the memory cost used in the password hash. Minimum of 1. Defaults to 65536.
         /// </summary>
         /// <remarks>
-        /// This translates into the minimum memory used. The memory cost is the minimum number
-        /// of 1024-byte blocks to used to perform the hash. If this value is less than
-        /// 2 * <see cref="Argon2.SyncPointCount"/> * <see cref="Lanes"/> then that value is used
-        /// (<see cref="Argon2.SyncPointCount"/> == 4).
+        /// <para>
+        /// This translates into a target count of memory blocks to use for hashing. A memory block
+        /// is 1024 bytes so the default 65536 is for a 64MB hash.
+        /// </para>
+        /// <para>
+        /// If this value is less than 2*<see cref="Argon2.SyncPointCount"/>*<see cref="Lanes"/>,
+        /// than 2*<see cref="Argon2.SyncPointCount"/>*<see cref="Lanes"/> will be used.
+        /// </para>
+        /// <para>
+        /// If this value is not a multiple of <see cref="Argon2.SyncPointCount"/>*<see
+        /// cref="Lanes"/>, than it is rounded down to a multiple of <see
+        /// cref="Argon2.SyncPointCount"/>*<see cref="Lanes"/>.
+        /// </para>
         /// </remarks>
         public int MemoryCost
         {
