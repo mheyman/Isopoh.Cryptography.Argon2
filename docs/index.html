@@ -64,7 +64,46 @@
 
 <h2 id="github-repository">GitHub Repository</h2>
 <p><a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2">https://github.com/mheyman/Isopoh.Cryptography.Argon2</a></p>
-<h2 id="introduction">Introduction</h2>
+<h2 id="nuget-repositories">Nuget Repositories</h2>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Nuget Repository</th>
+<th>Depends On</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/">Argon2</a></td>
+<td>https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/</td>
+<td><a href="https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/">Blake2b</a>, <a href="https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/">SecureArray</a></td>
+</tr>
+<tr>
+<td><a href="https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/">Blake2b</a></td>
+<td>https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/</td>
+<td><a href="https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/">SecureArray</a></td>
+</tr>
+<tr>
+<td><a href="https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/">SecureArray</a></td>
+<td>https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>To use Argon2 in your project, you can</p>
+<pre><code class="lang-powershell">Install-Package Isopoh.Cryptography.Argon2
+</code></pre>
+<p>or</p>
+<pre><code class="lang-bash">dotnet add package Isopoh.Cryptography.Argon2
+</code></pre>
+<p>or</p>
+<pre><code class="lang-bash">paket add Isopoh.Cryptography.Argon2
+</code></pre>
+<p>This project uses <a href="https://github.com/dotnet/sourcelink/blob/master/README.md">SourceLink</a>
+so you should be able to step into the source code for debugging even when just
+adding the NuGet package as a dependency.</p>
+<h2 id="argon2-package-introduction">Argon2 Package Introduction</h2>
 <p>Fully managed .Net implementation of the
 <a href="https://en.wikipedia.org/wiki/Argon2">Argon2</a>
 (<a href="https://github.com/P-H-C/phc-winner-argon2">reference implementation</a>)

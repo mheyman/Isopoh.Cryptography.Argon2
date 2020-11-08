@@ -6,11 +6,11 @@
 
 ## Nuget Repositories
 
-| Library | Nuget Repository | Depends on
-|-----|-----|
-|[Argon2](https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/)|https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/| [Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/), [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)
-|[Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/)|https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/| [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)
-|[SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)|https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/
+| Library                                                                      | Nuget Repository                                              | Depends On                                                                                                                                            |
+|------------------------------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+|[Argon2](https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/)          |https://www.nuget.org/packages/Isopoh.Cryptography.Argon2/     | [Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/), [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)|
+|[Blake2b](https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/)        |https://www.nuget.org/packages/Isopoh.Cryptography.Blake2b/    | [SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)                                                                        |
+|[SecureArray](https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/)|https://www.nuget.org/packages/Isopoh.Cryptography.SecureArray/|                                                                                                                                                       |
 
 To use Argon2 in your project, you can
 ```powershell
