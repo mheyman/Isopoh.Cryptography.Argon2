@@ -20,9 +20,9 @@ namespace Isopoh.Cryptography.SecureArray
         public DefaultWebSecureArrayCall()
             : base(WebZero, WebLockMemory, WebUnlockMemory)
         {
-            if (RuntimeInformation.OSDescription != "web")
+            if (RuntimeInformation.OSDescription != "web" && RuntimeInformation.OSDescription != "Browser")
             {
-                throw new DllNotFoundException($"Running on \"{RuntimeInformation.OSDescription}\", not \"web\".");
+                throw new DllNotFoundException($"Running on \"{RuntimeInformation.OSDescription}\", not \"web\" or \"Browser\".");
             }
         }
 
