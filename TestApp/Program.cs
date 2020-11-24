@@ -449,10 +449,10 @@ namespace TestApp
         /// Test-by-inspection that hash is slowest when parallelism is 1.
         /// (Depending on core count, it may go down and back up after that).
         /// </summary>
-        /// <returns>TestTimeToHash: Passed</returns>
+        /// <returns>TestTimeToHash: Passed.</returns>
         public static string TestTimeToHash()
         {
-            (double, string, string) check5(int p)
+            (double, string, string) Check5(int p)
             {
                 const string password = "hello world";
                 string ret = string.Empty;
@@ -484,7 +484,7 @@ namespace TestApp
 
             for (int parallelism = 1; parallelism <= 20; ++parallelism)
             {
-                var (tick, pw, hash) = check5(parallelism);
+                var (tick, pw, hash) = Check5(parallelism);
                 Console.WriteLine($"Parallelism {parallelism:D2}: {tick:F3} seconds, \"{pw}\" => {hash}");
             }
 

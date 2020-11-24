@@ -1,8 +1,13 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
+﻿// <copyright file="GlobalSuppressions.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+
+// This file is used by Code Analysis to maintain SuppressMessage
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
-
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "C++ interop", Scope = "member", Target = "~F:Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.ProcessMemoryCounters.Cb")]
@@ -19,3 +24,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types", Justification = "C++ interop", Scope = "type", Target = "~T:Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.ProcessMemoryCounters")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "clearer and simpler with parameter", Scope = "member", Target = "~M:Isopoh.Cryptography.SecureArray.SecureArray.BuiltInTypeElementSize``1(``0[])~System.Int32")]
 [assembly: SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "clearer and simpler with parameter", Scope = "member", Target = "~M:Isopoh.Cryptography.SecureArray.SecureArray.BuiltInTypeElementSize``1(``0[])~System.Int32")]
+[assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "it is supposed to be an array", Scope = "member", Target = "~P:Isopoh.Cryptography.SecureArray.SecureArray`1.Buffer")]
+[assembly: SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "this is required here", Scope = "member", Target = "~M:Isopoh.Cryptography.SecureArray.SecureArray`1.Best(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)~Isopoh.Cryptography.SecureArray.SecureArray{`0}")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces", Justification = "Old code")]

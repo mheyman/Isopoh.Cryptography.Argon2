@@ -17,13 +17,13 @@
         <PackageReleaseNotes>Helper verify functions can take threading parameter.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFrameworks>
-          netstandard2.0;netcoreapp2.0;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0
+          netstandard2.0;netcoreapp2.1;netcoreapp3.1;net5.0
         </TargetFrameworks>
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Argon2</AssemblyName>
         <PackageId>Isopoh.Cryptography.Argon2</PackageId>
-        <PackageVersion>1.1.9</PackageVersion>
+        <PackageVersion>1.1.10</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -38,7 +38,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

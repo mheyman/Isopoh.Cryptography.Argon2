@@ -211,7 +211,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// mapped into the address space of the calling process.
         /// </param>
         /// <returns>The handle to the specified module on success; otherwise null.</returns>
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr GetModuleHandle(string moduleName);
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// <param name="hModule">The handle to the DLL module.</param>
         /// <param name="procName">The function or variable name or the function's ordinal value.</param>
         /// <returns>The address of the exported function or variable on success; otherwise null.</returns>
-        [DllImport("kernel32", CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// <summary>
         /// Retrieves information about a range of pages in the virtual address space of the calling process.
         /// </summary>
-        /// <param name="lpAddress">The base addres of the region to be queried.</param>
+        /// <param name="lpAddress">The base address of the region to be queried.</param>
         /// <param name="lpBuffer">
         /// A pointer to a <see cref="MemoryBasicInformation"/> structure in
         /// which information about the specified page range is returned.

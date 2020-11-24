@@ -72,6 +72,7 @@ namespace TestBlazor.Server
             }
 
             app.UseHttpsRedirection();
+
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
