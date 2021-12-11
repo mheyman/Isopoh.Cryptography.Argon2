@@ -8,8 +8,10 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Threading;
 
     /// <summary>
     /// Base class of all <see cref="SecureArray{T}"/> classes.
@@ -39,8 +41,23 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(bool), sizeof(bool) },
                 };
 
+        private static readonly List<Tuple<string, Func<SecureArrayCall>>> SecureArrayCalls = new List<Tuple<string, Func<SecureArrayCall>>>
+        {
+            new Tuple<string, Func<SecureArrayCall>>("OSX", () => new DefaultOsxSecureArrayCall()),
+            new Tuple<string, Func<SecureArrayCall>>("Linux", () => new DefaultLinuxSecureArrayCall()),
+            new Tuple<string, Func<SecureArrayCall>>("Windows", () => new DefaultWindowsSecureArrayCall()),
+            new Tuple<string, Func<SecureArrayCall>>("UWP", () => new DefaultUwpSecureArrayCall()),
+            new Tuple<string, Func<SecureArrayCall>>("Web", () => new DefaultWebSecureArrayCall()),
+            new Tuple<string, Func<SecureArrayCall>>("Not Found", () => throw new NotSupportedException(
+                "No SecureArray.DefaultCall support for current operating system (whatever " +
+                $"that is, maybe \"{RuntimeInformation.OSDescription}\", I think I know Windows, " +
+                "UWP, Linux, OSX, and web - and maybe iOS...). You  don't have to use the default " +
+                "SecureArrayCall - you can pass in a version of the calls that work for your " +
+                "operating system.")),
+        };
+
         private static readonly object DefaultCallLock = new object();
-        private static SecureArrayCall defaultCall = DefaultCall;
+        private static SecureArrayCall? defaultCall = DefaultCall;
 
         private GCHandle handle;
 
@@ -85,66 +102,55 @@ namespace Isopoh.Cryptography.SecureArray
         {
             get
             {
-                if (defaultCall == null)
+                if (defaultCall != null)
                 {
-                    lock (DefaultCallLock)
+                    return defaultCall;
+                }
+
+                lock (DefaultCallLock)
+                {
+                    if (defaultCall != null)
                     {
-                        if (defaultCall == null)
+                        return defaultCall;
+                    }
+
+                    var buf = new byte[1];
+                    var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+                    IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
+                    UIntPtr cnt = new UIntPtr(1);
+                    try
+                    {
+                        foreach (var (name, secureArrayCall) in SecureArrayCalls)
                         {
-                            var buf = new byte[1];
-                            var tmpHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
                             try
                             {
-                                IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
-                                UIntPtr cnt = new UIntPtr(1);
-                                try
-                                {
-                                    defaultCall = new DefaultOsxSecureArrayCall();
-                                    defaultCall.ZeroMemory(bufPtr, cnt);
-                                }
-                                catch (DllNotFoundException)
-                                {
-                                    try
-                                    {
-                                        defaultCall = new DefaultLinuxSecureArrayCall();
-                                        defaultCall.ZeroMemory(bufPtr, cnt);
-                                    }
-                                    catch (DllNotFoundException)
-                                    {
-                                        try
-                                        {
-                                            defaultCall = new DefaultWindowsSecureArrayCall();
-                                            defaultCall.ZeroMemory(bufPtr, cnt);
-                                        }
-                                        catch (DllNotFoundException)
-                                        {
-                                            try
-                                            {
-                                                defaultCall = new DefaultWebSecureArrayCall();
-                                                defaultCall.ZeroMemory(bufPtr, cnt);
-                                            }
-                                            catch (DllNotFoundException)
-                                            {
-                                                throw new NotSupportedException(
-                                                    "No SecureArray.DefaultCall support for current operating system (whatever " +
-                                                    $"that is, maybe \"{RuntimeInformation.OSDescription}\", I think I know Windows, " +
-                                                    "Linux, OSX, and web - and maybe iOS...). You  don't have to use the default " +
-                                                    "SecureArrayCall - you can pass in a version of the calls that work for your " +
-                                                    "operating system.");
-                                            }
-                                        }
-                                    }
-                                }
+                                SecureArrayCall tmp = secureArrayCall();
+                                tmp.ZeroMemory(bufPtr, cnt); // verify that it works.
+                                Thread.MemoryBarrier();
+                                defaultCall = tmp;
+                                break;
                             }
-                            finally
+                            catch (DllNotFoundException e)
                             {
-                                tmpHandle.Free();
+                                // try next SecureArrayCall default
+                                Debug.WriteLine($"{name}: DllNotFoundException: {e.Message}");
+                            }
+                            catch (TypeLoadException e)
+                            {
+                                // try next SecureArrayCall default
+                                Debug.WriteLine($"{name}: TypeLoadException: {e.Message}");
                             }
                         }
                     }
+                    finally
+                    {
+                        tmpHandle.Free();
+                    }
                 }
 
+#pragma warning disable CS8603
                 return defaultCall;
+#pragma warning restore CS8603
             }
         }
 
@@ -235,7 +241,7 @@ namespace Isopoh.Cryptography.SecureArray
         {
             if (buf == null)
             {
-                throw new System.ArgumentNullException(nameof(buf));
+                throw new ArgumentNullException(nameof(buf));
             }
 
             var sizeInBytes = BuiltInTypeElementSize(buf) * buf.Length;

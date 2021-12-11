@@ -1,0 +1,122 @@
+﻿@page "/"
+@using Isopoh.Cryptography.Argon2
+
+<PageTitle>Argon2</PageTitle>
+
+<h2>@hashTitle</h2>
+<h3>@hashValue</h3>
+<h3>@hashTime</h3>
+<table>
+    <tr>
+        <td><input type="text" placeholder="hash text" disabled="@disabled" value="@secret" onchange="@(async (ChangeEventArgs args) => await Hash(args))"/></td>
+        <td>The &quot;secret&quot; to hash</td>
+    </tr>
+    <tr>
+        <td><input type="number" placeholder="3" @bind="TimeCost" disabled="@disabled"/></td>
+        <td>Time cost. Defaults to 3.</td>
+    </tr>
+    <tr>
+        <td><input type="number" placeholder="65536" @bind="MemoryCost" disabled="@disabled"/></td>
+        <td>Memory cost. Defaults to 65536 (65536 * 1024 = 64MB).</td>
+    </tr>
+    <tr>
+        <td><input type="number" placeholder="1" @bind="Parallelism" disabled="@disabled"/></td>
+        <td>Parallelism. Defaults to 1.</td>
+    </tr>
+    <tr>
+        <td>
+            <select @bind="Type" disabled="@disabled">
+                <option value="@HybridType">@HybridType</option>
+                <option value="@DependentType">@DependentType</option>
+                <option value="@IndependentType">@IndependentType</option>
+            </select>
+        </td>
+        <td>&quot;dependent&quot; (faster but susceptible to side-channel attacks), &quot;independent&quot; (slower and suitable for password hashing and password-based key derivation), or &quot;hybrid&quot; (a mixture of the two). Defaults to the recommended type: &quot;hybrid&quot;.</td>
+    </tr>
+    <tr>
+        <td><input type="number" placeholder="32" @bind="HashLength" disabled="@disabled"/></td>
+        <td>Hash length. The hash string base-64 encodes the hash of this length along with other parameters so the length of the resulting hash string is significantly longer.</td>
+    </tr>
+</table>
+
+@code {
+        private const string HybridType = "hybrid";
+        private const string DependentType = "dependent";
+        private const string IndependentType = "independent";
+    private bool disabled;
+    private string? secret;
+    private string previousSecret = string.Empty;
+    private string hashTitle = string.Empty;
+    private string hashValue = string.Empty;
+    private string hashTime = string.Empty;
+
+    public string TimeCost { get; set; } = "3";
+    public string MemoryCost { get; set; } = "65536";
+    public string Parallelism { get; set; } = "1";
+    public string Type { get; set; } = "hybrid";
+    public string HashLength { get; set; } = "32";
+
+    private async Task Hash(ChangeEventArgs e)
+    {
+        try
+        {
+            var tick = DateTimeOffset.UtcNow;
+
+            this.secret =((string?)e.Value);
+            if (string.IsNullOrEmpty(this.secret) || this.secret == this.previousSecret)
+            {
+                this.secret = previousSecret;
+                return;
+            }
+
+            this.previousSecret = this.secret;
+            disabled = true;
+            hashTitle = string.Empty;
+            hashValue = $"Calculating hash for \"{this.previousSecret}\"...";
+            hashTime = string.Empty;
+            if (!int.TryParse(this.TimeCost, out var timeCost) || timeCost < 1)
+            {
+                timeCost = 3;
+                this.TimeCost = "3";
+            }
+
+            if (!int.TryParse(this.MemoryCost, out var memoryCost) || memoryCost < 1)
+            {
+                memoryCost = 65536;
+                this.MemoryCost = "65536";
+            }
+
+            if (!int.TryParse(this.Parallelism, out var parallelism) || parallelism < 1)
+            {
+                parallelism = 1;
+                this.Parallelism = "1";
+            }
+            var type = this.Type switch
+            {
+                DependentType => Argon2Type.DataDependentAddressing,
+                IndependentType => Argon2Type.DataIndependentAddressing,
+                _ => Argon2Type.HybridAddressing
+            };
+            if (!int.TryParse(this.HashLength, out var hashLength) || hashLength < 1)
+            {
+                hashLength = 32;
+                this.HashLength = "32";
+            }
+
+            this.hashValue = await Task.Run(
+                () => Argon2.Hash(
+                    this.previousSecret,
+                    timeCost,
+                    memoryCost,
+                    parallelism,
+                    type,
+                    hashLength));
+            this.hashTitle = $"Hash for \"{this.previousSecret}\".";
+            this.hashTime = $"({((int)(DateTimeOffset.UtcNow - tick).TotalMilliseconds) / 1000.0} seconds)";
+        }
+        finally
+        {
+            disabled = false;
+        }
+    }
+}

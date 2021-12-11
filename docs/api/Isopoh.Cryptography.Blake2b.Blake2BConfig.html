@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Blake2BConfig
    ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -81,11 +81,35 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">Blake2BConfig</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Isopoh.Cryptography.Blake2b.html">Isopoh.Cryptography.Blake2b</a></h6>
   <h6><strong>Assembly</strong>: Isopoh.Cryptography.Blake2b.dll</h6>
   <h5 id="Isopoh_Cryptography_Blake2b_Blake2BConfig_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class Blake2BConfig : object</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Blake2BConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -141,6 +165,22 @@
   <div class="markdown level1 remarks"><p>Blake2 keyed hashing can be used for authentication as a faster and
 simpler replacement for HMAC.</p>
 </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>Attempt to set <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_Key">Key</a> greater than 128 bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BConfig_LockMemoryPolicy.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BConfig.LockMemoryPolicy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -200,6 +240,22 @@ simpler replacement for HMAC.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>Attempt to set <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_OutputSizeInBits">OutputSizeInBits</a> to a value not a multiple of 8 bits.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -274,6 +330,22 @@ returned.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>Attempt to set <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_Personalization">Personalization</a> to non-null other than 16 bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BConfig_Result64ByteBuffer.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BConfig.Result64ByteBuffer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -310,6 +382,22 @@ returned.</p>
 <span class="xref">Isopoh.Cryptography.Blake2b.Blake2BHasher</span>.<span class="xref">Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish</span> call
 regardless of the value of <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_OutputSizeInBytes">OutputSizeInBytes</a>.</p>
 </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>Attempt to set <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_Result64ByteBuffer">Result64ByteBuffer</a> to non-null other than 64 bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BConfig_Salt.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BConfig.Salt%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -341,6 +429,22 @@ regardless of the value of <a class="xref" href="Isopoh.Cryptography.Blake2b.Bla
       </tr>
     </tbody>
   </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>Attempt to set <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BConfig.html#Isopoh_Cryptography_Blake2b_Blake2BConfig_Salt">Salt</a> to non-null other than 16 bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
@@ -357,7 +461,8 @@ regardless of the value of <a class="xref" href="Isopoh.Cryptography.Blake2b.Bla
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

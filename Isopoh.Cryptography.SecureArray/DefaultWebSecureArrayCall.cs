@@ -10,7 +10,7 @@ namespace Isopoh.Cryptography.SecureArray
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// A <see cref="SecureArrayCall"/> with defaults for the Linux operating system.
+    /// A <see cref="SecureArrayCall"/> with defaults for running in a browser.
     /// </summary>
     public class DefaultWebSecureArrayCall : SecureArrayCall
     {
@@ -18,7 +18,11 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="DefaultWebSecureArrayCall"/> class.
         /// </summary>
         public DefaultWebSecureArrayCall()
-            : base(WebZero, WebLockMemory, WebUnlockMemory)
+            : base(
+                WebZero,
+                WebLockMemory,
+                WebUnlockMemory,
+                "Web")
         {
             if (RuntimeInformation.OSDescription != "web" && RuntimeInformation.OSDescription != "Browser")
             {

@@ -8,7 +8,7 @@
     <title>Argon2 in WebAssembly </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Argon2 in WebAssembly ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -69,61 +69,11 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="argon2-in-webassembly">Argon2 in WebAssembly</h1>
 
-<p>It appears, as of fall 2020, there are two viable ways to run the Argon2 hash
+<p>It appears, as of fall 2021, there are two viable ways to run the Argon2 hash
 code in this library from within a web page. Both the <a href="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor">Blazor</a>
 and <a href="https://platform.uno/">UnoPlatform</a> allow for compiling .Net code to run
 in a web page.</p>
-<p>Both solutions can have the Mono interpreter running in the web page to run a
-byte-compiled application. Additionally, Uno has the ability to do
-ahead-of-time (AOT) compilation (AOT creates some limitations with what the
-.Net can perform but those limitations don't impact Argon2).</p>
-<p>The following table shows some of the relative performance I've seen as I've
-played with <code>Argon2.Hash()</code> on various web page platforms (Chrome and Edge)
-and the same computer on the host (<code>Argon2.Verify()</code> will perform similarly).
-This technology is a moving target and with every release, these numbers can
-change.</p>
-<table>
-<thead>
-<tr>
-<th>Technology</th>
-<th>Performance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Wasm Blazor Debug</td>
-<td>1.5-3 minutes</td>
-</tr>
-<tr>
-<td>Wasm Blazor Publish</td>
-<td>20-40 seconds</td>
-</tr>
-<tr>
-<td>Wasm Uno Debug</td>
-<td>3-4 minutes</td>
-</tr>
-<tr>
-<td>Wasm Uno Release</td>
-<td>1-2 minutes</td>
-</tr>
-<tr>
-<td>Wasm Uno Full AOT</td>
-<td>4-6 seconds</td>
-</tr>
-<tr>
-<td>On Host</td>
-<td>.9 seconds</td>
-</tr>
-</tbody>
-</table>
-<p>Blazor is, by far, the easiest. The Uno Platform is really impressive. It is
-fun watching it bounce into WSL Linux to compile while within Visual Studio.
-The <strong>Uno Full AOT</strong> compilation takes a <em>really</em> long time (they need to
-implement <a href="https://ccache.dev/">ccache</a> because it seems much of the slowness
-can be cached and only processed once.</p>
-<p>This Argon2 library can do threading to speed processing. The current state
-of .Net code running threaded in the browser is poor. <em>Blazor</em> doesn't support
-it at all and I was not able to get the <em>Uno Platform</em> build to use threading.</p>
+<p>Both methods perform similarly when published (3-5x slowdown over )</p>
 <h2 id="blazor-and-uno-platform-specific-notes">Blazor and Uno Platform Specific Notes</h2>
 <ul>
 <li><a href="blazor.html">Argon2 with Blazor WebAssembly</a></li>
@@ -142,7 +92,8 @@ it at all and I was not able to get the <em>Uno Platform</em> build to use threa
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

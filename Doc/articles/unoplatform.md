@@ -1,11 +1,12 @@
 ﻿# Argon2 With UnoPlatform WebAssembly
 
 You can use this library to calculate Argon2 hashes in the web browser.
-With the 3.1 dotnet SDK, the Blazor WebAssembly runs slower than
-on the host - taking on the order of 4-6 seconds for a default
-hash on common hardware (this is the speed after publishing with full
-ahead-of-time (AOT) compilation, it can take 1.5-3 minutes when
-interpreting). This should improve as both dotnet improves and
+With the .Net 6.0 SDK, the Blazor WebAssembly runs slower than
+on the host - taking on the order of 4-8 times longer for a default
+hash on common hardware. I couldn't get the Uno Platform example to
+compile with the `Project`->`PropertyGroup`->`WasmShellMonoRuntimeExecutionMode`
+setting to anything other than `Interpreter` (`InterpreterAndAOT` and
+`FullAOT` failed to build). This should improve as both dotnet improves and
 WebAssembly improves.
 
 Note, unlike the current Blazor, the Uno Plaform says it supports
@@ -13,6 +14,13 @@ Note, unlike the current Blazor, the Uno Plaform says it supports
 Please tell me how if you get it to work - I have failed with the
 page hanging using 1.3.4 and failed to even load the page properly
 when using 1.4.0-dev.52.
+
+## UWP
+
+One of UnoPlatform's output types is for a Universal Windows Application (UWP). I have yet
+to figure out out to call `VirtualAllocFromApp()` which *should* be available for UWP apps
+and *should* allow protection from writing to cache for `SecureArray`. So, for now, only
+zero-before-free is available with UWP.
 
 ## Example
 

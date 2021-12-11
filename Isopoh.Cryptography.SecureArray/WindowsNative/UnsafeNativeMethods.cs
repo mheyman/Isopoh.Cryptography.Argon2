@@ -120,7 +120,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// </summary>
         /// <param name="ptr">A pointer to the memory block to be filled with zeros.</param>
         /// <param name="cnt">The number of bytes to fill with zeros.</param>
-        [DllImport("ntdll.dll", CallingConvention = CallingConvention.Winapi)]
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
         public static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
 
         /// <summary>

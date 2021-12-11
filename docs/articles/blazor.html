@@ -8,7 +8,7 @@
     <title>Argon2 with Blazor WebAssembly </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Argon2 with Blazor WebAssembly ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -70,14 +70,16 @@
 <h1 id="argon2-with-blazor-webassembly">Argon2 with Blazor WebAssembly</h1>
 
 <p>You can use this library to calculate Argon2 hashes in the web browser.
-With the 3.1 dotnet SDK, the Blazor WebAssembly runs <em>a lot slower</em> than
-on the host - taking on the order of 20-40 seconds for a default
-hash on common hardware (this is the speed after publishing, it can take
-1-2 minutes when debugging). This should improve as both dotnet improves
+With the 6.0 dotnet SDK, the Blazor WebAssembly runs <em>a lot slower</em> than
+on the host - taking on the order of 3-5 times longer for a default hash
+on common hardware (this is the speed after publishing, it can take 10-20
+times longer when debugging). This should improve as both dotnet improves
 and WebAssembly improves.</p>
 <p>Even with the poor hashing performance in the browser, there may be use cases
 that require the server to never see the secret so performing a hash with
 reduced protection on the browser will be more secure than the alternative.</p>
+<p><em><strong>Note:</strong></em> when running in the browser, running with parallelism anything but
+the default of <code>1</code> appears to hang in the hash calculation.</p>
 <p>With Blazor, you typically assemble your pages with components. The following
 is a simple example demonstrating Argon2 in the browser.</p>
 <h2 id="example">Example</h2>
@@ -89,195 +91,53 @@ so.</p>
 <blockquote>
 <p><img src="../images/HashComponent.PNG" alt="HashComponent"></p>
 </blockquote>
-<p>To do the &quot;a little more friendly&quot; bits, it uses a helper class, <code>Argoner</code>.</p>
-<h3 id="argoner-helper-class">Argoner Helper Class</h3>
-<p>The important part of this class is the <code>SetSecret()</code> method towards the bottom
-that takes the new secret and a <code>Action</code> that can be called to notify the code
-when to update the web page with new information.</p>
-<pre><code class="lang-csharp" name="Argoner" highlight-lines="75-82">// &lt;copyright file=&quot;Argoner.cs&quot; company=&quot;Isopoh&quot;&gt;
-// To the extent possible under law, the author(s) have dedicated all copyright
-// and related and neighboring rights to this software to the public domain
-// worldwide. This software is distributed without any warranty.
-// &lt;/copyright&gt;
+<h2 id="example-source">Example Source</h2>
+<p><code>index.razor</code>:</p>
+<pre><code class="lang-razor">@page &quot;/&quot;
+@using Isopoh.Cryptography.Argon2
 
-namespace TestBlazor.Client
-{
-    using System;
-    using System.Threading.Tasks;
-    using Isopoh.Cryptography.Argon2;
+&lt;PageTitle&gt;Argon2&lt;/PageTitle&gt;
 
-    /// &lt;summary&gt;
-    /// Uses Argon2 to hash a secret.
-    /// &lt;/summary&gt;
-    public class Argoner
-    {
-        /// &lt;summary&gt;
-        /// Gets a value indicating whether the hash is being calculated.
-        /// &lt;/summary&gt;
-        public bool Calculating { get; private set; }
-
-        /// &lt;summary&gt;
-        /// Gets how many seconds it took to create the hash to millisecond accuracy.
-        /// &lt;/summary&gt;
-        public double CalculationSeconds { get; private set; }
-
-        /// &lt;summary&gt;
-        /// Gets the hash of the secret.
-        /// &lt;/summary&gt;
-        public string Hash { get; private set; } = string.Empty;
-
-        /// &lt;summary&gt;
-        /// Gets the secret.
-        /// &lt;/summary&gt;
-        public string Secret { get; private set; } = string.Empty;
-
-        /// &lt;summary&gt;
-        /// Gets or sets the time cost. Defaults to 3.
-        /// &lt;/summary&gt;
-        public int TimeCost { get; set; } = 3;
-
-        /// &lt;summary&gt;
-        /// Gets or sets the memory cost. Defaults to 65536 (65536 * 1024 = 64MB).
-        /// &lt;/summary&gt;
-        public int MemoryCost { get; set; } = 65536;
-
-        /// &lt;summary&gt;
-        /// Gets or sets the parallelism. Defaults to 1 (single threaded).
-        /// &lt;/summary&gt;
-        public int Parallelism { get; set; } = 1;
-
-        /// &lt;summary&gt;
-        /// Gets or sets the type. Data-dependent (faster but susceptible to
-        /// side-channel attacks), data-independent (slower and suitable
-        /// for password hashing and password-based key derivation) or hybrid (a
-        /// mixture of the two). The recommended type is hybrid.
-        /// &lt;/summary&gt;
-        public Argon2Type Type { get; set; } = Argon2Type.HybridAddressing;
-
-        /// &lt;summary&gt;
-        /// Gets or sets the hash length.
-        /// &lt;/summary&gt;
-        /// &lt;remarks&gt;
-        /// The string returned base-64 encodes this with other parameters so
-        /// the resulting string is significantly longer.
-        /// &lt;/remarks&gt;
-        public int HashLength { get; set; } = 32;
-
-        /// &lt;summary&gt;
-        /// Sets the secret, notifying when the &lt;see cref=&quot;Argoner&quot;/&gt; state changes (calculating hash takes a while).
-        /// &lt;/summary&gt;
-        /// &lt;param name=&quot;newSecret&quot;&gt;The new secret.&lt;/param&gt;
-        /// &lt;param name=&quot;stateHasChanged&quot;&gt;Called when the state changes.&lt;/param&gt;
-        public void SetSecret(string newSecret, Action stateHasChanged)
-        {
-            if (newSecret != this.Secret)
-            {
-                this.Secret = newSecret;
-                this.Recalculate(stateHasChanged ?? (() =&gt; { }));
-            }
-        }
-
-        private void Recalculate(Action stateHasChanged)
-        {
-            var tick = DateTimeOffset.Now;
-            this.Calculating = true;
-            stateHasChanged();
-            Task.Run(() =&gt; Argon2.Hash(
-                    this.Secret, this.TimeCost, this.MemoryCost, this.Parallelism, this.Type, this.HashLength))
-                .ContinueWith(
-                    t =&gt;
-                    {
-                        this.Hash = t.Result;
-                        this.Calculating = false;
-                        this.CalculationSeconds = ((int)(DateTimeOffset.Now - tick).TotalMilliseconds) / 1000.0;
-                        stateHasChanged();
-                    })
-                .ConfigureAwait(false);
-        }
-    }
-}
-</code></pre><h3 id="hashcomponentrazor">HashComponent.razor</h3>
-<p>This is the component that uses the <code>Argoner</code> class above to render the hash.</p>
-<p>The only tricky bit is near the top where, to set the new text to hash, the
-method, <code>SetSecret()</code> gets called with the <code>this.StateHasChanged</code> method as a
-parameter so the hasher can notify the page when the hash has started and when
-it has finished.</p>
-<p>Create a component, <strong><code>HashComponent.razor</code></strong>:</p>
-<pre><code class="lang-html" name="HashComponent.razor" highlight-lines="19">&lt;div&gt;
-    @if (argoner.Calculating)
-    {
-        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
-        &lt;div&gt;Calculating &amp;quot;@argoner.Secret&amp;quot;&lt;/div&gt;
-        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
-    }
-    else
-    {
-        &lt;div&gt;Argon2 hash of &amp;quot;@argoner.Secret&amp;quot;&lt;/div&gt;
-        &lt;div&gt;&amp;quot;@argoner.Hash&amp;quot;&lt;/div&gt;
-        &lt;div&gt;(@argoner.CalculationSeconds seconds)&lt;/div&gt;
-    }
-&lt;/div&gt;
-&lt;div&gt;&amp;nbsp;&lt;/div&gt;
-&lt;EditForm Model=@argoner&gt;
-    &lt;div&gt;
-        &lt;div&gt;
-            &lt;input value=&quot;@argoner.Secret&quot; disabled=&quot;@argoner.Calculating&quot; @onchange=&quot;@((ChangeEventArgs a) =&gt; argoner.SetSecret(a.Value.ToString(), this.StateHasChanged))&quot; /&gt;
-            &lt;label&gt;The &amp;quot;secret&amp;quot; to hash.&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div&gt;Hashing occurs when leaving the secret input field, or when Enter is pressed and may take 2 minutes for a default hash.&lt;/div&gt;
-        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;InputNumber @bind-Value=@argoner.TimeCost disabled=@argoner.Calculating /&gt;
-        &lt;label&gt;Time cost. Defaults to 3.&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;InputNumber @bind-Value=@argoner.MemoryCost disabled=@argoner.Calculating /&gt;
-        &lt;label&gt;Memory cost. Defaults to 65536 (65536 * 1024 = 64MB).&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;InputNumber @bind-Value=@argoner.Parallelism disabled=@argoner.Calculating /&gt;
-        &lt;label&gt;Parallelism. Defaults to 1. Blazor bug on WaitHandle.WaitAny() prevents this from working on any other value than 1.&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;InputSelect @bind-Value=@argoner.Type disabled=@argoner.Calculating&gt;
-            &lt;option value=&quot;DataDependentAddressing&quot;&gt;dependent&lt;/option&gt;
-            &lt;option value=&quot;DataIndependentAddressing&quot;&gt;independent&lt;/option&gt;
-            &lt;option value=&quot;HybridAddressing&quot;&gt;hybrid&lt;/option&gt;
-        &lt;/InputSelect&gt;
-        &lt;label&gt;
-            &amp;quot;dependent&amp;quot; (faster but susceptible to side-channel
-            attacks), &amp;quot;independent&amp;quot; (slower and suitable for password
-            hashing and password-based key derivation), or &amp;quot;hybrid&amp;quot; (a
-            mixture of the two). Defaults to the recommended type:
-            &amp;quot;hybrid&amp;quot;.
-        &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;InputNumber @bind-Value=@argoner.HashLength disabled=@argoner.Calculating /&gt;
-        &lt;label&gt;
-            Hash length. The hash string base-64 encodes the hash of this
-            length along with other parameters so the length of the resulting
-            hash string is significantly longer.
-        &lt;/label&gt;
-    &lt;/div&gt;
-&lt;/EditForm&gt;
-
+&lt;h3&gt;@hashValue&lt;/h3&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;text&quot; placeholder=&quot;hash text&quot; disabled=&quot;@disabled&quot; value=&quot;@secret&quot; onchange=&quot;@(async (ChangeEventArgs args) =&gt; await Hash(args))&quot;/&gt;&lt;/td&gt;
+        &lt;td&gt;The &amp;quot;secret&amp;quot; to hash&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
 
 @code {
-    private readonly Argoner argoner = new Argoner();
+    private bool disabled;
+    private string? secret;
+    private string previousSecret = string.Empty;
+    private string hashValue = string.Empty;
+
+    private async Task Hash(ChangeEventArgs e)
+    {
+        try
+        {
+            disabled = true; // don't allow changes during hash calculation
+            this.secret =((string?)e.Value);
+            if (string.IsNullOrEmpty(this.secret) || this.secret == this.previousSecret)
+            {
+                this.secret = previousSecret;
+                return;
+            }
+
+            this.previousSecret = this.secret;
+            disabled = true;
+            hashValue = $&quot;Calculating hash for \&quot;{this.previousSecret}\&quot;...&quot;;
+            this.hashValue = await Task.Run(() =&gt; Argon2.Hash(this.previousSecret));
+        }
+        finally
+        {
+            disabled = false;
+        }
+    }
 }
-</code></pre><h3 id="use-hashcomponentrazor">Use HashComponent.razor</h3>
-<p>To use the hash component, just include it in a page, for example you can just
-put it on the website root:</p>
-<pre><code class="lang-html" name="HashComponent.razor">@page &quot;/&quot;
-
-&lt;h1&gt;Argon2 Demo&lt;/h1&gt;
-
-&lt;HashComponent/&gt;
-</code></pre><h2 id="example-source">Example Source</h2>
+</code></pre>
 <p>The source for this example can be found at:</p>
-<p>(github)<a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestBlazor/Client">TestBlazor.Client</a></p>
+<p>(github)<a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestBlazor.Wasm">TestBlazor.Client</a></p>
 </article>
           </div>
           
@@ -291,7 +151,8 @@ put it on the website root:</p>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

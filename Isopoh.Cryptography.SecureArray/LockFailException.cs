@@ -8,7 +8,6 @@ namespace Isopoh.Cryptography.SecureArray
 {
     using System;
 
-    /// <inheritdoc />
     /// <summary>
     /// Represents errors that occur trying to lock a buffer into memory.
     /// </summary>

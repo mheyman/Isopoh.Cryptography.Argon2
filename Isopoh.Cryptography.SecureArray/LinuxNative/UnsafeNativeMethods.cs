@@ -24,7 +24,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="len">Byte count of memory to lock into RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
         [DllImport("libc", SetLastError = true, EntryPoint = "mlock")]
-        public static extern int LinuxMlock(IntPtr addr, UIntPtr len);
+        public static extern int LinuxMlock(IntPtr addr, nuint len);
 
         /// <summary>
         /// Unlocks pages in the address range starting at <paramref
@@ -36,7 +36,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="len">Byte count of memory to unlock from RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
         [DllImport("libc", SetLastError = true, EntryPoint = "munlock")]
-        public static extern int LinuxMunlock(IntPtr addr, UIntPtr len);
+        public static extern int LinuxMunlock(IntPtr addr, nuint len);
 
         /// <summary>
         /// Fills the first <paramref name="n"/> bytes of <paramref
@@ -47,7 +47,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="n">The number of bytes to fill.</param>
         /// <returns><paramref name="addr"/>.</returns>
         [DllImport("libc", EntryPoint = "memset")]
-        public static extern IntPtr LinuxMemset(IntPtr addr, int c, UIntPtr n);
+        public static extern IntPtr LinuxMemset(IntPtr addr, int c, nuint n);
 
         /// <summary>
         /// Gets resource limits.

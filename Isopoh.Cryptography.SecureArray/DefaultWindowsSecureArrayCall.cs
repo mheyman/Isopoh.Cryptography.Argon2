@@ -38,7 +38,8 @@ namespace Isopoh.Cryptography.SecureArray
             : base(
                 UnsafeNativeMethods.RtlZeroMemory,
                 (m, l) => "ERROR: This temporary \"lock memory\" method should never be called.",
-                (m, l) => UnsafeNativeMethods.VirtualUnlock(m, l))
+                (m, l) => UnsafeNativeMethods.VirtualUnlock(m, l),
+                "Windows")
         {
             this.LockMemory = this.WindowsLockMemory;
         }

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class LockFailException
    ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -79,13 +79,75 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">LockFailException</span></div>
+    <div class="level1"><span class="xref">System.Exception</span></div>
+    <div class="level2"><span class="xref">LockFailException</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.Runtime.Serialization.ISerializable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Exception.GetBaseException()</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.Data</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.HelpLink</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.HResult</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.InnerException</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.Message</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.Source</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.StackTrace</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.TargetSite</span>
+    </div>
+    <div>
+      <span class="xref">System.Exception.SerializeObjectState</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Isopoh.Cryptography.SecureArray.html">Isopoh.Cryptography.SecureArray</a></h6>
   <h6><strong>Assembly</strong>: Isopoh.Cryptography.SecureArray.dll</h6>
   <h5 id="Isopoh_Cryptography_SecureArray_LockFailException_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class LockFailException : Exception</code></pre>
+    <pre><code class="lang-csharp hljs">public class LockFailException : Exception, ISerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -94,7 +156,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L20">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L19">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor">LockFailException()</h4>
@@ -107,19 +169,19 @@
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L30">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L29">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
-  <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Nullable_System_String__" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Nullable{System.String})">LockFailException(Nullable&lt;String&gt;)</h4>
+  <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)">LockFailException(String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Isopoh.Cryptography.SecureArray.LockFailException.html">LockFailException</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LockFailException(string? message)</code></pre>
+    <pre><code class="lang-csharp hljs">public LockFailException(string message)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -132,28 +194,28 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">System.String</span></td>
         <td><span class="parametername">message</span></td>
-        <td><p>Text for the <see cref="!:Exception.Message"></see> property.</p>
+        <td><p>Text for the <span class="xref">System.Exception.Message</span> property.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Nullable_System_String__System_Nullable_Exception__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.Nullable%7BSystem.String%7D%2CSystem.Nullable%7BException%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_System_Exception_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.String%2CSystem.Exception)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L44">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L43">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
-  <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Nullable_System_String__System_Nullable_Exception__" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Nullable{System.String},System.Nullable{Exception})">LockFailException(Nullable&lt;String&gt;, Nullable&lt;Exception&gt;)</h4>
+  <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_System_Exception_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String,System.Exception)">LockFailException(String, Exception)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Isopoh.Cryptography.SecureArray.LockFailException.html">LockFailException</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LockFailException(string? message, Exception? innerException)</code></pre>
+    <pre><code class="lang-csharp hljs">public LockFailException(string message, Exception innerException)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -166,19 +228,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">System.String</span></td>
         <td><span class="parametername">message</span></td>
-        <td><p>Text for the <see cref="!:Exception.Message"></see> property.</p>
+        <td><p>Text for the <span class="xref">System.Exception.Message</span> property.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="xref">System.Exception</span></td>
         <td><span class="parametername">innerException</span></td>
         <td><p>Exception that spawned this exception.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.Runtime.Serialization.ISerializable</span>
+  </div>
 </article>
           </div>
           
@@ -190,12 +256,13 @@
                     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L15" class="contribution-link">View Source</a>
+                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

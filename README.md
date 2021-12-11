@@ -214,9 +214,14 @@ RAM for other processes and puts stress on your particular executable by
 denying freedom to the garbage collector to reduce fragmentation as needed
 for best performance.
 
-Note: when using SecureArray in the browser under Blazor, the memory cannot
-be locked into RAM so SecureArray does its best effort to protect the data
-by zeroing the buffer when it is disposed.
+Note: when using SecureArray in the browser (for example, under Blazor or UnoPlatform),
+the memory cannot be locked into RAM so SecureArray does its best effort to protect the
+data by zeroing the buffer when it is disposed.
+
+Note similarly: when using SecureArray in a Universal Windows Platform (UWP)
+application, I have yet to figure out how to use the supposedly available
+`VirtualAllocFromApp()` system call to lock memory into RAM so SecureArray does
+its best effort to protect the data by zeroing the buffer when it is disposed.
 
 ***Always*** dispose of your `SecureArray`s.
 

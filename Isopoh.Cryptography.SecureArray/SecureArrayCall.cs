@@ -25,25 +25,28 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="unlockMemory">
         /// Call that unlocks memory previously locked by a call to <paramref name="lockMemory"/>.
         /// </param>
+        /// <param name="os">The name of the operating system this <see cref="SecureArrayCall"/> is for.</param>
         public SecureArrayCall(
-            Action<IntPtr, UIntPtr> zeroMemory,
-            Func<IntPtr, UIntPtr, string?> lockMemory,
-            Action<IntPtr, UIntPtr> unlockMemory)
+            Action<IntPtr, nuint> zeroMemory,
+            Func<IntPtr, nuint, string?> lockMemory,
+            Action<IntPtr, nuint> unlockMemory,
+            string os)
         {
             this.ZeroMemory = zeroMemory;
             this.LockMemory = lockMemory;
             this.UnlockMemory = unlockMemory;
+            this.Os = os;
         }
 
         /// <summary>
         /// Gets or sets a method that zeroes memory in a way that does not get optimized away.
         /// </summary>
         /// <remarks>
-        /// On Linux and OSX, simply calls memset() and hopes the P/Invoke
+        /// On Linux, OSX, and UWP, simply calls memset() and hopes the P/Invoke
         /// mechanism does not have special handling for memset calls (and
         /// thus does not even think about optimizing the call away).
         /// </remarks>
-        public Action<IntPtr, UIntPtr> ZeroMemory { get; protected set; }
+        public Action<IntPtr, nuint> ZeroMemory { get; protected set; }
 
         /// <summary>
         /// Gets or sets a method that locks the given memory so it doesn't get swapped out to disk.
@@ -51,11 +54,16 @@ namespace Isopoh.Cryptography.SecureArray
         /// <returns>
         /// Null on success; otherwise an error message.
         /// </returns>
-        public Func<IntPtr, UIntPtr, string?> LockMemory { get; protected set; }
+        public Func<IntPtr, nuint, string?> LockMemory { get; protected set; }
 
         /// <summary>
         /// Gets or sets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.
         /// </summary>
-        public Action<IntPtr, UIntPtr> UnlockMemory { get; protected set; }
+        public Action<IntPtr, nuint> UnlockMemory { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the operating system this <see cref="SecureArrayCall"/> works for.
+        /// </summary>
+        public string Os { get; set; }
     }
 }

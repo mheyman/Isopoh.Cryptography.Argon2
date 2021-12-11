@@ -381,7 +381,8 @@ namespace TestApp
                                 ++badUnlockCount;
                             }
                         }
-                    });
+                    },
+                $"Wrapped {SecureArray.DefaultCall.Os}");
 
             var hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
             var password = "b";
@@ -834,7 +835,7 @@ namespace TestApp
         private sealed class InsecureArrayCall : SecureArrayCall
         {
             public InsecureArrayCall()
-                : base(NoZeroMemory, NoLockMemory, NoUnlockMemory)
+                : base(NoZeroMemory, NoLockMemory, NoUnlockMemory, "No OS (insecure)")
             {
             }
 

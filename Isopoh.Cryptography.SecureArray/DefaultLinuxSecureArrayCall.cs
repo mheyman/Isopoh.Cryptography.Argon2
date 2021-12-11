@@ -19,10 +19,14 @@ namespace Isopoh.Cryptography.SecureArray
         /// Initializes a new instance of the <see cref="DefaultLinuxSecureArrayCall"/> class.
         /// </summary>
         public DefaultLinuxSecureArrayCall()
-            : base((m, l) => UnsafeNativeMethods.LinuxMemset(m, 0, l), LinuxLockMemory, (m, l) =>
-            {
-                 _ = UnsafeNativeMethods.LinuxMunlock(m, l);
-            })
+            : base(
+                (m, l) => UnsafeNativeMethods.LinuxMemset(m, 0, l),
+                LinuxLockMemory,
+                (m, l) =>
+                {
+                    _ = UnsafeNativeMethods.LinuxMunlock(m, l);
+                },
+                "Linux")
         {
         }
 

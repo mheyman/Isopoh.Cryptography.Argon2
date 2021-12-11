@@ -25,7 +25,8 @@ namespace Isopoh.Cryptography.SecureArray
                   (m, l) =>
                   {
                        _ = UnsafeNativeMethods.OsxMunlock(m, l);
-                  })
+                  },
+                  "OSX")
         {
         }
     }
