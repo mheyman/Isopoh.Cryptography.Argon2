@@ -9,16 +9,28 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
 
-    using SecureArray;
+    using Isopoh.Cryptography.SecureArray;
+
+    /// <summary>
+    /// Utilities to create the Blake2 initialization vector.
+    /// </summary>
     internal static class Blake2IvBuilder
     {
         private static readonly Blake2BTreeConfig SequentialTreeConfig = new Blake2BTreeConfig { IntermediateHashSize = 0, LeafSize = 0, FanOut = 1, MaxHeight = 1 };
 
+        /// <summary>
+        /// Create a raw Blake2 configuration from the given configurations.
+        /// </summary>
+        /// <param name="config">The <see cref="Blake2BConfig"/>.</param>
+        /// <param name="treeConfig">The <see cref="Blake2BTreeConfig"/>.</param>
+        /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
+        /// <returns>The raw Blake2 configuration.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">When <paramref name="config"/>.<see cref="Blake2BConfig.OutputSizeInBytes"/> is not between 0 and 64.</exception>
+        /// <exception cref="ArgumentException">When <paramref name="config"/>.<see cref="Blake2BConfig.Key"/> length is > 64.</exception>
         public static SecureArray<ulong> ConfigB(Blake2BConfig config, Blake2BTreeConfig? treeConfig, SecureArrayCall secureArrayCall)
         {
             bool isSequential = treeConfig == null;
@@ -34,8 +46,8 @@ namespace Isopoh.Cryptography.Blake2b
                 rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
             }
 
-            //digest length
-            if (config.OutputSizeInBytes <= 0 | config.OutputSizeInBytes > 64)
+            // digest length
+            if (config.OutputSizeInBytes is <= 0 or > 64)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(config),
@@ -44,7 +56,7 @@ namespace Isopoh.Cryptography.Blake2b
 
             rawConfig[0] |= (uint)config.OutputSizeInBytes;
 
-            //Key length
+            // Key length
             if (config.Key != null)
             {
                 if (config.Key.Length > 64)
@@ -65,7 +77,7 @@ namespace Isopoh.Cryptography.Blake2b
             rawConfig[0] |= ((ulong)(uint)myTreeConfig.LeafSize) << 32;
 
             // Inner length
-            if (!isSequential && (myTreeConfig.IntermediateHashSize <= 0 || myTreeConfig.IntermediateHashSize > 64))
+            if (!isSequential && myTreeConfig.IntermediateHashSize is <= 0 or > 64)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(treeConfig),
@@ -103,7 +115,12 @@ namespace Isopoh.Cryptography.Blake2b
             return rawConfig;
         }
 
-        // ReSharper disable once UnusedMember.Global
+        /// <summary>
+        /// Update the Blake2 raw configuration for the given depth and node offset.
+        /// </summary>
+        /// <param name="rawConfig">The configuration to update.</param>
+        /// <param name="depth">The new depth value.</param>
+        /// <param name="nodeOffset">The new node offset value.</param>
         public static void ConfigBSetNode(ulong[] rawConfig, byte depth, ulong nodeOffset)
         {
             rawConfig[1] = nodeOffset;

@@ -883,6 +883,22 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore
   nameWithType: Blake2BCore.Blake2BCore
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
+  name: BytesToUInt64(Byte[], Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_Byte___System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
+  name.vb: BytesToUInt64(Byte(), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[], System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte(), System.Int32)
+  nameWithType: Blake2BCore.BytesToUInt64(Byte[], Int32)
+  nameWithType.vb: Blake2BCore.BytesToUInt64(Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64*
+  name: BytesToUInt64
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64
+  nameWithType: Blake2BCore.BytesToUInt64
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   name: Dispose()
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose
@@ -965,6 +981,22 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize
   nameWithType: Blake2BCore.Initialize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
+  name: UInt64ToBytes(UInt64, Byte[], Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Byte___System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
+  name.vb: UInt64ToBytes(UInt64, Byte(), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte[], System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte(), System.Int32)
+  nameWithType: Blake2BCore.UInt64ToBytes(UInt64, Byte[], Int32)
+  nameWithType.vb: Blake2BCore.UInt64ToBytes(UInt64, Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes*
+  name: UInt64ToBytes
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes
+  nameWithType: Blake2BCore.UInt64ToBytes
 - uid: Isopoh.Cryptography.Blake2b.Blake2BTreeConfig
   name: Blake2BTreeConfig
   href: api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.html
@@ -1275,6 +1307,12 @@ references:
   commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException()
   nameWithType: LockFailException.LockFailException()
+- uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: LockFailException(SerializationInfo, StreamingContext)
+  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: LockFailException.LockFailException(SerializationInfo, StreamingContext)
 - uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)
   name: LockFailException(String)
   href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_

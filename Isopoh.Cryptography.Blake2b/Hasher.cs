@@ -1,21 +1,20 @@
 ﻿// BLAKE2 reference source code package - C# implementation
 
-// Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
-
-// To the extent possible under law, the author(s) have dedicated all copyright
-// and related and neighboring rights to this software to the public domain
-// worldwide. This software is distributed without any warranty.
-
-// You should have received a copy of the CC0 Public Domain Dedication along with
-// this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-
-using System;
-using System.Security.Cryptography;
-
 namespace Isopoh.Cryptography.Blake2b
 {
+    // Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
+
+    // To the extent possible under law, the author(s) have dedicated all copyright
+    // and related and neighboring rights to this software to the public domain
+    // worldwide. This software is distributed without any warranty.
+
+    // You should have received a copy of the CC0 Public Domain Dedication along with
+    // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+    using System;
+    using System.Security.Cryptography;
+
     /// <summary>
-    /// The bash hasher class.
+    /// The base hasher class.
     /// </summary>
     public abstract class Hasher : IDisposable
     {
@@ -36,7 +35,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// Update the hash's state with the given data.
         /// </summary>
         /// <param name="data">
-        /// The data to add to the hash's state
+        /// The data to add to the hash's state.
         /// </param>
         /// <param name="start">
         /// The index of the first byte of <paramref name="data"/> to add to the hash's state.
@@ -50,7 +49,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// Update the hash's state with the given data.
         /// </summary>
         /// <param name="data">
-        /// The data to add to the hash's state
+        /// The data to add to the hash's state.
         /// </param>
         public void Update(byte[] data)
         {
@@ -62,7 +61,6 @@ namespace Isopoh.Cryptography.Blake2b
             this.Update(data, 0, data.Length);
         }
 
-        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Create a <see cref="HashAlgorithm"/> from this.
         /// </summary>
@@ -72,31 +70,6 @@ namespace Isopoh.Cryptography.Blake2b
         public HashAlgorithm AsHashAlgorithm()
         {
             return new HashAlgorithmAdapter(this);
-        }
-
-        internal class HashAlgorithmAdapter : HashAlgorithm
-        {
-            private readonly Hasher hasher;
-
-            protected override void HashCore(byte[] array, int ibStart, int cbSize)
-            {
-                this.hasher.Update(array, ibStart, cbSize);
-            }
-
-            protected override byte[] HashFinal()
-            {
-                return this.hasher.Finish();
-            }
-
-            public override void Initialize()
-            {
-                this.hasher.Init();
-            }
-
-            public HashAlgorithmAdapter(Hasher hasher)
-            {
-                this.hasher = hasher;
-            }
         }
 
         /// <summary>
@@ -116,6 +89,41 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
+        }
+
+        /// <summary>
+        /// <see cref="HashAlgorithm"/> implementation for a <see cref="Hasher"/>.
+        /// </summary>
+        internal class HashAlgorithmAdapter : HashAlgorithm
+        {
+            private readonly Hasher hasher;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="HashAlgorithmAdapter"/> class.
+            /// </summary>
+            /// <param name="hasher">The <see cref="Hasher"/> the <see cref="HashAlgorithmAdapter"/> is for.</param>
+            public HashAlgorithmAdapter(Hasher hasher)
+            {
+                this.hasher = hasher;
+            }
+
+            /// <inheritdoc/>
+            public override void Initialize()
+            {
+                this.hasher.Init();
+            }
+
+            /// <inheritdoc/>
+            protected override void HashCore(byte[] array, int ibStart, int cbSize)
+            {
+                this.hasher.Update(array, ibStart, cbSize);
+            }
+
+            /// <inheritdoc/>
+            protected override byte[] HashFinal()
+            {
+                return this.hasher.Finish();
+            }
         }
     }
 }

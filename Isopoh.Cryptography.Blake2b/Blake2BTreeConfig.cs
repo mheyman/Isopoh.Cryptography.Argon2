@@ -8,16 +8,23 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-
 namespace Isopoh.Cryptography.Blake2b
 {
     /// <summary>
-    /// Parameters for the tree hash
+    /// Parameters for the tree hash.
     /// </summary>
     public sealed class Blake2BTreeConfig
     {
         /// <summary>
-        /// Gets or sets the intermediate hash size
+        /// Initializes a new instance of the <see cref="Blake2BTreeConfig"/> class.
+        /// </summary>
+        public Blake2BTreeConfig()
+        {
+            this.IntermediateHashSize = 64;
+        }
+
+        /// <summary>
+        /// Gets or sets the intermediate hash size.
         /// </summary>
         public int IntermediateHashSize { get; set; }
 
@@ -27,7 +34,7 @@ namespace Isopoh.Cryptography.Blake2b
         public int MaxHeight { get; set; }
 
         /// <summary>
-        /// Get or sets the tree leaf size.
+        /// Gets or sets the tree leaf size.
         /// </summary>
         public long LeafSize { get; set; }
 
@@ -35,14 +42,6 @@ namespace Isopoh.Cryptography.Blake2b
         /// Gets or sets the tree fan out value.
         /// </summary>
         public int FanOut { get; set; }
-
-        /// <summary>
-        /// Initialize a new instance of the <see cref="Blake2BTreeConfig"/> class.
-        /// </summary>
-        public Blake2BTreeConfig()
-        {
-            this.IntermediateHashSize = 64;
-        }
 
         // ReSharper disable once UnusedMember.Global
 
@@ -61,7 +60,7 @@ namespace Isopoh.Cryptography.Blake2b
             {
                 FanOut = parallelism,
                 MaxHeight = 2,
-                IntermediateHashSize = 64
+                IntermediateHashSize = 64,
             };
             return result;
         }

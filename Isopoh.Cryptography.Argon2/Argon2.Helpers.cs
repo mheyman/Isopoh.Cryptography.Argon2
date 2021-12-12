@@ -81,10 +81,7 @@ namespace Isopoh.Cryptography.Argon2
             SecureArrayCall? secureArrayCall = null)
         {
             byte[] salt = new byte[16];
-            {
-                using var randomNumberGenerator = RandomNumberGenerator.Create();
-                randomNumberGenerator.GetBytes(salt);
-            }
+            GetSalt(salt);
 
             return Hash(
                 new Argon2Config
@@ -613,6 +610,12 @@ namespace Isopoh.Cryptography.Argon2
 
             return accumulator == 0;
 #endif
+        }
+
+        private static void GetSalt(byte[] salt)
+        {
+            using var randomNumberGenerator = RandomNumberGenerator.Create();
+            randomNumberGenerator.GetBytes(salt);
         }
     }
 }

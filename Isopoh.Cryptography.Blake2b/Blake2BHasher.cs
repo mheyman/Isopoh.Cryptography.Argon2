@@ -12,19 +12,26 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
-    using SecureArray;
+    using Isopoh.Cryptography.SecureArray;
 
+    /// <summary>
+    /// Init/Update/Final for Blake2 hash.
+    /// </summary>
     internal class Blake2BHasher : Hasher
     {
-        private bool disposed;
+        private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
         private readonly Blake2BCore core;
         private readonly SecureArray<ulong> rawConfig;
         private readonly SecureArray<byte>? key;
-
         private readonly byte[]? defaultOutputBuffer;
         private readonly int outputSizeInBytes;
-        private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
+        private bool disposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Blake2BHasher"/> class.
+        /// </summary>
+        /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
+        /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
         public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
         {
             config ??= DefaultConfig;
@@ -41,7 +48,6 @@ namespace Isopoh.Cryptography.Blake2b
                         try
                         {
                             this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-
                         }
                         catch (LockFailException)
                         {
@@ -62,6 +68,11 @@ namespace Isopoh.Cryptography.Blake2b
             this.Init();
         }
 
+        /// <summary>
+        /// Initialize the hasher. The hasher is initialized upon construction but this can be used
+        /// to reinitialize in order to reuse the hasher.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">When called after being disposed.</exception>
         public sealed override void Init()
         {
             if (this.disposed)
@@ -74,6 +85,23 @@ namespace Isopoh.Cryptography.Blake2b
             {
                 this.core.HashCore(this.key.Buffer, 0, this.key.Buffer.Length);
             }
+        }
+
+        /// <summary>
+        /// Update the hasher with more bytes of data.
+        /// </summary>
+        /// <param name="data">Buffer holding the data to update with.</param>
+        /// <param name="start">The offset into the buffer of the data to update the hasher with.</param>
+        /// <param name="count">The number of bytes starting at <paramref name="start"/> to update the hasher with.</param>
+        /// <exception cref="ObjectDisposedException">When called after being disposed.</exception>
+        public override void Update(byte[] data, int start, int count)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException("Called Blake2BHasher.Update() on disposed object");
+            }
+
+            this.core.HashCore(data, start, count);
         }
 
         /// <summary>
@@ -109,16 +137,6 @@ namespace Isopoh.Cryptography.Blake2b
             }
 
             return fullResult;
-        }
-
-        public override void Update(byte[] data, int start, int count)
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException("Called Blake2BHasher.Update() on disposed object");
-            }
-
-            this.core.HashCore(data, start, count);
         }
 
         /// <summary>

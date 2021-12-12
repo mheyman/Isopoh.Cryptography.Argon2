@@ -4,12 +4,11 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using System;
-using Isopoh.Cryptography.SecureArray;
-
 namespace TestUwpApp
 {
+    using System;
     using Isopoh.Cryptography.Argon2;
+    using Isopoh.Cryptography.SecureArray;
     using Windows.UI.Xaml.Controls;
 
     /// <summary>

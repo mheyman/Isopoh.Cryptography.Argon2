@@ -153,7 +153,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 case 2:
                     int c1 = buf[i];
-                    int c2 = buf[++i];
+                    int c2 = buf[i + 1];
                     ret.Append(B64Chars[(c1 & 0xFC) >> 2]);
                     ret.Append(B64Chars[((c1 & 0x03) << 4) | ((c2 & 0xF0) >> 4)]);
                     ret.Append(B64Chars[(c2 & 0xF) << 2]);

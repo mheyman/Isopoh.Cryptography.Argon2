@@ -3,12 +3,12 @@ namespace Isopoh.Cryptography.Blake2b
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    ///
+    /// How to attempt memory locking.
     /// </summary>
     public enum LockMemoryPolicy
     {
         /// <summary>
-        /// Do not attempt to lock Blake2B buffers into RAM
+        /// Do not attempt to lock Blake2B buffers into RAM.
         /// </summary>
         None,
 
@@ -33,6 +33,6 @@ namespace Isopoh.Cryptography.Blake2b
         /// Typically, in Linux, to increase the limit, you must edit the /etc/security/limits.conf file.
         /// </para>
         /// </remarks>
-        Enforce
+        Enforce,
     }
 }

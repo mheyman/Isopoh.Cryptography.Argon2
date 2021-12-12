@@ -3,14 +3,12 @@
 // Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
 // Modified in 2016 by Michael Heyman for sensitive information
 
-
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
@@ -30,7 +28,7 @@ namespace Isopoh.Cryptography.Blake2b
         private byte[]? key;
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="Blake2BConfig"/> class.
         /// </summary>
         public Blake2BConfig()
         {
@@ -138,7 +136,6 @@ namespace Isopoh.Cryptography.Blake2b
             }
         }
 
-        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Gets or sets the output size in bits. Must be a multiple of 8.
         /// </summary>
@@ -152,7 +149,10 @@ namespace Isopoh.Cryptography.Blake2b
             set
             {
                 if (value % 8 != 0)
+                {
                     throw new ArgumentException("Output size must be a multiple of 8 bits");
+                }
+
                 this.OutputSizeInBytes = value / 8;
             }
         }
@@ -181,7 +181,6 @@ namespace Isopoh.Cryptography.Blake2b
                 }
 
                 this.outputBuffer = value;
-
             }
         }
     }

@@ -25,25 +25,13 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
-    using SecureArray;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
-    /// The core of the Blake2 hash
+    /// The core of the Blake2 hash.
     /// </summary>
     public sealed partial class Blake2BCore : IDisposable
     {
-        private bool isInitialized;
-
-        private int bufferFilled;
-        private readonly SecureArray<byte> buf;
-
-        private readonly SecureArray<ulong> mbuf;
-        private readonly SecureArray<ulong> hbuf;
-        private ulong counter0;
-        private ulong counter1;
-        private ulong finalizationFlag0;
-        private ulong finalizationFlag1;
-
         private const int BlockSizeInBytes = 128;
 
         private const ulong Iv0 = 0x6A09E667F3BCC908UL;
@@ -54,6 +42,16 @@ namespace Isopoh.Cryptography.Blake2b
         private const ulong Iv5 = 0x9B05688C2B3E6C1FUL;
         private const ulong Iv6 = 0x1F83D9ABFB41BD6BUL;
         private const ulong Iv7 = 0x5BE0CD19137E2179UL;
+
+        private readonly SecureArray<byte> buf;
+        private readonly SecureArray<ulong> mbuf;
+        private readonly SecureArray<ulong> hbuf;
+        private bool isInitialized;
+        private int bufferFilled;
+        private ulong counter0;
+        private ulong counter1;
+        private ulong finalizationFlag0;
+        private ulong finalizationFlag1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blake2BCore"/> class.
@@ -68,7 +66,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         public Blake2BCore(SecureArrayCall secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
         {
-            switch(lockMemory)
+            switch (lockMemory)
             {
                 case LockMemoryPolicy.None:
                     this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
@@ -102,6 +100,7 @@ namespace Isopoh.Cryptography.Blake2b
                     {
                         this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
                     }
+
                     break;
 
                 default:
@@ -113,46 +112,52 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
-        /// Release unmanaged resources.
+        /// Convert a big-endian buffer into a <see cref="ulong"/>.
         /// </summary>
-        public void Dispose()
-        {
-            this.hbuf.Dispose();
-            this.mbuf.Dispose();
-            this.buf.Dispose();
-        }
-
-        internal static ulong BytesToUInt64(byte[] buf, int offset)
+        /// <param name="buf">Buffer holding an 8-byte big-endian ulong.</param>
+        /// <param name="offset">Offset into the buffer to start reading the ulong.</param>
+        /// <returns>The parsed ulong.</returns>
+        /// <remarks>
+        /// No checking is done to verify that an 8-byte value can be read from <paramref name="buf"/> at <paramref name="offset"/>.
+        /// </remarks>
+        public static ulong BytesToUInt64(byte[] buf, int offset)
         {
             return
-                ((ulong)buf[offset + 7] << 7 * 8 |
-                ((ulong)buf[offset + 6] << 6 * 8) |
-                ((ulong)buf[offset + 5] << 5 * 8) |
-                ((ulong)buf[offset + 4] << 4 * 8) |
-                ((ulong)buf[offset + 3] << 3 * 8) |
-                ((ulong)buf[offset + 2] << 2 * 8) |
-                ((ulong)buf[offset + 1] << 1 * 8) |
-                buf[offset]);
+                ((ulong)buf[offset + 7] << (7 * 8)) |
+                ((ulong)buf[offset + 6] << (6 * 8)) |
+                ((ulong)buf[offset + 5] << (5 * 8)) |
+                ((ulong)buf[offset + 4] << (4 * 8)) |
+                ((ulong)buf[offset + 3] << (3 * 8)) |
+                ((ulong)buf[offset + 2] << (2 * 8)) |
+                ((ulong)buf[offset + 1] << (1 * 8)) |
+                buf[offset];
         }
 
-        private static void UInt64ToBytes(ulong value, byte[] buf, int offset)
+        /// <summary>
+        /// Store a ulong into a byte buffer as big-endian.
+        /// </summary>
+        /// <param name="value">The ulong to store.</param>
+        /// <param name="buf">The buffer to load the 8-byte value into.</param>
+        /// <param name="offset">The offset to start <paramref name="value"/> at in <paramref name="buf"/>.</param>
+        /// <remarks>
+        /// No checking is done to validate the buffer can store <paramref name="value"/> at <paramref name="offset"/>.
+        /// </remarks>
+        public static void UInt64ToBytes(ulong value, byte[] buf, int offset)
         {
-            buf[offset + 7] = (byte)(value >> 7 * 8);
-            buf[offset + 6] = (byte)(value >> 6 * 8);
-            buf[offset + 5] = (byte)(value >> 5 * 8);
-            buf[offset + 4] = (byte)(value >> 4 * 8);
-            buf[offset + 3] = (byte)(value >> 3 * 8);
-            buf[offset + 2] = (byte)(value >> 2 * 8);
-            buf[offset + 1] = (byte)(value >> 1 * 8);
+            buf[offset + 7] = (byte)(value >> (7 * 8));
+            buf[offset + 6] = (byte)(value >> (6 * 8));
+            buf[offset + 5] = (byte)(value >> (5 * 8));
+            buf[offset + 4] = (byte)(value >> (4 * 8));
+            buf[offset + 3] = (byte)(value >> (3 * 8));
+            buf[offset + 2] = (byte)(value >> (2 * 8));
+            buf[offset + 1] = (byte)(value >> (1 * 8));
             buf[offset] = (byte)value;
         }
 
-        partial void Compress(byte[] block, int start);
-
         /// <summary>
-        /// Initialize the hash
+        /// Initialize the hash.
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="config">8-element configuration array.</param>
         public void Initialize(ulong[] config)
         {
             if (config == null)
@@ -186,11 +191,13 @@ namespace Isopoh.Cryptography.Blake2b
             Array.Clear(this.buf.Buffer, 0, this.buf.Buffer.Length);
 
             for (int i = 0; i < 8; i++)
+            {
                 this.hbuf[i] ^= config[i];
+            }
         }
 
         /// <summary>
-        /// Update the hash state
+        /// Update the hash state.
         /// </summary>
         /// <param name="array">
         /// Data to use to update the hash state.
@@ -269,10 +276,10 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
-        /// Compute the hash
+        /// Compute the hash.
         /// </summary>
         /// <param name="hash">
-        /// Loaded with the hash
+        /// Loaded with the hash.
         /// </param>
         /// <returns>
         /// <paramref name="hash"/>.
@@ -283,10 +290,10 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
-        /// Compute the hash
+        /// Compute the hash.
         /// </summary>
         /// <param name="hash">
-        /// Loaded with the hash
+        /// Loaded with the hash.
         /// </param>
         /// <param name="isEndOfLayer">
         /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
@@ -297,7 +304,10 @@ namespace Isopoh.Cryptography.Blake2b
         public byte[] HashFinal(byte[] hash, bool isEndOfLayer)
         {
             if (!this.isInitialized)
+            {
                 throw new InvalidOperationException("Not initialized");
+            }
+
             if (hash?.Length != 64)
             {
                 throw new ArgumentException(
@@ -332,7 +342,7 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
-        /// Return the hash
+        /// Return the hash.
         /// </summary>
         /// <returns>
         /// The 64-byte hash.
@@ -343,7 +353,7 @@ namespace Isopoh.Cryptography.Blake2b
         }
 
         /// <summary>
-        /// Return the hash
+        /// Return the hash.
         /// </summary>
         /// <param name="isEndOfLayer">
         /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
@@ -358,5 +368,16 @@ namespace Isopoh.Cryptography.Blake2b
             return hash;
         }
 
+        /// <summary>
+        /// Release unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.hbuf.Dispose();
+            this.mbuf.Dispose();
+            this.buf.Dispose();
+        }
+
+        partial void Compress(byte[] block, int start);
     }
 }

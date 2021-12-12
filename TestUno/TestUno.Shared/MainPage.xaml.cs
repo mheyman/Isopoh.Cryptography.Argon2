@@ -5,11 +5,11 @@
 // </copyright>
 namespace TestUno
 {
-    using System.Threading.Tasks;
     using System;
-    using Windows.UI.Xaml.Controls;
+    using System.Threading.Tasks;
     using Isopoh.Cryptography.Argon2;
     using Isopoh.Cryptography.SecureArray;
+    using Windows.UI.Xaml.Controls;
 
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -18,6 +18,9 @@ namespace TestUno
     {
         private string previousSecret = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainPage"/> class.
+        /// </summary>
         public MainPage()
         {
             this.InitializeComponent();
@@ -30,6 +33,11 @@ namespace TestUno
             this.HashLength.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
         }
 
+        /// <summary>
+        /// Called before a positive integer text change.
+        /// </summary>
+        /// <param name="o">The object called on.</param>
+        /// <param name="arg">The text change event information.</param>
         public void OnBeforePositiveIntTextChange(
             TextBox o,
             TextBoxBeforeTextChangingEventArgs arg)
@@ -37,6 +45,10 @@ namespace TestUno
             arg.Cancel = !int.TryParse(arg.NewText, out int val) || val < 1;
         }
 
+        /// <summary>
+        /// Called to calculate the hash with the parameters from the form.
+        /// </summary>
+        /// <returns>Task that calculates the hash.</returns>
         public async Task CalculateHashAsync()
         {
             bool textChanged = false;

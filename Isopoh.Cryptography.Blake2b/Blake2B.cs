@@ -1,6 +1,4 @@
-﻿// BLAKE2 reference source code package - C# implementation
-
-// Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
+﻿// Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
 // Modified in 2016 by Michael Heyman for sensitive information
 
 // To the extent possible under law, the author(s) have dedicated all copyright
@@ -9,12 +7,11 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-
 namespace Isopoh.Cryptography.Blake2b
 {
     using System.Security.Cryptography;
 
-    using SecureArray;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
     /// Convenience calls for performing Blake2 hashes.
@@ -41,7 +38,6 @@ namespace Isopoh.Cryptography.Blake2b
         /// </remarks>
         public const int OutputLength = 64;
 
-        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Create a default Blake2 hash.
         /// </summary>
@@ -73,7 +69,6 @@ namespace Isopoh.Cryptography.Blake2b
             return new Blake2BHasher(config, secureArrayCall);
         }
 
-        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
         /// </summary>
@@ -97,7 +92,6 @@ namespace Isopoh.Cryptography.Blake2b
             return ComputeHash(data, start, count, null, secureArrayCall);
         }
 
-        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
         /// </summary>
@@ -174,7 +168,5 @@ namespace Isopoh.Cryptography.Blake2b
             hasher.Update(data, start, count);
             return hasher.Finish();
         }
-        //public static byte[] ComputeParallelHash(byte[] data);
-        //public static byte[] ComputeParallelHash(byte[] data, Blake2Config config);
     }
 }

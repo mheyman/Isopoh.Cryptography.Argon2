@@ -65,7 +65,7 @@ namespace Isopoh.Cryptography.SecureArray
 
         static SecureArray()
         {
-            // Console.WriteLine("SecureArray static constructor");
+            //// Console.WriteLine("SecureArray static constructor");
         }
 
         /// <summary>

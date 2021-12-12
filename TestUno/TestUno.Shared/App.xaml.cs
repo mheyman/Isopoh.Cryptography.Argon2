@@ -1,7 +1,13 @@
-﻿namespace TestUno
+﻿// <copyright file="App.xaml.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+
+namespace TestUno
 {
-    using Microsoft.Extensions.Logging;
     using System;
+    using Microsoft.Extensions.Logging;
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Activation;
     using Windows.UI.Xaml;
@@ -13,9 +19,10 @@
     /// </summary>
     public sealed partial class App : Application
     {
-        private Window _window;
+        private Window window;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="App"/> class.
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
@@ -26,7 +33,7 @@
             this.InitializeComponent();
 
 #if HAS_UNO || NETFX_CORE
-            this.Suspending += OnSuspending;
+            this.Suspending += this.OnSuspending;
 #endif
         }
 
@@ -45,13 +52,13 @@
 #endif
 
 #if NET6_0_OR_GREATER && WINDOWS
-            _window = new Window();
-            _window.Activate();
+            this._window = new Window();
+            this._window.Activate();
 #else
-            _window = Windows.UI.Xaml.Window.Current;
+            this.window = Windows.UI.Xaml.Window.Current;
 #endif
 
-            var rootFrame = _window.Content as Frame;
+            var rootFrame = this.window.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -60,7 +67,7 @@
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.NavigationFailed += this.OnNavigationFailed;
 
                 if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -68,7 +75,7 @@
                 }
 
                 // Place the frame in the current Window
-                _window.Content = rootFrame;
+                this.window.Content = rootFrame;
             }
 
 #if !(NET6_0_OR_GREATER && WINDOWS)
@@ -82,37 +89,14 @@
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), args.Arguments);
                 }
+
                 // Ensure the current window is active
-                _window.Activate();
+                this.window.Activate();
             }
         }
 
         /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
-        }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
-            deferral.Complete();
-        }
-
-        /// <summary>
-        /// Configures global Uno Platform logging
+        /// Configures global Uno Platform logging.
         /// </summary>
         private static void InitializeLogging()
         {
@@ -169,6 +153,31 @@
 #if HAS_UNO
 			global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
 #endif
+        }
+
+        /// <summary>
+        /// Invoked when Navigation to a certain page fails.
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation.</param>
+        /// <param name="e">Details about the navigation failure.</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
+        }
+
+        /// <summary>
+        /// Invoked when application execution is being suspended.  Application state is saved
+        /// without knowing whether the application will be terminated or resumed with the contents
+        /// of memory still intact.
+        /// </summary>
+        /// <param name="sender">The source of the suspend request.</param>
+        /// <param name="e">Details about the suspend request.</param>
+        private void OnSuspending(object sender, SuspendingEventArgs e)
+        {
+            var deferral = e.SuspendingOperation.GetDeferral();
+
+            // Could do here: Save application state and stop any background activity
+            deferral.Complete();
         }
     }
 }

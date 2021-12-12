@@ -355,7 +355,7 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
-        private class Position
+        private sealed class Position
         {
             public int Pass { get; set; }
 
@@ -366,7 +366,7 @@ namespace Isopoh.Cryptography.Argon2
             public int Index { get; set; }
         }
 
-        private class FillState
+        private sealed class FillState
         {
             public FillState(Position position, AutoResetEvent are) => (this.Position, this.Are) = (position, are);
 

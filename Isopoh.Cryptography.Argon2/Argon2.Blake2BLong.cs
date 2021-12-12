@@ -32,13 +32,13 @@ namespace Isopoh.Cryptography.Argon2
         {
             var outputLengthBytes = new byte[4];
             using var intermediateHash = SecureArray<byte>.Best(Blake2B.OutputLength, secureArrayCall);
-            var config = new Blake2BConfig
+            var blake2BConfig = new Blake2BConfig
             {
                 Result64ByteBuffer = intermediateHash.Buffer,
                 OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length,
             };
             Store32(outputLengthBytes, hash.Length);
-            using (var blakeHash = Blake2B.Create(config, secureArrayCall))
+            using (var blakeHash = Blake2B.Create(blake2BConfig, secureArrayCall))
             {
                 blakeHash.Update(outputLengthBytes);
                 blakeHash.Update(inputBuffer);
@@ -59,13 +59,13 @@ namespace Isopoh.Cryptography.Argon2
             while (pos < lastHashIndex)
             {
                 Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);
-                Blake2B.ComputeHash(toHash, config, secureArrayCall);
+                Blake2B.ComputeHash(toHash, blake2BConfig, secureArrayCall);
                 Array.Copy(intermediateHash.Buffer, 0, hash, pos, b2B2);
                 pos += b2B2;
             }
 
             Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);
-            Blake2B.ComputeHash(toHash, config, secureArrayCall);
+            Blake2B.ComputeHash(toHash, blake2BConfig, secureArrayCall);
             Array.Copy(intermediateHash.Buffer, 0, hash, pos, hash.Length - pos);
         }
     }

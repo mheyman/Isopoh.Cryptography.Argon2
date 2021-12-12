@@ -89,22 +89,11 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            var version = Argon2Version.Sixteen;
             /* Reading the version number if the default is suppressed */
+            if (!TryGetVersion(str, ref pos, out Argon2Version version))
             {
-                var check = "$v=";
-                if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
-                {
-                    pos += check.Length;
-                    pos = DecodeDecimal(str, pos, out var decX);
-                    if (pos < 0)
-                    {
-                        hash = null;
-                        return false;
-                    }
-
-                    version = (Argon2Version)decX;
-                }
+                hash = null;
+                return false;
             }
 
             pos = DecodeDecimal(out var memoryCost, "$m=", str, pos);
@@ -128,19 +117,10 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            byte[]? associatedData = null;
+            if (!TryGetAssociatedData(str, ref pos, out byte[]? associatedData))
             {
-                var check = ",data=";
-                if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
-                {
-                    pos += check.Length;
-                    pos = FromBase64(out associatedData, str, pos);
-                    if (pos < 0)
-                    {
-                        hash = null;
-                        return false;
-                    }
-                }
+                hash = null;
+                return false;
             }
 
             var validator = new Argon2Config();
@@ -291,6 +271,42 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
+        private static bool TryGetAssociatedData(string str, ref int pos, out byte[]? associatedData)
+        {
+            var check = ",data=";
+            if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
+            {
+                pos += check.Length;
+                pos = FromBase64(out associatedData, str, pos);
+                if (pos < 0)
+                {
+                    return false;
+                }
+            }
+
+            associatedData = null;
+            return true;
+        }
+
+        private static bool TryGetVersion(string str, ref int i, out Argon2Version argon2Version)
+        {
+            var check = "$v=";
+            argon2Version = Argon2Version.Sixteen;
+            if (string.Compare(str, i, check, 0, check.Length, StringComparison.Ordinal) == 0)
+            {
+                i += check.Length;
+                i = DecodeDecimal(str, i, out var decX);
+                if (i < 0)
+                {
+                    return false;
+                }
+
+                argon2Version = (Argon2Version)decX;
+            }
+
+            return true;
+        }
+
         private static int DecodeBase64(out byte[]? dst, string check, string str, int pos)
         {
             if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) != 0)
@@ -352,12 +368,10 @@ namespace Isopoh.Cryptography.Argon2
                 }
             }
 
-            /*
-             * If the input length is equal to 1 modulo 4 (which is
-             * invalid), then there will remain 6 unprocessed bits;
-             * otherwise, only 0, 2 or 4 bits are buffered. The buffered
-             * bits must also all be zero.
-             */
+            // If the input length is equal to 1 modulo 4 (which is
+            // invalid), then there will remain 6 unprocessed bits;
+            // otherwise, only 0, 2 or 4 bits are buffered. The buffered
+            // bits must also all be zero.
             if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 dst = null;
@@ -423,12 +437,10 @@ namespace Isopoh.Cryptography.Argon2
                 }
             }
 
-            /*
-             * If the input length is equal to 1 modulo 4 (which is
-             * invalid), then there will remain 6 unprocessed bits;
-             * otherwise, only 0, 2 or 4 bits are buffered. The buffered
-             * bits must also all be zero.
-             */
+            // If the input length is equal to 1 modulo 4 (which is
+            // invalid), then there will remain 6 unprocessed bits;
+            // otherwise, only 0, 2 or 4 bits are buffered. The buffered
+            // bits must also all be zero.
             if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 return -1;
@@ -485,12 +497,10 @@ namespace Isopoh.Cryptography.Argon2
                 }
             }
 
-            /*
-             * If the input length is equal to 1 modulo 4 (which is
-             * invalid), then there will remain 6 unprocessed bits;
-             * otherwise, only 0, 2 or 4 bits are buffered. The buffered
-             * bits must also all be zero.
-             */
+            // If the input length is equal to 1 modulo 4 (which is
+            // invalid), then there will remain 6 unprocessed bits;
+            // otherwise, only 0, 2 or 4 bits are buffered. The buffered
+            // bits must also all be zero.
             if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
             {
                 return -1;

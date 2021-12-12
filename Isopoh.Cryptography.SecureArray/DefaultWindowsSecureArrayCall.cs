@@ -140,8 +140,10 @@ namespace Isopoh.Cryptography.SecureArray
                         setProcessWorkingSetSize ??= Is32BitSubsystem
                             ? ((processHandle, minWorkingSetSize, maxWorkingSetSize, flags) =>
                             {
+#pragma warning disable S3358 // Ternary operators should not be nested
                                 uint min = minWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)minWorkingSetSize;
                                 uint max = maxWorkingSetSize > uint.MaxValue ? uint.MaxValue : (uint)maxWorkingSetSize;
+#pragma warning restore S3358 // Ternary operators should not be nested
                                 return UnsafeNativeMethods.SetProcessWorkingSetSizeEx32(
                                     processHandle,
                                     min,
@@ -193,9 +195,11 @@ namespace Isopoh.Cryptography.SecureArray
 
         private static ulong GetWorkingSetSize(IntPtr processHandle)
         {
-            // ReSharper disable once InlineOutVariableDeclaration
             var memoryCounters =
-                new UnsafeNativeMethods.ProcessMemoryCounters { Cb = (uint)Marshal.SizeOf<UnsafeNativeMethods.ProcessMemoryCounters>() };
+                new UnsafeNativeMethods.ProcessMemoryCounters
+                {
+                    Cb = (uint)Marshal.SizeOf<UnsafeNativeMethods.ProcessMemoryCounters>(),
+                };
 
             return UnsafeNativeMethods.GetProcessMemoryInfo(processHandle, out memoryCounters, memoryCounters.Cb)
                        ? memoryCounters.WorkingSetSize
