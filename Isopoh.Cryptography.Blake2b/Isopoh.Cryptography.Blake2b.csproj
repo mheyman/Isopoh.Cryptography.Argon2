@@ -15,7 +15,7 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2020</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Match Isopoh.Cryptography.SecureArray version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Support .NET 6.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>

@@ -18,7 +18,7 @@
     <Authors>Michael Heyman</Authors>
     <Copyright>Michael Heyman 2020</Copyright>
     <PackageTags>sensitive array</PackageTags>
-    <PackageReleaseNotes>Support .NET 5 WebAssembly.</PackageReleaseNotes>
+    <PackageReleaseNotes>Support .NET 6, UWP.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
     <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>

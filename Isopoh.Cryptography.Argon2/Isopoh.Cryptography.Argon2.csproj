@@ -14,7 +14,7 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2020</Copyright>
         <PackageTags>argon2 hash password crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Helper verify functions can take threading parameter.</PackageReleaseNotes>
+        <PackageReleaseNotes>Support .NET 6.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
