@@ -16,7 +16,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
     <Authors>Michael Heyman</Authors>
-    <Copyright>Michael Heyman 2020</Copyright>
+    <Copyright>Michael Heyman 2021</Copyright>
     <PackageTags>sensitive array</PackageTags>
     <PackageReleaseNotes>Support .NET 6, UWP.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
