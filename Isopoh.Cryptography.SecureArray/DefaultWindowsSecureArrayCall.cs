@@ -15,13 +15,13 @@ namespace Isopoh.Cryptography.SecureArray
     /// </summary>
     public class DefaultWindowsSecureArrayCall : SecureArrayCall
     {
-        private static readonly object Is32BitSubsystemLock = new object();
+        private static readonly object Is32BitSubsystemLock = new ();
 
-        private static readonly object GetProcessWorkingSetSizeLock = new object();
+        private static readonly object GetProcessWorkingSetSizeLock = new ();
 
-        private static readonly object SetProcessWorkingSetSizeLock = new object();
+        private static readonly object SetProcessWorkingSetSizeLock = new ();
 
-        private static readonly object VirtualAllocLock = new object();
+        private static readonly object VirtualAllocLock = new ();
 
         private static bool? is32BitSubsystem;
 
@@ -37,7 +37,7 @@ namespace Isopoh.Cryptography.SecureArray
         public DefaultWindowsSecureArrayCall()
             : base(
                 UnsafeNativeMethods.RtlZeroMemory,
-                (m, l) => "ERROR: This temporary \"lock memory\" method should never be called.",
+                (_, _) => "ERROR: This temporary \"lock memory\" method should never be called.",
                 (m, l) => UnsafeNativeMethods.VirtualUnlock(m, l),
                 "Windows")
         {
@@ -118,7 +118,7 @@ namespace Isopoh.Cryptography.SecureArray
 
                                 return UnsafeNativeMethods.VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
                             }
-                            : (Func<IntPtr, ulong, uint, uint, IntPtr>)UnsafeNativeMethods.VirtualAlloc64;
+                        : UnsafeNativeMethods.VirtualAlloc64;
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace Isopoh.Cryptography.SecureArray
                                     max,
                                     flags);
                             })
-                            : (Func<IntPtr, ulong, ulong, uint, bool>)UnsafeNativeMethods.SetProcessWorkingSetSizeEx64;
+                            : UnsafeNativeMethods.SetProcessWorkingSetSizeEx64;
                     }
                 }
 
@@ -171,7 +171,7 @@ namespace Isopoh.Cryptography.SecureArray
                     {
                         getProcessWorkingSetSize ??= Is32BitSubsystem
                             ? GetProcessWorkingSetSizeEx32Wrapper
-                            : (GetProcessWorkingSetSizeExDelegate)UnsafeNativeMethods.GetProcessWorkingSetSizeEx64;
+                            : UnsafeNativeMethods.GetProcessWorkingSetSizeEx64;
                     }
                 }
 

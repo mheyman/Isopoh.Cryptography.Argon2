@@ -9,8 +9,6 @@ namespace Isopoh.Cryptography.Argon2
     using System.Runtime.CompilerServices;
     using System.Security.Cryptography;
     using System.Text;
-
-    // ReSharper disable once RedundantNameQualifier
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -159,11 +157,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 if (secretBuf != null)
                 {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8604 // Dereference of a possibly null reference.
-                    Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
-#pragma warning restore CS8604 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    Encoding.UTF8.GetBytes(secret!, 0, secret!.Length, secretBuf.Buffer, 0);
                 }
 
                 using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
@@ -433,11 +427,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 if (secretBuf != null)
                 {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8604 // Dereference of a possibly null reference.
-                    Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
-#pragma warning restore CS8604 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    Encoding.UTF8.GetBytes(secret!, 0, secret!.Length, secretBuf.Buffer, 0);
                 }
 
                 using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);
@@ -494,11 +484,7 @@ namespace Isopoh.Cryptography.Argon2
             {
                 if (secretBuf != null)
                 {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8604 // Dereference of a possibly null reference.
-                    Encoding.UTF8.GetBytes(secret, 0, secret.Length, secretBuf.Buffer, 0);
-#pragma warning restore CS8604 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    Encoding.UTF8.GetBytes(secret!, 0, secret!.Length, secretBuf.Buffer, 0);
                 }
 
                 using var passwordBuf = SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(password), secureArrayCall);

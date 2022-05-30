@@ -8,18 +8,18 @@
 			you need to make sure that the version provided here matches https://github.com/novotnyllc/MSBuildSdkExtras/blob/main/Source/MSBuild.Sdk.Extras/DefaultItems/ImplicitPackages.targets#L11.
 			This is not an issue when libraries are referenced through nuget packages. See https://github.com/unoplatform/uno/issues/446 for more details.
 			-->
-      <Version>6.2.11</Version>
+      <Version>6.2.13</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.2" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.7.1" />
     <PackageReference Include="StyleCop.Analyzers.Unstable">
-      <Version>1.2.0.376</Version>
+      <Version>1.2.0.435</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="4.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
-    <PackageReference Include="Uno.Core.Extensions.Logging.Singleton" Version="4.0.0-dev.7" />
+    <PackageReference Include="Uno.UI" Version="4.3.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="Uno.Core.Extensions.Logging.Singleton" Version="4.0.1" />
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -138,10 +138,6 @@
     <ProjectReference Include="..\..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj">
       <Project>{0738ed69-6346-4143-b8ef-71aa8605a1a4}</Project>
       <Name>Isopoh.Cryptography.Argon2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj">
-      <Project>{249617d6-8291-4b2d-881f-3a6de54ddcd3}</Project>
-      <Name>Isopoh.Cryptography.Blake2b</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj">
       <Project>{8f5cefc0-81b0-473b-8ce8-2e1ef555b15b}</Project>

@@ -98,7 +98,7 @@ namespace Isopoh.Cryptography.Blake2b
 
             set
             {
-                if (value != null && value.Length > 128)
+                if (value is { Length: > 128 })
                 {
                     throw new ArgumentException($"Blake2BConfig.Key must be 129 bytes or less, got {value.Length}");
                 }

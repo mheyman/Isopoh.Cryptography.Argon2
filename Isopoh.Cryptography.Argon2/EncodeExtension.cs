@@ -61,7 +61,7 @@ namespace Isopoh.Cryptography.Argon2
         /// The output length is always exactly 32 bytes.
         /// </para>
         /// </remarks>
-        public static string EncodeString(this Argon2Config config, byte[] hash)
+        public static string EncodeString(this Argon2Config config, byte[]? hash)
         {
             if (config == null)
             {
@@ -86,7 +86,8 @@ namespace Isopoh.Cryptography.Argon2
                 throw new ArgumentException(
                     $"Expected one of {Argon2Type.DataDependentAddressing}, "
                     + $"{Argon2Type.DataIndependentAddressing}, or {Argon2Type.HybridAddressing}, "
-                    + $"got {config.Type}", nameof(config));
+                    + $"got {config.Type}",
+                    nameof(config));
             }
 
             dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", (int)config.Version);
@@ -96,7 +97,7 @@ namespace Isopoh.Cryptography.Argon2
             dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.TimeCost);
             dst.Append(",p=");
             dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.Lanes);
-            if (config.AssociatedData != null && config.AssociatedData.Length > 0)
+            if (config.AssociatedData is { Length: > 0 })
             {
                 dst.Append(",data=");
                 dst.Append(config.AssociatedData.ToB64String());
@@ -125,7 +126,7 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         /// <param name="buf">The buffer to convert to a string.</param>
         /// <returns>The Argon2 B64 string.</returns>
-        public static string ToB64String(this byte[] buf)
+        public static string ToB64String(this byte[]? buf)
         {
             if (buf == null)
             {

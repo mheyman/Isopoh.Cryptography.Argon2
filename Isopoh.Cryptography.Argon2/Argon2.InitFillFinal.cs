@@ -9,7 +9,6 @@ namespace Isopoh.Cryptography.Argon2
     using System;
     using System.Linq;
     using System.Threading;
-
     using Isopoh.Cryptography.Blake2b;
     using Isopoh.Cryptography.SecureArray;
 
@@ -118,7 +117,7 @@ namespace Isopoh.Cryptography.Argon2
                     Enumerable.Range(
                         0,
                         this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads)
-                        .Select(i => new AutoResetEvent(false))
+                        .Select(_ => new AutoResetEvent(false))
                         .Cast<WaitHandle>()
                         .ToArray();
                 for (int passNumber = 0; passNumber < this.config.TimeCost; ++passNumber)

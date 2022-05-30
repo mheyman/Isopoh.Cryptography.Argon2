@@ -24,8 +24,8 @@ namespace Isopoh.Cryptography.SecureArray
         /// used to do it at runtime.
         /// </summary>
         private static readonly Dictionary<Type, int> TypeSizes =
-            new Dictionary<Type, int>
-                {
+            new ()
+            {
                     { typeof(sbyte), sizeof(sbyte) },
                     { typeof(byte), sizeof(byte) },
                     { typeof(short), sizeof(short) },
@@ -39,9 +39,9 @@ namespace Isopoh.Cryptography.SecureArray
                     { typeof(double), sizeof(double) },
                     { typeof(decimal), sizeof(decimal) },
                     { typeof(bool), sizeof(bool) },
-                };
+            };
 
-        private static readonly List<Tuple<string, Func<SecureArrayCall>>> SecureArrayCalls = new List<Tuple<string, Func<SecureArrayCall>>>
+        private static readonly List<Tuple<string, Func<SecureArrayCall>>> SecureArrayCalls = new ()
         {
             new Tuple<string, Func<SecureArrayCall>>("OSX", () => new DefaultOsxSecureArrayCall()),
             new Tuple<string, Func<SecureArrayCall>>("Linux", () => new DefaultLinuxSecureArrayCall()),
@@ -56,7 +56,7 @@ namespace Isopoh.Cryptography.SecureArray
                 "operating system.")),
         };
 
-        private static readonly object DefaultCallLock = new object();
+        private static readonly object DefaultCallLock = new ();
         private static SecureArrayCall? defaultCall = DefaultCall;
 
         private GCHandle handle;

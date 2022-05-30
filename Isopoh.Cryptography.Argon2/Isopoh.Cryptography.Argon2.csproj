@@ -14,14 +14,14 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2021</Copyright>
         <PackageTags>argon2 hash password crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Support .NET 6.</PackageReleaseNotes>
+        <PackageReleaseNotes>No unused package references.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Argon2</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Argon2</AssemblyName>
         <PackageId>Isopoh.Cryptography.Argon2</PackageId>
-        <PackageVersion>1.1.11</PackageVersion>
+        <PackageVersion>1.1.12</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -38,7 +38,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0">
+      <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -47,12 +47,14 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.33.0.40503">
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.39.0.47922">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-      <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -64,7 +66,6 @@
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>

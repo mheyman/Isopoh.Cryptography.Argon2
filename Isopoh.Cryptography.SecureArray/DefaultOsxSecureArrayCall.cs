@@ -6,7 +6,6 @@
 
 namespace Isopoh.Cryptography.SecureArray
 {
-    using System;
     using System.Runtime.InteropServices;
     using Isopoh.Cryptography.SecureArray.OsxNative;
 
@@ -24,7 +23,7 @@ namespace Isopoh.Cryptography.SecureArray
                   (m, l) => UnsafeNativeMethods.OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
                   (m, l) =>
                   {
-                       _ = UnsafeNativeMethods.OsxMunlock(m, l);
+                      _ = UnsafeNativeMethods.OsxMunlock(m, l);
                   },
                   "OSX")
         {

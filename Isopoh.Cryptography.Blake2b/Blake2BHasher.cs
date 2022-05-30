@@ -19,7 +19,7 @@ namespace Isopoh.Cryptography.Blake2b
     /// </summary>
     internal class Blake2BHasher : Hasher
     {
-        private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
+        private static readonly Blake2BConfig DefaultConfig = new();
         private readonly Blake2BCore core;
         private readonly SecureArray<ulong> rawConfig;
         private readonly SecureArray<byte>? key;
@@ -153,8 +153,8 @@ namespace Isopoh.Cryptography.Blake2b
             }
 
             this.key?.Dispose();
-            this.rawConfig?.Dispose();
-            this.core?.Dispose();
+            this.rawConfig.Dispose();
+            this.core.Dispose();
             this.disposed = true;
             base.Dispose(disposing);
         }

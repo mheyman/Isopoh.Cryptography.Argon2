@@ -10,7 +10,6 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System.Security.Cryptography;
-
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -87,10 +86,8 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, int start, int count, SecureArrayCall secureArrayCall)
-        {
-            return ComputeHash(data, start, count, null, secureArrayCall);
-        }
+        // ReSharper disable once UnusedMember.Global
+        public static byte[] ComputeHash(byte[] data, int start, int count, SecureArrayCall secureArrayCall) => ComputeHash(data, start, count, null, secureArrayCall);
 
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
@@ -104,6 +101,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
+        // ReSharper disable once UnusedMember.Global
         public static byte[] ComputeHash(byte[] data, SecureArrayCall secureArrayCall)
         {
             if (data == null)

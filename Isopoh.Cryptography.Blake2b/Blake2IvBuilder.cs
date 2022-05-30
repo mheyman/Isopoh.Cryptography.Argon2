@@ -12,7 +12,6 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
-
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -20,7 +19,7 @@ namespace Isopoh.Cryptography.Blake2b
     /// </summary>
     internal static class Blake2IvBuilder
     {
-        private static readonly Blake2BTreeConfig SequentialTreeConfig = new Blake2BTreeConfig { IntermediateHashSize = 0, LeafSize = 0, FanOut = 1, MaxHeight = 1 };
+        private static readonly Blake2BTreeConfig SequentialTreeConfig = new() { IntermediateHashSize = 0, LeafSize = 0, FanOut = 1, MaxHeight = 1 };
 
         /// <summary>
         /// Create a raw Blake2 configuration from the given configurations.
@@ -39,7 +38,7 @@ namespace Isopoh.Cryptography.Blake2b
             SecureArray<ulong> rawConfig;
             try
             {
-                 rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
+                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
             }
             catch (LockFailException)
             {
@@ -121,6 +120,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="rawConfig">The configuration to update.</param>
         /// <param name="depth">The new depth value.</param>
         /// <param name="nodeOffset">The new node offset value.</param>
+        // ReSharper disable once UnusedMember.Global
         public static void ConfigBSetNode(ulong[] rawConfig, byte depth, ulong nodeOffset)
         {
             rawConfig[1] = nodeOffset;

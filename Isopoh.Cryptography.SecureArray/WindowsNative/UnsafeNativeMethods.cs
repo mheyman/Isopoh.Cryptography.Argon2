@@ -7,6 +7,7 @@
 namespace Isopoh.Cryptography.SecureArray.WindowsNative
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using System.Security;
 
@@ -255,6 +256,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// <param name="dwLength">The size of the buffer pointed to by <paramref name="lpBuffer"/>.</param>
         /// <returns>Actual number of bytes returned in <paramref name="lpBuffer"/> on success; otherwise zero.</returns>
         [DllImport("kernel32.dll", SetLastError = true)]
+        [SuppressMessage("ReSharper", "UnusedMember.Global", Justification="Used for testing")]
         public static extern int VirtualQuery(IntPtr lpAddress, out MemoryBasicInformation lpBuffer, uint dwLength);
 
         /// <summary>

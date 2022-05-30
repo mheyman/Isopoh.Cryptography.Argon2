@@ -15,14 +15,14 @@
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2021</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Support .NET 6.</PackageReleaseNotes>
+        <PackageReleaseNotes>No unused package references.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.11</PackageVersion>
+        <PackageVersion>1.1.12</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -39,7 +39,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0">
+      <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -48,11 +48,11 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.33.0.40503">
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.39.0.47922">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.376">
+      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

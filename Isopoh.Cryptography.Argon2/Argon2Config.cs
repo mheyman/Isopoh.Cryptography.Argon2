@@ -7,7 +7,6 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
-
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -70,7 +69,7 @@ namespace Isopoh.Cryptography.Argon2
 
             set
             {
-                if (value != null && value.Length < 8)
+                if (value is { Length: < 8 })
                 {
                     throw new ArgumentException($"Salt must be 8 bytes or more, got {value.Length}");
                 }

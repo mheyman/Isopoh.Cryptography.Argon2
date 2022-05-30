@@ -7,7 +7,6 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System;
-
     using Isopoh.Cryptography.Blake2b;
     using Isopoh.Cryptography.SecureArray;
 

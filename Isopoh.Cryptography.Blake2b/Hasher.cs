@@ -67,10 +67,8 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The <see cref="HashAlgorithm"/> based on this <see cref="Hasher"/>.
         /// </returns>
-        public HashAlgorithm AsHashAlgorithm()
-        {
-            return new HashAlgorithmAdapter(this);
-        }
+        // ReSharper disable once UnusedMember.Global
+        public HashAlgorithm AsHashAlgorithm() => new HashAlgorithmAdapter(this);
 
         /// <summary>
         /// Zero and release sensitive resources.

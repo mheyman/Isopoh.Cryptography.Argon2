@@ -1,8 +1,5 @@
 ﻿namespace TestUno.Wasm
 {
-    using System;
-    using Windows.UI.Xaml;
-
     public class Program
     {
         private static App _app;

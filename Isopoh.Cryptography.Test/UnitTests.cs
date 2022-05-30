@@ -9,15 +9,13 @@
 
 namespace Isopoh.Cryptography.Test
 {
+    using Argon2;
+    using SecureArray;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-
-    using Argon2;
-    using SecureArray;
-
     using Xunit;
     using Xunit.Abstractions;
 
@@ -98,16 +96,16 @@ namespace Isopoh.Cryptography.Test
             byte[] salt = new byte[16];
             Rng.GetBytes(salt);
             var config = new Argon2Config
-                             {
-                                 Type = Argon2Type.DataIndependentAddressing,
-                                 Version = Argon2Version.Nineteen,
-                                 Password = passwordBytes,
-                                 Salt = salt,
-                                 TimeCost = 3,
-                                 MemoryCost = 65536,
-                                 Lanes = 4,
-                                 Threads = 2,
-                             };
+            {
+                Type = Argon2Type.DataIndependentAddressing,
+                Version = Argon2Version.Nineteen,
+                Password = passwordBytes,
+                Salt = salt,
+                TimeCost = 3,
+                MemoryCost = 65536,
+                Lanes = 4,
+                Threads = 2,
+            };
             var argon2 = new Argon2(config);
             SecureArray<byte> hash = argon2.Hash();
             var passwordHash = config.EncodeString(hash.Buffer);
@@ -181,19 +179,19 @@ namespace Isopoh.Cryptography.Test
                 try
                 {
                     var config = new Argon2Config
-                                     {
-                                         Type = testVector.Type,
-                                         Version = testVector.Version,
-                                         TimeCost = testVector.Iterations,
-                                         MemoryCost = testVector.MemoryKBytes,
-                                         Lanes = testVector.Parallelism,
-                                         Threads = testVector.Parallelism,
-                                         Password = testVector.Password,
-                                         Salt = testVector.Salt,
-                                         Secret = testVector.Secret,
-                                         AssociatedData = testVector.AssociatedData,
-                                         HashLength = testVector.TagLength
-                                     };
+                    {
+                        Type = testVector.Type,
+                        Version = testVector.Version,
+                        TimeCost = testVector.Iterations,
+                        MemoryCost = testVector.MemoryKBytes,
+                        Lanes = testVector.Parallelism,
+                        Threads = testVector.Parallelism,
+                        Password = testVector.Password,
+                        Salt = testVector.Salt,
+                        Secret = testVector.Secret,
+                        AssociatedData = testVector.AssociatedData,
+                        HashLength = testVector.TagLength
+                    };
                     var argon2 = new Argon2(config);
                     SecureArray<byte> hash = argon2.Hash();
                     Assert.False(

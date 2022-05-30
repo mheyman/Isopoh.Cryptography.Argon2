@@ -14,7 +14,7 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2
     {
-        // ReSharper disable once UnreachableCode
+        // ReSharper disable once HeuristicUnreachableCode
         private static readonly string? VectorFileName = true ? null : "argon2-test-vectors.txt";
 
         private static void InitialKat(byte[] buffer, Argon2 hasher)

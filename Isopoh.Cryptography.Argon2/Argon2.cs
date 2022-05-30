@@ -16,7 +16,7 @@ namespace Isopoh.Cryptography.Argon2
     /// </summary>
     public sealed partial class Argon2 : IDisposable
     {
-        private readonly List<SecureArray<ulong>> memories = new List<SecureArray<ulong>>();
+        private readonly List<SecureArray<ulong>> memories = new();
         private readonly Argon2Config config;
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace Isopoh.Cryptography.Argon2
                 var memoryCount = this.memories.Count;
 
                 // be nice, clear allocated memory that will never be used sooner rather than later
-                this.memories?.ForEach(m => m?.Dispose());
-                this.memories?.Clear();
+                this.memories.ForEach(m => m?.Dispose());
+                this.memories.Clear();
                 throw new OutOfMemoryException(
                     $"Failed to allocate {(memoryBlockCount > CsharpMaxBlocksPerArray ? CsharpMaxBlocksPerArray : memoryBlockCount) * QwordsInBlock}-byte Argon2 block array, " +
                     $"{(memoryCount > 0 ? $" allocation {memoryCount + 1} of multiple-allocation," : string.Empty)}" +
@@ -66,8 +66,8 @@ namespace Isopoh.Cryptography.Argon2
             catch (Exception)
             {
                 // be nice, clear allocated memory that will never be used sooner rather than later
-                this.memories?.ForEach(m => m?.Dispose());
-                this.memories?.Clear();
+                this.memories.ForEach(m => m?.Dispose());
+                this.memories.Clear();
                 throw;
             }
 
@@ -119,8 +119,8 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         public void Dispose()
         {
-            this.memories?.ForEach(m => m?.Dispose());
-            this.memories?.Clear();
+            this.memories.ForEach(m => m?.Dispose());
+            this.memories.Clear();
         }
     }
 }

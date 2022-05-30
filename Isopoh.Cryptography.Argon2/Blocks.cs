@@ -7,7 +7,6 @@
 namespace Isopoh.Cryptography.Argon2
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Break a byte array into blocks for Argon2 to use.
@@ -30,7 +29,7 @@ namespace Isopoh.Cryptography.Argon2
         {
             var bvs = new List<BlockValues>();
             int blockIndex = 0;
-            foreach (var memory in memories ?? new List<ulong[]>())
+            foreach (var memory in memories)
             {
                 var maxBlockIndex = blockIndex + (memory.Length / Argon2.QwordsInBlock);
                 for (int i = blockIndex; i < maxBlockIndex; ++i)
