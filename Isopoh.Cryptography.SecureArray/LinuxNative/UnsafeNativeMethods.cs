@@ -23,7 +23,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="addr">Start of memory to lock into RAM.</param>
         /// <param name="len">Byte count of memory to lock into RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
-        [DllImport("libc", SetLastError = true, EntryPoint = "mlock")]
+        [DllImport("libc", SetLastError = true, EntryPoint = "mlock", ExactSpelling = true)]
         public static extern int LinuxMlock(IntPtr addr, nuint len);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="addr">Start of memory to unlock from RAM.</param>
         /// <param name="len">Byte count of memory to unlock from RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
-        [DllImport("libc", SetLastError = true, EntryPoint = "munlock")]
+        [DllImport("libc", SetLastError = true, EntryPoint = "munlock", ExactSpelling = true)]
         public static extern int LinuxMunlock(IntPtr addr, nuint len);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="c">The byte value to fill with.</param>
         /// <param name="n">The number of bytes to fill.</param>
         /// <returns><paramref name="addr"/>.</returns>
-        [DllImport("libc", EntryPoint = "memset")]
+        [DllImport("libc", EntryPoint = "memset", ExactSpelling = true)]
         public static extern IntPtr LinuxMemset(IntPtr addr, int c, nuint n);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="resource">The resource to get.</param>
         /// <param name="rlimit">Populated with the resource values.</param>
         /// <returns>0 on success; -1 on error and errno is set appropriately.</returns>
-        [DllImport("libc", EntryPoint = "getrlimit", SetLastError = true)]
+        [DllImport("libc", EntryPoint = "getrlimit", SetLastError = true, ExactSpelling = true)]
         public static extern int LinuxGetRLimit(int resource, ref LinuxRlimit rlimit);
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="resource">The resource to set.</param>
         /// <param name="rlimit">Resource values to set.</param>
         /// <returns>0 on success; -1 on error and errno is set appropriately.</returns>
-        [DllImport("libc", EntryPoint = "setrlimit", SetLastError = true)]
+        [DllImport("libc", EntryPoint = "setrlimit", SetLastError = true, ExactSpelling = true)]
         public static extern int LinuxSetRLimit(int resource, ref LinuxRlimit rlimit);
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Isopoh.Cryptography.SecureArray.LinuxNative
         /// <param name="buf">The buffer to fill.</param>
         /// <param name="buflen">The maximum length of the buffer to fill.</param>
         /// <returns>0 on success; a positive error number on failure.</returns>
-        [DllImport("libc", EntryPoint = "strerror_r", CharSet = CharSet.Ansi)]
+        [DllImport("libc", EntryPoint = "strerror_r", CharSet = CharSet.Ansi, ExactSpelling = true)]
         public static extern IntPtr LinuxSterrorR(int errno, IntPtr buf, ulong buflen);
 
         /// <summary>

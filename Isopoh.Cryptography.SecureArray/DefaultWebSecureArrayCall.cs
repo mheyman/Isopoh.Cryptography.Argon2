@@ -30,7 +30,9 @@ namespace Isopoh.Cryptography.SecureArray
             }
         }
 
+        #nullable enable
         private static string? WebLockMemory(IntPtr m, UIntPtr l)
+        #nullable restore
         {
             // cannot prevent memory from swapping within the browser.
             return null;

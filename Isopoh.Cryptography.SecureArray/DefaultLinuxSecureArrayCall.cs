@@ -30,12 +30,16 @@ namespace Isopoh.Cryptography.SecureArray
         {
         }
 
+        #nullable enable
         private static string? LinuxLockMemory(IntPtr m, UIntPtr l)
+#nullable restore
         {
             if (UnsafeNativeMethods.LinuxMlock(m, l) != 0)
             {
                 var errorCode = Marshal.GetLastWin32Error();
+                #nullable enable
                 if (LinuxTryRaiseCurrentMlockLimit(out string? raiseError))
+                #nullable restore
                 {
                     if (UnsafeNativeMethods.LinuxMlock(m, l) == 0)
                     {
@@ -51,7 +55,9 @@ namespace Isopoh.Cryptography.SecureArray
             return null;
         }
 
+        #nullable enable
         private static bool LinuxTryRaiseCurrentMlockLimit(out string? error)
+        #nullable restore
         {
             var rlimit = new UnsafeNativeMethods.LinuxRlimit { RlimCur = 0, RlimMax = 0 }; // not sure always 64-bit RlimCur and RLimMax values
             int rlimitMemlock = 8; // not sure RLIMIT_MEMLOCK is always 8

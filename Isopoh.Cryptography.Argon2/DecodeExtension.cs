@@ -54,7 +54,12 @@ namespace Isopoh.Cryptography.Argon2
         /// The output length is always exactly 32 bytes.
         /// </para>
         /// </remarks>
-        public static bool DecodeString(this Argon2Config config, string str, out SecureArray<byte>? hash)
+        public static bool DecodeString(
+            this Argon2Config config,
+            string str,
+            #nullable enable
+            out SecureArray<byte>? hash)
+            #nullable restore
         {
             if (config == null)
             {
@@ -117,7 +122,12 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            if (!TryGetAssociatedData(str, ref pos, out byte[]? associatedData))
+            if (!TryGetAssociatedData(
+                str,
+                ref pos,
+                #nullable enable
+                out byte[]? associatedData))
+                #nullable restore
             {
                 hash = null;
                 return false;
@@ -271,7 +281,12 @@ namespace Isopoh.Cryptography.Argon2
             }
         }
 
-        private static bool TryGetAssociatedData(string str, ref int pos, out byte[]? associatedData)
+        private static bool TryGetAssociatedData(
+            string str,
+            ref int pos,
+            #nullable enable
+            out byte[]? associatedData)
+            #nullable restore
         {
             var check = ",data=";
             if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
@@ -307,7 +322,13 @@ namespace Isopoh.Cryptography.Argon2
             return true;
         }
 
-        private static int DecodeBase64(out byte[]? dst, string check, string str, int pos)
+#nullable enable
+        private static int DecodeBase64(
+            out byte[]? dst,
+            #nullable restore
+            string check,
+            string str,
+            int pos)
         {
             if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) != 0)
             {
@@ -333,7 +354,12 @@ namespace Isopoh.Cryptography.Argon2
         /// error occurred then -1 is returned; otherwise, the returned index
         /// points to the first non-Base64 character in the source stream.
         /// </remarks>
-        private static int FromBase64(out byte[]? dst, string src, int pos)
+        #nullable enable
+        private static int FromBase64(
+            out byte[]? dst,
+            #nullable restore
+            string src,
+            int pos)
         {
             int i = pos;
             var buf = new List<byte>();

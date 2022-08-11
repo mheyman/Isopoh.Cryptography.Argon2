@@ -15,11 +15,11 @@ namespace Isopoh.Cryptography.Argon2
     public sealed partial class Argon2
     {
         // ReSharper disable once HeuristicUnreachableCode
-        private static readonly string? VectorFileName = true ? null : "argon2-test-vectors.txt";
+        private static readonly string VectorFileName = true ? string.Empty : "argon2-test-vectors.txt";
 
         private static void InitialKat(byte[] buffer, Argon2 hasher)
         {
-            if (VectorFileName != null)
+            if (VectorFileName.Length != 0)
             {
                 using var fileOut = new FileStream(VectorFileName, FileMode.Append);
                 using var streamOut = new StreamWriter(fileOut);
@@ -61,7 +61,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private static void InternalKat(Argon2 hasher, int passNumber)
         {
-            if (VectorFileName != null)
+            if (VectorFileName.Length != 0)
             {
                 using var fileOut = new FileStream(VectorFileName, FileMode.Append);
                 using var streamOut = new StreamWriter(fileOut);
@@ -81,7 +81,7 @@ namespace Isopoh.Cryptography.Argon2
 
         private static void PrintTag(byte[] output)
         {
-            if (VectorFileName != null)
+            if (VectorFileName.Length != 0)
             {
                 using var fileOut = new FileStream(VectorFileName, FileMode.Append);
                 using var streamOut = new StreamWriter(fileOut);

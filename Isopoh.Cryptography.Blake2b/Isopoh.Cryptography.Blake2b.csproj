@@ -18,7 +18,7 @@
         <PackageReleaseNotes>No unused package references.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
@@ -48,7 +48,7 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.39.0.47922">
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.43.0.51858">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

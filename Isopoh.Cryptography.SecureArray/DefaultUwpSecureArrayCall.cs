@@ -38,7 +38,9 @@ namespace Isopoh.Cryptography.SecureArray
             }
         }
 
+        #nullable enable
         private static string? UwpLockMemory(IntPtr m, UIntPtr l)
+        #nullable restore
         {
             // cannot prevent memory from swapping within UWP.
             return null;

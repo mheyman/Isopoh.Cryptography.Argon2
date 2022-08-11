@@ -28,7 +28,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="message">
         /// Text for the <see cref="Exception.Message" /> property.
         /// </param>
+        #nullable enable
         public LockFailException(string? message)
+        #nullable restore
             : base(message)
         {
         }
@@ -42,7 +44,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="innerException">
         /// Exception that spawned this exception.
         /// </param>
+        #nullable enable
         public LockFailException(string? message, Exception? innerException)
+        #nullable restore
             : base(message, innerException)
         {
         }

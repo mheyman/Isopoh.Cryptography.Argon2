@@ -20,11 +20,21 @@ namespace Isopoh.Cryptography.Blake2b
     internal class Blake2BHasher : Hasher
     {
         private static readonly Blake2BConfig DefaultConfig = new();
+
         private readonly Blake2BCore core;
+
         private readonly SecureArray<ulong> rawConfig;
+
+        #nullable enable
         private readonly SecureArray<byte>? key;
+        #nullable restore
+
+        #nullable enable
         private readonly byte[]? defaultOutputBuffer;
+        #nullable restore
+
         private readonly int outputSizeInBytes;
+
         private bool disposed;
 
         /// <summary>
@@ -32,7 +42,9 @@ namespace Isopoh.Cryptography.Blake2b
         /// </summary>
         /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
         /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
+        #nullable enable
         public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        #nullable restore
         {
             config ??= DefaultConfig;
             this.core = new Blake2BCore(secureArrayCall, config.LockMemoryPolicy);

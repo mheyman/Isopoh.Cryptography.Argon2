@@ -28,7 +28,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="os">The name of the operating system this <see cref="SecureArrayCall"/> is for.</param>
         public SecureArrayCall(
             Action<IntPtr, nuint> zeroMemory,
+            #nullable enable
             Func<IntPtr, nuint, string?> lockMemory,
+            #nullable restore
             Action<IntPtr, nuint> unlockMemory,
             string os)
         {
@@ -54,7 +56,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <returns>
         /// Null on success; otherwise an error message.
         /// </returns>
+        #nullable enable
         public Func<IntPtr, nuint, string?> LockMemory { get; protected set; }
+        #nullable restore
 
         /// <summary>
         /// Gets or sets a method that unlocks memory previously locked by a call to <see cref="LockMemory"/>.

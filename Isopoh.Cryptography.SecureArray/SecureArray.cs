@@ -57,7 +57,10 @@ namespace Isopoh.Cryptography.SecureArray
         };
 
         private static readonly object DefaultCallLock = new ();
+
+        #nullable enable
         private static SecureArrayCall? defaultCall = DefaultCall;
+        #nullable restore
 
         private GCHandle handle;
 
@@ -79,7 +82,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// You cannot create a <see cref="SecureArray"/> directly, you must
         /// derive from this class like <see cref="SecureArray{T}"/> does.
         /// </remarks>
+        #nullable enable
         protected SecureArray(SecureArrayCall? call)
+        #nullable restore
         {
             this.Call = call ?? DefaultCall;
         }
@@ -206,7 +211,9 @@ namespace Isopoh.Cryptography.SecureArray
         /// <param name="call">
         /// The methods to call to secure the array. Defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
         /// </param>
+        #nullable enable
         public static void Zero<T>(T[] buffer, SecureArrayCall? call = null)
+        #nullable restore
             where T : struct
         {
             if (buffer == null)
@@ -301,7 +308,9 @@ namespace Isopoh.Cryptography.SecureArray
                         IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
                         UIntPtr cnt = new UIntPtr((uint)sizeInBytes);
                         this.Call.ZeroMemory(bufPtr, cnt);
+                        #nullable enable
                         string? err = this.Call.LockMemory(bufPtr, cnt);
+                        #nullable restore
                         if (err != null)
                         {
                             string msg;

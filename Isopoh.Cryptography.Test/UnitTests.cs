@@ -254,16 +254,17 @@ namespace Isopoh.Cryptography.Test
                     using (new SecureArray<byte>(size, SecureArray.DefaultCall))
                     {
                         this.output.WriteLine($"SecureArray: Passed size={size}");
-                        if (size == smallestFailedSize)
+                        if (size + 1 >= smallestFailedSize)
                         {
                             break;
                         }
 
-                        largestSuccessfulSize = size;
-                        long tmp = size;
-                        tmp += smallestFailedSize;
-                        tmp /= 2;
-                        size = (int)tmp;
+                        if (size > largestSuccessfulSize)
+                        {
+                            largestSuccessfulSize = size;
+                        }
+
+                        size = (int)(largestSuccessfulSize + ((smallestFailedSize - largestSuccessfulSize) / 2));
                     }
                 }
 

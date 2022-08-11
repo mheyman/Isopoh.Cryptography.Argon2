@@ -25,18 +25,24 @@ namespace Isopoh.Cryptography.SecureArray
 
         private static bool? is32BitSubsystem;
 
+        #nullable enable
         private static GetProcessWorkingSetSizeExDelegate? getProcessWorkingSetSize;
+        #nullable restore
 
+        #nullable enable
         private static Func<IntPtr, ulong, ulong, uint, bool>? setProcessWorkingSetSize;
+        #nullable restore
 
+        #nullable enable
         private static Func<IntPtr, ulong, uint, uint, IntPtr>? virtualAlloc;
+        #nullable restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultWindowsSecureArrayCall"/> class.
         /// </summary>
         public DefaultWindowsSecureArrayCall()
             : base(
-                UnsafeNativeMethods.RtlZeroMemory,
+                (m, l) => UnsafeNativeMethods.WindowsMemset(m, 0, l),
                 (_, _) => "ERROR: This temporary \"lock memory\" method should never be called.",
                 (m, l) => UnsafeNativeMethods.VirtualUnlock(m, l),
                 "Windows")
@@ -206,7 +212,9 @@ namespace Isopoh.Cryptography.SecureArray
                        : 0;
         }
 
+        #nullable enable
         private string? WindowsLockMemory(IntPtr m, UIntPtr l)
+        #nullable restore
         {
             IntPtr processHandle = UnsafeNativeMethods.GetCurrentProcess();
             ulong prevMinVal = 0;

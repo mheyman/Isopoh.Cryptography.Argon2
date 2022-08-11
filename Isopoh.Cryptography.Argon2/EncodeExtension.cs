@@ -61,7 +61,11 @@ namespace Isopoh.Cryptography.Argon2
         /// The output length is always exactly 32 bytes.
         /// </para>
         /// </remarks>
-        public static string EncodeString(this Argon2Config config, byte[]? hash)
+        public static string EncodeString(
+            this Argon2Config config,
+            #nullable enable
+            byte[]? hash)
+            #nullable restore
         {
             if (config == null)
             {
@@ -126,7 +130,10 @@ namespace Isopoh.Cryptography.Argon2
         /// </summary>
         /// <param name="buf">The buffer to convert to a string.</param>
         /// <returns>The Argon2 B64 string.</returns>
-        public static string ToB64String(this byte[]? buf)
+        #nullable enable
+        public static string ToB64String(
+            this byte[]? buf)
+            #nullable restore
         {
             if (buf == null)
             {

@@ -23,7 +23,7 @@ namespace Isopoh.Cryptography.SecureArray.OsxNative
         /// <param name="addr">Start of memory to lock into RAM.</param>
         /// <param name="len">Byte count of memory to lock into RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
-        [DllImport("libSystem", SetLastError = true, EntryPoint = "mlock")]
+        [DllImport("libSystem", SetLastError = true, EntryPoint = "mlock", ExactSpelling = true)]
         public static extern int OsxMlock(IntPtr addr, UIntPtr len);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Isopoh.Cryptography.SecureArray.OsxNative
         /// <param name="addr">Start of memory to unlock from RAM.</param>
         /// <param name="len">Byte count of memory to unlock from RAM.</param>
         /// <returns>0 on success; -1 on error.</returns>
-        [DllImport("libSystem", SetLastError = true, EntryPoint = "munlock")]
+        [DllImport("libSystem", SetLastError = true, EntryPoint = "munlock", ExactSpelling = true)]
         public static extern int OsxMunlock(IntPtr addr, UIntPtr len);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Isopoh.Cryptography.SecureArray.OsxNative
         /// <param name="c">The byte value to fill with.</param>
         /// <param name="n">The number of bytes to fill.</param>
         /// <returns><paramref name="addr"/>.</returns>
-        [DllImport("libSystem", EntryPoint = "memset")]
+        [DllImport("libSystem", EntryPoint = "memset", ExactSpelling = true)]
         public static extern IntPtr OsxMemset(IntPtr addr, int c, UIntPtr n);
     }
 }

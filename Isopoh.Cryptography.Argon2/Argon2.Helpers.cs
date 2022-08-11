@@ -70,13 +70,17 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public static string Hash(
             byte[] password,
+            #nullable enable
             byte[]? secret,
+            #nullable restore
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             byte[] salt = new byte[16];
             GetSalt(salt);
@@ -137,13 +141,17 @@ namespace Isopoh.Cryptography.Argon2
         /// </returns>
         public static string Hash(
             string password,
+            #nullable enable
             string? secret,
+            #nullable restore
             int timeCost = 3,
             int memoryCost = 65536,
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             if (password == null)
             {
@@ -218,7 +226,9 @@ namespace Isopoh.Cryptography.Argon2
             int parallelism = 1,
             Argon2Type type = Argon2Type.HybridAddressing,
             int hashLength = 32,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             return Hash(password, null, timeCost, memoryCost, parallelism, type, hashLength, secureArrayCall);
         }
@@ -239,7 +249,9 @@ namespace Isopoh.Cryptography.Argon2
             string encoded,
             Argon2Config configToVerify)
         {
+            #nullable enable
             SecureArray<byte>? hash = null;
+            #nullable restore
             try
             {
                 if (!configToVerify.DecodeString(encoded, out hash) || hash == null)
@@ -279,8 +291,12 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
+            #nullable enable
             byte[]? secret,
+            #nullable restore
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             var configToVerify = new Argon2Config
             {
@@ -318,9 +334,13 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
+            #nullable enable
             byte[]? secret,
+            #nullable restore
             int threads,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             var configToVerify = new Argon2Config
             {
@@ -353,7 +373,9 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             byte[] password,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             return Verify(encoded, password, null, secureArrayCall);
         }
@@ -384,7 +406,9 @@ namespace Isopoh.Cryptography.Argon2
             string encoded,
             byte[] password,
             int threads,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             return Verify(encoded, password, null, threads, secureArrayCall);
         }
@@ -411,8 +435,12 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             string password,
+            #nullable enable
             string? secret,
+            #nullable restore
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             if (password == null)
             {
@@ -467,9 +495,13 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             string password,
+            #nullable enable
             string? secret,
+            #nullable restore
             int threads,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             if (password == null)
             {
@@ -517,7 +549,9 @@ namespace Isopoh.Cryptography.Argon2
         public static bool Verify(
             string encoded,
             string password,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             return Verify(encoded, password, null, secureArrayCall);
         }
@@ -548,7 +582,9 @@ namespace Isopoh.Cryptography.Argon2
             string encoded,
             string password,
             int threads,
+            #nullable enable
             SecureArrayCall? secureArrayCall = null)
+            #nullable restore
         {
             return Verify(encoded, password, null, threads, secureArrayCall);
         }

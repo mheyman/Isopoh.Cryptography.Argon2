@@ -29,7 +29,7 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
         /// <param name="size">The size of the <paramref name="counters"/>
         /// structure in bytes.</param>
         /// <returns>Non zero on success; otherwise zero.</returns>
-        [DllImport("psapi.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        [DllImport("KERNELBASE.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true, EntryPoint = "K32GetProcessMemoryInfo", ExactSpelling = true)]
         public static extern bool GetProcessMemoryInfo(IntPtr hProcess, out ProcessMemoryCounters counters, uint size);
 
         /// <summary>
@@ -117,12 +117,15 @@ namespace Isopoh.Cryptography.SecureArray.WindowsNative
             uint flags);
 
         /// <summary>
-        /// Fill a block of memory with zeros.
+        /// Fills the first <paramref name="n"/> bytes of <paramref
+        /// name="addr"/> with the value <paramref name="c"/>.
         /// </summary>
-        /// <param name="ptr">A pointer to the memory block to be filled with zeros.</param>
-        /// <param name="cnt">The number of bytes to fill with zeros.</param>
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi)]
-        public static extern void RtlZeroMemory(IntPtr ptr, UIntPtr cnt);
+        /// <param name="addr">The buffer to fill.</param>
+        /// <param name="c">The byte value to fill with.</param>
+        /// <param name="n">The number of bytes to fill.</param>
+        /// <returns><paramref name="addr"/>.</returns>
+        [DllImport("ntdll", EntryPoint = "memset", ExactSpelling = true)]
+        public static extern IntPtr WindowsMemset(IntPtr addr, int c, nuint n);
 
         /// <summary>
         /// Reserves, commits, or changes the state of a region of pages in the
