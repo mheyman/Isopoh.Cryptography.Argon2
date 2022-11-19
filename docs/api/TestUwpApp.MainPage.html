@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MainPage
    ">
-    <meta name="generator" content="docfx 2.59.3.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,8 +91,6 @@
     <h5>Implements</h5>
     <div><span class="xref">Windows.UI.Composition.IAnimationObject</span></div>
     <div><span class="xref">Windows.UI.Composition.IVisualElement</span></div>
-    <div><span class="xref">Windows.UI.Xaml.Markup.IComponentConnector</span></div>
-    <div><span class="xref">Windows.UI.Xaml.Markup.IComponentConnector2</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -1322,7 +1320,7 @@
   <h6><strong>Assembly</strong>: TestUwpApp.dll</h6>
   <h5 id="TestUwpApp_MainPage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class MainPage : Page, IAnimationObject, IVisualElement, IComponentConnector, IComponentConnector2</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class MainPage : Page, IAnimationObject, IVisualElement</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -1346,97 +1344,6 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=TestUwpApp_MainPage_Connect_System_Int32_System_Object_.md&amp;value=---%0Auid%3A%20TestUwpApp.MainPage.Connect(System.Int32%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestUwpApp/obj/x86/Release/MainPage.g.cs/#L21">View Source</a>
-  </span>
-  <a id="TestUwpApp_MainPage_Connect_" data-uid="TestUwpApp.MainPage.Connect*"></a>
-  <h4 id="TestUwpApp_MainPage_Connect_System_Int32_System_Object_" data-uid="TestUwpApp.MainPage.Connect(System.Int32,System.Object)">Connect(Int32, Object)</h4>
-  <div class="markdown level1 summary"><p>Connect()</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Connect(int connectionId, object target)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">connectionId</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Object</span></td>
-        <td><span class="parametername">target</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=TestUwpApp_MainPage_GetBindingConnector_System_Int32_System_Object_.md&amp;value=---%0Auid%3A%20TestUwpApp.MainPage.GetBindingConnector(System.Int32%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestUwpApp/obj/x86/Release/MainPage.g.cs/#L46">View Source</a>
-  </span>
-  <a id="TestUwpApp_MainPage_GetBindingConnector_" data-uid="TestUwpApp.MainPage.GetBindingConnector*"></a>
-  <h4 id="TestUwpApp_MainPage_GetBindingConnector_System_Int32_System_Object_" data-uid="TestUwpApp.MainPage.GetBindingConnector(System.Int32,System.Object)">GetBindingConnector(Int32, Object)</h4>
-  <div class="markdown level1 summary"><p>GetBindingConnector(int connectionId, object target)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IComponentConnector GetBindingConnector(int connectionId, object target)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">connectionId</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Object</span></td>
-        <td><span class="parametername">target</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Windows.UI.Xaml.Markup.IComponentConnector</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=TestUwpApp_MainPage_InitializeComponent.md&amp;value=---%0Auid%3A%20TestUwpApp.MainPage.InitializeComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
@@ -1458,12 +1365,6 @@
   <div>
       <span class="xref">Windows.UI.Composition.IVisualElement</span>
   </div>
-  <div>
-      <span class="xref">Windows.UI.Xaml.Markup.IComponentConnector</span>
-  </div>
-  <div>
-      <span class="xref">Windows.UI.Xaml.Markup.IComponentConnector2</span>
-  </div>
 </article>
           </div>
           
@@ -1475,7 +1376,7 @@
                     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=TestUwpApp_MainPage.md&amp;value=---%0Auid%3A%20TestUwpApp.MainPage%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestUwpApp/obj/x86/Release/MainPage.g.cs/#L13" class="contribution-link">View Source</a>
+                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestUwpApp/obj/x86/Release/MainPage.g.i.cs/#L13" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

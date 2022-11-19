@@ -356,11 +356,11 @@ namespace Isopoh.Cryptography.Argon2
 
         private sealed class Position
         {
-            public int Pass { get; set; }
+            public int Pass { get; init; }
 
-            public int Lane { get; set; }
+            public int Lane { get; init; }
 
-            public int Slice { get; set; }
+            public int Slice { get; init; }
 
             public int Index { get; set; }
         }

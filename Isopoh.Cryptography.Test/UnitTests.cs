@@ -31,7 +31,7 @@ namespace Isopoh.Cryptography.Test
         /// </summary>
         private static readonly Argon2TestVector[] Argon2TestVectors =
             {
-                new Argon2TestVector(
+                new (
                     "Data dependent",
                     Argon2Type.DataDependentAddressing,
                     Argon2Version.Nineteen,
@@ -44,7 +44,7 @@ namespace Isopoh.Cryptography.Test
                     "03 03 03 03 03 03 03 03",
                     "04 04 04 04 04 04 04 04 04 04 04 04",
                     "51 2b 39 1b 6f 11 62 97 53 71 d3 09 19 73 42 94 f8 68 e3 be 39 84 f3 c1 a1 3a 4d b9 fa be 4a cb"),
-                new Argon2TestVector(
+                new (
                     "Data independent",
                     Argon2Type.DataIndependentAddressing,
                     Argon2Version.Nineteen,
@@ -57,7 +57,7 @@ namespace Isopoh.Cryptography.Test
                     "03 03 03 03 03 03 03 03",
                     "04 04 04 04 04 04 04 04 04 04 04 04",
                     "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8"),
-                new Argon2TestVector(
+                new (
                     "Hybrid",
                     Argon2Type.HybridAddressing,
                     Argon2Version.Nineteen,
@@ -264,7 +264,7 @@ namespace Isopoh.Cryptography.Test
                             largestSuccessfulSize = size;
                         }
 
-                        size = (int)(largestSuccessfulSize + ((smallestFailedSize - largestSuccessfulSize) / 2));
+                        size = largestSuccessfulSize + ((smallestFailedSize - largestSuccessfulSize) / 2);
                     }
                 }
 
@@ -462,15 +462,15 @@ namespace Isopoh.Cryptography.Test
 
                     byte val;
 #pragma warning disable SA1131 // Use readable conditions
-                    if ('0' <= ch && ch <= '9')
+                    if (ch is >= '0' and <= '9')
                     {
                         val = (byte)((uint)(ch - '0') << 4);
                     }
-                    else if ('a' <= ch && ch <= 'f')
+                    else if (ch is >= 'a' and <= 'f')
                     {
                         val = (byte)((uint)(ch - 'a' + 10) << 4);
                     }
-                    else if ('A' <= ch && ch <= 'F')
+                    else if (ch is >= 'A' and <= 'F')
                     {
                         val = (byte)((uint)(ch - 'A' + 10) << 4);
                     }
@@ -479,15 +479,15 @@ namespace Isopoh.Cryptography.Test
                         throw new ArgumentException($"Invalid character '{ch}' found in hex string");
                     }
 
-                    if ('0' <= cl && cl <= '9')
+                    if (cl is >= '0' and <= '9')
                     {
                         val += (byte)(uint)(cl - '0');
                     }
-                    else if ('a' <= cl && cl <= 'f')
+                    else if (cl is >= 'a' and <= 'f')
                     {
                         val += (byte)(uint)(cl - 'a' + 10);
                     }
-                    else if ('A' <= cl && cl <= 'F')
+                    else if (cl is >= 'A' and <= 'F')
                     {
                         val = (byte)(uint)(cl - 'A' + 10);
                     }

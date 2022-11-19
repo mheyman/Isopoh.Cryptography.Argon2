@@ -133,25 +133,8 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            var validator = new Argon2Config();
             if (pos == str.Length)
             {
-                try
-                {
-                    validator.Type = type;
-                    validator.TimeCost = (int)timeCost;
-                    validator.MemoryCost = (int)memoryCost;
-                    validator.Lanes = (int)lanes;
-                    validator.Threads = (int)lanes;
-                    validator.AssociatedData = associatedData;
-                    validator.Version = version;
-                }
-                catch (Exception)
-                {
-                    hash = null;
-                    return false;
-                }
-
                 config.Type = type;
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
@@ -172,23 +155,6 @@ namespace Isopoh.Cryptography.Argon2
 
             if (pos == str.Length)
             {
-                try
-                {
-                    validator.Type = type;
-                    validator.TimeCost = (int)timeCost;
-                    validator.MemoryCost = (int)memoryCost;
-                    validator.Lanes = (int)lanes;
-                    validator.Threads = (int)lanes;
-                    validator.Salt = salt;
-                    validator.AssociatedData = associatedData;
-                    validator.Version = version;
-                }
-                catch (Exception)
-                {
-                    hash = null;
-                    return false;
-                }
-
                 config.Type = type;
                 config.TimeCost = (int)timeCost;
                 config.MemoryCost = (int)memoryCost;
@@ -236,24 +202,6 @@ namespace Isopoh.Cryptography.Argon2
                 }
 
                 if (pos != str.Length)
-                {
-                    hash = null;
-                    return false;
-                }
-
-                try
-                {
-                    validator.Type = type;
-                    validator.HashLength = hashLength;
-                    validator.TimeCost = (int)timeCost;
-                    validator.MemoryCost = (int)memoryCost;
-                    validator.Lanes = (int)lanes;
-                    validator.Threads = (int)lanes;
-                    validator.Salt = salt;
-                    validator.AssociatedData = associatedData;
-                    validator.Version = version;
-                }
-                catch (Exception)
                 {
                     hash = null;
                     return false;

@@ -1709,38 +1709,6 @@ references:
   isSpec: "True"
   fullName: TestUwpApp.App.App
   nameWithType: App.App
-- uid: TestUwpApp.App.GetXamlType(System.String)
-  name: GetXamlType(String)
-  href: api/TestUwpApp.App.html#TestUwpApp_App_GetXamlType_System_String_
-  commentId: M:TestUwpApp.App.GetXamlType(System.String)
-  fullName: TestUwpApp.App.GetXamlType(System.String)
-  nameWithType: App.GetXamlType(String)
-- uid: TestUwpApp.App.GetXamlType(System.Type)
-  name: GetXamlType(Type)
-  href: api/TestUwpApp.App.html#TestUwpApp_App_GetXamlType_System_Type_
-  commentId: M:TestUwpApp.App.GetXamlType(System.Type)
-  fullName: TestUwpApp.App.GetXamlType(System.Type)
-  nameWithType: App.GetXamlType(Type)
-- uid: TestUwpApp.App.GetXamlType*
-  name: GetXamlType
-  href: api/TestUwpApp.App.html#TestUwpApp_App_GetXamlType_
-  commentId: Overload:TestUwpApp.App.GetXamlType
-  isSpec: "True"
-  fullName: TestUwpApp.App.GetXamlType
-  nameWithType: App.GetXamlType
-- uid: TestUwpApp.App.GetXmlnsDefinitions
-  name: GetXmlnsDefinitions()
-  href: api/TestUwpApp.App.html#TestUwpApp_App_GetXmlnsDefinitions
-  commentId: M:TestUwpApp.App.GetXmlnsDefinitions
-  fullName: TestUwpApp.App.GetXmlnsDefinitions()
-  nameWithType: App.GetXmlnsDefinitions()
-- uid: TestUwpApp.App.GetXmlnsDefinitions*
-  name: GetXmlnsDefinitions
-  href: api/TestUwpApp.App.html#TestUwpApp_App_GetXmlnsDefinitions_
-  commentId: Overload:TestUwpApp.App.GetXmlnsDefinitions
-  isSpec: "True"
-  fullName: TestUwpApp.App.GetXmlnsDefinitions
-  nameWithType: App.GetXmlnsDefinitions
 - uid: TestUwpApp.App.InitializeComponent
   name: InitializeComponent()
   href: api/TestUwpApp.App.html#TestUwpApp_App_InitializeComponent
@@ -1786,32 +1754,6 @@ references:
   isSpec: "True"
   fullName: TestUwpApp.MainPage.MainPage
   nameWithType: MainPage.MainPage
-- uid: TestUwpApp.MainPage.Connect(System.Int32,System.Object)
-  name: Connect(Int32, Object)
-  href: api/TestUwpApp.MainPage.html#TestUwpApp_MainPage_Connect_System_Int32_System_Object_
-  commentId: M:TestUwpApp.MainPage.Connect(System.Int32,System.Object)
-  fullName: TestUwpApp.MainPage.Connect(System.Int32, System.Object)
-  nameWithType: MainPage.Connect(Int32, Object)
-- uid: TestUwpApp.MainPage.Connect*
-  name: Connect
-  href: api/TestUwpApp.MainPage.html#TestUwpApp_MainPage_Connect_
-  commentId: Overload:TestUwpApp.MainPage.Connect
-  isSpec: "True"
-  fullName: TestUwpApp.MainPage.Connect
-  nameWithType: MainPage.Connect
-- uid: TestUwpApp.MainPage.GetBindingConnector(System.Int32,System.Object)
-  name: GetBindingConnector(Int32, Object)
-  href: api/TestUwpApp.MainPage.html#TestUwpApp_MainPage_GetBindingConnector_System_Int32_System_Object_
-  commentId: M:TestUwpApp.MainPage.GetBindingConnector(System.Int32,System.Object)
-  fullName: TestUwpApp.MainPage.GetBindingConnector(System.Int32, System.Object)
-  nameWithType: MainPage.GetBindingConnector(Int32, Object)
-- uid: TestUwpApp.MainPage.GetBindingConnector*
-  name: GetBindingConnector
-  href: api/TestUwpApp.MainPage.html#TestUwpApp_MainPage_GetBindingConnector_
-  commentId: Overload:TestUwpApp.MainPage.GetBindingConnector
-  isSpec: "True"
-  fullName: TestUwpApp.MainPage.GetBindingConnector
-  nameWithType: MainPage.GetBindingConnector
 - uid: TestUwpApp.MainPage.InitializeComponent
   name: InitializeComponent()
   href: api/TestUwpApp.MainPage.html#TestUwpApp_MainPage_InitializeComponent
@@ -1831,47 +1773,3 @@ references:
   commentId: T:TestUwpApp.Program
   fullName: TestUwpApp.Program
   nameWithType: Program
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo
-  name: TestUwpApp.TestUwpApp_XamlTypeInfo
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.html
-  commentId: N:TestUwpApp.TestUwpApp_XamlTypeInfo
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo
-  nameWithType: TestUwpApp.TestUwpApp_XamlTypeInfo
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider
-  name: XamlMetaDataProvider
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html
-  commentId: T:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider
-  nameWithType: XamlMetaDataProvider
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.String)
-  name: GetXamlType(String)
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html#TestUwpApp_TestUwpApp_XamlTypeInfo_XamlMetaDataProvider_GetXamlType_System_String_
-  commentId: M:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.String)
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.String)
-  nameWithType: XamlMetaDataProvider.GetXamlType(String)
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.Type)
-  name: GetXamlType(Type)
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html#TestUwpApp_TestUwpApp_XamlTypeInfo_XamlMetaDataProvider_GetXamlType_System_Type_
-  commentId: M:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.Type)
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.Type)
-  nameWithType: XamlMetaDataProvider.GetXamlType(Type)
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType*
-  name: GetXamlType
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html#TestUwpApp_TestUwpApp_XamlTypeInfo_XamlMetaDataProvider_GetXamlType_
-  commentId: Overload:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType
-  isSpec: "True"
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXamlType
-  nameWithType: XamlMetaDataProvider.GetXamlType
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions
-  name: GetXmlnsDefinitions()
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html#TestUwpApp_TestUwpApp_XamlTypeInfo_XamlMetaDataProvider_GetXmlnsDefinitions
-  commentId: M:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions()
-  nameWithType: XamlMetaDataProvider.GetXmlnsDefinitions()
-- uid: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions*
-  name: GetXmlnsDefinitions
-  href: api/TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.html#TestUwpApp_TestUwpApp_XamlTypeInfo_XamlMetaDataProvider_GetXmlnsDefinitions_
-  commentId: Overload:TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions
-  isSpec: "True"
-  fullName: TestUwpApp.TestUwpApp_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions
-  nameWithType: XamlMetaDataProvider.GetXmlnsDefinitions

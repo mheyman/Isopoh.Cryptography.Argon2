@@ -17,7 +17,7 @@ namespace TestUno
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    public sealed partial class App
     {
         private Window window;
 
@@ -55,7 +55,7 @@ namespace TestUno
             this._window = new Window();
             this._window.Activate();
 #else
-            this.window = Windows.UI.Xaml.Window.Current;
+            this.window = Window.Current;
 #endif
 
             var rootFrame = this.window.Content as Frame;
@@ -148,10 +148,10 @@ namespace TestUno
                 // builder.AddFilter("Uno.Foundation.WebAssemblyRuntime", LogLevel.Debug );
             });
 
-            global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
+            Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
 
 #if HAS_UNO
-            global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
+            Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
 #endif
         }
 
