@@ -30,7 +30,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <SignAssembly>True</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>C:\Users\mheym\source\repos\keys\isopoh.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\isopoh.pfx</AssemblyOriginatorKeyFile>
     <DisablePackageAssetsCache>true</DisablePackageAssetsCache>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

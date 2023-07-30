@@ -46,26 +46,29 @@ namespace Isopoh.Cryptography.Argon2
 
             if (hash.Length <= intermediateHash.Buffer.Length)
             {
+                // less than or equal to 64 bytes, just copy the hash result
                 Array.Copy(intermediateHash.Buffer, hash, hash.Length);
                 return;
             }
 
+            // greater than 64 bytes, copy a chain of half-hash results until the final up-to-full hash result
             const int b2B2 = Blake2B.OutputLength / 2;
-            Array.Copy(intermediateHash.Buffer, hash, b2B2);
+            Array.Copy(intermediateHash.Buffer, hash, b2B2); // copy half hash result
             int pos = b2B2;
             int lastHashIndex = hash.Length - Blake2B.OutputLength;
-            var toHash = new byte[Blake2B.OutputLength];
+            using var toHash = SecureArray<byte>.Best(Blake2B.OutputLength, secureArrayCall);
             while (pos < lastHashIndex)
             {
-                Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);
-                Blake2B.ComputeHash(toHash, blake2BConfig, secureArrayCall);
-                Array.Copy(intermediateHash.Buffer, 0, hash, pos, b2B2);
+                Array.Copy(intermediateHash.Buffer, toHash.Buffer, intermediateHash.Buffer.Length); // set toHash to be the previous hash
+                Blake2B.ComputeHash(toHash.Buffer, blake2BConfig, secureArrayCall);
+                Array.Copy(intermediateHash.Buffer, 0, hash, pos, b2B2); // copy half hash result
                 pos += b2B2;
             }
 
-            Array.Copy(intermediateHash.Buffer, toHash, intermediateHash.Buffer.Length);
-            Blake2B.ComputeHash(toHash, blake2BConfig, secureArrayCall);
-            Array.Copy(intermediateHash.Buffer, 0, hash, pos, hash.Length - pos);
+            // between 33 and 64 bytes left to load
+            Array.Copy(intermediateHash.Buffer, toHash.Buffer, intermediateHash.Buffer.Length); // set toHash to be the previous hash
+            Blake2B.ComputeHash(toHash.Buffer, blake2BConfig, secureArrayCall);
+            Array.Copy(intermediateHash.Buffer, 0, hash, pos, hash.Length - pos); // copy the final bytes from the first part of the hash result
         }
     }
 }
