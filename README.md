@@ -1,4 +1,4 @@
-![Isopoh](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/images/isopoh144.png)
+![Isopoh](https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/.github/images/isopoh144.png)
 
 # FULLY MANAGED .NET CORE ARGON2 IMPLEMENTATION
 [d]: #project
