@@ -11,18 +11,19 @@
         <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
         <PackageIcon>isopoh.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
         <Copyright>Michael Heyman 2022</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
-        <PackageReleaseNotes>Signed.</PackageReleaseNotes>
+        <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
         <Nullable>warnings</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
-        <PackageVersion>1.1.13</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -65,5 +66,6 @@
   <ItemGroup>
     <None Include="..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
     <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

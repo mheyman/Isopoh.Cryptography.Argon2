@@ -14,17 +14,18 @@
     <PackageIcon>isopoh.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>Michael Heyman</Authors>
     <Copyright>Michael Heyman 2022</Copyright>
     <PackageTags>sensitive array</PackageTags>
-    <PackageReleaseNotes>Signed.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
     <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
     <Nullable>warnings</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
     <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
-    <PackageVersion>1.1.13</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -66,5 +67,6 @@
   <ItemGroup>
     <None Include="..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
     <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

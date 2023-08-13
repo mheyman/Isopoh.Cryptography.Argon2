@@ -123,10 +123,10 @@ namespace Argon2TestVector
         }};
     }}
 }}";
-            if (!Debugger.IsAttached)
-            {
-                Debugger.Launch();
-            }
+            ////if (!Debugger.IsAttached)
+            ////{
+            ////    Debugger.Launch();
+            ////}
 
             return SourceText.From(source, Encoding.ASCII);
         }
