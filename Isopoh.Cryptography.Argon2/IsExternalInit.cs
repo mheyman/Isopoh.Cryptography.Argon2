@@ -4,7 +4,15 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+#pragma warning disable S3261 // namespaces not empty
+// ReSharper disable once CheckNamespace
 namespace System.Runtime.CompilerServices;
+
 #if !NET5_0_OR_GREATER
-    internal static class IsExternalInit { }
+#pragma warning disable SA1600 // Elements should be documented
+#pragma warning disable SA1502 // Element should not be on a single line
+internal static class IsExternalInit { }
+#pragma warning restore SA1502 // Element should not be on a single line
+#pragma warning restore SA1600 // Elements should be documented
 #endif
+#pragma warning restore S3261 // namespaces not empty

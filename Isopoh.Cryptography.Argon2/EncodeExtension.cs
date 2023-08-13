@@ -101,11 +101,11 @@ namespace Isopoh.Cryptography.Argon2
             dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.TimeCost);
             dst.Append(",p=");
             dst.AppendFormat(CultureInfo.InvariantCulture, "{0:D}", config.Lanes);
-            if (config.AssociatedData is { Length: > 0 })
-            {
-                dst.Append(",data=");
-                dst.Append(config.AssociatedData.ToB64String());
-            }
+////            if (config.AssociatedData is { Length: > 0 })
+////            {
+////                dst.Append(",data=");
+////                dst.Append(config.AssociatedData.ToB64String());
+////            }
 
             if (config.Salt == null || config.Salt.Length == 0)
             {

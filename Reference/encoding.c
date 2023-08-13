@@ -109,7 +109,7 @@ static unsigned b64_char_to_byte(int c) {
  * in the buffer, and the output length (counted WITHOUT the terminating
  * zero) is returned.
  */
-static size_t to_base64(char *dst, size_t dst_len, const void *src,
+size_t to_base64(char *dst, size_t dst_len, const void *src,
                         size_t src_len) {
     size_t olen;
     const unsigned char *buf;

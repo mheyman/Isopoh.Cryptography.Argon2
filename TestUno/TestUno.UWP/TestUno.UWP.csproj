@@ -10,13 +10,13 @@
 			-->
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.5" />
     <PackageReference Include="StyleCop.Analyzers.Unstable">
-      <Version>1.2.0.435</Version>
+      <Version>1.2.0.507</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="4.6.19" />
+    <PackageReference Include="Uno.UI" Version="4.9.45" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="Uno.Core.Extensions.Logging.Singleton" Version="4.0.1" />

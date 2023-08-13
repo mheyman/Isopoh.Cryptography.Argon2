@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+    <LangVersion>Latest</LangVersion>
     <ImplicitUsings>disable</ImplicitUsings>
-      <GenerateDocumentationFile>true</GenerateDocumentationFile>
-      <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <GeneratedFolder>Generated</GeneratedFolder>
+    <CompilerGeneratedFilesOutputPath>$(GeneratedFolder)\$(TargetFramework)</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +26,7 @@
     <ProjectReference Include="..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
   </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Argon2TestVectorSourceGenerator\Argon2TestVectorSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\Argon2TestVectorSourceGenerator\Argon2TestVectorSourceGenerator.csproj" PrivateAssets="all" ReferenceOutputAssembly="false" OutputItemType="Analyzer" SetTargetFramework="TargetFramework=netstandard2.0" />
   </ItemGroup>
 
 </Project>

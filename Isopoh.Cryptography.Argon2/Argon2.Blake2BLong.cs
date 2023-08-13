@@ -67,6 +67,16 @@ namespace Isopoh.Cryptography.Argon2
 
             // between 33 and 64 bytes left to load
             Array.Copy(intermediateHash.Buffer, toHash.Buffer, intermediateHash.Buffer.Length); // set toHash to be the previous hash
+            var remaining = hash.Length - pos;
+            if (remaining < 64)
+            {
+                blake2BConfig = new Blake2BConfig
+                {
+                    Result64ByteBuffer = intermediateHash.Buffer,
+                    OutputSizeInBytes = hash.Length - pos,
+                };
+            }
+
             Blake2B.ComputeHash(toHash.Buffer, blake2BConfig, secureArrayCall);
             Array.Copy(intermediateHash.Buffer, 0, hash, pos, hash.Length - pos); // copy the final bytes from the first part of the hash result
         }

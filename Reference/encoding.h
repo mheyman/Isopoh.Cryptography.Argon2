@@ -24,6 +24,16 @@
 #define ARGON2_MIN_DECODED_OUT_LEN UINT32_C(12)
 
 /*
+ * Convert some bytes to Base64. 'dst_len' is the length (in characters)
+ * of the output buffer 'dst'; if that buffer is not large enough to
+ * receive the result (including the terminating 0), then (size_t)-1
+ * is returned. Otherwise, the zero-terminated Base64 string is written
+ * in the buffer, and the output length (counted WITHOUT the terminating
+ * zero) is returned.
+ */
+size_t to_base64(char *dst, size_t dst_len, const void *src, size_t src_len);
+
+/*
 * encode an Argon2 hash string into the provided buffer. 'dst_len'
 * contains the size, in characters, of the 'dst' buffer; if 'dst_len'
 * is less than the number of required characters (including the

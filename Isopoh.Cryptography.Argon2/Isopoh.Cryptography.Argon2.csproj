@@ -44,11 +44,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.48.0.56517">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="9.7.0.75501">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
+        <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.507">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

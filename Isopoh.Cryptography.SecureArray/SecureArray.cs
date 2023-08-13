@@ -378,7 +378,9 @@ namespace Isopoh.Cryptography.SecureArray
                         else
                         {
                             // lock failed
+#pragma warning disable S3949
                             high = cur - 1;
+#pragma warning restore S3949
                         }
                     }
                     finally
@@ -389,7 +391,9 @@ namespace Isopoh.Cryptography.SecureArray
                 catch (OutOfMemoryException)
                 {
                     // new failed. Act like lock failed
+#pragma warning disable S3949
                     high = cur - 1;
+#pragma warning restore S3949
                 }
             }
 

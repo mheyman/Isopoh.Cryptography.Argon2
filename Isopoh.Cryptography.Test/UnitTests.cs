@@ -213,7 +213,7 @@ namespace Isopoh.Cryptography.Test
                 }
                 catch (Exception e)
                 {
-                    Assert.False(true, e.Message);
+                    Assert.Fail(e.Message);
                 }
             }
         }

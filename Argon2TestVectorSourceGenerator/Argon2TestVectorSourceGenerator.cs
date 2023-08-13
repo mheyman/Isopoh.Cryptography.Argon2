@@ -4,8 +4,6 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Argon2TestVectorType;
-
 namespace Argon2TestVectorSourceGenerator
 {
     using System;
@@ -14,6 +12,8 @@ namespace Argon2TestVectorSourceGenerator
     using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Text;
+    using Argon2TestVectorType;
     using Isopoh.Cryptography.Argon2;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.Text;
@@ -21,12 +21,12 @@ namespace Argon2TestVectorSourceGenerator
     /// <summary>
     /// Generate source code.
     /// </summary>
-    [Generator]
-    public class Argon2TestVectorSourceGenerator : ISourceGenerator
+    [Generator(LanguageNames.CSharp)]
+    public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
     {
-        private static readonly List<OfficialTestVector> OfficialTestVectors = new List<OfficialTestVector>
+        private static readonly List<OfficialTestVector> OfficialTestVectors = new()
         {
-            new OfficialTestVector(
+            new(
                 Argon2Type.DataDependentAddressing,
                 Argon2Version.Nineteen,
                 3,
@@ -37,7 +37,7 @@ namespace Argon2TestVectorSourceGenerator
                 new string((char)3, 8),
                 new string((char)4, 12),
                 "512b391b6f1162975371d30919734294f868e3be3984f3c1a13a4db9fabe4acb"),
-            new OfficialTestVector(
+            new(
                 Argon2Type.DataIndependentAddressing,
                 Argon2Version.Nineteen,
                 3,
@@ -48,7 +48,7 @@ namespace Argon2TestVectorSourceGenerator
                 new string((char)3, 8),
                 new string((char)4, 12),
                 "c814d9d1dc7f37aa13f0d77f2494bda1c8de6b016dd388d29952a4c4672b6ce8"),
-            new OfficialTestVector(
+            new(
                 Argon2Type.HybridAddressing,
                 Argon2Version.Nineteen,
                 3,
@@ -62,51 +62,77 @@ namespace Argon2TestVectorSourceGenerator
         };
 
         /// <summary>
-        /// Gets or sets the path to the argon2 executable. Discovered during the <see cref="Initialize"/> call.
+        /// Called to initialize the generator and register generation steps via callbacks
+        /// on the <paramref name="context"/>.
         /// </summary>
-        public string Argon2 { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Called before generation occurs. A generator can use the <paramref name="context"/>
-        /// to register callbacks required to perform generation.
-        /// </summary>
-        /// <param name="context">The <see cref="GeneratorInitializationContext"/> to register callbacks on.</param>
-        public void Initialize(GeneratorInitializationContext context)
+        /// <param name="context">The <see cref="IncrementalGeneratorInitializationContext"/> to register callbacks on.</param>
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            ////if (!Debugger.IsAttached)
-            ////{
-            ////    Debugger.Launch();
-            ////}
+            var compilationProvider = context.CompilationProvider;
+            var solutionDir = compilationProvider.Select((_, _) => GetSolutionDir());
+            var argon2 = compilationProvider.Combine(solutionDir)
+                .Select(
+                    (x, _) => Directory.GetFiles(x.Right, "argon2.exe", SearchOption.AllDirectories)
+                            .FirstOrDefault() ??
+                        throw new Exception($"argon2.exe not found in {x.Right}"));
+            var validatedArgon2 = compilationProvider.Combine(argon2).Select((x, _) =>
+            {
+                Validate(x.Right);
+                return x.Right;
+            });
 
-            var solutionDir = GetSolutionDir();
-            var argon2 = Directory.GetFiles(solutionDir, "argon2.exe", SearchOption.AllDirectories)
-                    .FirstOrDefault() ??
-                throw new Exception($"argon2.exe not found in {solutionDir}");
-            Validate(argon2);
-            this.Argon2 = argon2;
+            var textNewTestVectorList = compilationProvider.Combine(validatedArgon2)
+                .Select((x, _) => Argon2Parameters().Select(parameters => TextNewTestVector(x.Right, parameters)));
+
+            try
+            {
+                context.RegisterSourceOutput(textNewTestVectorList, static (c, textNewVectors) => c.AddSource("Test.g.cs", GenerateSource(textNewVectors)));
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                Console.WriteLine(msg);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Called to perform source generation. A generator can use the <paramref name="context"/>
-        /// to add source files via the <see cref="GeneratorExecutionContext.AddSource(string, SourceText)"/>
-        /// method.
-        /// </summary>
-        /// <param name="context">The <see cref="GeneratorExecutionContext"/> to add source to</param>
-        /// <remarks>
-        /// This call represents the main generation step. It is called after a <see cref="Compilation"/> is
-        /// created that contains the user written code.
-        ///
-        /// A generator can use the <see cref="GeneratorExecutionContext.Compilation"/> property to
-        /// discover information about the users compilation and make decisions on what source to
-        /// provide.
-        /// </remarks>
-        public void Execute(GeneratorExecutionContext context)
+        private static SourceText GenerateSource(IEnumerable<string> textNewTestVectors)
         {
-            ////if (!Debugger.IsAttached)
-            ////{
-            ////    Debugger.Launch();
-            ////}
+            string source = $@"// <auto-generated/>
+// <copyright file=""Test.g.cs"" company=""Isopoh"">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
 
+namespace Argon2TestVector
+{{
+    using System.Collections.Generic;
+    using Argon2TestVectorType;
+    using Isopoh.Cryptography.Argon2;
+
+    /// <content/>
+    public partial class Test
+    {{
+        /// <summary>
+        /// Argon2 vectors generated at compile time from C-language reference argon2 command line example code.
+        /// </summary>
+        private List<TestVector> generatedVectors = new List<TestVector>
+        {{
+            {string.Join(",\r\n            ", textNewTestVectors)},
+        }};
+    }}
+}}";
+            if (!Debugger.IsAttached)
+            {
+                Debugger.Launch();
+            }
+
+            return SourceText.From(source, Encoding.ASCII);
+        }
+
+        private static List<(Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength)> Argon2Parameters()
+        {
             const string salt = "test salt";
             var types = new List<Argon2Type>
             {
@@ -114,74 +140,53 @@ namespace Argon2TestVectorSourceGenerator
             };
             const string password = "test password";
             var iterationCounts = new List<int>() { 3, 17 };
-            var secrets = new List<string> { null, "test secret" };
-            var associatedDatas = new List<string> { null, "test associated data" };
+            var secrets = new List<string?> { null, "test secret" };
+            var associatedDatas = new List<string?> { null, "test associated data" };
             var memoryKByteFactors = new List<int> { 1, 2 };
             var parallelisms = new List<int> { 1, 4 };
             var tagLengths = new List<int> { 63, 64, 65, 511, 512, 513 };
-
-            List<(Argon2Type Type, string Password, string Salt, int IterationCount, string Secret, string AssociatedData, int
+            List<(Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int
                 MemoryKByteFactor, int Parallelism, int TagLength)> runArgs = types
-                .SelectMany(dummy => iterationCounts, (type, iterationCount) => new { type, iterationCount })
-                .SelectMany(dummy => secrets, (a, secret) => new { a.type, a.iterationCount, secret })
+                .SelectMany(_ => iterationCounts, (type, iterationCount) => new { type, iterationCount })
+                .SelectMany(_ => secrets, (a, secret) => new { a.type, a.iterationCount, secret })
                 .SelectMany(
-                    dummy => associatedDatas,
+                    _ => associatedDatas,
                     (a, associatedData) => new { a.type, a.iterationCount, a.secret, associatedData })
                 .SelectMany(
-                    dummy => memoryKByteFactors,
+                    _ => memoryKByteFactors,
                     (a, memoryKByteFactor) => new
                     {
                         a.type, a.iterationCount, a.secret, a.associatedData, memoryKByteFactor,
                     })
                 .SelectMany(
-                    dummy => parallelisms,
+                    _ => parallelisms,
                     (a, parallelism) => new
                     {
                         a.type, a.iterationCount, a.secret, a.associatedData, a.memoryKByteFactor, parallelism,
                     })
                 .SelectMany(
-                    dummy => tagLengths,
+                    _ => tagLengths,
                     (a, tagLength) =>
-                        (a.type, password, salt, a.iterationCount, a.secret, a.associatedData, a.memoryKByteFactor, a.parallelism, tagLength))
+                        (a.type, password, salt, a.iterationCount, a.secret, a.associatedData, a.memoryKByteFactor,
+                            a.parallelism, tagLength))
                 .ToList();
 
             // put on the "official" test vectors. These are already known to work because of their use in the Validate() call.
-            runArgs.AddRange(OfficialTestVectors.Select(a => (a.Type, a.Password, a.Salt, a.IterationCount, a.Secret, a.AssociatedData, a.MemoryKByteCount / 8 / a.Parallelism, a.Parallelism, a.Tag.Length / 2)));
-            string source = $@"// <auto-generated/>
-namespace Argon2TestVector
-{{
-    using System.Collections.Generic;
-    using Argon2TestVectorType;
-    using Isopoh.Cryptography.Argon2;
-
-    public static partial class Test
-    {{
-        static partial void LoadTestVectors(List<TestVector> testVectors)
-        {{
-            {string.Join("\r\n            ", runArgs.Select(a => TestVectorAdd(this.Argon2, a)))}
-            if (!System.Diagnostics.Debugger.IsAttached)
-            {{
-                System.Diagnostics.Debugger.Break();
-            }}
-        }}
-    }}
-}}";
-
-            context.AddSource("Test.g.cs", source);
+            runArgs.AddRange(
+                OfficialTestVectors.Select(
+                    a => (a.Type, a.Password, a.Salt, a.IterationCount, (string?)a.Secret, (string?)a.AssociatedData,
+                        a.MemoryKByteCount / 8 / a.Parallelism, a.Parallelism, a.Tag.Length / 2)));
+            return runArgs;
         }
 
-        private static string TestVectorAdd(string argon2, (Argon2Type Type, string Password, string Salt, int IterationCount, string Secret, string AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength) args)
+        private static string TextNewTestVector(string argon2, (Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength) args)
         {
-            static string Arg(string a)
+            static string Arg(string? a)
             {
                 return a == null ? "null" : $"\"{a}\"";
             }
 
-            var ret = $"testVectors.Add(new TestVector(Argon2Type.{args.Type}, Argon2Version.Nineteen, {args.IterationCount}, {args.MemoryKByteFactor * 8 * args.Parallelism}, {args.Parallelism}, {Arg(args.Password)}, {Arg(args.Salt)}, {Arg(args.Secret)}, {Arg(args.AssociatedData)}, {args.TagLength}, {Arg(RunArgon2(argon2, args.Salt, args.Type, args.Password, args.IterationCount, args.Secret, args.AssociatedData, args.MemoryKByteFactor * 8 * args.Parallelism, args.Parallelism, args.TagLength, Argon2Output.Encoded))}));";
-
-            using var log = File.AppendText("TestVectorAddLine.log");
-            log.WriteLine(ret);
-            return ret;
+            return $"new TestVector(Argon2Type.{args.Type}, Argon2Version.Nineteen, {args.IterationCount}, {args.MemoryKByteFactor * 8 * args.Parallelism}, {args.Parallelism}, {Arg(args.Password)}, {Arg(args.Salt)}, {Arg(args.Secret)}, {Arg(args.AssociatedData)}, {args.TagLength}, {Arg(RunArgon2(argon2, args.Salt, args.Type, args.Password, args.IterationCount, args.Secret, args.AssociatedData, args.MemoryKByteFactor * 8 * args.Parallelism, args.Parallelism, args.TagLength, Argon2Output.Encoded))})";
         }
 
         /// <summary>
@@ -189,7 +194,9 @@ namespace Argon2TestVector
         /// </summary>
         /// <param name="path">Roslyn sets to the path of the current file.</param>
         /// <returns>The path to the solution directory.</returns>
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         private static string GetSolutionDir([CallerFilePath] string path = null)
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         {
             return Path.GetDirectoryName(
                     Path.GetDirectoryName(
@@ -228,8 +235,8 @@ namespace Argon2TestVector
             Argon2Type type,
             string password,
             int iterations,
-            string secret,
-            string associatedData,
+            string? secret,
+            string? associatedData,
             int memoryKBytes,
             int parallelism,
             int tagLength,
@@ -246,7 +253,7 @@ namespace Argon2TestVector
                 Arguments = BuildCommandLineFromArgs(
                     salt,
                     type == Argon2Type.DataIndependentAddressing ? "-i" : type == Argon2Type.DataDependentAddressing ? "-d" : "-id",
-                    password == null ? null : "-x",
+                    "-x",
                     password,
                     "-t",
                     $"{iterations}",
@@ -263,31 +270,26 @@ namespace Argon2TestVector
                     output == Argon2Output.Raw ? "-r" : output == Argon2Output.Encoded ? "-e" : null),
             };
             using var p = Process.Start(startInfo) ?? throw new Exception($"Failed to start {startInfo.FileName}");
-            var res = p.StandardOutput.ReadToEnd().TrimEnd(new char[] { '\r', '\n' });
+            var res = p.StandardOutput.ReadToEnd().TrimEnd('\r', '\n');
             //// var resError = p.StandardError.ReadToEnd().TrimEnd(new char[] { '\r', '\n' });
             p.WaitForExit();
             return res;
         }
 
         /// <summary>
-        /// From https://stackoverflow.com/a/10489920
+        /// From https://stackoverflow.com/a/10489920.
         /// </summary>
         /// <param name="args">Command line arguments.</param>
         /// <returns>Single string of escaped command line arguments.</returns>
-        private static string BuildCommandLineFromArgs(params string[] args)
+        private static string BuildCommandLineFromArgs(params string?[] args)
         {
-            if (args == null)
-            {
-                return null;
-            }
-
             string result = string.Empty;
 
             if (Environment.OSVersion.Platform == PlatformID.Unix
                 ||
                 Environment.OSVersion.Platform == PlatformID.MacOSX)
             {
-                foreach (string arg in args.Where(s => s != null))
+                foreach (string arg in args.Where(s => s != null).Cast<string>())
                 {
                     result += (result.Length > 0 ? " " : string.Empty)
                         + arg
@@ -305,10 +307,10 @@ namespace Argon2TestVector
             else
             {
                 // Windows family
-                foreach (string arg in args.Where(s => s != null))
+                foreach (string arg in args.Where(s => s != null).Cast<string>())
                 {
                     var enclosedInApo = arg.LastIndexOfAny(
-                        new char[] { ' ', '\t', '|', '@', '^', '<', '>', '&' }) >= 0;
+                        new[] { ' ', '\t', '|', '@', '^', '<', '>', '&' }) >= 0;
                     var wasApo = enclosedInApo;
                     var subResult = string.Empty;
                     for (int i = arg.Length - 1; i >= 0; i--)
