@@ -78,4 +78,4 @@ It builds a component that looks like this:
 
 The source for this example can be found at:
 
-(github)[TestBlazor.Client](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestBlazor.Wasm)
+(github)[TestBlazor.Client](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/test/TestBlazor.Wasm)

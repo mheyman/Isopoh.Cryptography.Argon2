@@ -43,10 +43,10 @@ The code to do the processing for that XAML takes care to do as much
 proccessing in async calls to give the UI a chance to be reactive. Highlighted
 is the actual call to `Argon2.Hash()`:
 
-[!code-csharp[MainPage.xaml.cs](../../TestUno/Shared/MainPage.xaml.cs?highlight=107-114)]
+[!code-csharp[MainPage.xaml.cs](../../TestUno/Shared/MainPage.xaml.cs?highlight=135-141)]
 
 ## Example Source
 
 The source for this example can be found at:
 
-(github)[TestUno](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/TestUno)
+(github)[TestUno](https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/test/TestUno)

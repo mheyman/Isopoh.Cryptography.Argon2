@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+  </ItemGroup>
+
+</Project>

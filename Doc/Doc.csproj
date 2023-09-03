@@ -31,11 +31,13 @@
   </ItemGroup>
 
   <Target Name="DeleteDoc" BeforeTargets="DocBuild">
-    <RemoveDir Directories="$(DocFxOutputDir);$(GitHubPagesDir)" />
+      <Message Text="Deleting $(DocFxOutputDir);$(GitHubPagesDir) before DocBuild" />
+      <RemoveDir Directories="$(DocFxOutputDir);$(GitHubPagesDir)" />
   </Target>
 
 
   <Target Name="CopyDoc" AfterTargets="DocBuild">
+      <Message Text="Copying $(DocFxOutputDir) to $(GitHubPagesDir)" />
     <!-- copy all files from the source folder to the dest folder
             that are newer or don't exist in the dest folder -->
     <Copy SourceFiles="@(DocumentationFiles)" DestinationFiles="@(DocumentationFiles->'$(GitHubPagesDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="True">

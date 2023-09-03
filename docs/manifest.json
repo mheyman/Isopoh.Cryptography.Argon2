@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Argon2TestVector.Test.html",
-          "hash": "HRhDeNn+Ec9VVvijimViQSwsGztX7sbNMS1FnuD1DHc="
+          "hash": "IWeiYQsx2PViovTnkAxTO1ubQTm2FUEtvsTAY7/2hO4="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Argon2TestVectorSourceGenerator.Argon2TestVectorSourceGenerator.html",
-          "hash": "kNibQP3tF21bORSSv/57jYoaO/mdxUfjqV3q5adw97A="
+          "hash": "Qn9sOebhNakxRP/trC+I0XDVt6g9XC9Uw0N7Oe0DDYc="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Argon2TestVectorType.Argon2Output.html",
-          "hash": "FMpsBWezlGLtUaRMW22IlhJQVp14Xp+LsEO4siagANg="
+          "hash": "W9Rqtha68ezNeP7r5EVK7lI9C+l27q6jmA80C7zsXSI="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Argon2TestVectorType.OfficialTestVector.html",
-          "hash": "OjLdgl1zelU2MOv3zdhs4s8tRkMz9jUZnb/5MAw0F1g="
+          "hash": "HjaMXVkwH7LRpUOT1WOC4XCkT+11DVe9M3fYZKODyoo="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Argon2TestVectorType.TestVector.html",
-          "hash": "IQ2GWOJKgz3sSegWLl+quHpxY+2krV2z4z+iAwOHaCU="
+          "hash": "c4u/2Y1NT+X31i0HGvILuNxuEebE/NQhO0HLQenIqpo="
         }
       },
       "is_incremental": false,
@@ -113,11 +113,35 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Doc.Dummy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doc.Dummy.html",
+          "hash": "8oilO/o2YzQz1MNBqJoF9qdtoG+vGDjft0uA8+cJDAQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doc.html",
+          "hash": "a5xG1+ONyI2fNrxTa6DQCpxSxHMOSRay7YkAfeZW518="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.yml",
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "U3x/PkjOW+a6NZD90fSLXEdQAID+XRPk/tyjkJpZxZQ="
+          "hash": "GVNX7HCKq5JVtUPcokIUBPpKMCgT67y53grMp9+zUgk="
         }
       },
       "is_incremental": false,
@@ -129,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.html",
-          "hash": "kfUXhpUO+HhUijHN28SBfXcGvV2z9OKb1QlX/uyUtZ0="
+          "hash": "UoxrYDiTsSVE6iYYqA6kidytElPCHr9lSqG6W4HooHE="
         }
       },
       "is_incremental": false,
@@ -141,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Type.html",
-          "hash": "1APYduK/YBguuJtvTWU9Mzdd0OZ2Ytv/NCLL0zcC+3I="
+          "hash": "fkKtOnHoJxZz/IHJx7slvPf4bsm7emYSyF5LWuiQA0s="
         }
       },
       "is_incremental": false,
@@ -153,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Version.html",
-          "hash": "qjnj6W5p2HXvWgIwcti7Pj3BkQhQx8dj1wr8bXtEhlU="
+          "hash": "BSq3Q8z/zcgUwo3WX5SpNMQ8ITSoP0PscdoMc8t4doY="
         }
       },
       "is_incremental": false,
@@ -165,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.html",
-          "hash": "yS3BwHARnrBwLo6ZcuQ2+GWGFKNg4c3a9OZoUZpZVHM="
+          "hash": "kbBTL2Oga/w36LxwqNFlXvmBD9A3ou05o0uyYyic/Cc="
         }
       },
       "is_incremental": false,
@@ -177,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.html",
-          "hash": "usdCPXaFFR7Q6FQxSvOzlUm0goi65UpFF4q5s/p86Gs="
+          "hash": "oxoUo97EoFgz6JUNNhm8Q1wZego1vEuvH1YR49rGQPA="
         }
       },
       "is_incremental": false,
@@ -189,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.DecodeExtension.html",
-          "hash": "znZbnm3/Uamz5hndhiUxYvf/3Zyont7DcI/KCuL4hHE="
+          "hash": "apm+0WSDYrH8ZGd4f/puULrCU/eVfoUdgzwDwobnks8="
         }
       },
       "is_incremental": false,
@@ -201,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.EncodeExtension.html",
-          "hash": "L5zctdwwdgo7gYGPh8JLeYfEY9rEonOpm31klAPANnk="
+          "hash": "OEiuUzWoiF1tyEmZSv9ANwgsmzUhZm4vUv3lgXLY9kU="
         }
       },
       "is_incremental": false,
@@ -225,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2B.html",
-          "hash": "9hwZvLzbf1QTDo3wKI8kjPuxnYdb3EiZ4LM8j430810="
+          "hash": "XRICYB5CER6YuytKBov+yOAElC9njh6kfGxkPVL4n5M="
         }
       },
       "is_incremental": false,
@@ -237,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BConfig.html",
-          "hash": "2LODPjiSqfhVOfu5mBS0cnw6iEjelE9kPmww7QyeFMA="
+          "hash": "HvuUxB0E/Um91OMJX68SZNw4QUYjyNR5q/CbY2zm/3g="
         }
       },
       "is_incremental": false,
@@ -249,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BCore.html",
-          "hash": "mVIbrk8/91OjkQArOeTo3T+rCB1kzpHeGUCGw9SSwCo="
+          "hash": "Ip+PB0iY8Ewl/vCsydF7ZhBaz0c2CV0Vaf2umD3VAuk="
         }
       },
       "is_incremental": false,
@@ -261,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.html",
-          "hash": "b9oQ8QuzO7iKrHDoC/FcprLya+KeVNXzG68vyQ34yf0="
+          "hash": "Gwj7qbFpdRkWnwzECAmQ9rPX7QdRUA116atgYfdAta8="
         }
       },
       "is_incremental": false,
@@ -273,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Hasher.html",
-          "hash": "+2yCtODucYJJMtlVaYBIenZJqB8zEevgp8sxWYqCCFs="
+          "hash": "BSULb3wqY68lX1V0Gqvaq9mGHeQptZVluyjOGdL2mdo="
         }
       },
       "is_incremental": false,
@@ -285,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html",
-          "hash": "AkGB9w2OaT/7Jg+aGF+BQAFji+uKfz+SgBWpMBKpeUE="
+          "hash": "Otlree7PjJhsdyp47qloACIEk4YZH/m+9J/yH8AR6wk="
         }
       },
       "is_incremental": false,
@@ -309,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultLinuxSecureArrayCall.html",
-          "hash": "jdZnwNN5J8yIDCubIWU1R2GD6Ys1gXLtisQjWHT9Rxg="
+          "hash": "h0BJp/hlEs69llOKnebf0BX72OgEifwbTyZ3YnBp3wo="
         }
       },
       "is_incremental": false,
@@ -321,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultOsxSecureArrayCall.html",
-          "hash": "0fmASMxKy8ietPNUr4ylJ2tgMT3J3G+B2JwTAQKW2wQ="
+          "hash": "oJNkn2yEyAGrYVSaM6fEWC0fJNXGHV3cvD3wmLyBz9g="
         }
       },
       "is_incremental": false,
@@ -333,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultUwpSecureArrayCall.html",
-          "hash": "xx5Yq1r/s35TEjOzWv8iUOOzJucRfc6uaM0QnSryV7Q="
+          "hash": "E6OMpUNhh5Jbw66SypOvqdQUhgibkJi3GXje8wYHGSk="
         }
       },
       "is_incremental": false,
@@ -345,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWebSecureArrayCall.html",
-          "hash": "bu5/fU9BpxJHv9syoIQg4jWOCXMfHUIWAoPlSbK3Ntc="
+          "hash": "Fn9AD9EAe7+Q1htDQX85pCdgU7bVbj9MIaBcjuBr06Q="
         }
       },
       "is_incremental": false,
@@ -357,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.html",
-          "hash": "mUiEgY990uXiOA/f6xO8O31XY4kpbn06NKKWQ0pC+ho="
+          "hash": "ngAhFQli5bENxzoMLp8TWYENPOybTJQxDCAddszwy80="
         }
       },
       "is_incremental": false,
@@ -369,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.LockFailException.html",
-          "hash": "Rj95+3OiWn7JJYnY6PUFHP20w3ccdJE/3aX5gEev6pE="
+          "hash": "kUND64OhR6AnMyxJiGcLaKQkt86wz5ZoNJbP9BtG+lc="
         }
       },
       "is_incremental": false,
@@ -381,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
-          "hash": "vPkn4f/7RL/KY6xHQ6a6oNPp/Ez+THXzMJ1v5gMZT+o="
+          "hash": "OvbDVngvolAeFgXI/fMe6LdWHa7kX1eRylySBmc1jlo="
         }
       },
       "is_incremental": false,
@@ -393,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.html",
-          "hash": "h09a5NSSIcl9WY7cs52dYpElQV9iOGiU73byl2dQW7E="
+          "hash": "lLrYIRTpVBPgVbBiTAXFYNbdoPaHPiKERyYU0fsgVdg="
         }
       },
       "is_incremental": false,
@@ -405,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayCall.html",
-          "hash": "Pka8h6IgANvj6fg0ifBGF4ILd9s4Ym3L+zDVYRzz8CU="
+          "hash": "qnrO8yF7THVOSfbAYp7+aIciEmQVOzy4eamkcKuLkJM="
         }
       },
       "is_incremental": false,
@@ -417,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArrayType.html",
-          "hash": "HTPIMujnkaawztFvvjfvdsLBnhdfqBsBJ0sS2bRg3fc="
+          "hash": "qkvOrjonRMpbL1BdsU9Y63pVjLice6AbT5fRxz5f4Ns="
         }
       },
       "is_incremental": false,
@@ -437,11 +461,143 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Test.UnitTests.Argon2TestVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Test.UnitTests.Argon2TestVector.html",
+          "hash": "iDT4QvRMFEejRCi4XzXHB1O691qJsan1PSk4rtNgy3I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Test.UnitTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Test.UnitTests.html",
+          "hash": "psNqO2zJ4AEBwllb/ojUYT+y8SSjGoCpt5XiI+761Xc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Test.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Test.html",
+          "hash": "eWm4Z0nkotoROcKUkMtrL+UJSD/xTxUesyJMuqtVZUU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestApp.Program.Argon2TestVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestApp.Program.Argon2TestVector.html",
+          "hash": "qygxWwXzb01Awigb5s/J95FCbh6nTUDFfEu6EMCocN8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestApp.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestApp.Program.html",
+          "hash": "Df4npkdqu41gOADCIbLU8ePxZ9M8HLESLburUEvVLKs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestApp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestApp.html",
+          "hash": "CMw5IIGAQTTV/oqWMZc8XrfGTPZxuXxBD0AR+eriCGw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestBlazor.Server.Data.WeatherForecast.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestBlazor.Server.Data.WeatherForecast.html",
+          "hash": "4m1bXDB19aFVg8gKSjBtu6hcL3fGY/vDu+LjkpKHE+s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestBlazor.Server.Data.WeatherForecastService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestBlazor.Server.Data.WeatherForecastService.html",
+          "hash": "/kxscHTW+V531dYmOw8/zAIHm0MGkzregzd2xIuFiBc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestBlazor.Server.Data.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestBlazor.Server.Data.html",
+          "hash": "DjlRtsiZpWQduVrq1qaPJarGZO60mxmRniPi8ufhX7o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestUno.Wasm.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestUno.Wasm.Program.html",
+          "hash": "9urAlhxQr0GS15J4oTyJ7ICHacKgtluATim7mznIzAQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TestUno.Wasm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TestUno.Wasm.html",
+          "hash": "rsW1P6syFyrMzq6J0eG1Bc4/z3rT6FpFmdXiuii52PE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/TestUwpApp.App.yml",
       "output": {
         ".html": {
           "relative_path": "api/TestUwpApp.App.html",
-          "hash": "YrBePabmlkfNvUfDzkSj61HU+yECqqts9pORHxZx988="
+          "hash": "9IV+lLA2QgqxE3rrzWOXwNmaxtSrqeh0I//kJCBvpSA="
         }
       },
       "is_incremental": false,
@@ -453,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "api/TestUwpApp.MainPage.html",
-          "hash": "34M2y2s1zvQ9D+ZDrOKGSOx+5PFCSOIEY7LSCKnOVJA="
+          "hash": "l41mYafI+beSu7pXGY+8o3x5f1nxfMF86z/1SrFj+bM="
         }
       },
       "is_incremental": false,
@@ -465,7 +621,7 @@
       "output": {
         ".html": {
           "relative_path": "api/TestUwpApp.Program.html",
-          "hash": "aQIEEW0sEib8Q1m7PO9waEErCuMFbq82m3Q0uo7FuqY="
+          "hash": "FI3mPG/dmlwT9idljJuEonPPfxu/MAiBcOieEYzNELw="
         }
       },
       "is_incremental": false,
@@ -504,7 +660,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "aNZ46vvMBNljRHUfmt5NKM1cGW8Xz3frrzbupZXQcvg="
+          "hash": "pFa+wEIkmihAyhcFTQNggZms2KaA2Xl0qJZ9oqY7Klw="
         }
       },
       "is_incremental": false,
@@ -516,7 +672,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/blazor.html",
-          "hash": "o7RznFb6BCLB1CBWkUxkBYHKKJW3BAEWn2456yo5at8="
+          "hash": "8OCAPy1oy9KdC0fdHyn5BSe1kk9PyNgaGtgIe0SKEAg="
         }
       },
       "is_incremental": false,
@@ -558,7 +714,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/unoplatform.html",
-          "hash": "0FvoowdzrhDmBG5St+FsRBb5H/G+QYO+xOKIHMgUT0A="
+          "hash": "tLcqLzi7DxNHkk2uKLT12UofmHsBjI2TlRzLiMpiAMM="
         }
       },
       "is_incremental": false,
@@ -645,7 +801,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 39,
+          "total_file_count": 52,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

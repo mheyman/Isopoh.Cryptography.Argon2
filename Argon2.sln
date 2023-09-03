@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.SecureArray", "Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj", "{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.SecureArray", "lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj", "{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Blake2b", "Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj", "{249617D6-8291-4B2D-881F-3A6DE54DDCD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Blake2b", "lib\Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj", "{249617D6-8291-4B2D-881F-3A6DE54DDCD3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Argon2", "Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj", "{0738ED69-6346-4143-B8EF-71AA8605A1A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Argon2", "lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj", "{0738ED69-6346-4143-B8EF-71AA8605A1A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Test", "Isopoh.Cryptography.Test\Isopoh.Cryptography.Test.csproj", "{7B863047-1FFC-415E-B08E-FE88608A2456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isopoh.Cryptography.Test", "test\Isopoh.Cryptography.Test\Isopoh.Cryptography.Test.csproj", "{7B863047-1FFC-415E-B08E-FE88608A2456}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{6EED6F14-8F1D-430F-AEF1-E6B5567A3A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "test\TestApp\TestApp.csproj", "{6EED6F14-8F1D-430F-AEF1-E6B5567A3A68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doc", "Doc\Doc.csproj", "{F064552E-7DA8-4DC2-B880-5C03B3F5B70E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,31 +30,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doc", "Doc\Doc.csproj", "{F
 		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B} = {8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B}
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestUno.Shared", "TestUno\TestUno.Shared\TestUno.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestUno.Shared", "test\TestUno\TestUno.Shared\TestUno.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUno.Wasm", "TestUno\TestUno.Wasm\TestUno.Wasm.csproj", "{0164184C-0ABB-4BB3-A476-4218C6F60AA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUno.Wasm", "test\TestUno\TestUno.Wasm\TestUno.Wasm.csproj", "{0164184C-0ABB-4BB3-A476-4218C6F60AA5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0738ED69-6346-4143-B8EF-71AA8605A1A4} = {0738ED69-6346-4143-B8EF-71AA8605A1A4}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazor.Server", "TestBlazor\Server\TestBlazor.Server.csproj", "{477CFCDE-BF5C-4C88-BC4E-1EF2C805C2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazor.Server", "test\TestBlazor\Server\TestBlazor.Server.csproj", "{477CFCDE-BF5C-4C88-BC4E-1EF2C805C2DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazor.Wasm", "TestBlazor\Wasm\TestBlazor.Wasm.csproj", "{9F1371AC-36C0-43CA-95EA-85078EEBCAB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazor.Wasm", "test\TestBlazor\Wasm\TestBlazor.Wasm.csproj", "{9F1371AC-36C0-43CA-95EA-85078EEBCAB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUno.UWP", "TestUno\TestUno.UWP\TestUno.UWP.csproj", "{71A3260F-BC17-40BF-A638-F38A6CD889D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUno.UWP", "test\TestUno\TestUno.UWP\TestUno.UWP.csproj", "{71A3260F-BC17-40BF-A638-F38A6CD889D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUwpApp", "TestUwpApp\TestUwpApp.csproj", "{A99DEE1D-F00D-48D9-A1EB-622770B0576B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUwpApp", "test\TestUwpApp\TestUwpApp.csproj", "{A99DEE1D-F00D-48D9-A1EB-622770B0576B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reference", "Reference\Reference.vcxproj", "{A8C121A7-31B2-47A5-B95D-D1393F9F3E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argon2TestVector", "Argon2TestVector\Argon2TestVector.csproj", "{BE33D227-79C6-47E7-8736-1191762307FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Argon2TestVector", "test\Argon2TestVector\Argon2TestVector.csproj", "{BE33D227-79C6-47E7-8736-1191762307FF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A8C121A7-31B2-47A5-B95D-D1393F9F3E6B} = {A8C121A7-31B2-47A5-B95D-D1393F9F3E6B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argon2TestVectorSourceGenerator", "Argon2TestVectorSourceGenerator\Argon2TestVectorSourceGenerator.csproj", "{8B485E13-27B6-4464-9CA2-9E3ED91D82B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Argon2TestVectorSourceGenerator", "test\Argon2TestVectorSourceGenerator\Argon2TestVectorSourceGenerator.csproj", "{8B485E13-27B6-4464-9CA2-9E3ED91D82B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argon2TestVectorType", "Argon2TestVectorType\Argon2TestVectorType.csproj", "{53E74418-FB97-4FF9-980C-FC69C5A4FC34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Argon2TestVectorType", "test\Argon2TestVectorType\Argon2TestVectorType.csproj", "{53E74418-FB97-4FF9-980C-FC69C5A4FC34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{684C371C-38D1-443F-8B69-D9139E2EBAAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4D24C235-3AF5-46CB-BF09-71CB32EAD368}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestUno", "TestUno", "{7DB77222-FB19-4BC8-8A33-D49224567DC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -394,12 +400,29 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8F5CEFC0-81B0-473B-8CE8-2E1EF555B15B} = {684C371C-38D1-443F-8B69-D9139E2EBAAA}
+		{249617D6-8291-4B2D-881F-3A6DE54DDCD3} = {684C371C-38D1-443F-8B69-D9139E2EBAAA}
+		{0738ED69-6346-4143-B8EF-71AA8605A1A4} = {684C371C-38D1-443F-8B69-D9139E2EBAAA}
+		{7B863047-1FFC-415E-B08E-FE88608A2456} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{6EED6F14-8F1D-430F-AEF1-E6B5567A3A68} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{6279C845-92F8-4333-AB99-3D213163593C} = {7DB77222-FB19-4BC8-8A33-D49224567DC9}
+		{0164184C-0ABB-4BB3-A476-4218C6F60AA5} = {7DB77222-FB19-4BC8-8A33-D49224567DC9}
+		{477CFCDE-BF5C-4C88-BC4E-1EF2C805C2DC} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{9F1371AC-36C0-43CA-95EA-85078EEBCAB8} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{71A3260F-BC17-40BF-A638-F38A6CD889D1} = {7DB77222-FB19-4BC8-8A33-D49224567DC9}
+		{A99DEE1D-F00D-48D9-A1EB-622770B0576B} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{BE33D227-79C6-47E7-8736-1191762307FF} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{8B485E13-27B6-4464-9CA2-9E3ED91D82B3} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{53E74418-FB97-4FF9-980C-FC69C5A4FC34} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+		{7DB77222-FB19-4BC8-8A33-D49224567DC9} = {4D24C235-3AF5-46CB-BF09-71CB32EAD368}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB3AF224-A8C2-431C-996A-0AAA5B5AFE5B}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		TestUno\TestUno.Shared\TestUno.Shared.projitems*{0164184c-0abb-4bb3-a476-4218c6f60aa5}*SharedItemsImports = 5
-		TestUno\TestUno.Shared\TestUno.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
-		TestUno\TestUno.Shared\TestUno.Shared.projitems*{71a3260f-bc17-40bf-a638-f38a6cd889d1}*SharedItemsImports = 4
+		test\TestUno\TestUno.Shared\TestUno.Shared.projitems*{0164184c-0abb-4bb3-a476-4218c6f60aa5}*SharedItemsImports = 5
+		test\TestUno\TestUno.Shared\TestUno.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+		test\TestUno\TestUno.Shared\TestUno.Shared.projitems*{71a3260f-bc17-40bf-a638-f38a6cd889d1}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

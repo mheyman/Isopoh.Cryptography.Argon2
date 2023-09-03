@@ -3,20 +3,13 @@
     {
       "src": [
         {
-          "src": "../",
+          "src": "..",
           "files": [
             "**/**.csproj"
           ],
           "exclude": [
-            ".git/**",
-            ".vs/**",
-            "Doc/**",
-            "Isopoh.Cryptography.Test/**",
-            "TestApp/**",
-            "TestBlazor/**",
-            "TestUno/**",
             "docfx_project/**",
-            "docs/**",
+            "**/isopoh.pfx",
             "**/obj/**",
             "**/bin/**"
           ]

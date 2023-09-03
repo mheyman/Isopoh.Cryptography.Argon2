@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <LangVersion>8.0</LangVersion>
+      <NullableContextOptions>enable</NullableContextOptions>
+      <Title>Isopoh.Cryptography.Blake2b</Title>
+        <Description>Blake2 hash for sensitive data. Uses
+          Isopoh.Cryptography.SecureArray to assure sensitive data gets wiped
+          from RAM and, if the operating system allows, never gets written to
+          disk.</Description>
+        <PackageProjectUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</PackageProjectUrl>
+        <PackageIcon>isopoh.png</PackageIcon>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
+        <Authors>Michael Heyman</Authors>
+        <Copyright>Michael Heyman 2022</Copyright>
+        <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
+        <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
+        <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
+        <Nullable>warnings</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
+        <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
+        <PackageVersion>2.0.0</PackageVersion>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <SignAssembly>true</SignAssembly>
+        <DelaySign>false</DelaySign>
+        <AssemblyOriginatorKeyFile>..\..\isopoh.pfx</AssemblyOriginatorKeyFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="9.7.0.75501">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.507">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(SolutionDir)images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
+    <None Include="$(SolutionDir)LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+</Project>
