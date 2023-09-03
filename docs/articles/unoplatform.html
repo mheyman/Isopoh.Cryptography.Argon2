@@ -96,17 +96,232 @@ calculating the hash and disables the controls when it is doing so.</p>
 </blockquote>
 <h2 id="xaml">XAML</h2>
 <p>The WPF XAML for that page looks like:</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>It looks like the sample you are looking for does not exist.</p>
-</div><h2 id="xaml-code">XAML Code</h2>
+<pre><code class="lang-xml" name="MainPage.xaml">&lt;Page
+    x:Class=&quot;TestUno.MainPage&quot;
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:local=&quot;using:TestUno&quot;
+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+    mc:Ignorable=&quot;d&quot;    
+    Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;
+    xmlns:numeric=&quot;http://gu.se/NumericInput&quot;
+    d:DesignWidth=&quot;1000&quot;&gt;
+
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;TextBlock Name=&quot;HashTitle&quot; Text=&quot;&quot; Margin=&quot;5&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;TextBlock Name=&quot;Os&quot; Text=&quot;&quot; Margin=&quot;5&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;TextBlock Name=&quot;HashValue&quot; Text=&quot;&quot; Margin=&quot;5&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;TextBlock Name=&quot;HashTime&quot; Text=&quot;&quot; Margin= &quot;5&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;StackPanel Margin=&quot;0,20,0,20&quot;&gt;
+            &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot;&gt;
+                &lt;TextBox x:Name=&quot;Secret&quot; Text=&quot;&quot; Width=&quot;200&quot; FontSize=&quot;25&quot;/&gt;
+                &lt;TextBlock Text=&quot;The &amp;quot;secret&amp;quot; to hash&quot; FontSize=&quot;25&quot; /&gt;
+            &lt;/StackPanel&gt;
+            &lt;TextBlock Text=&quot;Hashing occurs when leaving the secret input field.&quot; Padding=&quot;4&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot;&gt;
+            &lt;TextBox x:Name=&quot;TimeCost&quot; Text=&quot;3&quot; Width=&quot;200&quot; FontSize=&quot;25&quot;/&gt;
+            &lt;TextBlock Text=&quot;Time cost. Defaults to 3.&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot;&gt;
+            &lt;TextBox x:Name=&quot;MemoryCost&quot; Text=&quot;65536&quot; Width=&quot;200&quot; FontSize=&quot;25&quot; /&gt;
+            &lt;TextBlock Text=&quot;Memory cost. Defaults to 65536 (65536 * 1024 = 64MB).&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot;&gt;
+            &lt;TextBox Name=&quot;Parallelism&quot; Text=&quot;1&quot; Width=&quot;200&quot; FontSize=&quot;25&quot; /&gt;
+            &lt;TextBlock Text=&quot;Parallelism. Defaults to 1.&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot; &gt;
+            &lt;ComboBox x:Name=&quot;Type&quot; Width=&quot;200&quot; SelectedItem=&quot;hybrid&quot; FontSize=&quot;25&quot;&gt;
+                &lt;ComboBoxItem IsSelected=&quot;False&quot;&gt;dependent&lt;/ComboBoxItem&gt;
+                &lt;ComboBoxItem IsSelected=&quot;False&quot;&gt;independent&lt;/ComboBoxItem&gt;
+                &lt;ComboBoxItem IsSelected=&quot;True&quot;&gt;hybrid&lt;/ComboBoxItem&gt;
+            &lt;/ComboBox&gt;
+            &lt;TextBlock Text=&quot;&amp;quot;dependent&amp;quot; (faster but susceptible to side-channel attacks), &amp;quot;independent&amp;quot; (slower and suitable for password hashing and password-based key derivation), or &amp;quot;hybrid&amp;quot; (a mixture of the two). Defaults to the recommended type: &amp;quot;hybrid&amp;quot;.&quot; TextWrapping=&quot;WrapWholeWords&quot; MaxWidth=&quot;700&quot;  FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Padding=&quot;4&quot; Spacing=&quot;10&quot;&gt;
+            &lt;TextBox x:Name=&quot;HashLength&quot; Text=&quot;32&quot; Width=&quot;200&quot; FontSize=&quot;25&quot; /&gt;
+            &lt;TextBlock Text=&quot;Hash length. The hash string base-64 encodes the hash of this length along with other parameters so the length of the resulting hash string is significantly longer.&quot; TextWrapping=&quot;WrapWholeWords&quot; MaxWidth=&quot;700&quot; FontSize=&quot;25&quot; /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre><h2 id="xaml-code">XAML Code</h2>
 <p>The code to do the processing for that XAML takes care to do as much
 proccessing in async calls to give the UI a chance to be reactive. Highlighted
 is the actual call to <code>Argon2.Hash()</code>:</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>It looks like the sample you are looking for does not exist.</p>
-</div><h2 id="example-source">Example Source</h2>
+<pre><code class="lang-csharp" name="MainPage.xaml.cs" highlight-lines="135-141">// &lt;copyright file=&quot;MainPage.xaml.cs&quot; company=&quot;Isopoh&quot;&gt;
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// &lt;/copyright&gt;
+namespace TestUno
+{
+    using System;
+    using System.Threading.Tasks;
+    using Isopoh.Cryptography.Argon2;
+    using Isopoh.Cryptography.SecureArray;
+    using Windows.UI.Xaml.Controls;
+
+    /// &lt;summary&gt;
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// &lt;/summary&gt;
+    public sealed partial class MainPage : Page
+    {
+        private string previousSecret = string.Empty;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;MainPage&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        public MainPage()
+        {
+            this.InitializeComponent();
+            this.Os.Text = $&quot;Operating System: {SecureArray.DefaultCall.Os}, {IntPtr.Size * 8}-bit&quot;;
+            this.Secret.LostFocus += (o, a) =&gt; Task.Run(
+                async () =&gt; await this.CalculateHashAsync());
+            this.TimeCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
+            this.MemoryCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
+            this.Parallelism.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
+            this.HashLength.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
+        }
+
+        /// &lt;summary&gt;
+        /// Called before a positive integer text change.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;o&quot;&gt;The object called on.&lt;/param&gt;
+        /// &lt;param name=&quot;arg&quot;&gt;The text change event information.&lt;/param&gt;
+        public void OnBeforePositiveIntTextChange(
+            TextBox o,
+            TextBoxBeforeTextChangingEventArgs arg)
+        {
+            arg.Cancel = !int.TryParse(arg.NewText, out int val) || val &lt; 1;
+        }
+
+        /// &lt;summary&gt;
+        /// Called to calculate the hash with the parameters from the form.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Task that calculates the hash.&lt;/returns&gt;
+        public async Task CalculateHashAsync()
+        {
+            bool textChanged = false;
+            await this.Dispatcher.RunAsync(
+                Windows.UI.Core.CoreDispatcherPriority.Normal,
+                () =&gt;
+                {
+                    textChanged = this.Secret.Text != this.previousSecret;
+                });
+            if (textChanged)
+            {
+                var tick = DateTimeOffset.UtcNow;
+                await this.Dispatcher.RunAsync(
+                    Windows.UI.Core.CoreDispatcherPriority.Normal,
+                    () =&gt;
+                    {
+                        this.previousSecret = this.Secret.Text;
+                        this.Secret.IsEnabled = false;
+                        this.TimeCost.IsEnabled = false;
+                        this.MemoryCost.IsEnabled = false;
+                        this.Parallelism.IsEnabled = false;
+                        this.Type.IsEnabled = false;
+                        this.HashLength.IsEnabled = false;
+                        this.HashTitle.Text = string.Empty;
+                        this.HashValue.Text =
+                            $&quot;Calculating hash for \&quot;{this.previousSecret}\&quot;...&quot;;
+                        this.HashTime.Text = string.Empty;
+                    });
+                try
+                {
+                    int timeCost = 3;
+                    int memoryCost = 65536;
+                    int parallelism = 1;
+                    Argon2Type type = Argon2Type.HybridAddressing;
+                    int hashLength = 32;
+                    await this.Dispatcher.RunAsync(
+                        Windows.UI.Core.CoreDispatcherPriority.Normal,
+                        () =&gt;
+                        {
+                            if (!int.TryParse(this.TimeCost.Text, out timeCost)
+                                || timeCost &lt; 1)
+                            {
+                                timeCost = 3;
+                                this.TimeCost.Text = &quot;3&quot;;
+                            }
+
+                            if (!int.TryParse(this.MemoryCost.Text, out memoryCost)
+                                || memoryCost &lt; 1)
+                            {
+                                memoryCost = 65536;
+                                this.MemoryCost.Text = &quot;65536&quot;;
+                            }
+
+                            if (!int.TryParse(this.Parallelism.Text, out parallelism)
+                                || parallelism &lt; 1)
+                            {
+                                parallelism = 1;
+                                this.Parallelism.Text = &quot;1&quot;;
+                            }
+
+                            if (this.Type.SelectedIndex == 0)
+                            {
+                                type = Argon2Type.DataDependentAddressing;
+                            }
+                            else if (this.Type.SelectedIndex == 1)
+                            {
+                                type = Argon2Type.DataIndependentAddressing;
+                            }
+                            else
+                            {
+                                type = Argon2Type.HybridAddressing;
+                                this.Type.SelectedIndex = 2;
+                            }
+
+                            if (!int.TryParse(this.HashLength.Text, out hashLength)
+                                || hashLength &lt; 1)
+                            {
+                                hashLength = 32;
+                                this.HashLength.Text = &quot;32&quot;;
+                            }
+                        });
+
+                    var hashValue = await Task.Run(
+                        () =&gt; Argon2.Hash(
+                            this.previousSecret,
+                            timeCost,
+                            memoryCost,
+                            parallelism,
+                            type,
+                            hashLength));
+                    var hashTime =
+                        ((int)(DateTimeOffset.UtcNow - tick).TotalMilliseconds) / 1000.0;
+                    var hashTimeText = $&quot;({hashTime} seconds)&quot;;
+                    await this.Dispatcher.RunAsync(
+                        Windows.UI.Core.CoreDispatcherPriority.Normal,
+                        () =&gt;
+                        {
+                            this.HashTitle.Text = $&quot;Hash for \&quot;{this.previousSecret}\&quot;.&quot;;
+                            this.HashValue.Text = hashValue;
+                            this.HashTime.Text = hashTimeText;
+                        });
+                }
+                finally
+                {
+                    await this.Dispatcher.RunAsync(
+                        Windows.UI.Core.CoreDispatcherPriority.Normal,
+                        () =&gt;
+                        {
+                            this.Secret.IsEnabled = true;
+                            this.TimeCost.IsEnabled = true;
+                            this.MemoryCost.IsEnabled = true;
+                            this.Parallelism.IsEnabled = true;
+                            this.Type.IsEnabled = true;
+                            this.HashLength.IsEnabled = true;
+                        });
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-source">Example Source</h2>
 <p>The source for this example can be found at:</p>
 <p>(github)<a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/test/TestUno">TestUno</a></p>
 </article>

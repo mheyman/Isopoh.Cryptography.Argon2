@@ -135,11 +135,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj">
+    <ProjectReference Include="..\..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj">
       <Project>{0738ed69-6346-4143-b8ef-71aa8605a1a4}</Project>
       <Name>Isopoh.Cryptography.Argon2</Name>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj">
+    <ProjectReference Include="..\..\..\lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj">
       <Project>{8f5cefc0-81b0-473b-8ce8-2e1ef555b15b}</Project>
       <Name>Isopoh.Cryptography.SecureArray</Name>
     </ProjectReference>
@@ -151,7 +151,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <AdditionalFiles Include="$(SolutionDir)stylecop.json">
+    <AdditionalFiles Include="..\..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
     <None Include="TestUno.UWP_TemporaryKey.pfx" />
@@ -165,7 +165,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
-  <Import Project="$(SolutionDir)test\TestUno\TestUno.Shared\TestUno.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\..\test\TestUno\TestUno.Shared\TestUno.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

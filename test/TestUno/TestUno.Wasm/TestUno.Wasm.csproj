@@ -21,7 +21,7 @@
     <Content Include="Assets\SplashScreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <UpToDateCheckInput Include="$(SolutionDir)test\TestUno\TestUno.Shared\**\*.xaml" />
+    <UpToDateCheckInput Include="..\..\..\test\TestUno\TestUno.Shared\**\*.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="WasmCSS\Fonts.css" />
@@ -52,7 +52,7 @@
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.27" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
   </ItemGroup>
-  <Import Project="$(SolutionDir)test\TestUno\TestUno.Shared\TestUno.Shared.projitems" Label="Shared" Condition="Exists('$(SolutionDir)test\TestUno\TestUno.Shared\TestUno.Shared.projitems')" />
+  <Import Project="..\..\..\test\TestUno\TestUno.Shared\TestUno.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\test\TestUno\TestUno.Shared\TestUno.Shared.projitems')" />
 </Project>

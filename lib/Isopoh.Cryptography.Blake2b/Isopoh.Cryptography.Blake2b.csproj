@@ -60,12 +60,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+        <AdditionalFiles Include="..\..\stylecop.json" />
     </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(SolutionDir)images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
-    <None Include="$(SolutionDir)LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
     <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

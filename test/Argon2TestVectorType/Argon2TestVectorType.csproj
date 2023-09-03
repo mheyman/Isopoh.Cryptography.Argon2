@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
   </ItemGroup>
 
 </Project>

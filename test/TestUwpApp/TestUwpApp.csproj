@@ -177,17 +177,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj">
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj">
       <Project>{0738ed69-6346-4143-b8ef-71aa8605a1a4}</Project>
       <Name>Isopoh.Cryptography.Argon2</Name>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj">
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj">
       <Project>{8f5cefc0-81b0-473b-8ce8-2e1ef555b15b}</Project>
       <Name>Isopoh.Cryptography.SecureArray</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="$(SolutionDir)stylecop.json">
+    <AdditionalFiles Include="..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
   </ItemGroup>

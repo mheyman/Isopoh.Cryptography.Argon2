@@ -35,7 +35,7 @@ It builds a component that looks like this:
 
 The WPF XAML for that page looks like:
 
-[!code-xml[MainPage.xaml](../../TestUno/Shared/MainPage.xaml)]
+[!code-xml[MainPage.xaml](../../test/TestUno/TestUno.Shared/MainPage.xaml)]
 
 ## XAML Code
 
@@ -43,7 +43,7 @@ The code to do the processing for that XAML takes care to do as much
 proccessing in async calls to give the UI a chance to be reactive. Highlighted
 is the actual call to `Argon2.Hash()`:
 
-[!code-csharp[MainPage.xaml.cs](../../TestUno/Shared/MainPage.xaml.cs?highlight=135-141)]
+[!code-csharp[MainPage.xaml.cs](../../test/TestUno/TestUno.Shared/MainPage.xaml.cs?highlight=135-141)]
 
 ## Example Source
 

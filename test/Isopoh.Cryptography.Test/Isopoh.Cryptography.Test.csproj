@@ -19,12 +19,12 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
-    <ProjectReference Include="$(SolutionDir)lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="$(SolutionDir)stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>

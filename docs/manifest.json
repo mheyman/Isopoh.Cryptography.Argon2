@@ -17,126 +17,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVector.Test.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVector.Test.html",
-          "hash": "IWeiYQsx2PViovTnkAxTO1ubQTm2FUEtvsTAY7/2hO4="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVector.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVector.html",
-          "hash": "cdzY92NuYKT3oLVsSkduWLD9KT/iB9oND7hpUIGkmNc="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorSourceGenerator.Argon2TestVectorSourceGenerator.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorSourceGenerator.Argon2TestVectorSourceGenerator.html",
-          "hash": "Qn9sOebhNakxRP/trC+I0XDVt6g9XC9Uw0N7Oe0DDYc="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorSourceGenerator.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorSourceGenerator.html",
-          "hash": "rQWwMsgyZKRJu164rwYAUUdPgF9OGEgHZi20H/8gei0="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorType.Argon2Output.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorType.Argon2Output.html",
-          "hash": "W9Rqtha68ezNeP7r5EVK7lI9C+l27q6jmA80C7zsXSI="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorType.OfficialTestVector.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorType.OfficialTestVector.html",
-          "hash": "HjaMXVkwH7LRpUOT1WOC4XCkT+11DVe9M3fYZKODyoo="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorType.TestVector.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorType.TestVector.html",
-          "hash": "c4u/2Y1NT+X31i0HGvILuNxuEebE/NQhO0HLQenIqpo="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Argon2TestVectorType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Argon2TestVectorType.html",
-          "hash": "gnDfKOcJXCASmef7/oyM24AldLVUqyskPoSS3ux9cH8="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Doc.Dummy.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Doc.Dummy.html",
-          "hash": "8oilO/o2YzQz1MNBqJoF9qdtoG+vGDjft0uA8+cJDAQ="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Doc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Doc.html",
-          "hash": "a5xG1+ONyI2fNrxTa6DQCpxSxHMOSRay7YkAfeZW518="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.yml",
       "output": {
         ".html": {
@@ -460,186 +340,6 @@
       "version": ""
     },
     {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Isopoh.Cryptography.Test.UnitTests.Argon2TestVector.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Isopoh.Cryptography.Test.UnitTests.Argon2TestVector.html",
-          "hash": "iDT4QvRMFEejRCi4XzXHB1O691qJsan1PSk4rtNgy3I="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Isopoh.Cryptography.Test.UnitTests.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Isopoh.Cryptography.Test.UnitTests.html",
-          "hash": "psNqO2zJ4AEBwllb/ojUYT+y8SSjGoCpt5XiI+761Xc="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Isopoh.Cryptography.Test.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Isopoh.Cryptography.Test.html",
-          "hash": "eWm4Z0nkotoROcKUkMtrL+UJSD/xTxUesyJMuqtVZUU="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestApp.Program.Argon2TestVector.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestApp.Program.Argon2TestVector.html",
-          "hash": "qygxWwXzb01Awigb5s/J95FCbh6nTUDFfEu6EMCocN8="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestApp.Program.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestApp.Program.html",
-          "hash": "Df4npkdqu41gOADCIbLU8ePxZ9M8HLESLburUEvVLKs="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestApp.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestApp.html",
-          "hash": "CMw5IIGAQTTV/oqWMZc8XrfGTPZxuXxBD0AR+eriCGw="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestBlazor.Server.Data.WeatherForecast.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestBlazor.Server.Data.WeatherForecast.html",
-          "hash": "4m1bXDB19aFVg8gKSjBtu6hcL3fGY/vDu+LjkpKHE+s="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestBlazor.Server.Data.WeatherForecastService.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestBlazor.Server.Data.WeatherForecastService.html",
-          "hash": "/kxscHTW+V531dYmOw8/zAIHm0MGkzregzd2xIuFiBc="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestBlazor.Server.Data.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestBlazor.Server.Data.html",
-          "hash": "DjlRtsiZpWQduVrq1qaPJarGZO60mxmRniPi8ufhX7o="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUno.Wasm.Program.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUno.Wasm.Program.html",
-          "hash": "9urAlhxQr0GS15J4oTyJ7ICHacKgtluATim7mznIzAQ="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUno.Wasm.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUno.Wasm.html",
-          "hash": "rsW1P6syFyrMzq6J0eG1Bc4/z3rT6FpFmdXiuii52PE="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUwpApp.App.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUwpApp.App.html",
-          "hash": "9IV+lLA2QgqxE3rrzWOXwNmaxtSrqeh0I//kJCBvpSA="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUwpApp.MainPage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUwpApp.MainPage.html",
-          "hash": "l41mYafI+beSu7pXGY+8o3x5f1nxfMF86z/1SrFj+bM="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUwpApp.Program.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUwpApp.Program.html",
-          "hash": "FI3mPG/dmlwT9idljJuEonPPfxu/MAiBcOieEYzNELw="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/TestUwpApp.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/TestUwpApp.html",
-          "hash": "G/nVLCFXnKZ3cB90g3Fm2J/yngJVn13IGfqf8E6WsjQ="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "log_codes": [
         "InvalidFileLink"
       ],
@@ -660,7 +360,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "pFa+wEIkmihAyhcFTQNggZms2KaA2Xl0qJZ9oqY7Klw="
+          "hash": "jmNj8gX/ennsYp3HqZK+OhzKj4tMspFXgad+6v1k2IU="
         }
       },
       "is_incremental": false,
@@ -672,7 +372,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/blazor.html",
-          "hash": "8OCAPy1oy9KdC0fdHyn5BSe1kk9PyNgaGtgIe0SKEAg="
+          "hash": "Cop16ZStbZc+pY9M5TmT/o3YFcAhC+vYDAqBihDT9lY="
         }
       },
       "is_incremental": false,
@@ -706,15 +406,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "codesnippet-not-found"
-      ],
       "type": "Conceptual",
       "source_relative_path": "articles/unoplatform.md",
       "output": {
         ".html": {
           "relative_path": "articles/unoplatform.html",
-          "hash": "tLcqLzi7DxNHkk2uKLT12UofmHsBjI2TlRzLiMpiAMM="
+          "hash": "CdNixxsWvVWoO3LXTvXpJQr+fQyNhbFI71d28Bh1clQ="
         }
       },
       "is_incremental": false,
@@ -801,7 +498,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 52,
+          "total_file_count": 27,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
