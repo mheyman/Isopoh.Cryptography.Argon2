@@ -264,7 +264,20 @@ List of people and project that inspired creation of this one:
 ## LICENSE
 [cpl]:#license 'License info'
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Isopoh.Cryptography.Argon2</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/mheyman/Isopoh.Cryptography.Argon2" property="cc:attributionName" rel="cc:attributionURL">Michael Heyman</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law,
+  <a rel="dct:publisher"
+     href="https://github.com/mheyman/Isopoh.Cryptography.Argon2">
+    <span property="dct:title">Michael Heyman</span></a>
+  has waived all copyright and related or neighboring rights to
+  <span property="dct:title">Isopoh.Cryptography.ARgon2</span>.
+</p>
+
 ## PRODUCTION STATUS & SUPPORT
 [ps]: #production-status--support 'Production use disclaimer & support info'
 
