@@ -65,7 +65,6 @@
 
   <ItemGroup>
     <None Include="..\..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
-    <None Include="..\..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
     <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

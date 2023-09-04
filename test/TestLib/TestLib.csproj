@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    <ProjectReference Include="..\Argon2TestVectorType\Argon2TestVectorType.csproj" />
+    <ProjectReference Include="..\Argon2TestVector\Argon2TestVector.csproj" />
+  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Profiler.Api" Version="1.4.0" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="xunit.abstractions" Version="2.0.3" />
+    </ItemGroup>
+
+</Project>

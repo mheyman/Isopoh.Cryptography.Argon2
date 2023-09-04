@@ -7,501 +7,134 @@
 // Tests because unit tests seem to be hard to get running.
 // </summary>
 
-namespace Isopoh.Cryptography.Test
+namespace Isopoh.Cryptography.Test;
+using TestLib;
+
+using Argon2;
+using SecureArray;
+using Xunit;
+using Xunit.Abstractions;
+
+/// <summary>
+/// Unit tests for Isopoh.Cryptography.Argon2.
+/// </summary>
+public class UnitTests
 {
-    using Argon2;
-    using SecureArray;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
-    using Xunit;
-    using Xunit.Abstractions;
+    private readonly ITestOutputHelper output;
 
     /// <summary>
-    /// Unit tests for Isopoh.Cryptography.Argon2
+    /// Initializes a new instance of the <see cref="UnitTests"/> class.
     /// </summary>
-    public class UnitTests
+    /// <param name="output">
+    /// Where to send the output to (doesn't seem to work...)
+    /// </param>
+    public UnitTests(ITestOutputHelper output)
     {
-        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+        this.output = output;
+    }
 
-        /// <summary>
-        /// Test vectors for Argon2. From https://github.com/P-H-C/phc-winner-argon2/tree/master/kats
-        /// </summary>
-        private static readonly Argon2TestVector[] Argon2TestVectors =
-            {
-                new (
-                    "Data dependent",
-                    Argon2Type.DataDependentAddressing,
-                    Argon2Version.Nineteen,
-                    3,
-                    32,
-                    4,
-                    32,
-                    "01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01",
-                    "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
-                    "03 03 03 03 03 03 03 03",
-                    "04 04 04 04 04 04 04 04 04 04 04 04",
-                    "51 2b 39 1b 6f 11 62 97 53 71 d3 09 19 73 42 94 f8 68 e3 be 39 84 f3 c1 a1 3a 4d b9 fa be 4a cb"),
-                new (
-                    "Data independent",
-                    Argon2Type.DataIndependentAddressing,
-                    Argon2Version.Nineteen,
-                    3,
-                    32,
-                    4,
-                    32,
-                    "01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01",
-                    "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
-                    "03 03 03 03 03 03 03 03",
-                    "04 04 04 04 04 04 04 04 04 04 04 04",
-                    "c8 14 d9 d1 dc 7f 37 aa 13 f0 d7 7f 24 94 bd a1 c8 de 6b 01 6d d3 88 d2 99 52 a4 c4 67 2b 6c e8"),
-                new (
-                    "Hybrid",
-                    Argon2Type.HybridAddressing,
-                    Argon2Version.Nineteen,
-                    3,
-                    32,
-                    4,
-                    32,
-                    "01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01",
-                    "02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02",
-                    "03 03 03 03 03 03 03 03",
-                    "04 04 04 04 04 04 04 04 04 04 04 04",
-                    "0d 64 0d f5 8d 78 76 6c 08 c0 37 a3 4a 8b 53 c9 d0 1e f0 45 2d 75 b6 5e b5 25 20 e9 6b 01 e6 59"),
-            };
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestArgon2RoundTrip()
+    {
+        var (passed, text) = RoundTrip.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        private readonly ITestOutputHelper output;
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestArgon2RoundTripSimpleCall()
+    {
+        var (passed, text) = RoundTripSimpleCall.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        /// <summary>
-        /// Initialize a new instance of the <see cref="UnitTests"/> class.
-        /// </summary>
-        /// <param name="output">
-        /// Where to send the output to (doesn't seem to work...)
-        /// </param>
-        public UnitTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestArgon2ThreadsDontMatter()
+    {
+        var (passed, text) = ThreadsDontMatter.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        /// <summary>
-        /// Test <see cref="Argon2"/>.
-        /// </summary>
-        [Fact]
-        public void TestArgon2RoundTrip()
-        {
-            var password = "password1";
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] salt = new byte[16];
-            Rng.GetBytes(salt);
-            var config = new Argon2Config
-            {
-                Type = Argon2Type.DataIndependentAddressing,
-                Version = Argon2Version.Nineteen,
-                Password = passwordBytes,
-                Salt = salt,
-                TimeCost = 3,
-                MemoryCost = 65536,
-                Lanes = 4,
-                Threads = 2,
-            };
-            var argon2 = new Argon2(config);
-            SecureArray<byte> hash = argon2.Hash();
-            var passwordHash = config.EncodeString(hash.Buffer);
-            this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
-            Assert.True(
-                Argon2.Verify(passwordHash, passwordBytes, SecureArray.DefaultCall),
-                $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
-        }
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestArgon2()
+    {
+        var (passed, text) = PublishedVector.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        /// <summary>
-        /// Test <see cref="Argon2"/>.
-        /// </summary>
-        [Fact]
-        public void TestArgon2RoundTrip2()
-        {
-            var password = "password1";
-            var passwordHash = Argon2.Hash(password);
-            this.output.WriteLine($"Argon2 of {password} --> {passwordHash}");
-            Assert.True(
-                Argon2.Verify(passwordHash, password, SecureArray.DefaultCall),
-                $"expected verify to work for {passwordHash} (Argon2 hash of {password}");
-        }
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestParallelismTiming()
+    {
+        var (passed, text) = TimeToHash.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        /// <summary>
-        /// Test <see cref="Argon2"/>.
-        /// </summary>
-        [Fact]
-        public void TestArgon2ThreadsDontMatter()
-        {
-            var password = "password1";
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            var configA = new Argon2Config
-            {
-                Type = Argon2Type.DataIndependentAddressing,
-                Version = Argon2Version.Nineteen,
-                Password = passwordBytes,
-                TimeCost = 3,
-                MemoryCost = 32,
-                Lanes = 4,
-                Threads = 3,
-            };
+    /// <summary>
+    /// Test <see cref="Argon2"/>.
+    /// </summary>
+    [Fact]
+    public void TestLeaking()
+    {
+        var (passed, text) = LeakInVerify.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-            var configB = new Argon2Config
-            {
-                Type = Argon2Type.DataIndependentAddressing,
-                Version = Argon2Version.Nineteen,
-                Password = passwordBytes,
-                TimeCost = 3,
-                MemoryCost = 32,
-                Lanes = 4,
-                Threads = 1,
-            };
-            using var argon2A = new Argon2(configA);
-            using var argon2B = new Argon2(configB);
-            using var hashA = argon2A.Hash();
-            using var hashB = argon2B.Hash();
-            var hashTextA = configA.EncodeString(hashA.Buffer);
-            var hashTextB = configB.EncodeString(hashB.Buffer);
-            Assert.Equal(hashTextA, hashTextB);
-        }
+    ////[Fact]
+    ////public void TestStore64()
+    ////{
+    ////    var v1 = new byte[8];
+    ////    var v2 = new byte[8];
 
-        /// <summary>
-        /// Test <see cref="Argon2"/>.
-        /// </summary>
-        [Fact]
-        public void TestArgon2()
-        {
-            foreach (var testVector in Argon2TestVectors)
-            {
-                var encoded = new StringBuilder();
-                try
-                {
-                    var config = new Argon2Config
-                    {
-                        Type = testVector.Type,
-                        Version = testVector.Version,
-                        TimeCost = testVector.Iterations,
-                        MemoryCost = testVector.MemoryKBytes,
-                        Lanes = testVector.Parallelism,
-                        Threads = testVector.Parallelism,
-                        Password = testVector.Password,
-                        Salt = testVector.Salt,
-                        Secret = testVector.Secret,
-                        AssociatedData = testVector.AssociatedData,
-                        HashLength = testVector.TagLength
-                    };
-                    var argon2 = new Argon2(config);
-                    SecureArray<byte> hash = argon2.Hash();
-                    Assert.False(
-                        hash.Buffer.Where((b, i) => b != testVector.Tag[i]).Any(),
-                        $"Test {testVector.Name}: Got{Environment.NewLine}{BitConverter.ToString(hash.Buffer)}{Environment.NewLine}expected{Environment.NewLine}{BitConverter.ToString(testVector.Tag)}");
-                    this.output.WriteLine(
-                        "Passed Argon2:\r\n"
-                        + $"             Version 0x{(int)testVector.Version:X} ({(int)testVector.Version})\r\n"
-                        + $"                Type {testVector.Type}\r\n"
-                        + $"          Iterations {testVector.Iterations}\r\n"
-                        + $"       Memory KBytes {testVector.MemoryKBytes}\r\n"
-                        + $"         Parallelism {testVector.Parallelism}\r\n"
-                        + $"            Password {BitConverter.ToString(testVector.Password)}\r\n"
-                        + $"                Salt {BitConverter.ToString(testVector.Salt)}\r\n"
-                        + $"              Secret {BitConverter.ToString(testVector.Secret)}\r\n"
-                        + $"      AssociatedData {BitConverter.ToString(testVector.AssociatedData)}\r\n"
-                        + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}\r\n"
-                        + $"             encoded {encoded}");
-                }
-                catch (Exception e)
-                {
-                    Assert.Fail(e.Message);
-                }
-            }
-        }
+    ////    rng.GetBytes(salt);
+    ////    ulong tmp = Hasher.Load64(v1, 0);
+    ////    Hasher.Store64(v2, 0, tmp);
+    ////    this.output.WriteLine($"{BitConverter.ToString(v1)}");
+    ////    this.output.WriteLine($"{tmp:X}");
+    ////    this.output.WriteLine($"{BitConverter.ToString(v2)}");
+    ////    Assert.True(false, $"{BitConverter.ToString(v1)}\r\n{tmp:X}\r\n{BitConverter.ToString(v2)}");
 
-        ////[Fact]
-        ////public void TestStore64()
-        ////{
-        ////    var v1 = new byte[8];
-        ////    var v2 = new byte[8];
+    ////    Assert.Equal(v1, v2);
+    ////}
 
-        ////    rng.GetBytes(salt);
-        ////    ulong tmp = Hasher.Load64(v1, 0);
-        ////    Hasher.Store64(v2, 0, tmp);
-        ////    this.output.WriteLine($"{BitConverter.ToString(v1)}");
-        ////    this.output.WriteLine($"{tmp:X}");
-        ////    this.output.WriteLine($"{BitConverter.ToString(v2)}");
-        ////    Assert.True(false, $"{BitConverter.ToString(v1)}\r\n{tmp:X}\r\n{BitConverter.ToString(v2)}");
+    /// <summary>
+    /// Test the size of buffer <see cref="SecureArray"/> allows.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="SecureArray"/> already tends to try to figure this out under the hood.
+    /// </remarks>
+    [Fact]
+    public void TestSecureArray()
+    {
+        var (passed, text) = SecureArraySizing.Test(this.output);
+        Assert.True(passed, text);
+    }
 
-        ////    Assert.Equal(v1, v2);
-        ////}
+    [Fact]
+    public void HashSize()
+    {
+        string password = "password";
+        string hash = Argon2.Hash(password, hashLength: 16);
+        Assert.True(Argon2.Verify(hash, password));
+    }
 
-        /// <summary>
-        /// Test the size of buffer <see cref="SecureArray"/> allows.
-        /// </summary>
-        /// <remarks>
-        /// <see cref="SecureArray"/> already tends to try to figure this out under the hood.
-        /// </remarks>
-        [Fact]
-        public void TestSecureArray()
-        {
-            int size = 100;
-            int smallestFailedSize = int.MaxValue;
-            int largestSuccessfulSize = size;
-            while (true)
-            {
-                try
-                {
-                    using (new SecureArray<byte>(size, SecureArray.DefaultCall))
-                    {
-                        this.output.WriteLine($"SecureArray: Passed size={size}");
-                        if (size + 1 >= smallestFailedSize)
-                        {
-                            break;
-                        }
-
-                        if (size > largestSuccessfulSize)
-                        {
-                            largestSuccessfulSize = size;
-                        }
-
-                        size = largestSuccessfulSize + ((smallestFailedSize - largestSuccessfulSize) / 2);
-                    }
-                }
-
-                // ReSharper disable once CatchAllClause
-                catch (Exception e)
-                {
-                    this.output.WriteLine($"SecureArray: Failed size={size}: {e.Message}");
-
-                    smallestFailedSize = size;
-                    long tmp = largestSuccessfulSize;
-                    tmp += smallestFailedSize;
-                    tmp /= 2;
-                    size = (int)tmp;
-
-                    if (smallestFailedSize <= largestSuccessfulSize)
-                    {
-                        size = largestSuccessfulSize;
-                        break;
-                    }
-                }
-            }
-
-            this.output.WriteLine($"SecureArray: Made a {size}-byte secure array");
-        }
-
-        [Fact]
-        public void HashSize()
-        {
-            string password = "password";
-            string hash = Argon2.Hash(password, hashLength: 16);
-            Assert.True(Argon2.Verify(hash, password));
-        }
-
-        [Fact]
-        public void HighMemoryCost()
-        {
-            // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
-            // this can take a long time depending on the multiplier
-            int multiplier = 20;
-            string password = "password";
-            string hash = Argon2.Hash(password, memoryCost: (multiplier * Argon2.CsharpMaxBlocksPerArray / Argon2.QwordsInBlock) + 271, parallelism: 20);
-            Assert.True(Argon2.Verify(hash, password));
-        }
-
-        /// <summary>
-        /// Makes useful binary from text Argon2 test vector information.
-        /// </summary>
-        public sealed class Argon2TestVector
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Argon2TestVector"/> class.
-            /// </summary>
-            /// <param name="name">
-            /// name of the vector
-            /// </param>
-            /// <param name="type">
-            /// Data-driven or independent.
-            /// </param>
-            /// <param name="version">
-            /// The Argon2 version.
-            /// </param>
-            /// <param name="iterations">
-            /// The number of iterations.
-            /// </param>
-            /// <param name="memoryKBytes">
-            /// The memory to use.
-            /// </param>
-            /// <param name="parallelism">
-            /// The number of threads to use.
-            /// </param>
-            /// <param name="tagLength">
-            /// How many bytes to output.
-            /// </param>
-            /// <param name="password">
-            /// The password to hash.
-            /// </param>
-            /// <param name="salt">
-            /// The salt to use in the hash. Minimum of 8 bytes. 16 recommended.
-            /// </param>
-            /// <param name="secret">
-            /// The secret to use in the hash.
-            /// </param>
-            /// <param name="associatedData">
-            /// The associated data to use in the hash (like a salt but can be shorter).
-            /// </param>
-            /// <param name="tag">
-            /// The expected hash created from the above parameters.
-            /// </param>
-            public Argon2TestVector(
-                string name,
-                Argon2Type type,
-                Argon2Version version,
-                int iterations,
-                int memoryKBytes,
-                int parallelism,
-                int tagLength,
-                string password,
-                string salt,
-                string secret,
-                string associatedData,
-                string tag)
-            {
-                this.Name = name;
-                this.Type = type;
-                this.Version = version;
-                this.Iterations = iterations;
-                this.MemoryKBytes = memoryKBytes;
-                this.Parallelism = parallelism;
-                this.TagLength = tagLength;
-                this.Password = ToBytes(password);
-                this.Salt = ToBytes(salt);
-                this.Secret = ToBytes(secret);
-                this.AssociatedData = ToBytes(associatedData);
-                this.Tag = ToBytes(tag);
-            }
-
-            /// <summary>
-            /// Gets the name of the test vector.
-            /// </summary>
-            public string Name { get; }
-
-            /// <summary>
-            /// Gets the Argon2 type - data dependent or independent.
-            /// </summary>
-            public Argon2Type Type { get; }
-
-            /// <summary>
-            /// Gets the version of the Argon2 algorithm to use.
-            /// </summary>
-            public Argon2Version Version { get; }
-
-            /// <summary>
-            /// Gets the number of iterations to use in the Argon2 hash.
-            /// </summary>
-            public int Iterations { get; }
-
-            /// <summary>
-            /// Gets the amount of memory to use in the Argon2 hash.
-            /// </summary>
-            public int MemoryKBytes { get; }
-
-            /// <summary>
-            /// Gets the number of threads to use in the Argon2 hash.
-            /// </summary>
-            public int Parallelism { get; }
-
-            /// <summary>
-            /// Gets the size in bytes of the output hash value to create.
-            /// </summary>
-            public int TagLength { get; }
-
-            /// <summary>
-            /// Gets the password to hash.
-            /// </summary>
-            public byte[] Password { get; }
-
-            /// <summary>
-            /// Gets the salt to hash.
-            /// </summary>
-            public byte[] Salt { get; }
-
-            /// <summary>
-            /// Gets the secret to hash.
-            /// </summary>
-            public byte[] Secret { get; }
-
-            /// <summary>
-            /// Gets the associated data to hash.
-            /// </summary>
-            public byte[] AssociatedData { get; }
-
-            /// <summary>
-            /// Gets the expected result of the hash.
-            /// </summary>
-            public byte[] Tag { get; }
-
-            private static byte[] ToBytes(string s)
-            {
-                var ret = new List<byte>();
-                for (int i = 1; i < s.Length; i += 2)
-                {
-                    var ch = s[i - 1];
-                    var cl = s[i];
-                    while (char.IsWhiteSpace(ch))
-                    {
-                        ch = cl;
-                        ++i;
-                        if (i == s.Length)
-                        {
-                            break;
-                        }
-
-                        cl = s[i];
-                    }
-
-                    byte val;
-#pragma warning disable SA1131 // Use readable conditions
-                    if (ch is >= '0' and <= '9')
-                    {
-                        val = (byte)((uint)(ch - '0') << 4);
-                    }
-                    else if (ch is >= 'a' and <= 'f')
-                    {
-                        val = (byte)((uint)(ch - 'a' + 10) << 4);
-                    }
-                    else if (ch is >= 'A' and <= 'F')
-                    {
-                        val = (byte)((uint)(ch - 'A' + 10) << 4);
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Invalid character '{ch}' found in hex string");
-                    }
-
-                    if (cl is >= '0' and <= '9')
-                    {
-                        val += (byte)(uint)(cl - '0');
-                    }
-                    else if (cl is >= 'a' and <= 'f')
-                    {
-                        val += (byte)(uint)(cl - 'a' + 10);
-                    }
-                    else if (cl is >= 'A' and <= 'F')
-                    {
-                        val = (byte)(uint)(cl - 'A' + 10);
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Invalid character '{cl}' found in hex string");
-                    }
-#pragma warning restore SA1131 // Use readable conditions
-
-                    ret.Add(val);
-                }
-
-                return ret.ToArray();
-            }
-        }
+    [Fact]
+    public void TestHighMemoryCost()
+    {
+        var (passed, text) = HighMemoryCost.Test(this.output);
+        Assert.True(passed, text);
     }
 }
