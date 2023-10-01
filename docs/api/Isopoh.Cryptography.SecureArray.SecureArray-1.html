@@ -505,10 +505,81 @@ returned.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_SecureArray_1_Create_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.SecureArray%601.Create(System.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall%2CIsopoh.Cryptography.SecureArray.LockMemoryPolicy)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/lib/Isopoh.Cryptography.SecureArray/SecureArray.1.cs/#L204">View Source</a>
+  </span>
+  <a id="Isopoh_Cryptography_SecureArray_SecureArray_1_Create_" data-uid="Isopoh.Cryptography.SecureArray.SecureArray`1.Create*"></a>
+  <h4 id="Isopoh_Cryptography_SecureArray_SecureArray_1_Create_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_" data-uid="Isopoh.Cryptography.SecureArray.SecureArray`1.Create(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)">Create(Int32, SecureArrayCall, LockMemoryPolicy)</h4>
+  <div class="markdown level1 summary"><p>Returns the &quot;best&quot; secure array it can. Tries first for <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArrayType.html#Isopoh_Cryptography_SecureArray_SecureArrayType_ZeroedPinnedAndNoSwap">ZeroedPinnedAndNoSwap</a>
+and, if that fails, returns a <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArrayType.html#Isopoh_Cryptography_SecureArray_SecureArrayType_ZeroedAndPinned">ZeroedAndPinned</a> secure array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SecureArray&lt;T&gt; Create(int size, SecureArrayCall secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The number of elements in the returned <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray&lt;T&gt;</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArrayCall.html">SecureArrayCall</a></td>
+        <td><span class="parametername">secureArrayCall</span></td>
+        <td><p>The methods that get called to secure the array. A null value
+defaults to <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray.html">SecureArray</a>.<a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray.html#Isopoh_Cryptography_SecureArray_SecureArray_DefaultCall">DefaultCall</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html">LockMemoryPolicy</a></td>
+        <td><span class="parametername">lockMemory</span></td>
+        <td><p>Used to set locking strategy for buffers used in creating the hash. The memory
+will always be zeroed prior to destruction. The memory is also always pinned
+so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray</a>&lt;T&gt;</td>
+        <td><p>A new <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray&lt;T&gt;</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Isopoh_Cryptography_SecureArray_SecureArray_1_Create_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Whether a no-swap <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray&lt;T&gt;</a> can be returned is up to the operating system.
+You can query <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray.html#Isopoh_Cryptography_SecureArray_SecureArray_ProtectionType">ProtectionType</a> to find the type of <a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray&lt;T&gt;</a>
+returned.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/master/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_SecureArray_1_Dispose.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.SecureArray%601.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/lib/Isopoh.Cryptography.SecureArray/SecureArray.1.cs/#L184">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/lib/Isopoh.Cryptography.SecureArray/SecureArray.1.cs/#L221">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_SecureArray_1_Dispose_" data-uid="Isopoh.Cryptography.SecureArray.SecureArray`1.Dispose*"></a>
   <h4 id="Isopoh_Cryptography_SecureArray_SecureArray_1_Dispose" data-uid="Isopoh.Cryptography.SecureArray.SecureArray`1.Dispose">Dispose()</h4>

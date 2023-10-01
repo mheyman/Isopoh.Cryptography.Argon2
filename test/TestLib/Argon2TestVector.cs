@@ -201,20 +201,20 @@ public sealed class Argon2TestVector
                 else
                 {
                     output.WriteLine(
-                        $"Test {this.Name}: Got{nl}" +
-                        $"  {text}{nl}" +
-                        $"expected{nl}" +
-                        $"  {this.TagText}");
+                        $"  Test {this.Name}: Got{nl}" +
+                        $"    {text}{nl}" +
+                        $"  expected{nl}" +
+                        $"    {this.TagText}");
                     return false;
                 }
             }
             else
             {
                 output.WriteLine(
-                    $"Test {this.Name}: Got{nl}" +
-                    $"  {BitConverter.ToString(hash.Buffer)}{nl}" +
-                    $"expected{nl}" +
-                    $"  {BitConverter.ToString(this.Tag)}");
+                    $"  Test {this.Name}: Got{nl}" +
+                    $"    {BitConverter.ToString(hash.Buffer)}{nl}" +
+                    $"  expected{nl}" +
+                    $"    {BitConverter.ToString(this.Tag)}");
                 return false;
             }
         }

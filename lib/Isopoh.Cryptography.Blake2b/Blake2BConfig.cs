@@ -12,6 +12,7 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
+    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
     /// Configuration for the Blake2 hash.

@@ -1,36 +1,44 @@
-﻿// BLAKE2 reference source code package - C# implementation
-
-// Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
-
+﻿// <copyright file="Blake2BCore.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
-
-// You should have received a copy of the CC0 Public Domain Dedication along with
-// this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-//
-/*
-  Based on BlakeSharp
-  by Dominik Reichl <dominik.reichl@t-online.de>
-  Web: http://www.dominik-reichl.de/
-  If you're using this class, it would be nice if you'd mention
-  me somewhere in the documentation of your program, but it's
-  not required.
-
-  BLAKE was designed by Jean-Philippe Aumasson, Luca Henzen,
-  Willi Meier and Raphael C.-W. Phan.
-  BlakeSharp was derived from the reference C implementation.
-*/
+// </copyright>
 
 namespace Isopoh.Cryptography.Blake2b
 {
+    // Originally written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
+    // Original copyright notice:
+    //   To the extent possible under law, the author(s) have dedicated all
+    //   copyright and related and neighboring rights to this software to the
+    //   public domain worldwide. This software is distributed without any
+    //   warranty.
+    //
+    //   You should have received a copy of the CC0 Public Domain Dedication
+    //   along with this software. If not, see
+    //   <http://creativecommons.org/publicdomain/zero/1.0/>.
+    //
+
+    /*
+      Based on BlakeSharp
+      by Dominik Reichl <dominik.reichl@t-online.de>
+      Web: http://www.dominik-reichl.de/
+      If you're using this class, it would be nice if you'd mention
+      me somewhere in the documentation of your program, but it's
+      not required.
+
+      BLAKE was designed by Jean-Philippe Aumasson, Luca Henzen,
+      Willi Meier and Raphael C.-W. Phan.
+      BlakeSharp was derived from the reference C implementation.
+    */
+
     using System;
+    using System.Runtime.InteropServices;
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
     /// The core of the Blake2 hash.
     /// </summary>
-    public sealed partial class Blake2BCore : IDisposable
+    public partial class Blake2BCore
     {
         private const int BlockSizeInBytes = 128;
 
@@ -43,9 +51,10 @@ namespace Isopoh.Cryptography.Blake2b
         private const ulong Iv6 = 0x1F83D9ABFB41BD6BUL;
         private const ulong Iv7 = 0x5BE0CD19137E2179UL;
 
-        private readonly SecureArray<byte> buf;
-        private readonly SecureArray<ulong> mbuf;
-        private readonly SecureArray<ulong> hbuf;
+        private readonly SecureArray<byte> secureArray;
+        private readonly Memory<byte> buf;
+        private readonly Memory<byte> mbufBacking;
+        private readonly Memory<byte> hbufBacking;
         private bool isInitialized;
         private int bufferFilled;
         private ulong counter0;
@@ -66,49 +75,12 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         public Blake2BCore(SecureArrayCall secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
         {
-            switch (lockMemory)
-            {
-                case LockMemoryPolicy.None:
-                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    break;
-                case LockMemoryPolicy.BestEffort:
-                    try
-                    {
-                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    }
-                    catch (LockFailException)
-                    {
-                        this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    }
-
-                    try
-                    {
-                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    }
-                    catch (LockFailException)
-                    {
-                        this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    }
-
-                    try
-                    {
-                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    }
-                    catch (LockFailException)
-                    {
-                        this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                    }
-
-                    break;
-
-                default:
-                    this.buf = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    this.mbuf = new SecureArray<ulong>(16, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    this.hbuf = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                    break;
-            }
+            const int totalSize = 128 + (sizeof(ulong) * (16 + 8));
+            this.secureArray = SecureArray<byte>.Create(totalSize, secureArrayCall, lockMemory);
+            var fullBuf = new Memory<byte>(this.secureArray.Buffer);
+            this.buf = fullBuf.Slice(0, 128);
+            this.mbufBacking = fullBuf.Slice(128, 16 * sizeof(ulong));
+            this.hbufBacking = fullBuf.Slice(128 + (16 * sizeof(ulong)), 8 * sizeof(ulong));
         }
 
         /// <summary>
@@ -120,7 +92,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <remarks>
         /// No checking is done to verify that an 8-byte value can be read from <paramref name="buf"/> at <paramref name="offset"/>.
         /// </remarks>
-        public static ulong BytesToUInt64(byte[] buf, int offset)
+        public static ulong BytesToUInt64(ReadOnlySpan<byte> buf, int offset)
         {
             return
                 ((ulong)buf[offset + 7] << (7 * 8)) |
@@ -172,14 +144,14 @@ namespace Isopoh.Cryptography.Blake2b
 
             this.isInitialized = true;
 
-            this.hbuf[0] = Iv0;
-            this.hbuf[1] = Iv1;
-            this.hbuf[2] = Iv2;
-            this.hbuf[3] = Iv3;
-            this.hbuf[4] = Iv4;
-            this.hbuf[5] = Iv5;
-            this.hbuf[6] = Iv6;
-            this.hbuf[7] = Iv7;
+            this.Hbuf[0] = Iv0;
+            this.Hbuf[1] = Iv1;
+            this.Hbuf[2] = Iv2;
+            this.Hbuf[3] = Iv3;
+            this.Hbuf[4] = Iv4;
+            this.Hbuf[5] = Iv5;
+            this.Hbuf[6] = Iv6;
+            this.Hbuf[7] = Iv7;
 
             this.counter0 = 0;
             this.counter1 = 0;
@@ -188,11 +160,11 @@ namespace Isopoh.Cryptography.Blake2b
 
             this.bufferFilled = 0;
 
-            Array.Clear(this.buf.Buffer, 0, this.buf.Buffer.Length);
+            this.buf.Span.Clear();
 
             for (int i = 0; i < 8; i++)
             {
-                this.hbuf[i] ^= config[i];
+                this.Hbuf[i] ^= config[i];
             }
         }
 
@@ -208,7 +180,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="count">
         /// Number of bytes in <paramref name="array"/> to use.
         /// </param>
-        public void HashCore(byte[] array, int start, int count)
+        public void HashCore(Span<byte> array, int start, int count)
         {
             if (!this.isInitialized)
             {
@@ -242,14 +214,14 @@ namespace Isopoh.Cryptography.Blake2b
 
             if ((this.bufferFilled > 0) && (count > bufferRemaining))
             {
-                Array.Copy(array, offset, this.buf.Buffer, this.bufferFilled, bufferRemaining);
+                this.buf.Slice(this.bufferFilled, bufferRemaining).Span.CopyTo(array.Slice(offset));
                 this.counter0 += BlockSizeInBytes;
                 if (this.counter0 == 0)
                 {
                     this.counter1++;
                 }
 
-                this.Compress(this.buf.Buffer, 0);
+                this.Compress(this.buf.Span, 0);
                 offset += bufferRemaining;
                 count -= bufferRemaining;
                 this.bufferFilled = 0;
@@ -270,7 +242,7 @@ namespace Isopoh.Cryptography.Blake2b
 
             if (count > 0)
             {
-                Array.Copy(array, offset, this.buf.Buffer, this.bufferFilled, count);
+                array.Slice(offset, count).CopyTo(this.buf.Span.Slice(this.bufferFilled));
                 this.bufferFilled += count;
             }
         }
@@ -325,17 +297,17 @@ namespace Isopoh.Cryptography.Blake2b
                 this.finalizationFlag1 = ulong.MaxValue;
             }
 
-            for (int i = this.bufferFilled; i < this.buf.Buffer.Length; i++)
+            for (int i = this.bufferFilled; i < this.buf.Length; i++)
             {
-                this.buf[i] = 0;
+                this.buf.Span[i] = 0;
             }
 
-            this.Compress(this.buf.Buffer, 0);
+            this.Compress(this.buf.Span, 0);
 
             // Output
             for (int i = 0; i < 8; ++i)
             {
-                UInt64ToBytes(this.hbuf[i], hash, i << 3);
+                UInt64ToBytes(this.Hbuf[i], hash, i << 3);
             }
 
             return hash;
@@ -373,11 +345,14 @@ namespace Isopoh.Cryptography.Blake2b
         /// </summary>
         public void Dispose()
         {
-            this.hbuf.Dispose();
-            this.mbuf.Dispose();
-            this.buf.Dispose();
+            this.secureArray.Dispose();
         }
 
-        partial void Compress(byte[] block, int start);
+        partial void Compress(ReadOnlySpan<byte> block, int start);
+
+        private Span<ulong> Mbuf => MemoryMarshal.Cast<byte, ulong>(this.mbufBacking.Span);
+
+        private Span<ulong> Hbuf => MemoryMarshal.Cast<byte, ulong>(this.hbufBacking.Span);
+
     }
 }

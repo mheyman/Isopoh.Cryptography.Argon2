@@ -1,19 +1,17 @@
-namespace Isopoh.Cryptography.Blake2b
+namespace Isopoh.Cryptography.SecureArray
 {
-    using Isopoh.Cryptography.SecureArray;
-
     /// <summary>
-    /// How to attempt memory locking.
+    /// How to attempt memory locking. Used in <see cref="SecureArray{T}.Create"/>.
     /// </summary>
     public enum LockMemoryPolicy
     {
         /// <summary>
-        /// Do not attempt to lock Blake2B buffers into RAM.
+        /// Do not attempt to lock buffers into RAM.
         /// </summary>
         None,
 
         /// <summary>
-        /// Attempt to lock Blake2B buffers into RAM, but allow non locked memory
+        /// Attempt to lock buffers into RAM, but allow non locked memory
         /// if the operating system doesn't allow the memory to be locked.
         /// </summary>
         BestEffort,
@@ -21,7 +19,7 @@ namespace Isopoh.Cryptography.Blake2b
         // ReSharper disable once UnusedMember.Global
 
         /// <summary>
-        /// Throw <see cref="LockFailException"/> exception on failure to lock Blake2B buffers into RAM.
+        /// Throw <see cref="LockFailException"/> exception on failure to lock buffers into RAM.
         /// </summary>
         /// <remarks>
         /// <para>

@@ -1,29 +1,30 @@
 ﻿// BLAKE2 reference source code package - C# implementation
 
-// Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
-
-// To the extent possible under law, the author(s) have dedicated all copyright
-// and related and neighboring rights to this software to the public domain
-// worldwide. This software is distributed without any warranty.
-
-// You should have received a copy of the CC0 Public Domain Dedication along with
-// this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 namespace Isopoh.Cryptography.Blake2b
 {
+    // Written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
+
+    // To the extent possible under law, the author(s) have dedicated all copyright
+    // and related and neighboring rights to this software to the public domain
+    // worldwide. This software is distributed without any warranty.
+
+    // You should have received a copy of the CC0 Public Domain Dedication along with
+    // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
     using System;
+    using System.Runtime.InteropServices;
 
 #if true
     /// <content/>
-    public sealed partial class Blake2BCore
+    public partial class Blake2BCore
     {
-        partial void Compress(byte[] block, int start)
+        partial void Compress(ReadOnlySpan<byte> block, int start)
         {
-            var h = this.hbuf.Buffer;
-            var m = this.mbuf.Buffer;
+            var h = this.Hbuf;
+            var m = this.Mbuf;
 
             if (BitConverter.IsLittleEndian)
             {
-                Buffer.BlockCopy(block, start, m, 0, BlockSizeInBytes);
+                block.Slice(start, BlockSizeInBytes).CopyTo(this.mbufBacking.Span);
             }
             else
             {
@@ -77,13 +78,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[0];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[1];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -91,13 +92,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[2];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[3];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -105,13 +106,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[4];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[5];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -119,13 +120,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[6];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[7];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -133,13 +134,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[8];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[9];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -147,13 +148,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[10];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[11];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -161,13 +162,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[12];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[13];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -175,13 +176,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[14];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[15];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -190,13 +191,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[14];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[10];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -204,13 +205,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[4];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[8];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -218,13 +219,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[9];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[15];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -232,13 +233,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[13];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[6];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -246,13 +247,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[1];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[12];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -260,13 +261,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[0];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[2];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -274,13 +275,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[11];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[7];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -288,13 +289,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[5];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[3];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -303,13 +304,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[11];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[8];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -317,13 +318,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[12];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[0];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -331,13 +332,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[5];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[2];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -345,13 +346,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[15];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[13];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -359,13 +360,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[10];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[14];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -373,13 +374,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[3];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[6];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -387,13 +388,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[7];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[1];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -401,13 +402,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[9];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[4];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -416,13 +417,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[7];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[9];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -430,13 +431,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[3];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[1];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -444,13 +445,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[13];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[12];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -458,13 +459,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[11];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[14];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -472,13 +473,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[2];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[6];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -486,13 +487,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[5];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[10];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -500,13 +501,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[4];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[0];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -514,13 +515,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[15];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[8];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -529,13 +530,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[9];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[0];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -543,13 +544,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[5];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[7];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -557,13 +558,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[2];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[4];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -571,13 +572,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[10];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[15];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -585,13 +586,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[14];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[1];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -599,13 +600,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[11];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[12];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -613,13 +614,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[6];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[8];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -627,13 +628,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[3];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[13];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -642,13 +643,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[2];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[12];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -656,13 +657,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[6];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[10];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -670,13 +671,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[0];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[11];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -684,13 +685,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[8];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[3];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -698,13 +699,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[4];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[13];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -712,13 +713,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[7];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[5];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -726,13 +727,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[15];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[14];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -740,13 +741,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[1];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[9];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -755,13 +756,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[12];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[5];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -769,13 +770,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[1];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[15];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -783,13 +784,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[14];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[13];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -797,13 +798,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[4];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[10];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -811,13 +812,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[0];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[7];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -825,13 +826,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[6];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[3];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -839,13 +840,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[9];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[2];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -853,13 +854,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[8];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[11];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -868,13 +869,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[13];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[11];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -882,13 +883,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[7];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[14];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -896,13 +897,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[12];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[1];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -910,13 +911,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[3];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[9];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -924,13 +925,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[5];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[0];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -938,13 +939,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[15];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[4];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -952,13 +953,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[8];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[6];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -966,13 +967,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[2];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[10];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -981,13 +982,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[6];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[15];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -995,13 +996,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[14];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[9];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1009,13 +1010,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[11];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[3];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1023,13 +1024,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[0];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[8];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1037,13 +1038,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[12];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[2];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1051,13 +1052,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[13];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[7];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1065,13 +1066,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[1];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[4];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1079,13 +1080,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[10];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[5];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1094,13 +1095,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[10];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[2];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1108,13 +1109,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[8];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[4];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1122,13 +1123,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[7];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[6];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1136,13 +1137,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[1];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[5];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1150,13 +1151,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[15];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[11];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1164,13 +1165,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[9];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[14];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1178,13 +1179,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[3];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[12];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1192,13 +1193,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[13];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[0];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1207,13 +1208,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[0];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[1];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1221,13 +1222,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[2];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[3];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1235,13 +1236,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[4];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[5];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1249,13 +1250,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[6];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[7];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1263,13 +1264,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[8];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[9];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1277,13 +1278,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[10];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[11];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1291,13 +1292,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[12];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[13];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1305,13 +1306,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[14];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[15];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1320,13 +1321,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v4 + m[14];
             v12 ^= v0;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v0 = v0 + v4 + m[10];
             v12 ^= v0;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v8 = v8 + v12;
+            v8 += v12;
             v4 ^= v8;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 
@@ -1334,13 +1335,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v5 + m[4];
             v13 ^= v1;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v1 = v1 + v5 + m[8];
             v13 ^= v1;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v9 = v9 + v13;
+            v9 += v13;
             v5 ^= v9;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1348,13 +1349,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v6 + m[9];
             v14 ^= v2;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v2 = v2 + v6 + m[15];
             v14 ^= v2;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v10 = v10 + v14;
+            v10 += v14;
             v6 ^= v10;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1362,13 +1363,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v7 + m[13];
             v15 ^= v3;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v3 = v3 + v7 + m[6];
             v15 ^= v3;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v11 = v11 + v15;
+            v11 += v15;
             v7 ^= v11;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1376,13 +1377,13 @@ namespace Isopoh.Cryptography.Blake2b
             v0 = v0 + v5 + m[1];
             v15 ^= v0;
             v15 = (v15 >> 32) | (v15 << (64 - 32));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 24) | (v5 << (64 - 24));
             v0 = v0 + v5 + m[12];
             v15 ^= v0;
             v15 = (v15 >> 16) | (v15 << (64 - 16));
-            v10 = v10 + v15;
+            v10 += v15;
             v5 ^= v10;
             v5 = (v5 >> 63) | (v5 << (64 - 63));
 
@@ -1390,13 +1391,13 @@ namespace Isopoh.Cryptography.Blake2b
             v1 = v1 + v6 + m[0];
             v12 ^= v1;
             v12 = (v12 >> 32) | (v12 << (64 - 32));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 24) | (v6 << (64 - 24));
             v1 = v1 + v6 + m[2];
             v12 ^= v1;
             v12 = (v12 >> 16) | (v12 << (64 - 16));
-            v11 = v11 + v12;
+            v11 += v12;
             v6 ^= v11;
             v6 = (v6 >> 63) | (v6 << (64 - 63));
 
@@ -1404,13 +1405,13 @@ namespace Isopoh.Cryptography.Blake2b
             v2 = v2 + v7 + m[11];
             v13 ^= v2;
             v13 = (v13 >> 32) | (v13 << (64 - 32));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 24) | (v7 << (64 - 24));
             v2 = v2 + v7 + m[7];
             v13 ^= v2;
             v13 = (v13 >> 16) | (v13 << (64 - 16));
-            v8 = v8 + v13;
+            v8 += v13;
             v7 ^= v8;
             v7 = (v7 >> 63) | (v7 << (64 - 63));
 
@@ -1418,13 +1419,13 @@ namespace Isopoh.Cryptography.Blake2b
             v3 = v3 + v4 + m[5];
             v14 ^= v3;
             v14 = (v14 >> 32) | (v14 << (64 - 32));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 24) | (v4 << (64 - 24));
             v3 = v3 + v4 + m[3];
             v14 ^= v3;
             v14 = (v14 >> 16) | (v14 << (64 - 16));
-            v9 = v9 + v14;
+            v9 += v14;
             v4 ^= v9;
             v4 = (v4 >> 63) | (v4 << (64 - 63));
 

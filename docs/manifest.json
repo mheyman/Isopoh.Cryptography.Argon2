@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BConfig.html",
-          "hash": "HvuUxB0E/Um91OMJX68SZNw4QUYjyNR5q/CbY2zm/3g="
+          "hash": "wJuv4wMIYjhkO1+T2RSDuYmE8Fk5a+u7MC0YrLR1Fso="
         }
       },
       "is_incremental": true,
@@ -153,10 +153,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.Blake2BCore.html",
-          "hash": "Ip+PB0iY8Ewl/vCsydF7ZhBaz0c2CV0Vaf2umD3VAuk="
+          "hash": "bV5pkr8n94Q3D/jB1uwMUbhObvgb7mow6DTtRPsVqwg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -185,26 +185,14 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html",
-          "hash": "Otlree7PjJhsdyp47qloACIEk4YZH/m+9J/yH8AR6wk="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Isopoh.Cryptography.Blake2b.yml",
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Blake2b.html",
-          "hash": "w2JAa8TixpyzkOUmGGNVmWFL3KvrfN23yhoztCfEY+A="
+          "hash": "2pJhLi3yNLAy6/dBzjM4ONxNHsLIpQ0USodbxmELo5U="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -281,11 +269,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html",
+          "hash": "Q//XQmCuZOaCtGKGp5ZJNY/HWTKNw46/bkvoLEmpcuo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.yml",
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
-          "hash": "OvbDVngvolAeFgXI/fMe6LdWHa7kX1eRylySBmc1jlo="
+          "hash": "OfAjx03v3Ba5rSgwMe7WtQJGWHqHy30rxyojSJwDLJ0="
         }
       },
       "is_incremental": true,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.html",
-          "hash": "9kGKHhHbVyvCy1f2S9QjF/T/LH6ZdKOlgeboUqbjoQ0="
+          "hash": "Sr5dVwQHE8AmPDiSgstFkDYNm/N50DIQWoHNT/51VVU="
         }
       },
       "is_incremental": true,
@@ -360,7 +360,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "jmNj8gX/ennsYp3HqZK+OhzKj4tMspFXgad+6v1k2IU="
+          "hash": "fzHcjFQRISBCne2+toO6AsU0xczYl+lnaHLdf4wy6g0="
         }
       },
       "is_incremental": false,
@@ -497,7 +497,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 27,
-          "skipped_file_count": 27
+          "skipped_file_count": 26
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

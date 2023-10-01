@@ -870,11 +870,11 @@ references:
   commentId: T:Isopoh.Cryptography.Blake2b.Blake2BCore
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore
   nameWithType: Blake2BCore
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   name: Blake2BCore(SecureArrayCall, LockMemoryPolicy)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_Blake2b_LockMemoryPolicy_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   nameWithType: Blake2BCore.Blake2BCore(SecureArrayCall, LockMemoryPolicy)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor*
   name: Blake2BCore
@@ -883,15 +883,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore
   nameWithType: Blake2BCore.Blake2BCore
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
-  name: BytesToUInt64(Byte[], Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_Byte___System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
-  name.vb: BytesToUInt64(Byte(), Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte(), System.Int32)
-  nameWithType: Blake2BCore.BytesToUInt64(Byte[], Int32)
-  nameWithType.vb: Blake2BCore.BytesToUInt64(Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)
+  name: BytesToUInt64(ReadOnlySpan<Byte>, Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_ReadOnlySpan_System_Byte__System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)
+  name.vb: BytesToUInt64(ReadOnlySpan(Of Byte), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan<System.Byte>, System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan(Of System.Byte), System.Int32)
+  nameWithType: Blake2BCore.BytesToUInt64(ReadOnlySpan<Byte>, Int32)
+  nameWithType.vb: Blake2BCore.BytesToUInt64(ReadOnlySpan(Of Byte), Int32)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64*
   name: BytesToUInt64
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_
@@ -912,15 +912,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   nameWithType: Blake2BCore.Dispose
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[],System.Int32,System.Int32)
-  name: HashCore(Byte[], Int32, Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_Byte___System_Int32_System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[],System.Int32,System.Int32)
-  name.vb: HashCore(Byte(), Int32, Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[], System.Int32, System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte(), System.Int32, System.Int32)
-  nameWithType: Blake2BCore.HashCore(Byte[], Int32, Int32)
-  nameWithType.vb: Blake2BCore.HashCore(Byte(), Int32, Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span{System.Byte},System.Int32,System.Int32)
+  name: HashCore(Span<Byte>, Int32, Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_Span_System_Byte__System_Int32_System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span{System.Byte},System.Int32,System.Int32)
+  name.vb: HashCore(Span(Of Byte), Int32, Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span<System.Byte>, System.Int32, System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span(Of System.Byte), System.Int32, System.Int32)
+  nameWithType: Blake2BCore.HashCore(Span<Byte>, Int32, Int32)
+  nameWithType.vb: Blake2BCore.HashCore(Span(Of Byte), Int32, Int32)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore*
   name: HashCore
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_
@@ -1170,30 +1170,6 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Hasher.Update
   nameWithType: Hasher.Update
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  name: LockMemoryPolicy
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html
-  commentId: T:Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  nameWithType: LockMemoryPolicy
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  name: BestEffort
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_BestEffort
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  nameWithType: LockMemoryPolicy.BestEffort
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  name: Enforce
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_Enforce
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  nameWithType: LockMemoryPolicy.Enforce
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  name: None
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_None
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  nameWithType: LockMemoryPolicy.None
 - uid: Isopoh.Cryptography.SecureArray
   name: Isopoh.Cryptography.SecureArray
   href: api/Isopoh.Cryptography.SecureArray.html
@@ -1332,6 +1308,30 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException
   nameWithType: LockFailException.LockFailException
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  name: LockMemoryPolicy
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html
+  commentId: T:Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  nameWithType: LockMemoryPolicy
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  name: BestEffort
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_BestEffort
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  nameWithType: LockMemoryPolicy.BestEffort
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  name: Enforce
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_Enforce
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  nameWithType: LockMemoryPolicy.Enforce
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  name: None
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_None
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  nameWithType: LockMemoryPolicy.None
 - uid: Isopoh.Cryptography.SecureArray.SecureArray
   name: SecureArray
   href: api/Isopoh.Cryptography.SecureArray.SecureArray.html
@@ -1551,6 +1551,23 @@ references:
   fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Buffer
   nameWithType: SecureArray<T>.Buffer
   nameWithType.vb: SecureArray(Of T).Buffer
+- uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Create(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  name: Create(Int32, SecureArrayCall, LockMemoryPolicy)
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Create_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_
+  commentId: M:Isopoh.Cryptography.SecureArray.SecureArray`1.Create(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray<T>.Create(System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Create(System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  nameWithType: SecureArray<T>.Create(Int32, SecureArrayCall, LockMemoryPolicy)
+  nameWithType.vb: SecureArray(Of T).Create(Int32, SecureArrayCall, LockMemoryPolicy)
+- uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Create*
+  name: Create
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Create_
+  commentId: Overload:Isopoh.Cryptography.SecureArray.SecureArray`1.Create
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray<T>.Create
+  fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Create
+  nameWithType: SecureArray<T>.Create
+  nameWithType.vb: SecureArray(Of T).Create
 - uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Dispose
   name: Dispose()
   href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Dispose

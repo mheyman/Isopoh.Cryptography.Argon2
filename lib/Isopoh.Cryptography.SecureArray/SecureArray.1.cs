@@ -179,6 +179,43 @@ namespace Isopoh.Cryptography.SecureArray
         }
 
         /// <summary>
+        /// Returns the "best" secure array it can. Tries first for <see cref="SecureArrayType.ZeroedPinnedAndNoSwap"/>
+        /// and, if that fails, returns a <see cref="SecureArrayType.ZeroedAndPinned"/> secure array.
+        /// </summary>
+        /// <param name="size">The number of elements in the returned <see cref="SecureArray{T}"/>.</param>
+        /// <param name="secureArrayCall">
+        ///     The methods that get called to secure the array. A null value
+        ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+        /// </param>
+        /// <param name="lockMemory">
+        /// Used to set locking strategy for buffers used in creating the hash. The memory
+        /// will always be zeroed prior to destruction. The memory is also always pinned
+        /// so the CLR can't move it and leave extraneous copies floating around in RAM.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="SecureArray{T}"/>.
+        /// </returns>
+        /// <remarks>
+        /// Whether a no-swap <see cref="SecureArray{T}"/> can be returned is up to the operating system.
+        /// You can query <see cref="SecureArray.ProtectionType"/> to find the type of <see cref="SecureArray{T}"/>
+        /// returned.
+        /// </remarks>
+#nullable enable
+        public static SecureArray<T> Create(int size, SecureArrayCall? secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
+#nullable restore
+        {
+            switch (lockMemory)
+            {
+                case LockMemoryPolicy.None:
+                    return new SecureArray<T>(size, SecureArrayType.ZeroedAndPinned, secureArrayCall);
+                case LockMemoryPolicy.BestEffort:
+                    return Best(size, secureArrayCall);
+                default:
+                    return new SecureArray<T>(size, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
+            }
+        }
+
+        /// <summary>
         /// Zero buffer and release resources.
         /// </summary>
         public void Dispose()

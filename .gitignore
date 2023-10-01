@@ -136,7 +136,12 @@ source/widgets/webapps/owf.war
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.person.js
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.javascriptconfig.js
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.common.js
-Argon2TestVector/Generated
+test/Argon2TestVector/Generated/
+civetweb.conf
+docs
+isopoh-nopass.pfx
+isopoh.snk
+private.key
 
 dllFun.csv
 dllFun.xml
