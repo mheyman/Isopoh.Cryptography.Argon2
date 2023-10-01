@@ -181,15 +181,7 @@ namespace Isopoh.Cryptography.Argon2
                 return false;
             }
 
-            SecureArray<byte> output;
-            try
-            {
-                output = new SecureArray<byte>(hashLength, SecureArrayType.ZeroedPinnedAndNoSwap, config.SecureArrayCall);
-            }
-            catch (LockFailException)
-            {
-                output = new SecureArray<byte>(hashLength, SecureArrayType.ZeroedAndPinned, config.SecureArrayCall);
-            }
+            SecureArray<byte> output = SecureArray<byte>.Best(hashLength, config.SecureArrayCall);
 
             bool success = false;
             try

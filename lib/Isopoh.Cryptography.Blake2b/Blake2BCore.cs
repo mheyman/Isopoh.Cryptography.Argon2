@@ -214,7 +214,8 @@ namespace Isopoh.Cryptography.Blake2b
 
             if ((this.bufferFilled > 0) && (count > bufferRemaining))
             {
-                this.buf.Slice(this.bufferFilled, bufferRemaining).Span.CopyTo(array.Slice(offset));
+                array.Slice(offset, bufferRemaining).CopyTo(this.buf.Span.Slice(this.bufferFilled));
+                //// this.buf.Slice(this.bufferFilled, bufferRemaining).Span.CopyTo(array.Slice(offset));
                 this.counter0 += BlockSizeInBytes;
                 if (this.counter0 == 0)
                 {
@@ -305,9 +306,16 @@ namespace Isopoh.Cryptography.Blake2b
             this.Compress(this.buf.Span, 0);
 
             // Output
-            for (int i = 0; i < 8; ++i)
+            if (BitConverter.IsLittleEndian)
             {
-                UInt64ToBytes(this.Hbuf[i], hash, i << 3);
+                for (int i = 0; i < 8; ++i)
+                {
+                    UInt64ToBytes(this.Hbuf[i], hash, i << 3);
+                }
+            }
+            else
+            {
+                this.hbufBacking.CopyTo(hash);
             }
 
             return hash;

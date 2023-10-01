@@ -51,27 +51,7 @@ namespace Isopoh.Cryptography.Blake2b
             this.rawConfig = Blake2IvBuilder.ConfigB(config, null, secureArrayCall);
             if (config.Key != null && config.Key.Length != 0)
             {
-                switch (config.LockMemoryPolicy)
-                {
-                    case LockMemoryPolicy.None:
-                        this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                        break;
-                    case LockMemoryPolicy.BestEffort:
-                        try
-                        {
-                            this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                        }
-                        catch (LockFailException)
-                        {
-                            this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-                        }
-
-                        break;
-                    default:
-                        this.key = new SecureArray<byte>(128, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-                        break;
-                }
-
+                this.key = SecureArray<byte>.Create(128, secureArrayCall, config.LockMemoryPolicy);
                 Array.Copy(config.Key, this.key.Buffer, config.Key.Length);
             }
 

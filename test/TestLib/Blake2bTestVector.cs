@@ -1327,7 +1327,12 @@ public class Blake2bTestVector
             };
             using (var blakeHash = Blake2B.Create(config, SecureArray.DefaultCall))
             {
-                blakeHash.Update(testVector.Data);
+                const int chunkSize = 10;
+                for (int i = 0; i < testVector.Data.Length; i += chunkSize)
+                {
+                    blakeHash.Update(testVector.Data, i, i + chunkSize > testVector.Data.Length ? testVector.Data.Length - i : chunkSize);
+                }
+
                 blakeHash.Finish();
             }
 

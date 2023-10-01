@@ -40,15 +40,7 @@ namespace Isopoh.Cryptography.Blake2b
             bool isSequential = treeConfig == null;
             Blake2BTreeConfig myTreeConfig = treeConfig ?? SequentialTreeConfig;
 
-            SecureArray<ulong> rawConfig;
-            try
-            {
-                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedPinnedAndNoSwap, secureArrayCall);
-            }
-            catch (LockFailException)
-            {
-                rawConfig = new SecureArray<ulong>(8, SecureArrayType.ZeroedAndPinned, secureArrayCall);
-            }
+            SecureArray<ulong> rawConfig = SecureArray<ulong>.Best(8, secureArrayCall);
 
             // digest length
             if (config.OutputSizeInBytes is <= 0 or > 64)
