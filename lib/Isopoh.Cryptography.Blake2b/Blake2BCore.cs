@@ -4,6 +4,8 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+using System.Buffers.Binary;
+
 namespace Isopoh.Cryptography.Blake2b
 {
     // Originally written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
@@ -38,7 +40,7 @@ namespace Isopoh.Cryptography.Blake2b
     /// <summary>
     /// The core of the Blake2 hash.
     /// </summary>
-    public partial class Blake2BCore
+    public partial class Blake2BCore : IDisposable
     {
         private const int BlockSizeInBytes = 128;
 
@@ -51,7 +53,7 @@ namespace Isopoh.Cryptography.Blake2b
         private const ulong Iv6 = 0x1F83D9ABFB41BD6BUL;
         private const ulong Iv7 = 0x5BE0CD19137E2179UL;
 
-        private readonly SecureArray<byte> secureArray;
+        private readonly SecureArray<byte>? secureArray;
         private readonly Memory<byte> buf;
         private readonly Memory<byte> mbufBacking;
         private readonly Memory<byte> hbufBacking;
@@ -61,6 +63,27 @@ namespace Isopoh.Cryptography.Blake2b
         private ulong counter1;
         private ulong finalizationFlag0;
         private ulong finalizationFlag1;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Blake2BCore"/> class.
+        /// </summary>
+        /// <param name="blake2BCoreBuffer">
+        /// Used to perform the Blake2b operations. Must be at least <see cref="BufferTotalSize"/> bytes long.
+        /// </param>
+        public Blake2BCore(Memory<byte> blake2BCoreBuffer)
+        {
+            if (blake2BCoreBuffer.Length < BufferTotalSize)
+            {
+                throw new ArgumentException(
+                    nameof(blake2BCoreBuffer),
+                    $"Expected {nameof(blake2BCoreBuffer)}.Length to be at least {BufferTotalSize}, got {blake2BCoreBuffer.Length}.");
+            }
+
+            this.secureArray = null;
+            this.buf = blake2BCoreBuffer.Slice(0, 128);
+            this.mbufBacking = blake2BCoreBuffer.Slice(128, 16 * sizeof(ulong));
+            this.hbufBacking = blake2BCoreBuffer.Slice(128 + (16 * sizeof(ulong)), 8 * sizeof(ulong));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blake2BCore"/> class.
@@ -75,13 +98,21 @@ namespace Isopoh.Cryptography.Blake2b
         /// </param>
         public Blake2BCore(SecureArrayCall secureArrayCall, LockMemoryPolicy lockMemory = LockMemoryPolicy.BestEffort)
         {
-            const int totalSize = 128 + (sizeof(ulong) * (16 + 8));
-            this.secureArray = SecureArray<byte>.Create(totalSize, secureArrayCall, lockMemory);
+            this.secureArray = SecureArray<byte>.Create(BufferTotalSize, secureArrayCall, lockMemory);
             var fullBuf = new Memory<byte>(this.secureArray.Buffer);
             this.buf = fullBuf.Slice(0, 128);
             this.mbufBacking = fullBuf.Slice(128, 16 * sizeof(ulong));
             this.hbufBacking = fullBuf.Slice(128 + (16 * sizeof(ulong)), 8 * sizeof(ulong));
         }
+
+        /// <summary>
+        /// Gets the total size of the buffer needed to do <see cref="Blake2BCore"/> operations.
+        /// </summary>
+        public static int BufferTotalSize => 128 + (sizeof(ulong) * (16 + 8));
+
+        private Span<ulong> Mbuf => MemoryMarshal.Cast<byte, ulong>(this.mbufBacking.Span);
+
+        private Span<ulong> Hbuf => MemoryMarshal.Cast<byte, ulong>(this.hbufBacking.Span);
 
         /// <summary>
         /// Convert a big-endian buffer into a <see cref="ulong"/>.
@@ -114,7 +145,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <remarks>
         /// No checking is done to validate the buffer can store <paramref name="value"/> at <paramref name="offset"/>.
         /// </remarks>
-        public static void UInt64ToBytes(ulong value, byte[] buf, int offset)
+        public static void UInt64ToBytes(ulong value, Span<byte> buf, int offset)
         {
             buf[offset + 7] = (byte)(value >> (7 * 8));
             buf[offset + 6] = (byte)(value >> (6 * 8));
@@ -130,7 +161,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// Initialize the hash.
         /// </summary>
         /// <param name="config">8-element configuration array.</param>
-        public void Initialize(Span<ulong> config)
+        public void Initialize(ReadOnlySpan<ulong> config)
         {
             if (config == null)
             {
@@ -193,7 +224,6 @@ namespace Isopoh.Cryptography.Blake2b
             if ((this.bufferFilled > 0) && (count > bufferRemaining))
             {
                 data.Slice(offset, bufferRemaining).CopyTo(this.buf.Span.Slice(this.bufferFilled));
-                //// this.buf.Slice(this.bufferFilled, bufferRemaining).Span.CopyTo(array.Slice(offset));
                 this.counter0 += BlockSizeInBytes;
                 if (this.counter0 == 0)
                 {
@@ -230,21 +260,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// Compute the hash.
         /// </summary>
         /// <param name="hash">
-        /// Loaded with the hash.
-        /// </param>
-        /// <returns>
-        /// <paramref name="hash"/>.
-        /// </returns>
-        public byte[] HashFinal(byte[] hash)
-        {
-            return this.HashFinal(hash, false);
-        }
-
-        /// <summary>
-        /// Compute the hash.
-        /// </summary>
-        /// <param name="hash">
-        /// Loaded with the hash.
+        /// Loaded with the hash. Must be 64 bytes.
         /// </param>
         /// <param name="isEndOfLayer">
         /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
@@ -252,7 +268,9 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// <paramref name="hash"/>.
         /// </returns>
-        public byte[] HashFinal(byte[] hash, bool isEndOfLayer)
+        /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
+        /// <exception cref="ArgumentException">When <see cref="hash"/>.Length != 64.</exception>
+        public Span<byte> HashFinal(Span<byte> hash, bool isEndOfLayer)
         {
             if (!this.isInitialized)
             {
@@ -276,26 +294,71 @@ namespace Isopoh.Cryptography.Blake2b
                 this.finalizationFlag1 = ulong.MaxValue;
             }
 
-            for (int i = this.bufferFilled; i < this.buf.Length; i++)
-            {
-                this.buf.Span[i] = 0;
-            }
-
+            this.buf.Slice(this.bufferFilled).Span.Clear(); // zero to end of buffer
             this.Compress(this.buf.Span, 0);
 
             // Output
             if (BitConverter.IsLittleEndian)
+            {
+                this.hbufBacking.Span.CopyTo(hash);
+            }
+            else
             {
                 for (int i = 0; i < 8; ++i)
                 {
                     UInt64ToBytes(this.Hbuf[i], hash, i << 3);
                 }
             }
-            else
-            {
-                this.hbufBacking.CopyTo(hash);
-            }
 
+            return hash;
+        }
+
+        /// <summary>
+        /// Compute the hash.
+        /// </summary>
+        /// <param name="hash">
+        /// Loaded with the hash.
+        /// </param>
+        /// <returns>
+        /// <paramref name="hash"/>.
+        /// </returns>
+        public Span<byte> HashFinal(Span<byte> hash)
+        {
+            return this.HashFinal(hash, false);
+        }
+
+        /// <summary>
+        /// Compute the hash.
+        /// </summary>
+        /// <param name="hash">
+        /// Loaded with the hash.
+        /// </param>
+        /// <returns>
+        /// <paramref name="hash"/>.
+        /// </returns>
+        public byte[] HashFinal(byte[] hash)
+        {
+            this.HashFinal(hash.AsSpan(), false);
+            return hash;
+        }
+
+        /// <summary>
+        /// Compute the hash.
+        /// </summary>
+        /// <param name="hash">
+        /// Loaded with the hash.
+        /// </param>
+        /// <param name="isEndOfLayer">
+        /// True to signal the last node of a layer in tree-hashing mode; false otherwise.
+        /// </param>
+        /// <returns>
+        /// <paramref name="hash"/>.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
+        /// <exception cref="ArgumentException">When <see cref="hash"/>.Length != 64.</exception>
+        public byte[] HashFinal(byte[] hash, bool isEndOfLayer)
+        {
+            this.HashFinal(hash.AsSpan(), isEndOfLayer);
             return hash;
         }
 
@@ -305,6 +368,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The 64-byte hash.
         /// </returns>
+        /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
         public byte[] HashFinal()
         {
             return this.HashFinal(false);
@@ -319,10 +383,11 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The 64-byte hash.
         /// </returns>
+        /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
         public byte[] HashFinal(bool isEndOfLayer)
         {
             byte[] hash = new byte[64];
-            this.HashFinal(hash, isEndOfLayer);
+            this.HashFinal(hash.AsSpan(), isEndOfLayer);
             return hash;
         }
 
@@ -331,14 +396,22 @@ namespace Isopoh.Cryptography.Blake2b
         /// </summary>
         public void Dispose()
         {
-            this.secureArray.Dispose();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose pattern Dispose method.
+        /// </summary>
+        /// <param name="disposing">True to dispose; false otherwise (when calling from destructor).</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.secureArray?.Dispose();
+            }
         }
 
         partial void Compress(ReadOnlySpan<byte> block, int start);
-
-        private Span<ulong> Mbuf => MemoryMarshal.Cast<byte, ulong>(this.mbufBacking.Span);
-
-        private Span<ulong> Hbuf => MemoryMarshal.Cast<byte, ulong>(this.hbufBacking.Span);
-
     }
 }

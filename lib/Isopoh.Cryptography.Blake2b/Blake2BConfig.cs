@@ -21,13 +21,21 @@ namespace Isopoh.Cryptography.Blake2b
     {
         private int outputSizeInBytes;
 
-        private byte[]? outputBuffer;
+        #nullable enable
+        private Memory<byte>? outputBuffer;
+        #nullable restore
 
-        private byte[]? personalization;
+        #nullable enable
+        private Memory<byte>? personalization;
+        #nullable restore
 
-        private byte[]? salt;
+        #nullable enable
+        private Memory<byte>? salt;
+        #nullable restore
 
-        private byte[]? key;
+        #nullable enable
+        private Memory<byte>? key;
+        #nullable restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blake2BConfig"/> class.
@@ -48,15 +56,17 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Personalization"/> to non-null other than 16 bytes.
         /// </exception>
-        public byte[]? Personalization
+        #nullable enable
+        public Memory<byte>? Personalization
+        #nullable restore
         {
             get => this.personalization;
 
             set
             {
-                if (value != null && value.Length != 16)
+                if (value != null && value.Value.Length != 16)
                 {
-                    throw new ArgumentException($"Blake2BConfig.Personalization must be 16 bytes, got {value.Length}");
+                    throw new ArgumentException($"Blake2BConfig.Personalization must be 16 bytes, got {value.Value.Length}");
                 }
 
                 this.personalization = value;
@@ -69,15 +79,17 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Salt"/> to non-null other than 16 bytes.
         /// </exception>
-        public byte[]? Salt
+        #nullable enable
+        public Memory<byte>? Salt
+        #nullable restore
         {
             get => this.salt;
 
             set
             {
-                if (value != null && value.Length != 16)
+                if (value != null && value.Value.Length != 16)
                 {
-                    throw new ArgumentException($"Blake2BConfig.Salt must be 16 bytes, got {value.Length}");
+                    throw new ArgumentException($"Blake2BConfig.Salt must be 16 bytes, got {value.Value.Length}");
                 }
 
                 this.salt = value;
@@ -94,7 +106,9 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Key"/> greater than 128 bytes.
         /// </exception>
-        public byte[]? Key
+        #nullable enable
+        public Memory<byte>? Key
+        #nullable restore
         {
             get => this.key;
 
@@ -102,7 +116,7 @@ namespace Isopoh.Cryptography.Blake2b
             {
                 if (value is { Length: > 128 })
                 {
-                    throw new ArgumentException($"Blake2BConfig.Key must be 129 bytes or less, got {value.Length}");
+                    throw new ArgumentException($"Blake2BConfig.Key must be 129 bytes or less, got {value.Value.Length}");
                 }
 
                 this.key = value;
@@ -170,16 +184,18 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">
         /// Attempt to set <see cref="Result64ByteBuffer"/> to non-null other than 64 bytes.
         /// </exception>
-        public byte[]? Result64ByteBuffer
+        #nullable enable
+        public Memory<byte>? Result64ByteBuffer
+        #nullable restore
         {
             get => this.outputBuffer;
 
             set
             {
-                if (value != null && value.Length != 64)
+                if (value != null && value.Value.Length != 64)
                 {
                     throw new ArgumentOutOfRangeException(
-                        $"Blake2 output buffer must be 64 bytes, got {value.Length}");
+                        $"Blake2 output buffer must be 64 bytes, got {value.Value.Length}");
                 }
 
                 this.outputBuffer = value;

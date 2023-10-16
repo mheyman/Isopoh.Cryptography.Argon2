@@ -12,7 +12,6 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
-    using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
     /// Utilities to create the Blake2 initialization vector.
@@ -26,19 +25,22 @@ namespace Isopoh.Cryptography.Blake2b
         /// </summary>
         /// <param name="config">The <see cref="Blake2BConfig"/>.</param>
         /// <param name="treeConfig">The <see cref="Blake2BTreeConfig"/>.</param>
-        /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
-        /// <returns>The raw Blake2 configuration.</returns>
+        /// <param name="iv">8-element span to get populated.</param>
         /// <exception cref="ArgumentOutOfRangeException">When <paramref name="config"/>.<see cref="Blake2BConfig.OutputSizeInBytes"/> is not between 0 and 64.</exception>
         /// <exception cref="ArgumentException">When <paramref name="config"/>.<see cref="Blake2BConfig.Key"/> length is > 64.</exception>
-        public static SecureArray<ulong> ConfigB(
+        /// <exception cref="ArgumentException">When <paramref name="iv"/>.Length is not 8.</exception>
+        public static void ConfigB(
             Blake2BConfig config,
             Blake2BTreeConfig? treeConfig,
-            SecureArrayCall secureArrayCall)
+            Span<ulong> iv)
         {
-            bool isSequential = treeConfig == null;
             Blake2BTreeConfig myTreeConfig = treeConfig ?? SequentialTreeConfig;
-
-            SecureArray<ulong> rawConfig = SecureArray<ulong>.Best(8, secureArrayCall);
+            if (iv.Length != 8)
+            {
+                throw new ArgumentException(
+                    nameof(iv),
+                    $"Expected {nameof(iv)}.Length == 8, got {iv.Length}");
+            }
 
             // digest length
             if (config.OutputSizeInBytes is <= 0 or > 64)
@@ -48,78 +50,76 @@ namespace Isopoh.Cryptography.Blake2b
                     $"Expected 0 < config.OutputSizeInBytes <= 64, got {config.OutputSizeInBytes}");
             }
 
-            rawConfig[0] |= (uint)config.OutputSizeInBytes;
+            iv[0] |= (uint)config.OutputSizeInBytes;
 
             // Key length
             if (config.Key != null)
             {
-                if (config.Key.Length > 64)
+                if (config.Key.Value.Length > 64)
                 {
-                    throw new ArgumentException($"Expected key length <= 64, got {config.Key.Length}", nameof(config));
+                    throw new ArgumentException($"Expected key length <= 64, got {config.Key.Value.Length}", nameof(config));
                 }
 
-                rawConfig[0] |= (uint)config.Key.Length << 8;
+                iv[0] |= (uint)config.Key.Value.Length << 8;
             }
 
             // FanOut
-            rawConfig[0] |= (uint)myTreeConfig.FanOut << 16;
+            iv[0] |= (uint)myTreeConfig.FanOut << 16;
 
             // Depth
-            rawConfig[0] |= (uint)myTreeConfig.MaxHeight << 24;
+            iv[0] |= (uint)myTreeConfig.MaxHeight << 24;
 
             // Leaf length
-            rawConfig[0] |= ((ulong)(uint)myTreeConfig.LeafSize) << 32;
+            iv[0] |= ((ulong)(uint)myTreeConfig.LeafSize) << 32;
 
             // Inner length
-            if (!isSequential && myTreeConfig.IntermediateHashSize is <= 0 or > 64)
+            if (!ReferenceEquals(myTreeConfig, SequentialTreeConfig) && myTreeConfig.IntermediateHashSize is <= 0 or > 64)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(treeConfig),
                     $"Expected 0 < treeConfig.IntermediateHashSize <= 64, got {myTreeConfig.IntermediateHashSize}");
             }
 
-            rawConfig[2] |= (uint)myTreeConfig.IntermediateHashSize << 8;
+            iv[2] |= (uint)myTreeConfig.IntermediateHashSize << 8;
 
             // Salt
             if (config.Salt != null)
             {
-                if (config.Salt.Length != 16)
+                if (config.Salt.Value.Length != 16)
                 {
                     throw new ArgumentException("config.Salt has invalid length");
                 }
 
-                rawConfig[4] = Blake2BCore.BytesToUInt64(config.Salt, 0);
-                rawConfig[5] = Blake2BCore.BytesToUInt64(config.Salt, 8);
+                iv[4] = Blake2BCore.BytesToUInt64(config.Salt.Value.Span, 0);
+                iv[5] = Blake2BCore.BytesToUInt64(config.Salt.Value.Span, 8);
             }
 
             // Personalization
             if (config.Personalization != null)
             {
-                if (config.Personalization.Length != 16)
+                if (config.Personalization.Value.Length != 16)
                 {
                     throw new ArgumentException(
-                        $"Expected config.Personalization == 16, got {config.Personalization.Length}",
+                        $"Expected config.Personalization == 16, got {config.Personalization.Value.Length}",
                         nameof(config));
                 }
 
-                rawConfig[6] = Blake2BCore.BytesToUInt64(config.Personalization, 0);
-                rawConfig[7] = Blake2BCore.BytesToUInt64(config.Personalization, 8);
+                iv[6] = Blake2BCore.BytesToUInt64(config.Personalization.Value.Span, 0);
+                iv[7] = Blake2BCore.BytesToUInt64(config.Personalization.Value.Span, 8);
             }
-
-            return rawConfig;
         }
 
         /// <summary>
         /// Update the Blake2 raw configuration for the given depth and node offset.
         /// </summary>
-        /// <param name="rawConfig">The configuration to update.</param>
+        /// <param name="iv">The configuration to update.</param>
         /// <param name="depth">The new depth value.</param>
         /// <param name="nodeOffset">The new node offset value.</param>
         // ReSharper disable once UnusedMember.Global
-        public static void ConfigBSetNode(ulong[] rawConfig, byte depth, ulong nodeOffset)
+        public static void ConfigBSetNode(Span<ulong> iv, byte depth, ulong nodeOffset)
         {
-            rawConfig[1] = nodeOffset;
-            rawConfig[2] = (rawConfig[2] & ~0xFFul) | depth;
+            iv[1] = nodeOffset;
+            iv[2] = (iv[2] & ~0xFFul) | depth;
         }
     }
 }

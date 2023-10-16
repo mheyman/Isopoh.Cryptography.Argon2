@@ -12,6 +12,7 @@
 namespace Isopoh.Cryptography.Blake2b
 {
     using System;
+    using System.Runtime.InteropServices;
     using Isopoh.Cryptography.SecureArray;
 
     /// <summary>
@@ -21,13 +22,13 @@ namespace Isopoh.Cryptography.Blake2b
     {
         private static readonly Blake2BConfig DefaultConfig = new();
 
+        private readonly SecureArray<byte>? backingBuffer;
+
         private readonly Blake2BCore core;
+        private readonly Memory<byte> ivBytes;
+        private readonly Memory<byte>? key;
 
-        private readonly SecureArray<ulong> rawConfig;
-
-        private readonly SecureArray<byte>? key;
-
-        private readonly byte[]? defaultOutputBuffer;
+        private readonly Memory<byte>? defaultOutputBuffer;
 
         private readonly int outputSizeInBytes;
 
@@ -37,22 +38,87 @@ namespace Isopoh.Cryptography.Blake2b
         /// Initializes a new instance of the <see cref="Blake2BHasher"/> class.
         /// </summary>
         /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
-        /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
-        public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        /// <param name="blake2BHasherBuffer">Must be at least <see cref="BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0).</param>
+        /// <exception cref="ArgumentException"><see cref="blake2BHasherBuffer"/>.Length too small.</exception>
+        public Blake2BHasher(Blake2BConfig? config, Memory<byte> blake2BHasherBuffer)
         {
             config ??= DefaultConfig;
-            this.core = new Blake2BCore(secureArrayCall, config.LockMemoryPolicy);
-            this.rawConfig = Blake2IvBuilder.ConfigB(config, null, secureArrayCall);
-            if (config.Key != null && config.Key.Length != 0)
+            var configKey = config.Key == null ? default : config.Key.Value.Span;
+            var keyLength = configKey.Length == 0 ? 0 : 128;
+            var bufferTotalSize = BufferMinimumTotalSize + keyLength;
+            if (blake2BHasherBuffer.Length < bufferTotalSize)
             {
-                this.key = SecureArray<byte>.Create(128, secureArrayCall, config.LockMemoryPolicy);
-                Array.Copy(config.Key, this.key.Buffer, config.Key.Length);
+                throw new ArgumentException(nameof(blake2BHasherBuffer), $"Expected {nameof(blake2BHasherBuffer)}.Length >= {bufferTotalSize}, got {blake2BHasherBuffer.Length}.");
+            }
+
+            this.core = new Blake2BCore(blake2BHasherBuffer.Slice(0, Blake2BCore.BufferTotalSize));
+            this.ivBytes = blake2BHasherBuffer.Slice(Blake2BCore.BufferTotalSize, 8 * sizeof(ulong));
+
+            Blake2IvBuilder.ConfigB(config, null, this.Iv);
+
+            if (keyLength > 0)
+            {
+                this.key = blake2BHasherBuffer.Slice(BufferMinimumTotalSize, keyLength);
+                if (keyLength > configKey.Length)
+                {
+                    configKey.CopyTo(this.key.Value.Span.Slice(0, configKey.Length));
+                    this.key.Value.Span.Slice(config.Key?.Length ?? 0).Clear();
+                }
+                else
+                {
+                    configKey.Slice(0, keyLength).CopyTo(this.key.Value.Span);
+                }
             }
 
             this.outputSizeInBytes = config.OutputSizeInBytes;
             this.defaultOutputBuffer = config.Result64ByteBuffer;
             this.Init();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Blake2BHasher"/> class.
+        /// </summary>
+        /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
+        /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
+        public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        {
+            config ??= DefaultConfig;
+            var configKey = config.Key == null ? default : config.Key.Value.Span;
+            var keyLength = configKey.Length == 0 ? 0 : 128;
+            var bufferTotalSize = BufferMinimumTotalSize + keyLength;
+            this.backingBuffer = SecureArray<byte>.Create(bufferTotalSize, secureArrayCall, config.LockMemoryPolicy);
+            var blake2BHasherBuffer = new Memory<byte>(this.backingBuffer.Buffer);
+            this.core = new Blake2BCore(blake2BHasherBuffer.Slice(0, Blake2BCore.BufferTotalSize));
+            this.ivBytes = blake2BHasherBuffer.Slice(Blake2BCore.BufferTotalSize, 8 * sizeof(ulong));
+
+            Blake2IvBuilder.ConfigB(config, null, this.Iv);
+            if (keyLength > 0)
+            {
+                this.key = blake2BHasherBuffer.Slice(BufferMinimumTotalSize, keyLength);
+                if (configKey.Length < keyLength)
+                {
+                    configKey.CopyTo(this.key.Value.Span.Slice(0, configKey.Length));
+                    this.key.Value.Span.Slice(configKey.Length).Clear();
+                }
+                else
+                {
+                    configKey.Slice(0, keyLength).CopyTo(this.key.Value.Span);
+                }
+            }
+
+            this.outputSizeInBytes = config.OutputSizeInBytes;
+            this.defaultOutputBuffer = config.Result64ByteBuffer;
+            this.Init();
+        }
+
+        /// <summary>
+        /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
+        /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
+        /// field is the total required size.
+        /// </summary>
+        public static int BufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8);
+
+        private Span<ulong> Iv => MemoryMarshal.Cast<byte, ulong>(this.ivBytes.Span);
 
         /// <summary>
         /// Initialize the hasher. The hasher is initialized upon construction but this can be used
@@ -66,10 +132,10 @@ namespace Isopoh.Cryptography.Blake2b
                 throw new ObjectDisposedException("Called Blake2BHasher.Init() on disposed object");
             }
 
-            this.core.Initialize(this.rawConfig.Buffer);
+            this.core.Initialize(this.Iv);
             if (this.key != null)
             {
-                this.core.HashCore(this.key.Buffer);
+                this.core.HashCore(this.key.Value.Span);
             }
         }
 
@@ -77,17 +143,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// Update the hasher with more bytes of data.
         /// </summary>
         /// <param name="data">Buffer holding the data to update with.</param>
-        /// <param name="start">The offset into the buffer of the data to update the hasher with.</param>
-        /// <param name="count">The number of bytes starting at <paramref name="start"/> to update the hasher with.</param>
         /// <exception cref="ObjectDisposedException">When called after being disposed.</exception>
-        public override void Update(byte[] data, int start, int count)
+        public override void Update(ReadOnlySpan<byte> data)
         {
             if (this.disposed)
             {
                 throw new ObjectDisposedException("Called Blake2BHasher.Update() on disposed object");
             }
 
-            this.core.HashCore(data.AsSpan(start, count));
+            this.core.HashCore(data);
         }
 
         /// <summary>
@@ -102,7 +166,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// is the first <see cref="Blake2BConfig.OutputSizeInBytes"/> of the <see
         /// cref="Blake2BConfig.Result64ByteBuffer"/> buffer.
         /// </returns>
-        public override byte[] Finish()
+        public override Memory<byte> Finish()
         {
             if (this.disposed)
             {
@@ -111,7 +175,8 @@ namespace Isopoh.Cryptography.Blake2b
 
             if (this.defaultOutputBuffer != null)
             {
-                return this.core.HashFinal(this.defaultOutputBuffer);
+                this.core.HashFinal(this.defaultOutputBuffer.Value.Span);
+                return this.defaultOutputBuffer.Value;
             }
 
             byte[] fullResult = this.core.HashFinal();
@@ -123,6 +188,47 @@ namespace Isopoh.Cryptography.Blake2b
             }
 
             return fullResult;
+        }
+
+        /// <summary>
+        /// Finishes the hash and stores the results into <paramref name="hash"/>. If a
+        /// <see cref="Blake2BConfig.Result64ByteBuffer"/>.<see cref="Blake2BConfig.Result64ByteBuffer"/>
+        /// was given, that will be loaded with the full hash. If the given <paramref name="hash"/>
+        /// is longer than <see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/>, it will be padded
+        /// with zeros.
+        /// </summary>
+        /// <param name="hash">Loaded with the hash value.</param>
+        /// <returns>
+        /// The passed in <paramref name="hash"/>.
+        /// </returns>
+        public override Span<byte> Finish(Span<byte> hash)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException("Called Blake2BHasher.Finish() on disposed object");
+            }
+
+            var res = this.defaultOutputBuffer != null
+                ? this.defaultOutputBuffer.Value.Span
+                : hash.Length >= Blake2B.OutputLength
+                ? hash.Slice(0, Blake2B.OutputLength)
+                : new Span<byte>(new byte[Blake2B.OutputLength]);
+            this.core.HashFinal(res);
+            if (hash.Length < res.Length)
+            {
+                res.Slice(0, hash.Length).CopyTo(hash);
+            }
+            else
+            {
+                if (!res.Overlaps(hash))
+                {
+                    res.CopyTo(hash);
+                }
+
+                hash.Slice(res.Length).Clear();
+            }
+
+            return hash;
         }
 
         /// <summary>
@@ -138,8 +244,7 @@ namespace Isopoh.Cryptography.Blake2b
                 return;
             }
 
-            this.key?.Dispose();
-            this.rawConfig.Dispose();
+            this.backingBuffer?.Dispose();
             this.core.Dispose();
             this.disposed = true;
             base.Dispose(disposing);

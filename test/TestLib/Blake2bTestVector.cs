@@ -1315,6 +1315,7 @@ public class Blake2bTestVector
         bool ret = true;
         int vectorIndex = 0;
         int failCount = 0;
+        var buf = new Memory<byte>(new byte[Blake2B.BufferMinimumTotalSize + 128]);
         foreach (var testVector in TestVectors)
         {
             ++vectorIndex;
@@ -1325,7 +1326,7 @@ public class Blake2bTestVector
                 Result64ByteBuffer = hash,
                 OutputSizeInBytes = testVector.Hash.Length,
             };
-            using (var blakeHash = Blake2B.Create(config, SecureArray.DefaultCall))
+            using (var blakeHash = Blake2B.Create(config, buf))
             {
                 const int chunkSize = 10;
                 for (int i = 0; i < testVector.Data.Length; i += chunkSize)

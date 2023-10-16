@@ -7,6 +7,9 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+using System;
+
 namespace Isopoh.Cryptography.Blake2b
 {
     using System.Security.Cryptography;
@@ -38,6 +41,44 @@ namespace Isopoh.Cryptography.Blake2b
         public const int OutputLength = 64;
 
         /// <summary>
+        /// Gets the minimum total size in bytes of the <see cref="Blake2B"/> work buffer.
+        /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
+        /// field is the total required size.
+        /// </summary>
+        public static int BufferMinimumTotalSize => Blake2BHasher.BufferMinimumTotalSize;
+
+        /// <summary>
+        /// Create a default Blake2 hash.
+        /// </summary>
+        /// <param name="blake2BBuffer">
+        /// Must be at least <see cref="Blake2BHasher"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0)..
+        /// </param>
+        /// <returns>
+        /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
+        /// </returns>
+        public static Hasher Create(Memory<byte> blake2BBuffer)
+        {
+            return Create(new Blake2BConfig(), blake2BBuffer);
+        }
+
+        /// <summary>
+        /// Create a Blake2 hash with the given configuration.
+        /// </summary>
+        /// <param name="config">
+        /// The configuration to use.
+        /// </param>
+        /// <param name="blake2BBuffer">
+        /// Must be at least <see cref="Blake2BHasher"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0)..
+        /// </param>
+        /// <returns>
+        /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
+        /// </returns>
+        public static Hasher Create(Blake2BConfig? config, Memory<byte> blake2BBuffer)
+        {
+            return new Blake2BHasher(config, blake2BBuffer);
+        }
+
+        /// <summary>
         /// Create a default Blake2 hash.
         /// </summary>
         /// <param name="secureArrayCall">
@@ -63,7 +104,9 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
         /// </returns>
+        #nullable enable
         public static Hasher Create(Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        #nullable restore
         {
             return new Blake2BHasher(config, secureArrayCall);
         }
@@ -87,7 +130,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// The hash of the buffer.
         /// </returns>
         // ReSharper disable once UnusedMember.Global
-        public static byte[] ComputeHash(byte[] data, int start, int count, SecureArrayCall secureArrayCall) => ComputeHash(data, start, count, null, secureArrayCall);
+        public static Memory<byte> ComputeHash(byte[] data, int start, int count, SecureArrayCall secureArrayCall) => ComputeHash(data, start, count, null, secureArrayCall);
 
         /// <summary>
         /// Perform a default Blake2 hash on the given buffer.
@@ -102,7 +145,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// The hash of the buffer.
         /// </returns>
         // ReSharper disable once UnusedMember.Global
-        public static byte[] ComputeHash(byte[] data, SecureArrayCall secureArrayCall)
+        public static Memory<byte> ComputeHash(byte[] data, SecureArrayCall secureArrayCall)
         {
             if (data == null)
             {
@@ -128,7 +171,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, Blake2BConfig config, SecureArrayCall secureArrayCall)
+        public static Memory<byte> ComputeHash(byte[] data, Blake2BConfig config, SecureArrayCall secureArrayCall)
         {
             if (data == null)
             {
@@ -160,7 +203,9 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        #nullable enable
+        public static Memory<byte> ComputeHash(byte[] data, int start, int count, Blake2BConfig? config, SecureArrayCall secureArrayCall)
+        #nullable restore
         {
             using var hasher = Create(config, secureArrayCall);
             hasher.Update(data, start, count);

@@ -29,7 +29,24 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The generated hash.
         /// </returns>
-        public abstract byte[] Finish();
+        public abstract Memory<byte> Finish();
+
+        /// <summary>
+        /// Generate the hash from the hash's state.
+        /// </summary>
+        /// <param name="hash">Loaded with the hash.</param>
+        /// <returns>
+        /// The generated hash.
+        /// </returns>
+        public abstract Span<byte> Finish(Span<byte> hash);
+
+        /// <summary>
+        /// Update the hash's state with the given data.
+        /// </summary>
+        /// <param name="data">
+        /// The data to add to the hash's state.
+        /// </param>
+        public abstract void Update(ReadOnlySpan<byte> data);
 
         /// <summary>
         /// Update the hash's state with the given data.
@@ -43,7 +60,15 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="count">
         /// The number of bytes of <paramref name="data"/> to add to the hash's state.
         /// </param>
-        public abstract void Update(byte[] data, int start, int count);
+        public void Update(byte[] data, int start, int count)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            this.Update(data.AsSpan(start, count));
+        }
 
         /// <summary>
         /// Update the hash's state with the given data.
@@ -58,7 +83,7 @@ namespace Isopoh.Cryptography.Blake2b
                 throw new ArgumentNullException(nameof(data));
             }
 
-            this.Update(data, 0, data.Length);
+            this.Update(data.AsSpan());
         }
 
         /// <summary>
@@ -120,7 +145,7 @@ namespace Isopoh.Cryptography.Blake2b
             /// <inheritdoc/>
             protected override byte[] HashFinal()
             {
-                return this.hasher.Finish();
+                return this.hasher.Finish().ToArray();
             }
         }
     }
