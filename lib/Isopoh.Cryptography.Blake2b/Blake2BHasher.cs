@@ -75,7 +75,7 @@ namespace Isopoh.Cryptography.Blake2b
             this.core.Initialize(this.rawConfig.Buffer);
             if (this.key != null)
             {
-                this.core.HashCore(this.key.Buffer, 0, this.key.Buffer.Length);
+                this.core.HashCore(this.key.Buffer);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Isopoh.Cryptography.Blake2b
                 throw new ObjectDisposedException("Called Blake2BHasher.Update() on disposed object");
             }
 
-            this.core.HashCore(data, start, count);
+            this.core.HashCore(data.AsSpan(start, count));
         }
 
         /// <summary>

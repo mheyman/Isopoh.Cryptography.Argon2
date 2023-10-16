@@ -130,7 +130,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// Initialize the hash.
         /// </summary>
         /// <param name="config">8-element configuration array.</param>
-        public void Initialize(ulong[] config)
+        public void Initialize(Span<ulong> config)
         {
             if (config == null)
             {
@@ -180,7 +180,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="count">
         /// Number of bytes in <paramref name="array"/> to use.
         /// </param>
-        public void HashCore(Span<byte> array, int start, int count)
+        public void HashCore(Span<byte> array)
         {
             if (!this.isInitialized)
             {
@@ -192,24 +192,8 @@ namespace Isopoh.Cryptography.Blake2b
                 throw new ArgumentNullException(nameof(array));
             }
 
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(start));
-            }
-
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
-
-            if (start + (long)count > array.Length)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(count),
-                    $"Expected start+count <= array.Length, got {start}+{count} > {array.Length}");
-            }
-
-            int offset = start;
+            int offset = 0;
+            int count = array.Length;
             int bufferRemaining = BlockSizeInBytes - this.bufferFilled;
 
             if ((this.bufferFilled > 0) && (count > bufferRemaining))
