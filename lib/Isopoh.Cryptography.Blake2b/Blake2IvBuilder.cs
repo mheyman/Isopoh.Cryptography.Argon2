@@ -29,7 +29,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentOutOfRangeException">When <paramref name="config"/>.<see cref="Blake2BConfig.OutputSizeInBytes"/> is not between 0 and 64.</exception>
         /// <exception cref="ArgumentException">When <paramref name="config"/>.<see cref="Blake2BConfig.Key"/> length is > 64.</exception>
         /// <exception cref="ArgumentException">When <paramref name="iv"/>.Length is not 8.</exception>
-        public static void ConfigB(
+        public static void Set(
             Blake2BConfig config,
             Blake2BTreeConfig? treeConfig,
             Span<ulong> iv)
@@ -50,6 +50,7 @@ namespace Isopoh.Cryptography.Blake2b
                     $"Expected 0 < config.OutputSizeInBytes <= 64, got {config.OutputSizeInBytes}");
             }
 
+            iv.Clear();
             iv[0] |= (uint)config.OutputSizeInBytes;
 
             // Key length
@@ -116,7 +117,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="depth">The new depth value.</param>
         /// <param name="nodeOffset">The new node offset value.</param>
         // ReSharper disable once UnusedMember.Global
-        public static void ConfigBSetNode(Span<ulong> iv, byte depth, ulong nodeOffset)
+        public static void SetNode(Span<ulong> iv, byte depth, ulong nodeOffset)
         {
             iv[1] = nodeOffset;
             iv[2] = (iv[2] & ~0xFFul) | depth;

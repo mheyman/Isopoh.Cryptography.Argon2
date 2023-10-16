@@ -38,7 +38,8 @@ public class Program
             ////FromDraft3.Test(output).Item2,
             ////HighMemoryCost.Test(output).Item2,
             ////TimeToHash.Test(output).Item2,
-            Blake2bTestVector.Test(output).Item2,
+            ////Blake2bTestVector.Test(output).Item2,
+            Blake2bTestVariations.Test(output).Item2,
         };
         Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
     }

@@ -23,10 +23,9 @@ namespace Isopoh.Cryptography.Blake2b
         private static readonly Blake2BConfig DefaultConfig = new();
 
         private readonly SecureArray<byte>? backingBuffer;
+        private readonly Memory<byte>? backingMemory;
 
         private readonly Blake2BCore core;
-        private readonly Memory<byte> ivBytes;
-        private readonly Memory<byte>? key;
 
         private readonly Memory<byte>? defaultOutputBuffer;
 
@@ -41,38 +40,8 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="blake2BHasherBuffer">Must be at least <see cref="BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0).</param>
         /// <exception cref="ArgumentException"><see cref="blake2BHasherBuffer"/>.Length too small.</exception>
         public Blake2BHasher(Blake2BConfig? config, Memory<byte> blake2BHasherBuffer)
+            : this(GetArg(config, null, blake2BHasherBuffer))
         {
-            config ??= DefaultConfig;
-            var configKey = config.Key == null ? default : config.Key.Value.Span;
-            var keyLength = configKey.Length == 0 ? 0 : 128;
-            var bufferTotalSize = BufferMinimumTotalSize + keyLength;
-            if (blake2BHasherBuffer.Length < bufferTotalSize)
-            {
-                throw new ArgumentException(nameof(blake2BHasherBuffer), $"Expected {nameof(blake2BHasherBuffer)}.Length >= {bufferTotalSize}, got {blake2BHasherBuffer.Length}.");
-            }
-
-            this.core = new Blake2BCore(blake2BHasherBuffer.Slice(0, Blake2BCore.BufferTotalSize));
-            this.ivBytes = blake2BHasherBuffer.Slice(Blake2BCore.BufferTotalSize, 8 * sizeof(ulong));
-
-            Blake2IvBuilder.ConfigB(config, null, this.Iv);
-
-            if (keyLength > 0)
-            {
-                this.key = blake2BHasherBuffer.Slice(BufferMinimumTotalSize, keyLength);
-                if (keyLength > configKey.Length)
-                {
-                    configKey.CopyTo(this.key.Value.Span.Slice(0, configKey.Length));
-                    this.key.Value.Span.Slice(config.Key?.Length ?? 0).Clear();
-                }
-                else
-                {
-                    configKey.Slice(0, keyLength).CopyTo(this.key.Value.Span);
-                }
-            }
-
-            this.outputSizeInBytes = config.OutputSizeInBytes;
-            this.defaultOutputBuffer = config.Result64ByteBuffer;
-            this.Init();
         }
 
         /// <summary>
@@ -81,33 +50,45 @@ namespace Isopoh.Cryptography.Blake2b
         /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
         /// <param name="secureArrayCall">Used to create <see cref="SecureArray"/> instances.</param>
         public Blake2BHasher(Blake2BConfig? config, SecureArrayCall secureArrayCall)
+            : this(GetArg(config, secureArrayCall, null))
         {
-            config ??= DefaultConfig;
-            var configKey = config.Key == null ? default : config.Key.Value.Span;
-            var keyLength = configKey.Length == 0 ? 0 : 128;
-            var bufferTotalSize = BufferMinimumTotalSize + keyLength;
-            this.backingBuffer = SecureArray<byte>.Create(bufferTotalSize, secureArrayCall, config.LockMemoryPolicy);
-            var blake2BHasherBuffer = new Memory<byte>(this.backingBuffer.Buffer);
-            this.core = new Blake2BCore(blake2BHasherBuffer.Slice(0, Blake2BCore.BufferTotalSize));
-            this.ivBytes = blake2BHasherBuffer.Slice(Blake2BCore.BufferTotalSize, 8 * sizeof(ulong));
+        }
 
-            Blake2IvBuilder.ConfigB(config, null, this.Iv);
+        private Blake2BHasher((Blake2BConfig Config, Memory<byte>? Memory, SecureArray<byte>? SecureArray) arg)
+        {
+            if (arg is { SecureArray: null, Memory: null })
+            {
+                throw new ArgumentException(
+                    $"Only one of {nameof(arg)} {nameof(arg.SecureArray)} and {nameof(arg.Memory)} can be null");
+            }
+
+            if (arg is { SecureArray: not null, Memory: not null })
+            {
+                throw new ArgumentException(
+                    $"Only one of {nameof(arg)} {nameof(arg.SecureArray)} and {nameof(arg.Memory)} can be non-null");
+            }
+
+            var configKey = arg.Config.Key == null ? default : arg.Config.Key.Value.Span;
+            var keyLength = configKey.Length == 0 ? 0 : 128;
+            this.backingBuffer = arg.SecureArray;
+            this.backingMemory = arg.Memory;
+            this.core = new Blake2BCore(this.CoreBuffer);
+            Blake2IvBuilder.Set(arg.Config, null, this.Iv);
             if (keyLength > 0)
             {
-                this.key = blake2BHasherBuffer.Slice(BufferMinimumTotalSize, keyLength);
                 if (configKey.Length < keyLength)
                 {
-                    configKey.CopyTo(this.key.Value.Span.Slice(0, configKey.Length));
-                    this.key.Value.Span.Slice(configKey.Length).Clear();
+                    configKey.CopyTo(this.Key.Slice(0, configKey.Length));
+                    this.Key.Slice(configKey.Length).Clear();
                 }
                 else
                 {
-                    configKey.Slice(0, keyLength).CopyTo(this.key.Value.Span);
+                    configKey.Slice(0, keyLength).CopyTo(this.Key);
                 }
             }
 
-            this.outputSizeInBytes = config.OutputSizeInBytes;
-            this.defaultOutputBuffer = config.Result64ByteBuffer;
+            this.outputSizeInBytes = arg.Config.OutputSizeInBytes;
+            this.defaultOutputBuffer = arg.Config.Result64ByteBuffer;
             this.Init();
         }
 
@@ -116,9 +97,25 @@ namespace Isopoh.Cryptography.Blake2b
         /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
         /// field is the total required size.
         /// </summary>
-        public static int BufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8);
+        public static int BufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8) + 128;
 
-        private Span<ulong> Iv => MemoryMarshal.Cast<byte, ulong>(this.ivBytes.Span);
+        /// <summary>
+        /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
+        /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
+        /// field is the total required size.
+        /// </summary>
+        public static int NoKeyBufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8);
+
+        private Span<byte> Backing =>
+            this.backingBuffer != null ? this.backingBuffer.Buffer.AsSpan() : this.backingMemory!.Value.Span;
+
+        private Memory<byte> CoreBuffer => this.backingBuffer != null
+            ? new Memory<byte>(this.backingBuffer.Buffer, 0, Blake2BCore.BufferTotalSize)
+            : this.backingMemory!.Value.Slice(0, Blake2BCore.BufferTotalSize);
+
+        private Span<ulong> Iv => MemoryMarshal.Cast<byte, ulong>(this.Backing.Slice(Blake2BCore.BufferTotalSize, 8 * sizeof(ulong)));
+
+        private Span<byte> Key => this.Backing.Slice(Blake2BCore.BufferTotalSize + (8 * sizeof(ulong)));
 
         /// <summary>
         /// Initialize the hasher. The hasher is initialized upon construction but this can be used
@@ -133,9 +130,9 @@ namespace Isopoh.Cryptography.Blake2b
             }
 
             this.core.Initialize(this.Iv);
-            if (this.key != null)
+            if (this.Key.Length > 0)
             {
-                this.core.HashCore(this.key.Value.Span);
+                this.core.HashCore(this.Key);
             }
         }
 
@@ -176,7 +173,7 @@ namespace Isopoh.Cryptography.Blake2b
             if (this.defaultOutputBuffer != null)
             {
                 this.core.HashFinal(this.defaultOutputBuffer.Value.Span);
-                return this.defaultOutputBuffer.Value;
+                return this.defaultOutputBuffer.Value.Slice(0, this.outputSizeInBytes);
             }
 
             byte[] fullResult = this.core.HashFinal();
@@ -248,6 +245,28 @@ namespace Isopoh.Cryptography.Blake2b
             this.core.Dispose();
             this.disposed = true;
             base.Dispose(disposing);
+        }
+
+        private static (Blake2BConfig Config, Memory<byte>? Memory, SecureArray<byte>? SecureArray) GetArg(Blake2BConfig? config, SecureArrayCall? secureArrayCall, Memory<byte>? memory)
+        {
+            config ??= DefaultConfig;
+            var configKey = config.Key == null ? default : config.Key.Value.Span;
+            var keyLength = configKey.Length == 0 ? 0 : 128;
+            var bufferTotalSize = NoKeyBufferMinimumTotalSize + keyLength;
+            if (secureArrayCall != null)
+            {
+                return (config, null, new SecureArray<byte>(bufferTotalSize));
+            }
+            else
+            {
+                if (memory!.Value.Length < bufferTotalSize)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        $"{nameof(memory)} must be at least {bufferTotalSize} in length.");
+                }
+
+                return (config, memory, null);
+            }
         }
     }
 }

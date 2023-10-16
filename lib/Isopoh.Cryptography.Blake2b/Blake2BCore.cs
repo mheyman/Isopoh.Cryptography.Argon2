@@ -4,8 +4,6 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using System.Buffers.Binary;
-
 namespace Isopoh.Cryptography.Blake2b
 {
     // Originally written in 2012 by Christian Winnerlein  <codesinchaos@gmail.com>
@@ -81,6 +79,7 @@ namespace Isopoh.Cryptography.Blake2b
 
             this.secureArray = null;
             this.buf = blake2BCoreBuffer.Slice(0, 128);
+            this.buf.Span.Clear();
             this.mbufBacking = blake2BCoreBuffer.Slice(128, 16 * sizeof(ulong));
             this.hbufBacking = blake2BCoreBuffer.Slice(128 + (16 * sizeof(ulong)), 8 * sizeof(ulong));
         }
