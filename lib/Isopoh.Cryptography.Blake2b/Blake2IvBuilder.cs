@@ -32,9 +32,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <exception cref="ArgumentException">When <paramref name="config"/>.<see cref="Blake2BConfig.Key"/> length is > 64.</exception>
         public static SecureArray<ulong> ConfigB(
             Blake2BConfig config,
-            #nullable enable
             Blake2BTreeConfig? treeConfig,
-            #nullable restore
             SecureArrayCall secureArrayCall)
         {
             bool isSequential = treeConfig == null;

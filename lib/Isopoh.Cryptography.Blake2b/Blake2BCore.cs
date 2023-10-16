@@ -171,34 +171,28 @@ namespace Isopoh.Cryptography.Blake2b
         /// <summary>
         /// Update the hash state.
         /// </summary>
-        /// <param name="array">
+        /// <param name="data">
         /// Data to use to update the hash state.
         /// </param>
-        /// <param name="start">
-        /// Index of the first byte in <paramref name="array"/> to use.
-        /// </param>
-        /// <param name="count">
-        /// Number of bytes in <paramref name="array"/> to use.
-        /// </param>
-        public void HashCore(Span<byte> array)
+        public void HashCore(ReadOnlySpan<byte> data)
         {
             if (!this.isInitialized)
             {
                 throw new InvalidOperationException("Not initialized");
             }
 
-            if (array == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(nameof(data));
             }
 
             int offset = 0;
-            int count = array.Length;
+            int count = data.Length;
             int bufferRemaining = BlockSizeInBytes - this.bufferFilled;
 
             if ((this.bufferFilled > 0) && (count > bufferRemaining))
             {
-                array.Slice(offset, bufferRemaining).CopyTo(this.buf.Span.Slice(this.bufferFilled));
+                data.Slice(offset, bufferRemaining).CopyTo(this.buf.Span.Slice(this.bufferFilled));
                 //// this.buf.Slice(this.bufferFilled, bufferRemaining).Span.CopyTo(array.Slice(offset));
                 this.counter0 += BlockSizeInBytes;
                 if (this.counter0 == 0)
@@ -220,14 +214,14 @@ namespace Isopoh.Cryptography.Blake2b
                     this.counter1++;
                 }
 
-                this.Compress(array, offset);
+                this.Compress(data, offset);
                 offset += BlockSizeInBytes;
                 count -= BlockSizeInBytes;
             }
 
             if (count > 0)
             {
-                array.Slice(offset, count).CopyTo(this.buf.Span.Slice(this.bufferFilled));
+                data.Slice(offset, count).CopyTo(this.buf.Span.Slice(this.bufferFilled));
                 this.bufferFilled += count;
             }
         }

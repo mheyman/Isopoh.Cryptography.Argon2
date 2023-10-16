@@ -63,9 +63,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
         /// </returns>
-        #nullable enable
         public static Hasher Create(Blake2BConfig? config, SecureArrayCall secureArrayCall)
-        #nullable restore
         {
             return new Blake2BHasher(config, secureArrayCall);
         }
@@ -162,9 +160,7 @@ namespace Isopoh.Cryptography.Blake2b
         /// <returns>
         /// The hash of the buffer.
         /// </returns>
-        #nullable enable
         public static byte[] ComputeHash(byte[] data, int start, int count, Blake2BConfig? config, SecureArrayCall secureArrayCall)
-        #nullable restore
         {
             using var hasher = Create(config, secureArrayCall);
             hasher.Update(data, start, count);
