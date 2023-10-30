@@ -14,7 +14,7 @@ namespace TestUno
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         private string previousSecret = string.Empty;
 
@@ -25,7 +25,7 @@ namespace TestUno
         {
             this.InitializeComponent();
             this.Os.Text = $"Operating System: {SecureArray.DefaultCall.Os}, {IntPtr.Size * 8}-bit";
-            this.Secret.LostFocus += (o, a) => Task.Run(
+            this.Secret.LostFocus += (sender, e) => Task.Run(
                 async () => await this.CalculateHashAsync());
             this.TimeCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
             this.MemoryCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;

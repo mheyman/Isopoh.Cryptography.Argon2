@@ -174,14 +174,14 @@ public sealed class Argon2TestVector
     /// <returns>True on success; false otherwise.</returns>
     public bool Validate(ITestOutputHelper output)
     {
-        var nl = Environment.NewLine;
+        string nl = Environment.NewLine;
         try
         {
             var argon2 = new Argon2(this.Config);
             SecureArray<byte> hash = argon2.Hash();
             if (!hash.Buffer.Where((b, i) => b != this.Tag[i]).Any())
             {
-                var text = Argon2.Hash(this.Config);
+                string? text = Argon2.Hash(this.Config);
                 if (string.CompareOrdinal(text, this.TagText) == 0)
                 {
                     output.WriteLine(
@@ -243,10 +243,10 @@ public sealed class Argon2TestVector
     private static byte[] ToBytes(string s)
     {
         var ret = new List<byte>();
-        for (int i = 1; i < s.Length; i += 2)
+        for (var i = 1; i < s.Length; i += 2)
         {
-            var ch = s[i - 1];
-            var cl = s[i];
+            char ch = s[i - 1];
+            char cl = s[i];
             while (char.IsWhiteSpace(ch))
             {
                 ch = cl;
@@ -259,46 +259,28 @@ public sealed class Argon2TestVector
                 cl = s[i];
             }
 
-            byte val;
-#pragma warning disable SA1131 // Use readable conditions
+            byte val = ch switch
+            {
+                >= '0' and <= '9' => (byte)((uint)(ch - '0') << 4),
+                >= 'a' and <= 'f' => (byte)((uint)(ch - 'a' + 10) << 4),
+                >= 'A' and <= 'F' => (byte)((uint)(ch - 'A' + 10) << 4),
+                _ => throw new ArgumentException($"Invalid character '{ch}' found in hex string"),
+            };
 
-            // ReSharper disable StyleCop.SA1131
-            if (ch is >= '0' and <= '9')
+            switch (cl)
             {
-                val = (byte)((uint)(ch - '0') << 4);
+                case >= '0' and <= '9':
+                    val += (byte)(uint)(cl - '0');
+                    break;
+                case >= 'a' and <= 'f':
+                    val += (byte)(uint)(cl - 'a' + 10);
+                    break;
+                case >= 'A' and <= 'F':
+                    val = (byte)(uint)(cl - 'A' + 10);
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid character '{cl}' found in hex string");
             }
-            else if (ch is >= 'a' and <= 'f')
-            {
-                val = (byte)((uint)(ch - 'a' + 10) << 4);
-            }
-            else if (ch is >= 'A' and <= 'F')
-            {
-                val = (byte)((uint)(ch - 'A' + 10) << 4);
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid character '{ch}' found in hex string");
-            }
-
-            if (cl is >= '0' and <= '9')
-            {
-                val += (byte)(uint)(cl - '0');
-            }
-            else if (cl is >= 'a' and <= 'f')
-            {
-                val += (byte)(uint)(cl - 'a' + 10);
-            }
-            else if (cl is >= 'A' and <= 'F')
-            {
-                val = (byte)(uint)(cl - 'A' + 10);
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid character '{cl}' found in hex string");
-            }
-
-            // ReSharper restore StyleCop.SA1131
-#pragma warning restore SA1131 // Use readable conditions
 
             ret.Add(val);
         }

@@ -9,197 +9,181 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-namespace Isopoh.Cryptography.Blake2b
+namespace Isopoh.Cryptography.Blake2b;
+
+using System;
+using Isopoh.Cryptography.SecureArray;
+
+/// <summary>
+/// Configuration for the Blake2 hash.
+/// </summary>
+public sealed class Blake2BConfig
 {
-    using System;
-    using Isopoh.Cryptography.SecureArray;
+    private int outputSizeInBytes;
+
+    private Memory<byte>? outputBuffer;
+
+    private Memory<byte>? personalization;
+
+    private Memory<byte>? salt;
+
+    private Memory<byte>? key;
 
     /// <summary>
-    /// Configuration for the Blake2 hash.
+    /// Initializes a new instance of the <see cref="Blake2BConfig"/> class.
     /// </summary>
-    public sealed class Blake2BConfig
+    public Blake2BConfig()
     {
-        private int outputSizeInBytes;
+        this.OutputSizeInBytes = 64;
+    }
 
-        #nullable enable
-        private Memory<byte>? outputBuffer;
-        #nullable restore
+    /// <summary>
+    /// Gets or sets the policy for created memory buffers.
+    /// </summary>
+    // ReSharper disable once UnusedMember.Global
+    public LockMemoryPolicy LockMemoryPolicy { get; set; } = LockMemoryPolicy.BestEffort;
 
-        #nullable enable
-        private Memory<byte>? personalization;
-        #nullable restore
+    /// <summary>
+    /// Gets or sets the personalization value used in the hash. If not null, must be 16 bytes.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Attempt to set <see cref="Personalization"/> to non-null other than 16 bytes.
+    /// </exception>
+    public Memory<byte>? Personalization
+    {
+        get => this.personalization;
 
-        #nullable enable
-        private Memory<byte>? salt;
-        #nullable restore
-
-        #nullable enable
-        private Memory<byte>? key;
-        #nullable restore
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Blake2BConfig"/> class.
-        /// </summary>
-        public Blake2BConfig()
+        set
         {
-            this.OutputSizeInBytes = 64;
-        }
-
-        /// <summary>
-        /// Gets or sets the policy for created memory buffers.
-        /// </summary>
-        public LockMemoryPolicy LockMemoryPolicy { get; set; } = LockMemoryPolicy.BestEffort;
-
-        /// <summary>
-        /// Gets or sets the personalization value used in the hash. If not null, must be 16 bytes.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        /// Attempt to set <see cref="Personalization"/> to non-null other than 16 bytes.
-        /// </exception>
-        #nullable enable
-        public Memory<byte>? Personalization
-        #nullable restore
-        {
-            get => this.personalization;
-
-            set
+            if (value != null && value.Value.Length != 16)
             {
-                if (value != null && value.Value.Length != 16)
-                {
-                    throw new ArgumentException($"Blake2BConfig.Personalization must be 16 bytes, got {value.Value.Length}");
-                }
-
-                this.personalization = value;
+                throw new ArgumentException($"Blake2BConfig.Personalization must be 16 bytes, got {value.Value.Length}");
             }
+
+            this.personalization = value;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the salt value used in the hash. If not null, must be 16 bytes.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        /// Attempt to set <see cref="Salt"/> to non-null other than 16 bytes.
-        /// </exception>
-        #nullable enable
-        public Memory<byte>? Salt
-        #nullable restore
+    /// <summary>
+    /// Gets or sets the salt value used in the hash. If not null, must be 16 bytes.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Attempt to set <see cref="Salt"/> to non-null other than 16 bytes.
+    /// </exception>
+    public Memory<byte>? Salt
+    {
+        get => this.salt;
+
+        set
         {
-            get => this.salt;
-
-            set
+            if (value != null && value.Value.Length != 16)
             {
-                if (value != null && value.Value.Length != 16)
-                {
-                    throw new ArgumentException($"Blake2BConfig.Salt must be 16 bytes, got {value.Value.Length}");
-                }
-
-                this.salt = value;
+                throw new ArgumentException($"Blake2BConfig.Salt must be 16 bytes, got {value.Value.Length}");
             }
+
+            this.salt = value;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the key value used in the hash. If not null, must be 128 bytes or shorter.
-        /// </summary>
-        /// <remarks>
-        /// Blake2 keyed hashing can be used for authentication as a faster and
-        /// simpler replacement for HMAC.
-        /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// Attempt to set <see cref="Key"/> greater than 128 bytes.
-        /// </exception>
-        #nullable enable
-        public Memory<byte>? Key
-        #nullable restore
+    /// <summary>
+    /// Gets or sets the key value used in the hash. If not null, must be 128 bytes or shorter.
+    /// </summary>
+    /// <remarks>
+    /// Blake2 keyed hashing can be used for authentication as a faster and
+    /// simpler replacement for HMAC.
+    /// </remarks>
+    /// <exception cref="ArgumentException">
+    /// Attempt to set <see cref="Key"/> greater than 128 bytes.
+    /// </exception>
+    public Memory<byte>? Key
+    {
+        get => this.key;
+
+        set
         {
-            get => this.key;
-
-            set
+            if (value is { Length: > 128 })
             {
-                if (value is { Length: > 128 })
-                {
-                    throw new ArgumentException($"Blake2BConfig.Key must be 129 bytes or less, got {value.Value.Length}");
-                }
-
-                this.key = value;
+                throw new ArgumentException($"Blake2BConfig.Key must be 129 bytes or less, got {value.Value.Length}");
             }
+
+            this.key = value;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the output size in bytes. Must be less than or equal to 64.
-        /// </summary>
-        /// <remarks>
-        /// Blake2 incorporates this value into the hash. The array returned by the
-        /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call will
-        /// be this length unless the <see cref="Result64ByteBuffer"/> value is non-null.
-        /// If that property is non-null, that buffer gets returned by the <see
-        /// cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call regardless of
-        /// the <see cref="OutputSizeInBytes"/> property. In that case, you can copy the
-        /// first <see cref="OutputSizeInBytes"/> bytes of the <see
-        /// cref="Result64ByteBuffer"/> array to get the value that Blake2 would have
-        /// returned.
-        /// </remarks>
-        public int OutputSizeInBytes
+    /// <summary>
+    /// Gets or sets the output size in bytes. Must be less than or equal to 64.
+    /// </summary>
+    /// <remarks>
+    /// Blake2 incorporates this value into the hash. The array returned by the
+    /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish(Span{byte})"/> call will
+    /// be this length unless the <see cref="Result64ByteBuffer"/> value is non-null.
+    /// If that property is non-null, that buffer gets returned by the <see
+    /// cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish(Span{byte})"/> call regardless of
+    /// the <see cref="OutputSizeInBytes"/> property. In that case, you can copy the
+    /// first <see cref="OutputSizeInBytes"/> bytes of the <see
+    /// cref="Result64ByteBuffer"/> array to get the value that Blake2 would have
+    /// returned.
+    /// </remarks>
+    public int OutputSizeInBytes
+    {
+        get => this.outputSizeInBytes;
+
+        set
         {
-            get => this.outputSizeInBytes;
-
-            set
+            if (value > 64)
             {
-                if (value > 64)
-                {
-                    throw new ArgumentOutOfRangeException($"Output size must be less than 64 byts, got {value}");
-                }
-
-                this.outputSizeInBytes = value;
+                throw new ArgumentOutOfRangeException($"Output size must be less than 64 byts, got {value}");
             }
+
+            this.outputSizeInBytes = value;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the output size in bits. Must be a multiple of 8.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        /// Attempt to set <see cref="OutputSizeInBits"/> to a value not a multiple of 8 bits.
-        /// </exception>
-        public int OutputSizeInBits
+    /// <summary>
+    /// Gets or sets the output size in bits. Must be a multiple of 8.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Attempt to set <see cref="OutputSizeInBits"/> to a value not a multiple of 8 bits.
+    /// </exception>
+    public int OutputSizeInBits
+    {
+        get => this.OutputSizeInBytes * 8;
+
+        set
         {
-            get => this.OutputSizeInBytes * 8;
-
-            set
+            if (value % 8 != 0)
             {
-                if (value % 8 != 0)
-                {
-                    throw new ArgumentException("Output size must be a multiple of 8 bits");
-                }
-
-                this.OutputSizeInBytes = value / 8;
+                throw new ArgumentException("Output size must be a multiple of 8 bits");
             }
+
+            this.OutputSizeInBytes = value / 8;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the 64-byte result buffer the Blake2 algorithm will use.
-        /// </summary>
-        /// <remarks>
-        /// If not null, this is the buffer that will get returned by the
-        /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish"/> call
-        /// regardless of the value of <see cref="OutputSizeInBytes"/>.
-        /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// Attempt to set <see cref="Result64ByteBuffer"/> to non-null other than 64 bytes.
-        /// </exception>
-        #nullable enable
-        public Memory<byte>? Result64ByteBuffer
-        #nullable restore
+    /// <summary>
+    /// Gets or sets the 64-byte result buffer the Blake2 algorithm will use.
+    /// </summary>
+    /// <remarks>
+    /// If not null, this is the buffer that will get returned by the
+    /// <see cref="Blake2BHasher"/>.<see cref="Blake2BHasher.Finish(Span{byte})"/> call
+    /// regardless of the value of <see cref="OutputSizeInBytes"/>.
+    /// </remarks>
+    /// <exception cref="ArgumentException">
+    /// Attempt to set <see cref="Result64ByteBuffer"/> to non-null other than 64 bytes.
+    /// </exception>
+    public Memory<byte>? Result64ByteBuffer
+    {
+        get => this.outputBuffer;
+
+        set
         {
-            get => this.outputBuffer;
-
-            set
+            if (value != null && value.Value.Length != 64)
             {
-                if (value != null && value.Value.Length != 64)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        $"Blake2 output buffer must be 64 bytes, got {value.Value.Length}");
-                }
-
-                this.outputBuffer = value;
+                throw new ArgumentOutOfRangeException(
+                    $"Blake2 output buffer must be 64 bytes, got {value.Value.Length}");
             }
+
+            this.outputBuffer = value;
         }
     }
 }

@@ -21,7 +21,7 @@
     <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
     <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
-    <Nullable>warnings</Nullable>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
     <PackageId>Isopoh.Cryptography.SecureArray</PackageId>

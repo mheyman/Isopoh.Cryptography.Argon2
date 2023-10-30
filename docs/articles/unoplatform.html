@@ -96,16 +96,15 @@ calculating the hash and disables the controls when it is doing so.</p>
 </blockquote>
 <h2 id="xaml">XAML</h2>
 <p>The WPF XAML for that page looks like:</p>
-<pre><code class="lang-xml" name="MainPage.xaml">&lt;Page
+<pre><code class="lang-xml" name="MainPage.xaml">&lt;!-- ReSharper disable once Xaml.XamlDuplicateDeviceFamilyTypeViewHighlighting --&gt;
+&lt;Page
     x:Class=&quot;TestUno.MainPage&quot;
     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-    xmlns:local=&quot;using:TestUno&quot;
     xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
     mc:Ignorable=&quot;d&quot;    
     Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;
-    xmlns:numeric=&quot;http://gu.se/NumericInput&quot;
     d:DesignWidth=&quot;1000&quot;&gt;
 
     &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
@@ -166,7 +165,7 @@ namespace TestUno
     /// &lt;summary&gt;
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// &lt;/summary&gt;
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         private string previousSecret = string.Empty;
 
@@ -177,7 +176,7 @@ namespace TestUno
         {
             this.InitializeComponent();
             this.Os.Text = $&quot;Operating System: {SecureArray.DefaultCall.Os}, {IntPtr.Size * 8}-bit&quot;;
-            this.Secret.LostFocus += (o, a) =&gt; Task.Run(
+            this.Secret.LostFocus += (sender, e) =&gt; Task.Run(
                 async () =&gt; await this.CalculateHashAsync());
             this.TimeCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
             this.MemoryCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
@@ -332,7 +331,7 @@ namespace TestUno
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/master/Doc/articles/unoplatform.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/Doc/articles/unoplatform.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

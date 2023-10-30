@@ -60,7 +60,7 @@
     {
         try
         {
-            var tick = DateTimeOffset.UtcNow;
+            DateTimeOffset tick = DateTimeOffset.UtcNow;
 
             this.secret =((string?)e.Value);
             if (string.IsNullOrEmpty(this.secret) || this.secret == this.previousSecret)
@@ -74,30 +74,30 @@
             hashTitle = string.Empty;
             hashValue = $"Calculating hash for \"{this.previousSecret}\"...";
             hashTime = string.Empty;
-            if (!int.TryParse(this.TimeCost, out var timeCost) || timeCost < 1)
+            if (!int.TryParse(this.TimeCost, out int timeCost) || timeCost < 1)
             {
                 timeCost = 3;
                 this.TimeCost = "3";
             }
 
-            if (!int.TryParse(this.MemoryCost, out var memoryCost) || memoryCost < 1)
+            if (!int.TryParse(this.MemoryCost, out int memoryCost) || memoryCost < 1)
             {
                 memoryCost = 65536;
                 this.MemoryCost = "65536";
             }
 
-            if (!int.TryParse(this.Parallelism, out var parallelism) || parallelism < 1)
+            if (!int.TryParse(this.Parallelism, out int parallelism) || parallelism < 1)
             {
                 parallelism = 1;
                 this.Parallelism = "1";
             }
-            var type = this.Type switch
+            Argon2Type type = this.Type switch
             {
                 DependentType => Argon2Type.DataDependentAddressing,
                 IndependentType => Argon2Type.DataIndependentAddressing,
-                _ => Argon2Type.HybridAddressing
+                _ => Argon2Type.HybridAddressing,
             };
-            if (!int.TryParse(this.HashLength, out var hashLength) || hashLength < 1)
+            if (!int.TryParse(this.HashLength, out int hashLength) || hashLength < 1)
             {
                 hashLength = 32;
                 this.HashLength = "32";

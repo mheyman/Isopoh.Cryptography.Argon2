@@ -1,6 +1,5 @@
-﻿namespace Doc
+﻿namespace Doc;
+
+public class Dummy
 {
-    public class Dummy
-    {
-    }
 }

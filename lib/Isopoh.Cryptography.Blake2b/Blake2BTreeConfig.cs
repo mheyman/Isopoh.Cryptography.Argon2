@@ -8,61 +8,60 @@
 
 // You should have received a copy of the CC0 Public Domain Dedication along with
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-namespace Isopoh.Cryptography.Blake2b
+namespace Isopoh.Cryptography.Blake2b;
+
+/// <summary>
+/// Parameters for the tree hash.
+/// </summary>
+public sealed class Blake2BTreeConfig
 {
     /// <summary>
-    /// Parameters for the tree hash.
+    /// Initializes a new instance of the <see cref="Blake2BTreeConfig"/> class.
     /// </summary>
-    public sealed class Blake2BTreeConfig
+    public Blake2BTreeConfig()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Blake2BTreeConfig"/> class.
-        /// </summary>
-        public Blake2BTreeConfig()
+        this.IntermediateHashSize = 64;
+    }
+
+    /// <summary>
+    /// Gets or sets the intermediate hash size.
+    /// </summary>
+    public int IntermediateHashSize { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tree maximum height.
+    /// </summary>
+    public int MaxHeight { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tree leaf size.
+    /// </summary>
+    public long LeafSize { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tree fan out value.
+    /// </summary>
+    public int FanOut { get; set; }
+
+    // ReSharper disable once UnusedMember.Global
+
+    /// <summary>
+    /// Create an instance of the <see cref="Blake2BTreeConfig"/> for parallel hash computation.
+    /// </summary>
+    /// <param name="parallelism">
+    /// The amount of parallelism to invoke when generating the hash.
+    /// </param>
+    /// <returns>
+    /// An instance of the <see cref="Blake2BTreeConfig"/> suitable for generating a hash.
+    /// </returns>
+    public static Blake2BTreeConfig CreateInterleaved(int parallelism)
+    {
+        var result = new Blake2BTreeConfig
         {
-            this.IntermediateHashSize = 64;
-        }
-
-        /// <summary>
-        /// Gets or sets the intermediate hash size.
-        /// </summary>
-        public int IntermediateHashSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tree maximum height.
-        /// </summary>
-        public int MaxHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tree leaf size.
-        /// </summary>
-        public long LeafSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tree fan out value.
-        /// </summary>
-        public int FanOut { get; set; }
-
-        // ReSharper disable once UnusedMember.Global
-
-        /// <summary>
-        /// Create an instance of the <see cref="Blake2BTreeConfig"/> for parallel hash computation.
-        /// </summary>
-        /// <param name="parallelism">
-        /// The amount of parallelism to invoke when generating the hash.
-        /// </param>
-        /// <returns>
-        /// An instance of the <see cref="Blake2BTreeConfig"/> suitable for generating a hash.
-        /// </returns>
-        public static Blake2BTreeConfig CreateInterleaved(int parallelism)
-        {
-            var result = new Blake2BTreeConfig
-            {
-                FanOut = parallelism,
-                MaxHeight = 2,
-                IntermediateHashSize = 64,
-            };
-            return result;
-        }
+            FanOut = parallelism,
+            MaxHeight = 2,
+            IntermediateHashSize = 64,
+        };
+        return result;
     }
 }

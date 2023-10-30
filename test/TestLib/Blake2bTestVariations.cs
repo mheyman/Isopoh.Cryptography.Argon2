@@ -4,14 +4,17 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Isopoh.Cryptography.SecureArray;
-
 namespace TestLib;
+
+using Isopoh.Cryptography.SecureArray;
 using Isopoh.Cryptography.Blake2b;
 using Xunit.Abstractions;
 using System;
 
-public class Blake2bTestVariations
+/// <summary>
+/// Runs tests for a bunch of different Blake2b parameters to make sure calls work as intended.
+/// </summary>
+public class Blake2BTestVariations
 {
     /// <summary>
     /// Make sure it works with more RAM than C# can allocate in a single chunk.
@@ -20,32 +23,32 @@ public class Blake2bTestVariations
     /// <returns>String with pass/fail message.</returns>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        bool ret = true;
-        int count = 0;
-        int failCount = 0;
-        var keyHashBuffer = FilledBuf(Blake2B.BufferMinimumTotalSize)!.Value;
-        var noKeyHashBuffer = FilledBuf(Blake2B.NoKeyBufferMinimumTotalSize)!.Value;
-        for (int dataLength = 10; dataLength < 600; dataLength += 81)
+        var ret = true;
+        var count = 0;
+        var failCount = 0;
+        Memory<byte> keyHashBuffer = FilledBuf(Blake2B.BufferMinimumTotalSize)!.Value;
+        Memory<byte> noKeyHashBuffer = FilledBuf(Blake2B.NoKeyBufferMinimumTotalSize)!.Value;
+        for (var dataLength = 10; dataLength < 600; dataLength += 81)
         {
-            var data = FilledBuf(dataLength)!.Value;
-            foreach (var keyLength in new[] { -1, 0, 7, 8, 9, 31, 32, 33, 63, 64 })
+            Memory<byte> data = FilledBuf(dataLength)!.Value;
+            foreach (int keyLength in new[] { -1, 0, 7, 8, 9, 31, 32, 33, 63, 64 })
             {
-                var hashBuffer = keyLength > 0 ? keyHashBuffer : noKeyHashBuffer;
-                foreach (var hasSalt in new[] { false, true })
+                Memory<byte> hashBuffer = keyLength > 0 ? keyHashBuffer : noKeyHashBuffer;
+                foreach (bool hasSalt in new[] { false, true })
                 {
-                    foreach (var outputLength in new [] { 1, 2, 7, 8, 9, 31, 32, 33, 63, 64 })
+                    foreach (int outputLength in new[] { 1, 2, 7, 8, 9, 31, 32, 33, 63, 64 })
                     {
-                        var ec = Config(keyLength, hasSalt, outputLength, true);
-                        var res = ec.Result64ByteBuffer!.Value;
+                        Blake2BConfig ec = Config(keyLength, hasSalt, outputLength, true);
+                        Memory<byte> res = ec.Result64ByteBuffer!.Value;
                         Blake2B.ComputeHash(data.Span, ec, hashBuffer).ToArray();
-                        foreach (var hasOutput in new[] { true, false })
+                        foreach (bool hasOutput in new[] { true, false })
                         {
-                            var c1 = Config(keyLength, hasSalt, outputLength, hasOutput);
-                            var check1 = Blake2B.ComputeHash(data.Span, c1, hashBuffer).ToArray();
-                            var c2 = Config(keyLength, hasSalt, outputLength, hasOutput);
-                            var check2 = Blake2B.ComputeHash(data.ToArray(), c2, SecureArray.DefaultCall).ToArray();
+                            Blake2BConfig c1 = Config(keyLength, hasSalt, outputLength, hasOutput);
+                            byte[] check1 = Blake2B.ComputeHash(data.Span, c1, hashBuffer).ToArray();
+                            Blake2BConfig c2 = Config(keyLength, hasSalt, outputLength, hasOutput);
+                            byte[] check2 = Blake2B.ComputeHash(data.ToArray(), c2, SecureArray.DefaultCall).ToArray();
 
-                            foreach (var (c, check, usedMemory) in new[] { (c1, check1, true), (c2, check2, false) })
+                            foreach ((Blake2BConfig c, byte[] check, bool usedMemory) in new[] { (c1, check1, true), (c2, check2, false) })
                             {
                                 if (c.Result64ByteBuffer.HasValue)
                                 {
@@ -70,7 +73,7 @@ public class Blake2bTestVariations
             }
         }
 
-        return (ret, failCount == 0 ? $"SUCCESS! {count} checks" : $"Failed {failCount} of {count}");
+        return (ret, $"Blake2BTestVariations: {(failCount == 0 ? $"SUCCESS! {count} checks" : $"Failed {failCount} of {count}")}");
     }
 
     private static string Detail(int dataLength, int keyLength, bool hasSalt, bool usedMemory, int outputLength, int ofLength) =>
@@ -84,7 +87,7 @@ public class Blake2bTestVariations
             return false;
         }
 
-        for (int i = 0; i < actual.Length; ++i)
+        for (var i = 0; i < actual.Length; ++i)
         {
             if (expected[i] != actual[i])
             {
@@ -102,7 +105,7 @@ public class Blake2bTestVariations
         if (length >= 0)
         {
             var ret = new byte[length];
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 ret[i] = (byte)i;
             }
@@ -115,7 +118,7 @@ public class Blake2bTestVariations
 
     private static Blake2BConfig Config(int keyLength, bool hasSalt, int outputSizeInBytes, bool hasOutput)
     {
-        return new Blake2BConfig()
+        return new Blake2BConfig
         {
             Key = FilledBuf(keyLength),
             Salt = FilledBuf(hasSalt ? 16 : -1),

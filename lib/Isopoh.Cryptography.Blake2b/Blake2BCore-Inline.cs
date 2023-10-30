@@ -10,8 +10,7 @@
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 // ReSharper disable once EmptyNamespace
-namespace Isopoh.Cryptography.Blake2b
-{
+namespace Isopoh.Cryptography.Blake2b;
 #if false
     public partial class Blake2BCore
     {
@@ -191,4 +190,3 @@ namespace Isopoh.Cryptography.Blake2b
         }
     }
 #endif
-}

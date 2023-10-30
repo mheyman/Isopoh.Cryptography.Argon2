@@ -24,10 +24,10 @@ public static class LeakInVerify
     public static (bool, string) Test(ITestOutputHelper output)
     {
         var locks = new Dictionary<IntPtr, int>();
-        int lockCount = 0;
+        var lockCount = 0;
         var badLocks = new List<int>();
-        int badUnlockCount = 0;
-        SecureArrayCall secureArrayCall = new SecureArrayCall(
+        var badUnlockCount = 0;
+        var secureArrayCall = new SecureArrayCall(
             SecureArray.DefaultCall.ZeroMemory,
             (m, l) =>
             {
@@ -67,16 +67,16 @@ public static class LeakInVerify
             },
             $"Wrapped {SecureArray.DefaultCall.Os}");
 
-        var hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
-        var password = "b";
+        const string hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
+        const string password = "b";
         const int maxIteration = 10;
         var memoryDiff = new long[maxIteration];
-        for (int i = 0; i < maxIteration; i++)
+        for (var i = 0; i < maxIteration; i++)
         {
             output.WriteLine($"TestLeaks: Iteration {i + 1} of {maxIteration}");
-            var prevTotalMemory = GC.GetTotalMemory(true);
+            long prevTotalMemory = GC.GetTotalMemory(true);
             Argon2.Verify(hashString, password, secureArrayCall);
-            var postTotalMemory = GC.GetTotalMemory(true);
+            long postTotalMemory = GC.GetTotalMemory(true);
             memoryDiff[i] = postTotalMemory - prevTotalMemory;
         }
 

@@ -107,9 +107,7 @@ public static class Blake2B
     /// <returns>
     /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.
     /// </returns>
-#nullable enable
     public static Hasher Create(Blake2BConfig? config, SecureArrayCall secureArrayCall)
-#nullable restore
     {
         return new Blake2BHasher(config, secureArrayCall);
     }
@@ -206,11 +204,9 @@ public static class Blake2B
     /// <returns>
     /// The hash of the buffer.
     /// </returns>
-#nullable enable
     public static Memory<byte> ComputeHash(byte[] data, int start, int count, Blake2BConfig? config, SecureArrayCall secureArrayCall)
-#nullable restore
     {
-        using var hasher = Create(config, secureArrayCall);
+        using Hasher hasher = Create(config, secureArrayCall);
         hasher.Update(data.AsSpan(start, count));
         return hasher.Finish();
     }
@@ -231,9 +227,10 @@ public static class Blake2B
     /// <returns>
     /// The hash of the buffer.
     /// </returns>
+    // ReSharper disable once UnusedMember.Global
     public static Memory<byte> ComputeHash(ReadOnlySpan<byte> data, Blake2BConfig? config, Memory<byte> blake2BBuffer)
     {
-        using var hasher = Create(config, blake2BBuffer);
+        using Hasher hasher = Create(config, blake2BBuffer);
         hasher.Update(data);
         return hasher.Finish();
     }

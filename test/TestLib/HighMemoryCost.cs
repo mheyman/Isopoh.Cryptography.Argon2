@@ -25,8 +25,8 @@ public static class HighMemoryCost
         // Tests chunking the Argon2 working memory because of the limits of C# array sizes.
         // this can take a long time depending on the multiplier
         output.WriteLine("HighMemoryCost:");
-        string password = "password";
-        var memoryCost = Argon2.CsharpMaxBlocksPerArray + 271;
+        const string password = "password";
+        const int memoryCost = Argon2.CsharpMaxBlocksPerArray + 271;
         JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
         output.WriteLine("HighMemoryCost: Hash");
         string hash = Argon2.Hash(password, memoryCost: memoryCost, parallelism: 20, secureArrayCall: new InsecureArrayCall());

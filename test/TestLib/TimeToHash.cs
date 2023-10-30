@@ -23,31 +23,31 @@ public static class TimeToHash
     /// <returns>TestTimeToHash: Passed.</returns>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        (double, string, string) Check7(int p)
-        {
-            const string password = "hello world";
-            string ret = string.Empty;
-            var res = new List<double>();
-            for (int i = 0; i < 5; ++i)
-            {
-                var tick = DateTimeOffset.UtcNow;
-                ret = Argon2.Hash(password, parallelism: p);
-                res.Add((DateTimeOffset.UtcNow - tick).TotalSeconds);
-            }
-
-            res.Sort();
-            var take = res.Count - 4;
-            return (res.Skip(2).Take(take).Average(), password, ret);
-        }
-
         var res = new List<string>();
-        for (int parallelism = 1; parallelism <= 20; ++parallelism)
+        for (var parallelism = 1; parallelism <= 20; ++parallelism)
         {
-            var (tick, pw, hash) = Check7(parallelism);
+            (double tick, string pw, string hash) = Check7(parallelism);
             res.Add($"{parallelism}:{tick:F3}");
             output.WriteLine($"Parallelism {parallelism:D2}: {tick:F3} seconds, \"{pw}\" => {hash}");
         }
 
         return (true, $"TestTimeToHash: Passed. {string.Join(", ", res)}");
+
+        static (double, string, string) Check7(int p)
+        {
+            const string password = "hello world";
+            var ret = string.Empty;
+            var res = new List<double>();
+            for (var i = 0; i < 5; ++i)
+            {
+                DateTimeOffset tick = DateTimeOffset.UtcNow;
+                ret = Argon2.Hash(password, parallelism: p);
+                res.Add((DateTimeOffset.UtcNow - tick).TotalSeconds);
+            }
+
+            res.Sort();
+            int take = res.Count - 4;
+            return (res.Skip(2).Take(take).Average(), password, ret);
+        }
     }
 }

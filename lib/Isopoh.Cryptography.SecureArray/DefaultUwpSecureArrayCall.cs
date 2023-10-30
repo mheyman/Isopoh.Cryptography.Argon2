@@ -4,51 +4,48 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-namespace Isopoh.Cryptography.SecureArray
+namespace Isopoh.Cryptography.SecureArray;
+
+using System;
+using System.Runtime.InteropServices;
+using Isopoh.Cryptography.SecureArray.UwpNative;
+
+/// <summary>
+/// A <see cref="SecureArrayCall"/> with defaults for the Universal Windows Platform.
+/// </summary>
+public class DefaultUwpSecureArrayCall : SecureArrayCall
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using Isopoh.Cryptography.SecureArray.UwpNative;
-
     /// <summary>
-    /// A <see cref="SecureArrayCall"/> with defaults for the Universal Windows Platform.
+    /// Initializes a new instance of the <see cref="DefaultUwpSecureArrayCall"/> class.
     /// </summary>
-    public class DefaultUwpSecureArrayCall : SecureArrayCall
+    public DefaultUwpSecureArrayCall()
+        : base(
+            (m, l) => UnsafeNativeMethods.UwpMemset(m, 0, l),
+            UwpLockMemory,
+            UwpUnlockMemory,
+            "UWP")
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultUwpSecureArrayCall"/> class.
-        /// </summary>
-        public DefaultUwpSecureArrayCall()
-            : base(
-                (m, l) => UnsafeNativeMethods.UwpMemset(m, 0, l),
-                UwpLockMemory,
-                UwpUnlockMemory,
-                "UWP")
+        var buffer = new byte[1];
+        GCHandle bufHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+        try
         {
-            var buffer = new byte[1];
-            var bufHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            try
-            {
-                IntPtr bufPtr = bufHandle.AddrOfPinnedObject();
-                _ = UnsafeNativeMethods.UwpMemset(bufPtr, 0, (nuint)buffer.Length);
-            }
-            finally
-            {
-                bufHandle.Free();
-            }
+            IntPtr bufPtr = bufHandle.AddrOfPinnedObject();
+            _ = UnsafeNativeMethods.UwpMemset(bufPtr, 0, (nuint)buffer.Length);
         }
+        finally
+        {
+            bufHandle.Free();
+        }
+    }
 
-        #nullable enable
-        private static string? UwpLockMemory(IntPtr m, UIntPtr l)
-        #nullable restore
-        {
-            // cannot prevent memory from swapping within UWP.
-            return null;
-        }
+    private static string? UwpLockMemory(IntPtr m, UIntPtr l)
+    {
+        // cannot prevent memory from swapping within UWP.
+        return null;
+    }
 
-        private static void UwpUnlockMemory(IntPtr m, UIntPtr l)
-        {
-            // cannot prevent memory from swapping within UWP.
-        }
+    private static void UwpUnlockMemory(IntPtr m, UIntPtr l)
+    {
+        // cannot prevent memory from swapping within UWP.
     }
 }

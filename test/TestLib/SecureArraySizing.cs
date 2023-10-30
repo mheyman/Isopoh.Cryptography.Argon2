@@ -25,8 +25,8 @@ public static class SecureArraySizing
     /// </remarks>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        int size = 100;
-        int smallestFailedSize = int.MaxValue;
+        var size = 100;
+        var smallestFailedSize = int.MaxValue;
         int largestSuccessfulSize = size;
         while (true)
         {

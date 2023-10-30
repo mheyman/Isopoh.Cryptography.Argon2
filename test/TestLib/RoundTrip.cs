@@ -29,18 +29,22 @@ public static class RoundTrip
     /// </returns>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        var password = "password1";
+        const string password = "password1";
         byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-        byte[] salt = new byte[16];
+        var salt = new byte[16];
         Rng.GetBytes(salt);
-        var secret = "secret1";
+        const string secret = "secret1";
         byte[] secretBytes = Encoding.UTF8.GetBytes(secret);
         var failedResults = new List<string>();
         var passedResults = new List<string>();
-        foreach (var argon2Type in new[] { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing })
+        foreach (Argon2Type argon2Type in new[] { Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing })
         {
-            var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
-                argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
+            string argon2Name = argon2Type switch
+            {
+                Argon2Type.DataIndependentAddressing => "Argon2i",
+                Argon2Type.DataDependentAddressing => "Argon2d",
+                _ => "Argon2id",
+            };
             var config = new Argon2Config
             {
                 Type = argon2Type,
@@ -55,7 +59,7 @@ public static class RoundTrip
             };
             var argon2 = new Argon2(config);
             SecureArray<byte> hash = argon2.Hash();
-            var passwordHash = config.EncodeString(hash.Buffer);
+            string? passwordHash = config.EncodeString(hash.Buffer);
             output.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
             if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
             {

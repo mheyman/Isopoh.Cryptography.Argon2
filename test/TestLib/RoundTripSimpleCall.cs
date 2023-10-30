@@ -24,19 +24,23 @@ public static class RoundTripSimpleCall
     /// </returns>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        var password = "password1";
-        var secret = "secret1";
+        const string password = "password1";
+        const string secret = "secret1";
         var passedResults = new List<string>();
         var failedResults = new List<string>();
-        foreach (var argon2Type in new[]
+        foreach (Argon2Type argon2Type in new[]
             {
                 Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing,
             })
         {
-            var argon2Name = argon2Type == Argon2Type.DataIndependentAddressing ? "Argon2i" :
-                argon2Type == Argon2Type.DataDependentAddressing ? "Argon2d" : "Argon2id";
+            string argon2Name = argon2Type switch
+            {
+                Argon2Type.DataIndependentAddressing => "Argon2i",
+                Argon2Type.DataDependentAddressing => "Argon2d",
+                _ => "Argon2id",
+            };
 
-            var passwordHash = Argon2.Hash(password, secret, type: argon2Type);
+            string? passwordHash = Argon2.Hash(password, secret, type: argon2Type);
             output.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
 
             if (Argon2.Verify(passwordHash, password, secret))

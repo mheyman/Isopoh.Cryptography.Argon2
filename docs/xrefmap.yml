@@ -686,6 +686,19 @@ references:
   commentId: T:Isopoh.Cryptography.Blake2b.Blake2B
   fullName: Isopoh.Cryptography.Blake2b.Blake2B
   nameWithType: Blake2B
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_BufferMinimumTotalSize
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  nameWithType: Blake2B.BufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize*
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_BufferMinimumTotalSize_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  nameWithType: Blake2B.BufferMinimumTotalSize
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.Byte[],Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: ComputeHash(Byte[], Blake2BConfig, SecureArrayCall)
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_System_Byte___Isopoh_Cryptography_Blake2b_Blake2BConfig_Isopoh_Cryptography_SecureArray_SecureArrayCall_
@@ -722,6 +735,15 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.Byte(), System.Int32, System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.ComputeHash(Byte[], Int32, Int32, SecureArrayCall)
   nameWithType.vb: Blake2B.ComputeHash(Byte(), Int32, Int32, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan{System.Byte},Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: ComputeHash(ReadOnlySpan<Byte>, Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_System_ReadOnlySpan_System_Byte__Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan{System.Byte},Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: ComputeHash(ReadOnlySpan(Of Byte), Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan<System.Byte>, Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan(Of System.Byte), Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2B.ComputeHash(ReadOnlySpan<Byte>, Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2B.ComputeHash(ReadOnlySpan(Of Byte), Blake2BConfig, Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash*
   name: ComputeHash
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_
@@ -735,12 +757,30 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.Create(Blake2BConfig, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: Create(Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: Create(Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2B.Create(Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2B.Create(Blake2BConfig, Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: Create(SecureArrayCall)
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_Isopoh_Cryptography_SecureArray_SecureArrayCall_
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.Create(SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory{System.Byte})
+  name: Create(Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory{System.Byte})
+  name.vb: Create(Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory(Of System.Byte))
+  nameWithType: Blake2B.Create(Memory<Byte>)
+  nameWithType.vb: Blake2B.Create(Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.Create*
   name: Create
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_
@@ -748,6 +788,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create
   nameWithType: Blake2B.Create
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_NoKeyBufferMinimumTotalSize
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2B.NoKeyBufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize*
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_NoKeyBufferMinimumTotalSize_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2B.NoKeyBufferMinimumTotalSize
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.OutputLength
   name: OutputLength
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_OutputLength
@@ -876,6 +929,15 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   nameWithType: Blake2BCore.Blake2BCore(SecureArrayCall, LockMemoryPolicy)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(System.Memory{System.Byte})
+  name: Blake2BCore(Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(System.Memory{System.Byte})
+  name.vb: Blake2BCore(Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(System.Memory(Of System.Byte))
+  nameWithType: Blake2BCore.Blake2BCore(Memory<Byte>)
+  nameWithType.vb: Blake2BCore.Blake2BCore(Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor*
   name: Blake2BCore
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_
@@ -883,6 +945,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore
   nameWithType: Blake2BCore.Blake2BCore
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  name: BufferTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  nameWithType: Blake2BCore.BufferTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize*
+  name: BufferTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  nameWithType: Blake2BCore.BufferTotalSize
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)
   name: BytesToUInt64(ReadOnlySpan<Byte>, Int32)
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_ReadOnlySpan_System_Byte__System_Int32_
@@ -905,6 +980,12 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose()
   nameWithType: Blake2BCore.Dispose()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  nameWithType: Blake2BCore.Dispose(Boolean)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose*
   name: Dispose
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_
@@ -912,15 +993,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   nameWithType: Blake2BCore.Dispose
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span{System.Byte},System.Int32,System.Int32)
-  name: HashCore(Span<Byte>, Int32, Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_Span_System_Byte__System_Int32_System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span{System.Byte},System.Int32,System.Int32)
-  name.vb: HashCore(Span(Of Byte), Int32, Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span<System.Byte>, System.Int32, System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Span(Of System.Byte), System.Int32, System.Int32)
-  nameWithType: Blake2BCore.HashCore(Span<Byte>, Int32, Int32)
-  nameWithType.vb: Blake2BCore.HashCore(Span(Of Byte), Int32, Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan{System.Byte})
+  name: HashCore(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan{System.Byte})
+  name.vb: HashCore(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Blake2BCore.HashCore(ReadOnlySpan<Byte>)
+  nameWithType.vb: Blake2BCore.HashCore(ReadOnlySpan(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore*
   name: HashCore
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_
@@ -958,6 +1039,24 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte(), System.Boolean)
   nameWithType: Blake2BCore.HashFinal(Byte[], Boolean)
   nameWithType.vb: Blake2BCore.HashFinal(Byte(), Boolean)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte})
+  name: HashFinal(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte})
+  name.vb: HashFinal(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span(Of System.Byte))
+  nameWithType: Blake2BCore.HashFinal(Span<Byte>)
+  nameWithType.vb: Blake2BCore.HashFinal(Span(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte},System.Boolean)
+  name: HashFinal(Span<Byte>, Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte},System.Boolean)
+  name.vb: HashFinal(Span(Of Byte), Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span<System.Byte>, System.Boolean)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span(Of System.Byte), System.Boolean)
+  nameWithType: Blake2BCore.HashFinal(Span<Byte>, Boolean)
+  nameWithType.vb: Blake2BCore.HashFinal(Span(Of Byte), Boolean)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*
   name: HashFinal
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_
@@ -965,15 +1064,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal
   nameWithType: Blake2BCore.HashFinal
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  name: Initialize(UInt64[])
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_UInt64___
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  name.vb: Initialize(UInt64())
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64())
-  nameWithType: Blake2BCore.Initialize(UInt64[])
-  nameWithType.vb: Blake2BCore.Initialize(UInt64())
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan{System.UInt64})
+  name: Initialize(ReadOnlySpan<UInt64>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_ReadOnlySpan_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan{System.UInt64})
+  name.vb: Initialize(ReadOnlySpan(Of UInt64))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan(Of System.UInt64))
+  nameWithType: Blake2BCore.Initialize(ReadOnlySpan<UInt64>)
+  nameWithType.vb: Blake2BCore.Initialize(ReadOnlySpan(Of UInt64))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize*
   name: Initialize
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_
@@ -981,15 +1080,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize
   nameWithType: Blake2BCore.Initialize
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
-  name: UInt64ToBytes(UInt64, Byte[], Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Byte___System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
-  name.vb: UInt64ToBytes(UInt64, Byte(), Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte(), System.Int32)
-  nameWithType: Blake2BCore.UInt64ToBytes(UInt64, Byte[], Int32)
-  nameWithType.vb: Blake2BCore.UInt64ToBytes(UInt64, Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Span{System.Byte},System.Int32)
+  name: UInt64ToBytes(UInt64, Span<Byte>, Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Span_System_Byte__System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Span{System.Byte},System.Int32)
+  name.vb: UInt64ToBytes(UInt64, Span(Of Byte), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Span<System.Byte>, System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Span(Of System.Byte), System.Int32)
+  nameWithType: Blake2BCore.UInt64ToBytes(UInt64, Span<Byte>, Int32)
+  nameWithType.vb: Blake2BCore.UInt64ToBytes(UInt64, Span(Of Byte), Int32)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes*
   name: UInt64ToBytes
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_
@@ -997,6 +1096,150 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes
   nameWithType: Blake2BCore.UInt64ToBytes
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher
+  name: Blake2BHasher
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html
+  commentId: T:Isopoh.Cryptography.Blake2b.Blake2BHasher
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher
+  nameWithType: Blake2BHasher
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Blake2BHasher(Blake2BConfig, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_Isopoh_Cryptography_Blake2b_Blake2BConfig_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Blake2BHasher.Blake2BHasher(Blake2BConfig, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: Blake2BHasher(Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: Blake2BHasher(Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2BHasher.Blake2BHasher(Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2BHasher.Blake2BHasher(Blake2BConfig, Memory(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor*
+  name: Blake2BHasher
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher
+  nameWithType: Blake2BHasher.Blake2BHasher
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_BufferMinimumTotalSize
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  nameWithType: Blake2BHasher.BufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize*
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_BufferMinimumTotalSize_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  nameWithType: Blake2BHasher.BufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Dispose_System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  nameWithType: Blake2BHasher.Dispose(Boolean)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose*
+  name: Dispose
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Dispose_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose
+  nameWithType: Blake2BHasher.Dispose
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  name: Finish()
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish()
+  nameWithType: Blake2BHasher.Finish()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span{System.Byte})
+  name: Finish(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span{System.Byte})
+  name.vb: Finish(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span(Of System.Byte))
+  nameWithType: Blake2BHasher.Finish(Span<Byte>)
+  nameWithType.vb: Blake2BHasher.Finish(Span(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish*
+  name: Finish
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  nameWithType: Blake2BHasher.Finish
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  name: Init()
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Init
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init()
+  nameWithType: Blake2BHasher.Init()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init*
+  name: Init
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Init_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  nameWithType: Blake2BHasher.Init
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  name: Iv
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Iv
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  nameWithType: Blake2BHasher.Iv
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv*
+  name: Iv
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Iv_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  nameWithType: Blake2BHasher.Iv
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  name: Key
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Key
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  nameWithType: Blake2BHasher.Key
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key*
+  name: Key
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Key_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  nameWithType: Blake2BHasher.Key
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_NoKeyBufferMinimumTotalSize
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2BHasher.NoKeyBufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize*
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_NoKeyBufferMinimumTotalSize_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2BHasher.NoKeyBufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan{System.Byte})
+  name: Update(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Update_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan{System.Byte})
+  name.vb: Update(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Blake2BHasher.Update(ReadOnlySpan<Byte>)
+  nameWithType.vb: Blake2BHasher.Update(ReadOnlySpan(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update*
+  name: Update
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Update_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Update
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update
+  nameWithType: Blake2BHasher.Update
 - uid: Isopoh.Cryptography.Blake2b.Blake2BTreeConfig
   name: Blake2BTreeConfig
   href: api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.html
@@ -1125,6 +1368,15 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Finish
   fullName: Isopoh.Cryptography.Blake2b.Hasher.Finish()
   nameWithType: Hasher.Finish()
+- uid: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span{System.Byte})
+  name: Finish(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Finish_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span{System.Byte})
+  name.vb: Finish(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span(Of System.Byte))
+  nameWithType: Hasher.Finish(Span<Byte>)
+  nameWithType.vb: Hasher.Finish(Span(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Hasher.Finish*
   name: Finish
   href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Finish_
@@ -1163,6 +1415,15 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Update(System.Byte(), System.Int32, System.Int32)
   nameWithType: Hasher.Update(Byte[], Int32, Int32)
   nameWithType.vb: Hasher.Update(Byte(), Int32, Int32)
+- uid: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan{System.Byte})
+  name: Update(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Update_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan{System.Byte})
+  name.vb: Update(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Hasher.Update(ReadOnlySpan<Byte>)
+  nameWithType.vb: Hasher.Update(ReadOnlySpan(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Hasher.Update*
   name: Update
   href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Update_

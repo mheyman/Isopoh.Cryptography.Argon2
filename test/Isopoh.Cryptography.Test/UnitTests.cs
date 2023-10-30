@@ -39,7 +39,7 @@ public class UnitTests
     [Fact]
     public void TestArgon2RoundTrip()
     {
-        var (passed, text) = RoundTrip.Test(this.output);
+        (bool passed, string text) = RoundTrip.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -49,7 +49,7 @@ public class UnitTests
     [Fact]
     public void TestArgon2RoundTripSimpleCall()
     {
-        var (passed, text) = RoundTripSimpleCall.Test(this.output);
+        (bool passed, string text) = RoundTripSimpleCall.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -59,7 +59,7 @@ public class UnitTests
     [Fact]
     public void TestArgon2ThreadsDontMatter()
     {
-        var (passed, text) = ThreadsDontMatter.Test(this.output);
+        (bool passed, string text) = ThreadsDontMatter.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -69,7 +69,7 @@ public class UnitTests
     [Fact]
     public void TestArgon2()
     {
-        var (passed, text) = PublishedVector.Test(this.output);
+        (bool passed, string text) = PublishedVector.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -79,7 +79,7 @@ public class UnitTests
     [Fact]
     public void TestParallelismTiming()
     {
-        var (passed, text) = TimeToHash.Test(this.output);
+        (bool passed, string text) = TimeToHash.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -89,7 +89,7 @@ public class UnitTests
     [Fact]
     public void TestLeaking()
     {
-        var (passed, text) = LeakInVerify.Test(this.output);
+        (bool passed, string text) = LeakInVerify.Test(this.output);
         Assert.True(passed, text);
     }
 
@@ -119,22 +119,28 @@ public class UnitTests
     [Fact]
     public void TestSecureArray()
     {
-        var (passed, text) = SecureArraySizing.Test(this.output);
+        (bool passed, string text) = SecureArraySizing.Test(this.output);
         Assert.True(passed, text);
     }
 
+    /// <summary>
+    /// Tests that can hash to length of 16.
+    /// </summary>
     [Fact]
     public void HashSize()
     {
-        string password = "password";
+        const string password = "password";
         string hash = Argon2.Hash(password, hashLength: 16);
         Assert.True(Argon2.Verify(hash, password));
     }
 
+    /// <summary>
+    /// Make sure can work with more RAM than C# can allocate in a single chunk.
+    /// </summary>
     [Fact]
     public void TestHighMemoryCost()
     {
-        var (passed, text) = HighMemoryCost.Test(this.output);
+        (bool passed, string text) = HighMemoryCost.Test(this.output);
         Assert.True(passed, text);
     }
 }

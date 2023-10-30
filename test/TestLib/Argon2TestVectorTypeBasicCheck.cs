@@ -25,7 +25,7 @@ public class Argon2TestVectorTypeBasicCheck
     /// <returns>True on success; false otherwise.</returns>
     public static bool Test(int checkNumber, Argon2TestVectorType.TestVector argon2TestVector, ITestOutputHelper output)
     {
-        var nl = Environment.NewLine;
+        string nl = Environment.NewLine;
         try
         {
             var config = new Argon2Config
@@ -44,7 +44,7 @@ public class Argon2TestVectorTypeBasicCheck
                 SecureArrayCall = SecureArray.DefaultCall,
             };
 
-            var text = Argon2.Hash(config);
+            string? text = Argon2.Hash(config);
             if (string.CompareOrdinal(text, argon2TestVector.EncodedTag) == 0)
             {
                 output.WriteLine(

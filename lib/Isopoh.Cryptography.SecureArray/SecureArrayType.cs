@@ -4,28 +4,27 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-namespace Isopoh.Cryptography.SecureArray
+namespace Isopoh.Cryptography.SecureArray;
+
+/// <summary>
+/// The behavior of the secure array.
+/// </summary>
+public enum SecureArrayType
 {
     /// <summary>
-    /// The behavior of the secure array.
+    /// Zero the memory on disposal
     /// </summary>
-    public enum SecureArrayType
-    {
-        /// <summary>
-        /// Zero the memory on disposal
-        /// </summary>
-        Zeroed,
+    Zeroed,
 
-        /// <summary>
-        /// Pin the memory so the garbage collector doesn't move it around
-        /// and zero the memory on disposal
-        /// </summary>
-        ZeroedAndPinned,
+    /// <summary>
+    /// Pin the memory so the garbage collector doesn't move it around
+    /// and zero the memory on disposal
+    /// </summary>
+    ZeroedAndPinned,
 
-        /// <summary>
-        /// Lock the memory into RAM, pin the memory so the garbage collector
-        /// doesn't move it, and zero the memory on disposal.
-        /// </summary>
-        ZeroedPinnedAndNoSwap,
-    }
+    /// <summary>
+    /// Lock the memory into RAM, pin the memory so the garbage collector
+    /// doesn't move it, and zero the memory on disposal.
+    /// </summary>
+    ZeroedPinnedAndNoSwap,
 }

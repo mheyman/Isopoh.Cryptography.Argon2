@@ -107,14 +107,8 @@ public static class PublishedVector
     /// </returns>
     public static (bool, string) Test(ITestOutputHelper output)
     {
-        var passed = true;
-
-        foreach (var testVector in Argon2TestVectors)
-        {
-            passed = passed && testVector.Validate(output);
-        }
-
-        var res = passed ? "Argon2 Passed" : "Argon2 FAILED";
+        bool passed = Argon2TestVectors.Aggregate(true, (current, testVector) => current && testVector.Validate(output));
+        string res = passed ? "Argon2 Passed" : "Argon2 FAILED";
         return (passed, res);
     }
 }
