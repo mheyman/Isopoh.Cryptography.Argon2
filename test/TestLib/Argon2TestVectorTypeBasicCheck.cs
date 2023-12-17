@@ -13,6 +13,7 @@ using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 // ReSharper disable once GrammarMistakeInComment
+
 /// <summary>
 /// Has a method that does a basic check against an <see cref="Argon2TestVectorType"/> instance.
 /// </summary>

@@ -4,7 +4,7 @@
       <LangVersion>latest</LangVersion>
       <NullableContextOptions>enable</NullableContextOptions>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,7 +28,7 @@
 
     <ItemGroup>
       <PackageReference Include="JetBrains.Profiler.Api" Version="1.4.0" />
-      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

@@ -12,13 +12,13 @@ namespace Isopoh.Cryptography.SecureArray;
 public enum SecureArrayType
 {
     /// <summary>
-    /// Zero the memory on disposal
+    /// Zero the memory on disposal.
     /// </summary>
     Zeroed,
 
     /// <summary>
     /// Pin the memory so the garbage collector doesn't move it around
-    /// and zero the memory on disposal
+    /// and zero the memory on disposal.
     /// </summary>
     ZeroedAndPinned,
 

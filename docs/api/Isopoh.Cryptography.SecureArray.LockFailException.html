@@ -147,8 +147,7 @@
   <h6><strong>Assembly</strong>: Isopoh.Cryptography.SecureArray.dll</h6>
   <h5 id="Isopoh_Cryptography_SecureArray_LockFailException_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Serializable]
-public class LockFailException : Exception, ISerializable</code></pre>
+    <pre><code class="lang-csharp hljs">public class LockFailException : Exception, ISerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -157,7 +156,7 @@ public class LockFailException : Exception, ISerializable</code></pre>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L21">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L20">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor">LockFailException()</h4>
@@ -170,71 +169,10 @@ public class LockFailException : Exception, ISerializable</code></pre>
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L63">View Source</a>
-  </span>
-  <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
-  <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">LockFailException(SerializationInfo, StreamingContext)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Isopoh.Cryptography.SecureArray.LockFailException.html">LockFailException</a> class with serialized data.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected LockFailException(SerializationInfo info, StreamingContext context)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Runtime.Serialization.SerializationInfo</span></td>
-        <td><span class="parametername">info</span></td>
-        <td><p>The <span class="xref">System.Runtime.Serialization.SerializationInfo</span> that holds the serialized object data about the exception being thrown.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Runtime.Serialization.StreamingContext</span></td>
-        <td><span class="parametername">context</span></td>
-        <td><p>The <span class="xref">System.Runtime.Serialization.StreamingContext</span> that contains contextual information about the source or destination.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.ArgumentNullException</span></td>
-        <td><p>The <code data-dev-comment-type="paramref" class="paramref">info</code> parameter is null.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Runtime.Serialization.SerializationException</span></td>
-        <td><p>The class name is null or <span class="xref">System.Exception.HResult</span> is zero (0).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.SecureArray.LockFailException.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L31">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.SecureArray/LockFailException.cs/#L30">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_" data-uid="Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)">LockFailException(String)</h4>

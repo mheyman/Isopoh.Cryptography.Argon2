@@ -8,10 +8,10 @@
 // </summary>
 
 namespace Isopoh.Cryptography.Test;
-using TestLib;
 
-using Argon2;
-using SecureArray;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
+using TestLib;
 using Xunit;
 using Xunit.Abstractions;
 

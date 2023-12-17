@@ -24,7 +24,7 @@ public class SecureArray
     /// used to do it at runtime.
     /// </summary>
     private static readonly Dictionary<Type, int> TypeSizes =
-        new ()
+        new()
         {
             { typeof(sbyte), sizeof(sbyte) },
             { typeof(byte), sizeof(byte) },
@@ -56,7 +56,7 @@ public class SecureArray
             "operating system.")),
     ];
 
-    private static readonly object DefaultCallLock = new ();
+    private static readonly object DefaultCallLock = new();
 
     private static SecureArrayCall? defaultCall = DefaultCall;
 

@@ -15,13 +15,13 @@ using Isopoh.Cryptography.SecureArray.WindowsNative;
 /// </summary>
 public class DefaultWindowsSecureArrayCall : SecureArrayCall
 {
-    private static readonly object Is32BitSubsystemLock = new ();
+    private static readonly object Is32BitSubsystemLock = new();
 
-    private static readonly object GetProcessWorkingSetSizeLock = new ();
+    private static readonly object GetProcessWorkingSetSizeLock = new();
 
-    private static readonly object SetProcessWorkingSetSizeLock = new ();
+    private static readonly object SetProcessWorkingSetSizeLock = new();
 
-    private static readonly object VirtualAllocLock = new ();
+    private static readonly object VirtualAllocLock = new();
 
     private static bool? is32BitSubsystem;
 
@@ -118,7 +118,7 @@ public class DefaultWindowsSecureArrayCall : SecureArrayCall
 
                             return UnsafeNativeMethods.VirtualAlloc32(lpAddress, (uint)size, allocationTypeFlags, protectFlags);
                         }
-                        : UnsafeNativeMethods.VirtualAlloc64;
+                    : UnsafeNativeMethods.VirtualAlloc64;
                 }
             }
 

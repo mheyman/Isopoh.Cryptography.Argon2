@@ -26,12 +26,38 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.Argon2
   nameWithType: Argon2.Argon2
+- uid: Isopoh.Cryptography.Argon2.Argon2.Are
+  name: Are
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Are
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Are
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Are
+  nameWithType: Argon2.Are
+- uid: Isopoh.Cryptography.Argon2.Argon2.Are*
+  name: Are
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Are_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Are
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Are
+  nameWithType: Argon2.Are
 - uid: Isopoh.Cryptography.Argon2.Argon2.BlockSize
   name: BlockSize
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_BlockSize
   commentId: F:Isopoh.Cryptography.Argon2.Argon2.BlockSize
   fullName: Isopoh.Cryptography.Argon2.Argon2.BlockSize
   nameWithType: Argon2.BlockSize
+- uid: Isopoh.Cryptography.Argon2.Argon2.Buf
+  name: Buf
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Buf
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Buf
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Buf
+  nameWithType: Argon2.Buf
+- uid: Isopoh.Cryptography.Argon2.Argon2.Buf*
+  name: Buf
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Buf_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Buf
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Buf
+  nameWithType: Argon2.Buf
 - uid: Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
   name: CsharpMaxBlocksPerArray
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_CsharpMaxBlocksPerArray
@@ -146,6 +172,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.MemoryBlockCount
   nameWithType: Argon2.MemoryBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2.Position
+  name: Position
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Position
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Position
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Position
+  nameWithType: Argon2.Position
+- uid: Isopoh.Cryptography.Argon2.Argon2.Position*
+  name: Position
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Position_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Position
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Position
+  nameWithType: Argon2.Position
 - uid: Isopoh.Cryptography.Argon2.Argon2.PrehashDigestLength
   name: PrehashDigestLength
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_PrehashDigestLength
@@ -1544,12 +1583,6 @@ references:
   commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException()
   nameWithType: LockFailException.LockFailException()
-- uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-  name: LockFailException(SerializationInfo, StreamingContext)
-  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
-  commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-  fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
-  nameWithType: LockFailException.LockFailException(SerializationInfo, StreamingContext)
 - uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)
   name: LockFailException(String)
   href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_
