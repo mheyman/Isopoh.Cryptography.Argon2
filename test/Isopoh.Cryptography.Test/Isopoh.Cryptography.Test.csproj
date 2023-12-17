@@ -8,6 +8,8 @@
     <IsPackable>false</IsPackable>
 
     <Nullable>warnings</Nullable>
+
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

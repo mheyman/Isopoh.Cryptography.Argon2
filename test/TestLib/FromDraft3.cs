@@ -4,12 +4,12 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Isopoh.Cryptography.SecureArray;
-
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System;
 using System.Linq;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -22,10 +22,10 @@ public static class FromDraft3
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>Tuple with a bool indicating pass or fail and associated text detail.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         // from draft-irtf-cfrg-argon2-03
-        // They have this code in version 3 of the draft but it is gone in version 4.
+        // They have this code in version 3 of the draft, but it is gone in version 4.
         byte[]? testPwd = "pasword"u8.ToArray();
         byte[]? testSalt = "somesalt"u8.ToArray();
         const int testTimeCost = 3;
@@ -113,7 +113,7 @@ public static class FromDraft3
             Argon2Version version,
             byte[] expectedHash)
         {
-            using SecureArray<byte>? hash = new Argon2(
+            using SecureArray<byte> hash = new Argon2(
                 new Argon2Config
                 {
                     HashLength = expectedHash.Length,

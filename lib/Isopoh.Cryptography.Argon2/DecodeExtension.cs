@@ -57,9 +57,7 @@ public static class DecodeExtension
     public static bool DecodeString(
         this Argon2Config config,
         string str,
-#nullable enable
         out SecureArray<byte>? hash)
-#nullable restore
     {
         if (config == null)
         {
@@ -125,9 +123,7 @@ public static class DecodeExtension
         if (!TryGetAssociatedData(
             str,
             ref pos,
-#nullable enable
             out byte[]? associatedData))
-#nullable restore
         {
             hash = null;
             return false;
@@ -146,7 +142,7 @@ public static class DecodeExtension
             return true;
         }
 
-        pos = DecodeBase64(out byte[] salt, "$", str, pos);
+        pos = DecodeBase64(out byte[]? salt, "$", str, pos);
         if (pos < 0)
         {
             hash = null;
@@ -224,9 +220,7 @@ public static class DecodeExtension
     private static bool TryGetAssociatedData(
         string str,
         ref int pos,
-#nullable enable
         out byte[]? associatedData)
-#nullable restore
     {
         const string check = ",data=";
         if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
@@ -266,10 +260,8 @@ public static class DecodeExtension
         return true;
     }
 
-#nullable enable
     private static int DecodeBase64(
         out byte[]? dst,
-#nullable restore
         string check,
         string str,
         int pos)
@@ -298,10 +290,8 @@ public static class DecodeExtension
     /// error occurred then -1 is returned; otherwise, the returned index
     /// points to the first non-Base64 character in the source stream.
     /// </remarks>
-#nullable enable
     private static int FromBase64(
         out byte[]? dst,
-#nullable restore
         string src,
         int pos)
     {
@@ -319,6 +309,7 @@ public static class DecodeExtension
             uint d = Base64CharToByte(src[i]);
             if (d == 0xFF)
             {
+                // ReSharper disable once GrammarMistakeInComment
                 // scan past trailing '=' (could calculate expected number of '='s)
                 while (i < src.Length && src[i] == '=')
                 {
@@ -331,6 +322,7 @@ public static class DecodeExtension
             ++i;
             acc = (acc << 6) + d;
             accLen += 6;
+
             // ReSharper disable once InvertIf
             if (accLen >= 8)
             {
@@ -383,6 +375,7 @@ public static class DecodeExtension
             uint d = Base64CharToByte(src[i]);
             if (d == 0xFF)
             {
+                // ReSharper disable once GrammarMistakeInComment
                 // scan past trailing '=' (could calculate expected number of '='s)
                 while (i < src.Length && src[i] == '=')
                 {
@@ -395,6 +388,7 @@ public static class DecodeExtension
             ++i;
             acc = (acc << 6) + d;
             accLen += 6;
+
             // ReSharper disable once InvertIf
             if (accLen >= 8)
             {
@@ -450,6 +444,7 @@ public static class DecodeExtension
             uint d = Base64CharToByte(src[i]);
             if (d == 0xFF)
             {
+                // ReSharper disable once GrammarMistakeInComment
                 // scan past trailing '=' (could calculate expected number of '='s)
                 while (i < src.Length && src[i] == '=')
                 {
@@ -462,6 +457,7 @@ public static class DecodeExtension
             ++i;
             acc = (acc << 6) + d;
             accLen += 6;
+
             // ReSharper disable once InvertIf
             if (accLen >= 8)
             {

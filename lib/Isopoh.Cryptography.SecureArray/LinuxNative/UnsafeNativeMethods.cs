@@ -97,7 +97,7 @@ internal static class UnsafeNativeMethods
         public ulong RlimCur;
 
         /// <summary>
-        /// Hard limit (ceiling for <see cref="RlimCur"/>.
+        /// Hard limit (ceiling for <see cref="RlimCur"/>).
         /// </summary>
         public ulong RlimMax;
 

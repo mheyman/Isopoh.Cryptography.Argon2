@@ -41,8 +41,8 @@ public class SecureArray
             { typeof(bool), sizeof(bool) },
         };
 
-    private static readonly List<Tuple<string, Func<SecureArrayCall>>> SecureArrayCalls = new ()
-    {
+    private static readonly List<Tuple<string, Func<SecureArrayCall>>> SecureArrayCalls =
+    [
         new Tuple<string, Func<SecureArrayCall>>("OSX", () => new DefaultOsxSecureArrayCall()),
         new Tuple<string, Func<SecureArrayCall>>("Linux", () => new DefaultLinuxSecureArrayCall()),
         new Tuple<string, Func<SecureArrayCall>>("Windows", () => new DefaultWindowsSecureArrayCall()),
@@ -54,7 +54,7 @@ public class SecureArray
             "UWP, Linux, OSX, and web - and maybe iOS...). You  don't have to use the default " +
             "SecureArrayCall - you can pass in a version of the calls that work for your " +
             "operating system.")),
-    };
+    ];
 
     private static readonly object DefaultCallLock = new ();
 
@@ -172,7 +172,7 @@ public class SecureArray
     /// <summary>
     /// Gets the size of the buffer element. Will throw a
     /// <see cref="NotSupportedException"/> if the element type is not
-    /// a built in type.
+    /// a built-in type.
     /// </summary>
     /// <typeparam name="T">
     /// The array element type to return the size of.
@@ -207,7 +207,8 @@ public class SecureArray
     /// <param name="call">
     /// The methods to call to secure the array. Defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
     /// </param>
-    public static void Zero<T>(T[] buffer, SecureArrayCall? call = null) where T : struct
+    public static void Zero<T>(T[] buffer, SecureArrayCall? call = null)
+        where T : struct
     {
         if (buffer == null)
         {

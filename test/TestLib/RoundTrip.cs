@@ -5,12 +5,13 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -27,7 +28,7 @@ public static class RoundTrip
     /// <returns>
     /// The result text.
     /// </returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         const string password = "password1";
         byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -59,7 +60,7 @@ public static class RoundTrip
             };
             var argon2 = new Argon2(config);
             SecureArray<byte> hash = argon2.Hash();
-            string? passwordHash = config.EncodeString(hash.Buffer);
+            string passwordHash = config.EncodeString(hash.Buffer);
             output.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
             if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
             {

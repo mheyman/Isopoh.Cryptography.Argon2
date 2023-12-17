@@ -5,9 +5,10 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System.Collections.Generic;
 using System.Linq;
+using Isopoh.Cryptography.Argon2;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -22,7 +23,7 @@ public static class RoundTripSimpleCall
     /// <returns>
     /// Result text.
     /// </returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         const string password = "password1";
         const string secret = "secret1";
@@ -40,7 +41,7 @@ public static class RoundTripSimpleCall
                 _ => "Argon2id",
             };
 
-            string? passwordHash = Argon2.Hash(password, secret, type: argon2Type);
+            string passwordHash = Argon2.Hash(password, secret, type: argon2Type);
             output.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
 
             if (Argon2.Verify(passwordHash, password, secret))

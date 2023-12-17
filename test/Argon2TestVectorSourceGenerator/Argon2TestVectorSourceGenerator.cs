@@ -24,8 +24,8 @@ using Microsoft.CodeAnalysis.Text;
 [Generator(LanguageNames.CSharp)]
 public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
 {
-    private static readonly List<OfficialTestVector> OfficialTestVectors = new()
-    {
+    private static readonly List<OfficialTestVector> OfficialTestVectors =
+    [
         new OfficialTestVector(
             Argon2Type.DataDependentAddressing,
             Argon2Version.Nineteen,
@@ -37,6 +37,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             new string((char)3, 8),
             new string((char)4, 12),
             "512b391b6f1162975371d30919734294f868e3be3984f3c1a13a4db9fabe4acb"),
+
         new OfficialTestVector(
             Argon2Type.DataIndependentAddressing,
             Argon2Version.Nineteen,
@@ -48,6 +49,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             new string((char)3, 8),
             new string((char)4, 12),
             "c814d9d1dc7f37aa13f0d77f2494bda1c8de6b016dd388d29952a4c4672b6ce8"),
+
         new OfficialTestVector(
             Argon2Type.HybridAddressing,
             Argon2Version.Nineteen,
@@ -59,7 +61,8 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             new string((char)3, 8),
             new string((char)4, 12),
             "0d640df58d78766c08c037a34a8b53c9d01ef0452d75b65eb52520e96b01e659"),
-    };
+
+    ];
 
     /// <summary>
     /// Called to initialize the generator and register generation steps via callbacks

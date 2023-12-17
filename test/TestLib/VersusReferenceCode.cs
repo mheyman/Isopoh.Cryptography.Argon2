@@ -4,12 +4,12 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Argon2TestVectorType;
-
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System.Collections.Generic;
 using System.Linq;
+using Argon2TestVectorType;
+using Isopoh.Cryptography.Argon2;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -23,7 +23,7 @@ public static class VersusReferenceCode
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>Result text.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         List<TestVector>? testVectors = new global::Argon2TestVector.Test().Argon2Vectors;
         var faileds = new List<int>();

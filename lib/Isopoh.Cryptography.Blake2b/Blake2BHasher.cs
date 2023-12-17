@@ -38,7 +38,7 @@ public class Blake2BHasher : Hasher
     /// </summary>
     /// <param name="config">The configuration to use; may be null to use the default Blake2 configuration.</param>
     /// <param name="blake2BHasherBuffer">Must be at least <see cref="BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0).</param>
-    /// <exception cref="ArgumentException"><see cref="blake2BHasherBuffer"/>.Length too small.</exception>
+    /// <exception cref="ArgumentException"><see paramref="blake2BHasherBuffer"/>.Length too small.</exception>
     public Blake2BHasher(Blake2BConfig? config, Memory<byte> blake2BHasherBuffer)
         : this(GetArg(config, null, blake2BHasherBuffer))
     {
@@ -257,8 +257,8 @@ public class Blake2BHasher : Hasher
     {
         config ??= DefaultConfig;
         Span<byte> configKey = config.Key == null ? default : config.Key.Value.Span;
-        int keyLength = configKey.Length == 0 ? 0 : 128;
-        int bufferTotalSize = NoKeyBufferMinimumTotalSize + keyLength;
+        int keyLength128 = configKey.Length == 0 ? 0 : 128;
+        int bufferTotalSize = NoKeyBufferMinimumTotalSize + keyLength128;
         if (secureArrayCall != null)
         {
             return (config, null, SecureArray<byte>.Create(bufferTotalSize, secureArrayCall, config.LockMemoryPolicy));

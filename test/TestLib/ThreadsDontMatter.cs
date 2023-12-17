@@ -4,11 +4,11 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Isopoh.Cryptography.SecureArray;
-
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System.Text;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -23,7 +23,7 @@ public static class ThreadsDontMatter
     /// <returns>
     /// The result text.
     /// </returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         const string password = "password1";
         byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -50,10 +50,10 @@ public static class ThreadsDontMatter
         };
         using var argon2A = new Argon2(configA);
         using var argon2B = new Argon2(configB);
-        using SecureArray<byte>? hashA = argon2A.Hash();
-        using SecureArray<byte>? hashB = argon2B.Hash();
-        string? hashTextA = configA.EncodeString(hashA.Buffer);
-        string? hashTextB = configB.EncodeString(hashB.Buffer);
+        using SecureArray<byte> hashA = argon2A.Hash();
+        using SecureArray<byte> hashB = argon2B.Hash();
+        string hashTextA = configA.EncodeString(hashA.Buffer);
+        string hashTextB = configB.EncodeString(hashB.Buffer);
         bool res = string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0;
         string resText = res
             ? "ThreadsDontMatter Passed"

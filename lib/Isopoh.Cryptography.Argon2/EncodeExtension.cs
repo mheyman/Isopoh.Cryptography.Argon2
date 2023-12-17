@@ -62,9 +62,7 @@ public static class EncodeExtension
     /// </remarks>
     public static string EncodeString(
         this Argon2Config config,
-#nullable enable
         byte[]? hash)
-#nullable restore
     {
         if (config == null)
         {
@@ -127,10 +125,8 @@ public static class EncodeExtension
     /// </summary>
     /// <param name="buf">The buffer to convert to a string.</param>
     /// <returns>The Argon2 B64 string.</returns>
-#nullable enable
     public static string ToB64String(
         this byte[]? buf)
-#nullable restore
     {
         if (buf == null)
         {

@@ -17,7 +17,7 @@ using Isopoh.Cryptography.SecureArray;
 public sealed partial class Argon2
 {
     /// <summary>
-    /// Hash the given password to a Argon2 hash string.
+    /// Hash the given password to an Argon2 hash string.
     /// </summary>
     /// <param name="configToHash">
     /// Contains all the information used to create the hash returned.
@@ -33,7 +33,7 @@ public sealed partial class Argon2
     }
 
     /// <summary>
-    /// Hash the given password to a Argon2 hash string.
+    /// Hash the given password to an Argon2 hash string.
     /// </summary>
     /// <param name="password">
     /// The password to hash. Gets UTF-8 encoded before hashing.
@@ -70,17 +70,13 @@ public sealed partial class Argon2
     /// </returns>
     public static string Hash(
         byte[] password,
-#nullable enable
         byte[]? secret,
-#nullable restore
         int timeCost = 3,
         int memoryCost = 65536,
         int parallelism = 1,
         Argon2Type type = Argon2Type.HybridAddressing,
         int hashLength = 32,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         var salt = new byte[16];
         GetSalt(salt);
@@ -103,7 +99,7 @@ public sealed partial class Argon2
     }
 
     /// <summary>
-    /// Hash the given password to a Argon2 hash string.
+    /// Hash the given password to an Argon2 hash string.
     /// </summary>
     /// <param name="password">
     /// The password to hash. Gets UTF-8 encoded before hashing.
@@ -141,24 +137,20 @@ public sealed partial class Argon2
     /// </returns>
     public static string Hash(
         string password,
-#nullable enable
         string? secret,
-#nullable restore
         int timeCost = 3,
         int memoryCost = 65536,
         int parallelism = 1,
         Argon2Type type = Argon2Type.HybridAddressing,
         int hashLength = 32,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         if (password == null)
         {
             throw new System.ArgumentNullException(nameof(password));
         }
 
-        SecureArray<byte> secretBuf = string.IsNullOrEmpty(secret)
+        SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)
             ? null
             : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
         try
@@ -187,7 +179,7 @@ public sealed partial class Argon2
     }
 
     /// <summary>
-    /// Hash the given password to a Argon2 hash string.
+    /// Hash the given password to an Argon2 hash string.
     /// </summary>
     /// <param name="password">
     /// The password to hash. Gets UTF-8 encoded before hashing.
@@ -226,9 +218,7 @@ public sealed partial class Argon2
         int parallelism = 1,
         Argon2Type type = Argon2Type.HybridAddressing,
         int hashLength = 32,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         return Hash(password, null, timeCost, memoryCost, parallelism, type, hashLength, secureArrayCall);
     }
@@ -249,9 +239,7 @@ public sealed partial class Argon2
         string encoded,
         Argon2Config configToVerify)
     {
-#nullable enable
         SecureArray<byte>? hash = null;
-#nullable restore
         try
         {
             if (!configToVerify.DecodeString(encoded, out hash) || hash == null)
@@ -291,12 +279,8 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         byte[] password,
-#nullable enable
         byte[]? secret,
-#nullable restore
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         var configToVerify = new Argon2Config
         {
@@ -334,13 +318,9 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         byte[] password,
-#nullable enable
         byte[]? secret,
-#nullable restore
         int threads,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         var configToVerify = new Argon2Config
         {
@@ -373,9 +353,7 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         byte[] password,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         return Verify(encoded, password, null, secureArrayCall);
     }
@@ -406,9 +384,7 @@ public sealed partial class Argon2
         string encoded,
         byte[] password,
         int threads,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         return Verify(encoded, password, null, threads, secureArrayCall);
     }
@@ -435,19 +411,15 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         string password,
-#nullable enable
         string? secret,
-#nullable restore
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         if (password == null)
         {
             throw new System.ArgumentNullException(nameof(password));
         }
 
-        SecureArray<byte> secretBuf = string.IsNullOrEmpty(secret)
+        SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)
             ? null
             : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
 
@@ -495,20 +467,16 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         string password,
-#nullable enable
         string? secret,
-#nullable restore
         int threads,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         if (password == null)
         {
             throw new System.ArgumentNullException(nameof(password));
         }
 
-        SecureArray<byte> secretBuf = string.IsNullOrEmpty(secret)
+        SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)
             ? null
             : SecureArray<byte>.Best(Encoding.UTF8.GetByteCount(secret), secureArrayCall);
 
@@ -549,9 +517,7 @@ public sealed partial class Argon2
     public static bool Verify(
         string encoded,
         string password,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         return Verify(encoded, password, null, secureArrayCall);
     }
@@ -582,9 +548,7 @@ public sealed partial class Argon2
         string encoded,
         string password,
         int threads,
-#nullable enable
         SecureArrayCall? secureArrayCall = null)
-#nullable restore
     {
         return Verify(encoded, password, null, threads, secureArrayCall);
     }

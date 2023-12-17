@@ -69,7 +69,7 @@ public class DefaultWindowsSecureArrayCall : SecureArrayCall
                             IntPtr kernelModuleHandle = UnsafeNativeMethods.GetModuleHandle("kernel32");
                             if (kernelModuleHandle == IntPtr.Zero)
                             {
-                                // much worse problems then just saying it is 32-bit so it is okay to lie here
+                                // much worse problems than just saying it is 32-bit, so it is okay to lie here
                                 is32BitSubsystem = true;
                             }
                             else

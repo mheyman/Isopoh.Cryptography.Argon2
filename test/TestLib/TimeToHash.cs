@@ -5,9 +5,10 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System.Collections.Generic;
 using System.Linq;
+using Isopoh.Cryptography.Argon2;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -21,7 +22,7 @@ public static class TimeToHash
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>TestTimeToHash: Passed.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         var res = new List<string>();
         for (var parallelism = 1; parallelism <= 20; ++parallelism)

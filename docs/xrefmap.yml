@@ -492,15 +492,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.Blocks
   fullName: Isopoh.Cryptography.Argon2.Blocks
   nameWithType: Blocks
-- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
-  name: Blocks(IEnumerable<UInt64[]>)
-  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_UInt64____
-  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
-  name.vb: Blocks(IEnumerable(Of UInt64()))
-  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.UInt64[]>)
-  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.UInt64()))
-  nameWithType: Blocks.Blocks(IEnumerable<UInt64[]>)
-  nameWithType.vb: Blocks.Blocks(IEnumerable(Of UInt64()))
+- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.Memory{System.UInt64}})
+  name: Blocks(IEnumerable<Memory<UInt64>>)
+  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_Memory_System_UInt64___
+  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.Memory{System.UInt64}})
+  name.vb: Blocks(IEnumerable(Of Memory(Of UInt64)))
+  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.Memory<System.UInt64>>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.Memory(Of System.UInt64)))
+  nameWithType: Blocks.Blocks(IEnumerable<Memory<UInt64>>)
+  nameWithType.vb: Blocks.Blocks(IEnumerable(Of Memory(Of UInt64)))
 - uid: Isopoh.Cryptography.Argon2.Blocks.#ctor*
   name: Blocks
   href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_
@@ -543,15 +543,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.BlockValues
   fullName: Isopoh.Cryptography.Argon2.BlockValues
   nameWithType: BlockValues
-- uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.UInt64[],System.Int32)
-  name: BlockValues(UInt64[], Int32)
-  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_System_UInt64___System_Int32_
-  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.UInt64[],System.Int32)
-  name.vb: BlockValues(UInt64(), Int32)
-  fullName: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.UInt64[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.UInt64(), System.Int32)
-  nameWithType: BlockValues.BlockValues(UInt64[], Int32)
-  nameWithType.vb: BlockValues.BlockValues(UInt64(), Int32)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.Memory{System.UInt64})
+  name: BlockValues(Memory<UInt64>)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_System_Memory_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.Memory{System.UInt64})
+  name.vb: BlockValues(Memory(Of UInt64))
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.Memory<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.Memory(Of System.UInt64))
+  nameWithType: BlockValues.BlockValues(Memory<UInt64>)
+  nameWithType.vb: BlockValues.BlockValues(Memory(Of UInt64))
 - uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor*
   name: BlockValues
   href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_

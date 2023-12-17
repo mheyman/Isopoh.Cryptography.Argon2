@@ -1,3 +1,9 @@
+// <copyright file="LockMemoryPolicy.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+
 namespace Isopoh.Cryptography.SecureArray;
 
 /// <summary>
@@ -11,7 +17,7 @@ public enum LockMemoryPolicy
     None,
 
     /// <summary>
-    /// Attempt to lock buffers into RAM, but allow non locked memory
+    /// Attempt to lock buffers into RAM, but allow non-locked memory
     /// if the operating system doesn't allow the memory to be locked.
     /// </summary>
     BestEffort,

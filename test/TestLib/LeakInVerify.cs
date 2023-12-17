@@ -5,10 +5,11 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
+
 using System.Collections.Generic;
 using System.Linq;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -21,7 +22,7 @@ public static class LeakInVerify
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         var locks = new Dictionary<IntPtr, int>();
         var lockCount = 0;
@@ -37,13 +38,9 @@ public static class LeakInVerify
                     lock (locks)
                     {
                         ++lockCount;
-                        if (locks.ContainsKey(m))
+                        if (!locks.TryAdd(m, lockCount))
                         {
                             badLocks.Add(lockCount);
-                        }
-                        else
-                        {
-                            locks.Add(m, lockCount);
                         }
                     }
                 }

@@ -6,6 +6,8 @@
 
 namespace Isopoh.Cryptography.Argon2;
 
+using System;
+
 /// <summary>
 /// Argon2 Hashing of passwords.
 /// </summary>
@@ -62,12 +64,24 @@ public sealed partial class Argon2
         G(ref v3, ref v4, ref v9, ref v14);
     }
 
-    private static void FillBlock(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock)
+    /// <summary>
+    /// Fills <paramref name="nextBlock"/>.
+    /// </summary>
+    /// <param name="prevBlock">The previous block.</param>
+    /// <param name="refBlock">The reference block.</param>
+    /// <param name="nextBlock">Filled with values.</param>
+    /// <param name="buf">The working buffer of length 2 * <see cref="Argon2.QwordsInBlock"/>.</param>
+    /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
+    private static void FillBlock(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock, Memory<ulong> buf)
     {
         // TODO: figure out and lift the code from Blake2BCore-FullyUnrolled.cs
-        var buf = new ulong[QwordsInBlock * 2];
-        var blockR = new BlockValues(buf, 0);
-        var blockTmp = new BlockValues(buf, 1);
+        if (buf.Length != QwordsInBlock * 2)
+        {
+            throw new ArgumentException($"Expected length of {QwordsInBlock}, got {buf.Length}");
+        }
+
+        var blockR = new BlockValues(buf.Slice(0, QwordsInBlock));
+        var blockTmp = new BlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
         blockR.Copy(refBlock);
         blockR.Xor(prevBlock);
         blockTmp.Copy(blockR);
@@ -190,11 +204,15 @@ public sealed partial class Argon2
         nextBlock.Xor(blockR);
     }
 
-    private static void FillBlockWithXor(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock)
+    private static void FillBlockWithXor(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock, Memory<ulong> buf)
     {
-        var buf = new ulong[QwordsInBlock * 2];
-        var blockR = new BlockValues(buf, 0);
-        var blockTmp = new BlockValues(buf, 1);
+        if (buf.Length != QwordsInBlock * 2)
+        {
+            throw new ArgumentException($"Expected length of {QwordsInBlock}, got {buf.Length}");
+        }
+
+        var blockR = new BlockValues(buf.Slice(QwordsInBlock));
+        var blockTmp = new BlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
         blockR.Copy(refBlock);
         blockR.Xor(prevBlock);
         blockTmp.Copy(blockR);

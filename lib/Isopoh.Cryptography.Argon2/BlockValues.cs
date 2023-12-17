@@ -14,9 +14,7 @@ using System;
 /// </summary>
 public class BlockValues
 {
-    private readonly ulong[] memory;
-
-    private readonly int offset;
+    private readonly Memory<ulong> memory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BlockValues"/> class.
@@ -24,15 +22,16 @@ public class BlockValues
     /// <param name="memory">
     /// The array of ulong elements the <see cref="BlockValues"/> will use.
     /// </param>
-    /// <param name="blockIndex">
-    /// The index of the block in <paramref name="memory"/> the <see
-    /// cref="BlockValues"/> will use. Blocks are <see cref="Argon2.QwordsInBlock"/>
-    /// elements long.
-    /// </param>
-    public BlockValues(ulong[] memory, int blockIndex)
+    public BlockValues(Memory<ulong> memory)
     {
+        if (memory.Length != Argon2.QwordsInBlock)
+        {
+            throw new ArgumentException(
+                $"Expected length of {Argon2.QwordsInBlock}, got {memory.Length}",
+                nameof(memory));
+        }
+
         this.memory = memory;
-        this.offset = blockIndex * Argon2.QwordsInBlock;
     }
 
     /// <summary>
@@ -46,9 +45,9 @@ public class BlockValues
     /// </returns>
     public ulong this[int i]
     {
-        get => this.memory[this.offset + i];
+        get => this.memory.Span[i];
 
-        set => this.memory[this.offset + i] = value;
+        set => this.memory.Span[i] = value;
     }
 
     /// <summary>
@@ -64,7 +63,7 @@ public class BlockValues
             throw new ArgumentNullException(nameof(other));
         }
 
-        Array.Copy(other.memory, other.offset, this.memory, this.offset, Argon2.QwordsInBlock);
+        other.memory.CopyTo(this.memory);
     }
 
     /// <summary>
@@ -82,7 +81,7 @@ public class BlockValues
 
         for (var i = 0; i < Argon2.QwordsInBlock; ++i)
         {
-            this[i] ^= other[i];
+            this.memory.Span[i] ^= other.memory.Span[i];
         }
     }
 
@@ -94,9 +93,6 @@ public class BlockValues
     /// </param>
     public void Init(ulong value)
     {
-        for (var i = 0; i < Argon2.QwordsInBlock; ++i)
-        {
-            this[i] = value;
-        }
+        this.memory.Span.Fill(value);
     }
 }

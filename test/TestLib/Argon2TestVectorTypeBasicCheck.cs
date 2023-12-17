@@ -5,12 +5,14 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
+
 using System;
 using System.Text;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
+// ReSharper disable once GrammarMistakeInComment
 /// <summary>
 /// Has a method that does a basic check against an <see cref="Argon2TestVectorType"/> instance.
 /// </summary>
@@ -44,7 +46,7 @@ public class Argon2TestVectorTypeBasicCheck
                 SecureArrayCall = SecureArray.DefaultCall,
             };
 
-            string? text = Argon2.Hash(config);
+            string text = Argon2.Hash(config);
             if (string.CompareOrdinal(text, argon2TestVector.EncodedTag) == 0)
             {
                 output.WriteLine(

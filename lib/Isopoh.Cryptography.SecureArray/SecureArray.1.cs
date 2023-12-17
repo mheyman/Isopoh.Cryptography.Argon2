@@ -54,7 +54,8 @@ public sealed class SecureArray<T> : SecureArray, IDisposable
     ///     The methods that get called to secure the array. A null value
     ///     defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
     /// </param>
-    public SecureArray(int size, SecureArrayType type, SecureArrayCall? call) : base(call)
+    public SecureArray(int size, SecureArrayType type, SecureArrayCall? call)
+        : base(call)
     {
         this.Buffer = new T[size];
         this.Init(this.Buffer, type);

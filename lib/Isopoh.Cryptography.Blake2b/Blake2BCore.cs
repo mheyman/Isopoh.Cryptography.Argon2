@@ -267,7 +267,7 @@ public partial class Blake2BCore : IDisposable
     /// <paramref name="hash"/>.
     /// </returns>
     /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
-    /// <exception cref="ArgumentException">When <see cref="hash"/>.Length != 64.</exception>
+    /// <exception cref="ArgumentException">When <see paramref="hash"/>.Length != 64.</exception>
     public Span<byte> HashFinal(Span<byte> hash, bool isEndOfLayer)
     {
         if (!this.isInitialized)
@@ -354,7 +354,7 @@ public partial class Blake2BCore : IDisposable
     /// <paramref name="hash"/>.
     /// </returns>
     /// <exception cref="InvalidOperationException">If <see cref="Initialize"/> was not called.</exception>
-    /// <exception cref="ArgumentException">When <see cref="hash"/>.Length != 64.</exception>
+    /// <exception cref="ArgumentException">When <see paramref="hash"/>.Length != 64.</exception>
     // ReSharper disable once UnusedMember.Global
     public byte[] HashFinal(byte[] hash, bool isEndOfLayer)
     {

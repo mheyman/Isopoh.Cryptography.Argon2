@@ -5,9 +5,10 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.SecureArray;
-using Isopoh.Cryptography.Blake2b;
+
 using System;
+using Isopoh.Cryptography.Blake2b;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -1311,7 +1312,7 @@ public class Blake2bTestVector
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         var ret = true;
         var vectorIndex = 0;
@@ -1369,6 +1370,12 @@ public class Blake2bTestVector
         return (ret, $"Blake2bTestVector: {(ret ? $"Passed ({vectorIndex * 3} tests, {vectorIndex} test vectors)" : $"FAILED {failCount} of {vectorIndex * 3} tests ({vectorIndex} test vectors)")}");
     }
 
+    /// <summary>
+    /// Blake2B test vector.
+    /// </summary>
+    /// <param name="Data">The data to be hashed.</param>
+    /// <param name="Key">The hash key.</param>
+    /// <param name="Hash">The hash.</param>
     public record TestVector(byte[] Data, byte[] Key, byte[] Hash)
     {
         /// <summary>

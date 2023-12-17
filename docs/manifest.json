@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "Readme.html",
-          "hash": "sadlzOcDUQkN0ssw4Yxy7xgm55C6PtS07NR+3kYY6Ls="
+          "hash": "8CcsfEcgbrWbnL3TqF3cTknCqxc/UjDfpsN6vc4ovmc="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "9xv1nDtycH2Gfl8wBja6weztZzAIQObVD8xrLd7Drf8="
+          "hash": "5KarRQtqvKjcFSahHVtv9oziP5uHse45cLNAVb+Mhtk="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.html",
-          "hash": "4UvJj8BwsMX9+1BIRgzm5oRtJVx4M6LgSKOojcRfy9g="
+          "hash": "HxE+Vjh0ZHeu6ad0L6jlxL3m50+gq4A6SoBD+yb28Rs="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.html",
-          "hash": "ADTmm5DtxmqfI23YVdvmIm6MCeNq8LBOWkDeosk9CtI="
+          "hash": "DOLMhaV+m5cuktBBr5U3qExNrMyrSvEi5pZTMUU6h+I="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Blocks.html",
-          "hash": "1Mz5oVxWi4g9RDxhNifaqH8USWgoc+ofJf7sqfq9c68="
+          "hash": "AsC6mtqc1Dd7l/u1+ZcXuK3rKv9u6JMjTUd7jzyLEs4="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.EncodeExtension.html",
-          "hash": "IRgg8wPqHCSEicJQ9DMADvUwOwZ7bDehFni+CbUQvmw="
+          "hash": "vVkSL2PzWqn8kYzg+E6In0WqZ8+c9Xq6IJhMvmK0eyY="
         }
       },
       "is_incremental": false,
@@ -360,7 +360,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "8Cs31pF0g1+96I+4VjxKCB2tsP5hJ/5GkKL1FsG2JCo="
+          "hash": "Zhr2+cLjWdSysXDXZ5+jCwrY/3VwpfEWSuN8PgQ+SW0="
         }
       },
       "is_incremental": false,
@@ -384,10 +384,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/blazor.html",
-          "hash": "Cop16ZStbZc+pY9M5TmT/o3YFcAhC+vYDAqBihDT9lY="
+          "hash": "CJw4jraJ6YlTfiFKs/5j0mbQXdvOoxC/iLjOhaZMqBY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -399,10 +399,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/index.html",
-          "hash": "cFpvX1+XI6RJauGhu4IL1d5iceBLu+16uwYmILDzI6M="
+          "hash": "jdocROVISXpN3ioNyG2sAnVj2hJGNH8xxJDhCWTWXac="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -471,10 +471,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "z3f5QYZedP2To0T/rE0exsRISw7Cmlazx7THyVnBo1s="
+          "hash": "uus0lVsRQfAj87jWLYrS2N/TFfHsE6NFESOd2PPoYXE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -493,23 +493,25 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Disable incremental build by force rebuild option.",
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0
+        "skipped_file_count": 0,
+        "full_build_reason_code": "ForceRebuild"
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 5
+          "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 28,
-          "skipped_file_count": 22
+          "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
@@ -529,8 +531,8 @@
     },
     {
       "status": {
-        "can_incremental": true,
-        "details": "Can support incremental post processing.",
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: it's disabled.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

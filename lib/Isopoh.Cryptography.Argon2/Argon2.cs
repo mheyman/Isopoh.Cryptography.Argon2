@@ -16,7 +16,7 @@ using Isopoh.Cryptography.SecureArray;
 /// </summary>
 public sealed partial class Argon2 : IDisposable
 {
-    private readonly List<SecureArray<ulong>> memories = new();
+    private readonly List<SecureArray<ulong>> memories = [];
     private readonly Argon2Config config;
 
     /// <summary>
@@ -55,7 +55,7 @@ public sealed partial class Argon2 : IDisposable
             int memoryCount = this.memories.Count;
 
             // be nice, clear allocated memory that will never be used sooner rather than later
-            this.memories.ForEach(m => m?.Dispose());
+            this.memories.ForEach(m => m.Dispose());
             this.memories.Clear();
             throw new OutOfMemoryException(
                 $"Failed to allocate {(memoryBlockCount > CsharpMaxBlocksPerArray ? CsharpMaxBlocksPerArray : memoryBlockCount) * QwordsInBlock}-byte Argon2 block array, " +
@@ -66,12 +66,12 @@ public sealed partial class Argon2 : IDisposable
         catch (Exception)
         {
             // be nice, clear allocated memory that will never be used sooner rather than later
-            this.memories.ForEach(m => m?.Dispose());
+            this.memories.ForEach(m => m.Dispose());
             this.memories.Clear();
             throw;
         }
 
-        this.Memory = new Blocks(this.memories.Select(m => m.Buffer));
+        this.Memory = new Blocks(this.memories.Select(m => m.Buffer.AsMemory()));
         //// Console.WriteLine($"Memory Cost {config.MemoryCost}, Chunks {this.memories.Count}, Lanes {config.Lanes}, Memory {memoryBlockCount * 1024}, Block count {this.Memory.Length}, MemoryBlockCount {this.MemoryBlockCount}");
     }
 
@@ -109,8 +109,11 @@ public sealed partial class Argon2 : IDisposable
     /// </returns>
     public SecureArray<byte> Hash()
     {
+        int parallelCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
+        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best(((6 * QwordsInBlock) + this.SegmentBlockCount) * parallelCount, this.config.SecureArrayCall);
+
         this.Initialize();
-        this.FillMemoryBlocks();
+        this.FillMemoryBlocks(workingBuffer.Buffer.AsMemory());
         return this.Final();
     }
 
@@ -119,7 +122,7 @@ public sealed partial class Argon2 : IDisposable
     /// </summary>
     public void Dispose()
     {
-        this.memories.ForEach(m => m?.Dispose());
+        this.memories.ForEach(m => m.Dispose());
         this.memories.Clear();
     }
 }

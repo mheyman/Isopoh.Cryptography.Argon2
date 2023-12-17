@@ -24,9 +24,7 @@ public sealed class Argon2Config
 
     private int timeCost = 3;
 
-#nullable enable
     private byte[]? salt;
-#nullable restore
 
     /// <summary>
     /// Gets or sets the Argon2 version used in the password hash. Defaults to
@@ -60,16 +58,12 @@ public sealed class Argon2Config
     /// <summary>
     /// Gets or sets the password to hash.
     /// </summary>
-#nullable enable
     public byte[]? Password { get; set; }
-#nullable restore
 
     /// <summary>
     /// Gets or sets the salt used in the password hash. If non-null, must be at least 8 bytes.
     /// </summary>
-#nullable enable
     public byte[]? Salt
-#nullable restore
     {
         get => this.salt;
 
@@ -87,16 +81,12 @@ public sealed class Argon2Config
     /// <summary>
     /// Gets or sets the secret used in the password hash.
     /// </summary>
-#nullable enable
     public byte[]? Secret { get; set; }
-#nullable restore
 
     /// <summary>
     /// Gets or sets the associated data used in the password hash.
     /// </summary>
-#nullable enable
     public byte[]? AssociatedData { get; set; }
-#nullable restore
 
     /// <summary>
     /// Gets or sets the time cost used in the password hash. Minimum of 1. Defaults to 3.
@@ -105,7 +95,7 @@ public sealed class Argon2Config
     /// This is the number of iterations to perform. There are attacks on the
     /// <see cref="Argon2Version"/>.<see cref="Argon2Version.Sixteen"/> with less than
     /// three iterations (if I'm reading the paper correctly). So, use a value
-    /// greater then 3 here if you are not using <see cref="Argon2Version"/>.<see
+    /// greater than 3 here if you are not using <see cref="Argon2Version"/>.<see
     /// cref="Argon2Version.Nineteen"/>.
     /// </remarks>
     public int TimeCost
@@ -137,7 +127,7 @@ public sealed class Argon2Config
     /// </para>
     /// <para>
     /// If this value is not a multiple of <see cref="Argon2.SyncPointCount"/>*<see
-    /// cref="Lanes"/>, than it is rounded down to a multiple of <see
+    /// cref="Lanes"/>, then it is rounded down to a multiple of <see
     /// cref="Argon2.SyncPointCount"/>*<see cref="Lanes"/>.
     /// </para>
     /// </remarks>

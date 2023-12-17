@@ -28,7 +28,8 @@ public class LockFailException : Exception
     /// <param name="message">
     /// Text for the <see cref="Exception.Message" /> property.
     /// </param>
-    public LockFailException(string? message) : base(message)
+    public LockFailException(string? message)
+        : base(message)
     {
     }
 
@@ -41,7 +42,8 @@ public class LockFailException : Exception
     /// <param name="innerException">
     /// Exception that spawned this exception.
     /// </param>
-    public LockFailException(string? message, Exception? innerException) : base(message, innerException)
+    public LockFailException(string? message, Exception? innerException)
+        : base(message, innerException)
     {
     }
 

@@ -28,18 +28,18 @@ public class Program
         Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
         var resultTexts = new List<string>
         {
-            LeakInVerify.Test(output).Item2,
-            SecureArraySizing.Test(output).Item2,
-            RoundTrip.Test(output).Item2,
-            RoundTripSimpleCall.Test(output).Item2,
-            ThreadsDontMatter.Test(output).Item2,
+            ////LeakInVerify.Test(output).Item2,
+            ////SecureArraySizing.Test(output).Item2,
+            ////RoundTrip.Test(output).Item2,
+            ////RoundTripSimpleCall.Test(output).Item2,
+            ////ThreadsDontMatter.Test(output).Item2,
             PublishedVector.Test(output).Item2,
-            VersusReferenceCode.Test(output).Item2,
-            FromDraft3.Test(output).Item2,
-            HighMemoryCost.Test(output).Item2,
-            TimeToHash.Test(output).Item2,
+            ////VersusReferenceCode.Test(output).Item2,
+            ////FromDraft3.Test(output).Item2,
+            ////HighMemoryCost.Test(output).Item2,
+            ////TimeToHash.Test(output).Item2,
             Blake2bTestVector.Test(output).Item2,
-            Blake2BTestVariations.Test(output).Item2,
+            ////Blake2BTestVariations.Test(output).Item2,
         };
         Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
     }

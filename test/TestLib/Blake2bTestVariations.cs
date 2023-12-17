@@ -6,10 +6,10 @@
 
 namespace TestLib;
 
-using Isopoh.Cryptography.SecureArray;
-using Isopoh.Cryptography.Blake2b;
-using Xunit.Abstractions;
 using System;
+using Isopoh.Cryptography.Blake2b;
+using Isopoh.Cryptography.SecureArray;
+using Xunit.Abstractions;
 
 /// <summary>
 /// Runs tests for a bunch of different Blake2b parameters to make sure calls work as intended.
@@ -21,7 +21,7 @@ public class Blake2BTestVariations
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         var ret = true;
         var count = 0;

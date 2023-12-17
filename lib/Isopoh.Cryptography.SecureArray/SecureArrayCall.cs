@@ -20,7 +20,7 @@ public class SecureArrayCall
     /// Call that zeroes memory in a way that does not get optimized away.
     /// </param>
     /// <param name="lockMemory">
-    /// Call that locks the given memory so it doesn't get swapped out to disk.
+    /// Call that locks the given memory, so it doesn't get swapped out to disk.
     /// </param>
     /// <param name="unlockMemory">
     /// Call that unlocks memory previously locked by a call to <paramref name="lockMemory"/>.
@@ -49,7 +49,7 @@ public class SecureArrayCall
     public Action<IntPtr, nuint> ZeroMemory { get; protected set; }
 
     /// <summary>
-    /// Gets or sets a method that locks the given memory so it doesn't get swapped out to disk.
+    /// Gets or sets a method that locks the given memory, so it doesn't get swapped out to disk.
     /// </summary>
     /// <returns>
     /// Null on success; otherwise an error message.

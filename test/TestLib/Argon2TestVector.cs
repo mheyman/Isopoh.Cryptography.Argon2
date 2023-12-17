@@ -4,11 +4,11 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using Xunit.Abstractions;
-
 namespace TestLib;
+
 using Isopoh.Cryptography.Argon2;
 using Isopoh.Cryptography.SecureArray;
+using Xunit.Abstractions;
 
 /// <summary>
 /// Holds Argon2 test vector information.
@@ -181,7 +181,7 @@ public sealed class Argon2TestVector
             SecureArray<byte> hash = argon2.Hash();
             if (!hash.Buffer.Where((b, i) => b != this.Tag[i]).Any())
             {
-                string? text = Argon2.Hash(this.Config);
+                string text = Argon2.Hash(this.Config);
                 if (string.CompareOrdinal(text, this.TagText) == 0)
                 {
                     output.WriteLine(

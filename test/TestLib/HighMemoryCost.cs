@@ -5,6 +5,7 @@
 // </copyright>
 
 namespace TestLib;
+
 using Isopoh.Cryptography.Argon2;
 using Xunit.Abstractions;
 
@@ -18,7 +19,7 @@ public static class HighMemoryCost
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
         output.WriteLine("HighMemoryCost");
 

@@ -28,7 +28,7 @@ internal static class UnsafeNativeMethods
     /// the memory usage of the process.</param>
     /// <param name="size">The size of the <paramref name="counters"/>
     /// structure in bytes.</param>
-    /// <returns>Non zero on success; otherwise zero.</returns>
+    /// <returns>Non-zero on success; otherwise zero.</returns>
     [DllImport("KERNELBASE.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true, EntryPoint = "K32GetProcessMemoryInfo", ExactSpelling = true)]
     public static extern bool GetProcessMemoryInfo(IntPtr hProcess, out ProcessMemoryCounters counters, uint size);
 
