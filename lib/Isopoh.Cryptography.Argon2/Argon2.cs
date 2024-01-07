@@ -110,7 +110,7 @@ public sealed partial class Argon2 : IDisposable
     public SecureArray<byte> Hash()
     {
         int parallelCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
-        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best(((6 * QwordsInBlock) + this.SegmentBlockCount) * parallelCount, this.config.SecureArrayCall);
+        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best((((this.config.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * QwordsInBlock) + this.SegmentBlockCount) * parallelCount, this.config.SecureArrayCall);
 
         this.Initialize();
         this.FillMemoryBlocks(workingBuffer.Buffer.AsMemory());

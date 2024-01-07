@@ -4,6 +4,8 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+using System.Diagnostics;
+
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
@@ -113,18 +115,20 @@ public sealed partial class Argon2
     /// Fills memory blocks.
     /// </summary>
     /// <param name="buf">
-    /// Working buffer of size ((6 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount) * (parallel count).
+    /// Working buffer of size ((2 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount) * (parallel count)
+    /// for <see cref="Argon2Type.DataDependentAddressing"/>; otherwise
+    /// ((6 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount) * (parallel count).
     /// Where "parallel count" is the fewest of this.config.Threads and this.config.Lanes.
     /// </param>
     /// <exception cref="ArgumentException">If buf is improperly sized.</exception>
     private void FillMemoryBlocks(Memory<ulong> buf)
     {
         int parallelCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
-        int threadWorkingBufferSize = (QwordsInBlock * 6) + this.SegmentBlockCount;
-        if (buf.Length != threadWorkingBufferSize * this.config.Threads)
+        int threadWorkingBufferSize = (QwordsInBlock * (this.config.Type == Argon2Type.DataDependentAddressing ? 2 : 6)) + this.SegmentBlockCount;
+        if (buf.Length != threadWorkingBufferSize * parallelCount)
         {
             throw new ArgumentException(
-                $"Expected length of {6 * QwordsInBlock * parallelCount}, got {buf.Length}",
+                $"Expected length of {threadWorkingBufferSize}, got {buf.Length}",
                 nameof(buf));
         }
 
@@ -153,7 +157,7 @@ public sealed partial class Argon2
                             {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                                this.FillSegment(((FillState)fs).Position, ((FillState)fs).Buf);
+                                this.FillSegment(((FillState)fs).Position, ((FillState)fs).Buf.Span);
                                 ((FillState)fs).Are.Set();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -170,7 +174,7 @@ public sealed partial class Argon2
                             {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                                this.FillSegment(((FillState)fs).Position, ((FillState)fs).Buf);
+                                this.FillSegment(((FillState)fs).Position, ((FillState)fs).Buf.Span);
                                 ((FillState)fs).Are.Set();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -205,7 +209,7 @@ public sealed partial class Argon2
                                 Slice = sliceNumber,
                                 Index = 0,
                             },
-                            buf);
+                            buf.Span);
                     }
                 }
 
@@ -238,21 +242,27 @@ public sealed partial class Argon2
     /// Fill the <paramref name="position"/> <see cref="Memory"/> segment.
     /// </summary>
     /// <param name="position">The position to fill.</param>
-    /// <param name="buf">Working buffer of size (6 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount.</param>
+    /// <param name="buf">
+    /// Working buffer of size (2 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount
+    /// for <see cref="Argon2Type.DataDependentAddressing"/>; otherwise
+    /// (6 * <see cref="Argon2.QwordsInBlock"/>) + this.SegmentBlockCount.
+    /// </param>
     /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
-    private void FillSegment(Position position, Memory<ulong> buf)
+    private void FillSegment(Position position, Span<ulong> buf)
     {
-        if (buf.Length != (6 * QwordsInBlock) + this.SegmentBlockCount)
+        int pseudoRandsOffset = (this.config.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * QwordsInBlock;
+        int expectedBufLen = pseudoRandsOffset + this.SegmentBlockCount;
+        if (buf.Length != expectedBufLen)
         {
-            throw new ArgumentException($"Expected length of {6 * QwordsInBlock}, got {buf.Length}.", nameof(buf));
+            throw new ArgumentException($"Expected length of {expectedBufLen}, got {buf.Length}.", nameof(buf));
         }
 
         bool dataIndependentAddressing = this.config.Type == Argon2Type.DataIndependentAddressing ||
             (this.config.Type == Argon2Type.HybridAddressing && position is { Pass: 0, Slice: < SyncPointCount / 2 });
-        Memory<ulong> pseudoRands = buf.Slice(6 * QwordsInBlock, this.SegmentBlockCount);
+        Span<ulong> pseudoRands = buf.Slice(pseudoRandsOffset, this.SegmentBlockCount);
         if (dataIndependentAddressing)
         {
-            this.GenerateAddresses(position, pseudoRands.Span, buf.Slice(0, 6 * QwordsInBlock));
+            this.GenerateAddresses(position, pseudoRands, buf.Slice(0, 6 * QwordsInBlock));
         }
 
         // 2 if already generated the first two blocks
@@ -260,7 +270,7 @@ public sealed partial class Argon2
         int curOffset = (position.Lane * this.LaneBlockCount) + (position.Slice * this.SegmentBlockCount) + startingIndex;
         int prevOffset = curOffset % this.LaneBlockCount == 0 ? curOffset + this.LaneBlockCount - 1 : curOffset - 1;
 
-        Memory<ulong> fillBuf = buf.Slice(0, 2 * QwordsInBlock);
+        Span<ulong> fillBuf = buf.Slice(0, 2 * QwordsInBlock);
         for (int i = startingIndex; i < this.SegmentBlockCount; ++i, ++curOffset, ++prevOffset)
         {
             if (curOffset % this.LaneBlockCount == 1)
@@ -269,7 +279,7 @@ public sealed partial class Argon2
             }
 
             // compute index of reference block taking pseudo-random value from previous block
-            ulong pseudoRand = dataIndependentAddressing ? pseudoRands.Span[i] : this.Memory[prevOffset][0];
+            ulong pseudoRand = dataIndependentAddressing ? pseudoRands[i] : this.Memory[prevOffset][0];
 
             // cannot reference other lanes until pass or slice are not zero
             int refLane =
@@ -364,20 +374,23 @@ public sealed partial class Argon2
     /// <param name="pseudoRands">Loaded with values.</param>
     /// <param name="buf">Working buffer of size 6 * <see cref="Argon2.QwordsInBlock"/>.</param>
     /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
-    private void GenerateAddresses(Position position, Span<ulong> pseudoRands, Memory<ulong> buf)
+    private void GenerateAddresses(Position position, Span<ulong> pseudoRands, Span<ulong> buf)
     {
         if (buf.Length != QwordsInBlock * 6)
         {
             throw new ArgumentException($"Expected length of {QwordsInBlock * 4}, got {buf.Length}", nameof(buf));
         }
 
-        var zeroBlock = new BlockValues(buf.Slice(0, QwordsInBlock));
-        zeroBlock.Init(0);
-        var inputBlock = new BlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
-        zeroBlock.Init(0);
-        var addressBlock = new BlockValues(buf.Slice(2 * QwordsInBlock, QwordsInBlock));
-        var tmpBlock = new BlockValues(buf.Slice(3 * QwordsInBlock, QwordsInBlock));
-        Memory<ulong> workingBlock = buf.Slice(4 * QwordsInBlock, 2 * QwordsInBlock);
+        // TODO: Make it so the first thing works without all that extra allocating (it should, the things that call it shouldn't cause any stomping)
+        ////var zeroBlock = new ReadOnlyBlockValues(buf.Slice(0, QwordsInBlock), 0);
+        ////var inputBlock = new TempBlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
+        ////var addressBlock = new TempBlockValues(buf.Slice(2 * QwordsInBlock, QwordsInBlock));
+        ////var tmpBlock = new TempBlockValues(buf.Slice(3 * QwordsInBlock, QwordsInBlock));
+        var zeroBlock = new ReadOnlyBlockValues(new Span<ulong>(new ulong[QwordsInBlock]), 0);
+        var inputBlock = new TempBlockValues(new Span<ulong>(new ulong[QwordsInBlock]));
+        var addressBlock = new TempBlockValues(new Span<ulong>(new ulong[QwordsInBlock]));
+        var tmpBlock = new TempBlockValues(new Span<ulong>(new ulong[QwordsInBlock]));
+        Span<ulong> workingBlock = buf.Slice(4 * QwordsInBlock, 2 * QwordsInBlock);
 
         inputBlock[0] = (ulong)position.Pass;
         inputBlock[1] = (ulong)position.Lane;

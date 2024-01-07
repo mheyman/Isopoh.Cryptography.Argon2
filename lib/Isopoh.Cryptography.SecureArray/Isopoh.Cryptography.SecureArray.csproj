@@ -6,7 +6,7 @@
     <Description>
       A managed class that can hold an array in RAM and zero it
       on disposal. The code has the capability to throw if it cannot lock
-      the array in RAM or gracefully degrade to merely pinning the memory
+      the array in RAM or gracefully degrade to merely pinning the span
       to prevent the CLR from moving it and risking exposure to other part
       of the executable.
     </Description>

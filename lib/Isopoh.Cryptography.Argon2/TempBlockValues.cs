@@ -1,4 +1,4 @@
-// <copyright file="BlockValues.cs" company="Isopoh">
+// <copyright file="TempBlockValues.cs" company="Isopoh">
 // To the extent possible under law, the author(s) have dedicated all copyright
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
@@ -12,29 +12,29 @@ using System;
 /// Gets the values from a ulong array. Block lengths are <see cref="Argon2.QwordsInBlock"/>
 /// elements long.
 /// </summary>
-public sealed class BlockValues
+public readonly ref struct TempBlockValues
 {
     /// <summary>
     /// The span behind the block values.
     /// </summary>
-    private readonly Memory<ulong> memory;
+    private readonly Span<ulong> span;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BlockValues"/> class.
+    /// Initializes a new instance of the <see cref="TempBlockValues"/> struct.
     /// </summary>
-    /// <param name="memory">
+    /// <param name="span">
     /// The array of ulong elements the <see cref="BlockValues"/> will use.
     /// </param>
-    public BlockValues(Memory<ulong> memory)
+    public TempBlockValues(Span<ulong> span)
     {
-        if (memory.Length != Argon2.QwordsInBlock)
+        if (span.Length != Argon2.QwordsInBlock)
         {
             throw new ArgumentException(
-                $"Expected length of {Argon2.QwordsInBlock}, got {memory.Length}",
-                nameof(memory));
+                $"Expected length of {Argon2.QwordsInBlock}, got {span.Length}",
+                nameof(span));
         }
 
-        this.memory = memory;
+        this.span = span;
     }
 
     /// <summary>
@@ -48,21 +48,15 @@ public sealed class BlockValues
     /// </returns>
     public ulong this[int i]
     {
-        get => this.memory.Span[i];
-        set => this.memory.Span[i] = value;
+        get => this.span[i];
+        set => this.span[i] = value;
     }
 
     /// <summary>
     /// Defines an implicit conversion of a <see cref="BlockValues"/> to a <see cref="ReadOnlyBlockValues"/>.
     /// </summary>
     /// <param name="blockValues">The value to convert.</param>
-    public static implicit operator ReadOnlyBlockValues(BlockValues blockValues) => new(blockValues.memory.Span);
-
-    /// <summary>
-    /// Defines an implicit conversion of a <see cref="BlockValues"/> to a <see cref="ReadOnlyBlockValues"/>.
-    /// </summary>
-    /// <param name="blockValues">The value to convert.</param>
-    public static implicit operator TempBlockValues(BlockValues blockValues) => new(blockValues.memory.Span);
+    public static implicit operator ReadOnlyBlockValues(TempBlockValues blockValues) => new(blockValues.span);
 
     /// <summary>
     /// Copy <paramref name="other"/> into this.
@@ -72,7 +66,7 @@ public sealed class BlockValues
     /// </param>
     public void Copy(ReadOnlyBlockValues other)
     {
-        other.ReadOnlySpan.CopyTo(this.memory.Span);
+        other.ReadOnlySpan.CopyTo(this.span);
     }
 
     /// <summary>
@@ -86,7 +80,7 @@ public sealed class BlockValues
         var otherSpan = other.ReadOnlySpan;
         for (var i = 0; i < Argon2.QwordsInBlock; ++i)
         {
-            this.memory.Span[i] ^= otherSpan[i];
+            this.span[i] ^= otherSpan[i];
         }
     }
 
@@ -98,6 +92,6 @@ public sealed class BlockValues
     /// </param>
     public void Init(ulong value)
     {
-        this.memory.Span.Fill(value);
+        this.span.Fill(value);
     }
 }

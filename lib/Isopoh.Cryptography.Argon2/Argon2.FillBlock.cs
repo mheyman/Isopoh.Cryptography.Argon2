@@ -72,7 +72,7 @@ public sealed partial class Argon2
     /// <param name="nextBlock">Filled with values.</param>
     /// <param name="buf">The working buffer of length 2 * <see cref="Argon2.QwordsInBlock"/>.</param>
     /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
-    private static void FillBlock(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock, Memory<ulong> buf)
+    private static void FillBlock(ReadOnlyBlockValues prevBlock, ReadOnlyBlockValues refBlock, BlockValues nextBlock, Span<ulong> buf)
     {
         // TODO: figure out and lift the code from Blake2BCore-FullyUnrolled.cs
         if (buf.Length != QwordsInBlock * 2)
@@ -80,8 +80,8 @@ public sealed partial class Argon2
             throw new ArgumentException($"Expected length of {QwordsInBlock}, got {buf.Length}");
         }
 
-        var blockR = new BlockValues(buf.Slice(0, QwordsInBlock));
-        var blockTmp = new BlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
+        var blockR = new TempBlockValues(buf.Slice(0, QwordsInBlock));
+        var blockTmp = new TempBlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
         blockR.Copy(refBlock);
         blockR.Xor(prevBlock);
         blockTmp.Copy(blockR);
@@ -204,15 +204,15 @@ public sealed partial class Argon2
         nextBlock.Xor(blockR);
     }
 
-    private static void FillBlockWithXor(BlockValues prevBlock, BlockValues refBlock, BlockValues nextBlock, Memory<ulong> buf)
+    private static void FillBlockWithXor(ReadOnlyBlockValues prevBlock, ReadOnlyBlockValues refBlock, TempBlockValues nextBlock, Span<ulong> buf)
     {
         if (buf.Length != QwordsInBlock * 2)
         {
             throw new ArgumentException($"Expected length of {QwordsInBlock}, got {buf.Length}");
         }
 
-        var blockR = new BlockValues(buf.Slice(QwordsInBlock));
-        var blockTmp = new BlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
+        var blockR = new TempBlockValues(buf.Slice(0, QwordsInBlock));
+        var blockTmp = new TempBlockValues(buf.Slice(QwordsInBlock, QwordsInBlock));
         blockR.Copy(refBlock);
         blockR.Xor(prevBlock);
         blockTmp.Copy(blockR);
