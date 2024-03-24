@@ -27,7 +27,7 @@ public static class HighMemoryCost
         // this can take a long time depending on the multiplier
         output.WriteLine("HighMemoryCost:");
         const string password = "password";
-        const int memoryCost = Argon2.CsharpMaxBlocksPerArray + 271;
+        const int memoryCost = Argon2Memory.CsharpMaxBlocksPerArray + 271;
         JetBrains.Profiler.Api.MemoryProfiler.GetSnapshot();
         output.WriteLine("HighMemoryCost: Hash");
         string hash = Argon2.Hash(password, memoryCost: memoryCost, parallelism: 20, secureArrayCall: new InsecureArrayCall());

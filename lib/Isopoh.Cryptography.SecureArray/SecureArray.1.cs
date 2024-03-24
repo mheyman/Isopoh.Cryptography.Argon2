@@ -41,6 +41,8 @@ using System;
 /// </remarks>
 public sealed class SecureArray<T> : SecureArray, IDisposable
 {
+    private T[] buffer;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.
     /// </summary>
@@ -57,7 +59,7 @@ public sealed class SecureArray<T> : SecureArray, IDisposable
     public SecureArray(int size, SecureArrayType type, SecureArrayCall? call)
         : base(call)
     {
-        this.Buffer = new T[size];
+        this.buffer = new T[size];
         this.Init(this.Buffer, type);
     }
 
@@ -78,7 +80,7 @@ public sealed class SecureArray<T> : SecureArray, IDisposable
     public SecureArray(int size, SecureArrayType type)
         : base(DefaultCall)
     {
-        this.Buffer = new T[size];
+        this.buffer = new T[size];
         this.Init(this.Buffer, type);
     }
 
@@ -98,7 +100,7 @@ public sealed class SecureArray<T> : SecureArray, IDisposable
     public SecureArray(int size, SecureArrayCall call)
         : base(call)
     {
-        this.Buffer = new T[size];
+        this.buffer = new T[size];
         this.Init(this.Buffer, SecureArrayType.ZeroedPinnedAndNoSwap);
     }
 
@@ -117,14 +119,14 @@ public sealed class SecureArray<T> : SecureArray, IDisposable
     public SecureArray(int size)
         : base(DefaultCall)
     {
-        this.Buffer = new T[size];
+        this.buffer = new T[size];
         this.Init(this.Buffer, SecureArrayType.ZeroedPinnedAndNoSwap);
     }
 
     /// <summary>
     /// Gets the secure array.
     /// </summary>
-    public T[] Buffer { get; }
+    public T[] Buffer => this.buffer;
 
     /// <summary>
     /// Gets or sets elements in the secure array.

@@ -124,7 +124,7 @@ internal static class UnsafeNativeMethods
     /// <param name="c">The byte value to fill with.</param>
     /// <param name="n">The number of bytes to fill.</param>
     /// <returns><paramref name="addr"/>.</returns>
-    [DllImport("ntdll", EntryPoint = "memset", ExactSpelling = true)]
+    [DllImport("ntdll", EntryPoint = "memset", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern IntPtr WindowsMemset(IntPtr addr, int c, nuint n);
 
     /// <summary>

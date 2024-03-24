@@ -29,7 +29,7 @@ public sealed partial class Argon2
     {
         using var argon2 = new Argon2(configToHash);
         using SecureArray<byte> hash = argon2.Hash();
-        return argon2.config.EncodeString(hash.Buffer);
+        return argon2.Config.EncodeString(hash.Buffer);
     }
 
     /// <summary>

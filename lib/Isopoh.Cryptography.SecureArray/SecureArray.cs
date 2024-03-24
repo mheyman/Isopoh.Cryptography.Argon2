@@ -264,6 +264,7 @@ public class SecureArray
         finally
         {
             this.handle.Free();
+            this.handle = default(GCHandle);
         }
     }
 

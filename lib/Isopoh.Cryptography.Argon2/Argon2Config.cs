@@ -228,4 +228,32 @@ public sealed class Argon2Config
     /// to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
     /// </summary>
     public SecureArrayCall SecureArrayCall { get; set; } = SecureArray.DefaultCall;
+
+    /// <summary>
+    /// Gets the number of <c>ulong</c>s in the working buffer.
+    /// </summary>
+    /// <remarks>
+    /// This depends on <see cref="Threads"/>, <see cref="Lanes"/>, <see
+    /// cref="MemoryCost"/>, and <see cref="Type"/> in a pretty messy way.
+    /// <para/>
+    /// The minimum value is 512 (for 4KB of working buffer). The default
+    /// value is 19,456 (for 152KB of working buffer). The maximum value
+    /// is much, much larger.
+    /// </remarks>
+    public int WorkingBufferLength
+    {
+        get
+        {
+            int parallelCount = this.Threads > this.Lanes ? this.Lanes : this.Threads;
+            var memoryBlockCount = this.MemoryCost;
+            if (memoryBlockCount < 2 * Argon2.SyncPointCount * this.Lanes)
+            {
+                memoryBlockCount = 2 * Argon2.SyncPointCount * this.Lanes;
+            }
+
+            var segmentBlockCount = memoryBlockCount / (this.Lanes * Argon2.SyncPointCount);
+
+            return (((this.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * Argon2.QwordsInBlock) + segmentBlockCount) * parallelCount;
+        }
+    }
 }

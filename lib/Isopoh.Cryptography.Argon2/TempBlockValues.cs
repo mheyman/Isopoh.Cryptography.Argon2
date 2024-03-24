@@ -38,6 +38,27 @@ public readonly ref struct TempBlockValues
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="TempBlockValues"/> struct.
+    /// </summary>
+    /// <param name="span">
+    /// The array of ulong elements the <see cref="BlockValues"/> will use.
+    /// </param>
+    /// <param name="value">Initial value for the block values.</param>
+    public TempBlockValues(Span<ulong> span, ulong value)
+    {
+        if (span.Length != Argon2.QwordsInBlock)
+        {
+            throw new ArgumentException(
+                $"Expected length of {Argon2.QwordsInBlock}, got {span.Length}",
+                nameof(span));
+        }
+
+        span.Fill(value);
+        this.span = span;
+    }
+
+
+    /// <summary>
     /// Gets or sets the ulong element at the specified index.
     /// </summary>
     /// <param name="i">

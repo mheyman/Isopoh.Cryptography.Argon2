@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2.html",
-          "hash": "BCZQdCPnnKU3PwXosS/ueTCzbUaGTBpndiR+Jp/okFc="
+          "hash": "pd4sa06bw166BwecvbDUybBGLkGgd6dYA1lLeloWeks="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,31 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Config.html",
-          "hash": "u9KmNhMkQX9jUyJSrPK1W/QgZxG7NajqPMh4ydw4I4U="
+          "hash": "NxekxBkhbKwkEtfQyx7cCy1HCA45STC2pRlDZPuNwMU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Memory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2Memory.html",
+          "hash": "FQup8ga+tLH40lukyN0CG/Ym6BR8VuzF47mS0Y/QYcs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.html",
+          "hash": "A3THZMxmhUd8CioJG07RX9xsWHQpWDL0EG3byt9c1fE="
         }
       },
       "is_incremental": false,
@@ -69,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.BlockValues.html",
-          "hash": "DOLMhaV+m5cuktBBr5U3qExNrMyrSvEi5pZTMUU6h+I="
+          "hash": "8K68sOGT3Ydd3JzqzxdOedoJT1OJwFRduwbx9brU53Q="
         }
       },
       "is_incremental": false,
@@ -113,11 +137,35 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html",
+          "hash": "knfcWvTRy9q+gjKYyav7zGfg7rey5kLA/htUtUA/r4s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Isopoh.Cryptography.Argon2.TempBlockValues.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Isopoh.Cryptography.Argon2.TempBlockValues.html",
+          "hash": "dRx0sjFKBSm2IDe0qYeJTipWWTNYfrWpdZhvIUq2J5Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Isopoh.Cryptography.Argon2.yml",
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.Argon2.html",
-          "hash": "NgUb8hgGnswyUCD1bH3iXUi4Ro1Z0c7n3TmooKz9xHc="
+          "hash": "qzYIA3rtfz/OWu8LSbMh5HDqy2uwj0h6KcMzwdOe7NQ="
         }
       },
       "is_incremental": false,
@@ -297,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray-1.html",
-          "hash": "ye3wjtVXOUhfH+1eXWIZpxZS0poUJudpIeCz2eGxc1E="
+          "hash": "8ZLccfEt6ueCKyHjL6V9isPW1LF9ODrKlhLWxtckU1I="
         }
       },
       "is_incremental": false,
@@ -309,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Isopoh.Cryptography.SecureArray.SecureArray.html",
-          "hash": "lkK2qU6LbRC0EMpISY+Oo6gip361kaqVIlIC804H+f0="
+          "hash": "n/zMwfwuidQu9hKtxcDC5z6Aq6E4fqCnyRS0lw5nRJo="
         }
       },
       "is_incremental": false,
@@ -372,7 +420,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Rbpx5Aym+UNSHKK69btpS+omlkkEFk+H9qizDR7cClE="
+          "hash": "YRqeAejwh5E/NSWEvO3H3ASWGiiZgRaNETSiQKPDRU0="
         }
       },
       "is_incremental": false,
@@ -494,11 +542,11 @@
     {
       "status": {
         "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "details": "Disable incremental build by force rebuild option.",
         "incrementalPhase": "build",
         "total_file_count": 0,
         "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "full_build_reason_code": "ForceRebuild"
       },
       "processors": {
         "ConceptualDocumentProcessor": {
@@ -510,7 +558,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 28,
+          "total_file_count": 32,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
@@ -532,7 +580,7 @@
     {
       "status": {
         "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "details": "Cannot support incremental post processing, the reason is: it's disabled.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

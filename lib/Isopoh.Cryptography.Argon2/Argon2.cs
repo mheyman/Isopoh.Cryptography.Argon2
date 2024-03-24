@@ -16,8 +16,8 @@ using Isopoh.Cryptography.SecureArray;
 /// </summary>
 public sealed partial class Argon2 : IDisposable
 {
-    private readonly List<SecureArray<ulong>> memories = [];
-    private readonly Argon2Config config;
+    private readonly bool memoryIsOwned = false;
+    private readonly Argon2Memory memory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2"/> class.
@@ -27,79 +27,57 @@ public sealed partial class Argon2 : IDisposable
     /// </param>
     public Argon2(Argon2Config config)
     {
-        this.config = config ?? throw new ArgumentNullException(nameof(config), "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
-        var memoryBlocks = (uint)config.MemoryCost;
-        if (memoryBlocks < 2 * SyncPointCount * config.Lanes)
-        {
-            memoryBlocks = 2 * SyncPointCount * (uint)config.Lanes;
-        }
-
-        this.SegmentBlockCount = (int)(memoryBlocks / (config.Lanes * SyncPointCount));
-
-        // ensure that all segments have equal length
-        this.LaneBlockCount = this.SegmentBlockCount * SyncPointCount;
-        this.MemoryBlockCount = this.LaneBlockCount * config.Lanes;
-        var memoryBlockCount = (ulong)this.MemoryBlockCount;
-        try
-        {
-            while (memoryBlockCount > CsharpMaxBlocksPerArray)
-            {
-                this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * CsharpMaxBlocksPerArray, config.SecureArrayCall));
-                memoryBlockCount -= CsharpMaxBlocksPerArray;
-            }
-
-            this.memories.Add(SecureArray<ulong>.Best(QwordsInBlock * (int)memoryBlockCount, config.SecureArrayCall));
-        }
-        catch (OutOfMemoryException e)
-        {
-            int memoryCount = this.memories.Count;
-
-            // be nice, clear allocated memory that will never be used sooner rather than later
-            this.memories.ForEach(m => m.Dispose());
-            this.memories.Clear();
-            throw new OutOfMemoryException(
-                $"Failed to allocate {(memoryBlockCount > CsharpMaxBlocksPerArray ? CsharpMaxBlocksPerArray : memoryBlockCount) * QwordsInBlock}-byte Argon2 block array, " +
-                $"{(memoryCount > 0 ? $" allocation {memoryCount + 1} of multiple-allocation," : string.Empty)}" +
-                $" memory cost {config.MemoryCost}, lane count {config.Lanes}.",
-                e);
-        }
-        catch (Exception)
-        {
-            // be nice, clear allocated memory that will never be used sooner rather than later
-            this.memories.ForEach(m => m.Dispose());
-            this.memories.Clear();
-            throw;
-        }
-
-        this.Memory = new Blocks(this.memories.Select(m => m.Buffer.AsMemory()));
-        //// Console.WriteLine($"Memory Cost {config.MemoryCost}, Chunks {this.memories.Count}, Lanes {config.Lanes}, Memory {memoryBlockCount * 1024}, Block count {this.Memory.Length}, MemoryBlockCount {this.MemoryBlockCount}");
+        this.Config = config ?? throw new ArgumentNullException(nameof(config), "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
+        this.memory = new Argon2Memory(this.Config, Argon2MemoryPolicy.NoShrink, LockMemoryPolicy.BestEffort);
+        this.memoryIsOwned = true;
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Argon2"/> class.
+    /// </summary>
+    /// <param name="config">
+    /// The configuration to use.
+    /// </param>
+    /// <param name="memory">The memory to use for the hash.</param>
+    /// <param name="memoryPolicy">Whether to shrink the memory to fit.</param>
+    public Argon2(Argon2Config config, Argon2Memory memory, Argon2MemoryPolicy memoryPolicy = Argon2MemoryPolicy.NoShrink)
+    {
+        this.Config = config ?? throw new ArgumentNullException(nameof(config), "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
+        this.memory = memory;
+        this.memoryIsOwned = false;
+        this.memory.Reset(this.Config);
+    }
+
+    /// <summary>
+    /// Gets the <see cref="Argon2Config"/> for this hash.
+    /// </summary>
+    public Argon2Config Config { get; }
 
     /// <summary>
     /// Gets the <see cref="MemoryBlockCount"/> blocks.
     /// </summary>
-    public Blocks Memory { get; }
+    public Blocks Memory => this.memory.Blocks;
 
     /// <summary>
     /// Gets the number of memory blocks, (<see cref="Argon2Config.Lanes"/>*<see cref="LaneBlockCount"/>).
     /// </summary>
-    public int MemoryBlockCount { get; }
+    public int MemoryBlockCount => this.memory.BlockCount;
 
     /// <summary>
     /// Gets the number of memory blocks per segment. This value gets
     /// derived from the memory cost. The memory cost value is a request
     /// for that number of blocks. If that request is less than (2 *
-    /// <see cref="SyncPointCount"/>) times the number of lanes requested,
+    /// <see cref="Argon2.SyncPointCount"/>) times the number of lanes requested,
     /// it is first bumped up to that amount. Then, it may be reduced to
-    /// fit on a <see cref="SyncPointCount"/> times the number of lanes
+    /// fit on a <see cref="Argon2.SyncPointCount"/> times the number of lanes
     /// requested boundary.
     /// </summary>
-    public int SegmentBlockCount { get; }
+    public int SegmentBlockCount => this.memory.SegmentBlockCount;
 
     /// <summary>
     /// Gets the number of memory blocks per lane. <see cref="SegmentBlockCount"/> * <see cref="SyncPointCount"/>.
     /// </summary>
-    public int LaneBlockCount { get; }
+    public int LaneBlockCount => this.memory.LaneBlockCount;
 
     /// <summary>
     /// Perform the hash.
@@ -109,11 +87,27 @@ public sealed partial class Argon2 : IDisposable
     /// </returns>
     public SecureArray<byte> Hash()
     {
-        int parallelCount = this.config.Threads > this.config.Lanes ? this.config.Lanes : this.config.Threads;
-        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best((((this.config.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * QwordsInBlock) + this.SegmentBlockCount) * parallelCount, this.config.SecureArrayCall);
+        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best(this.Config.WorkingBufferLength, this.Config.SecureArrayCall);
+        return this.Hash(workingBuffer.Buffer.AsMemory());
+    }
 
+    /// <summary>
+    /// Perform the hash.
+    /// </summary>
+    /// <param name="workingBuffer">Memory used during the hash operation. Must be at least <see cref="Config"/> <see cref="Argon2Config.WorkingBufferLength"/> in length.</param>
+    /// <returns>
+    /// The hash bytes.
+    /// </returns>
+    public SecureArray<byte> Hash(Memory<ulong> workingBuffer)
+    {
+        int wbLength = this.Config.WorkingBufferLength;
+        Memory<ulong> wb = workingBuffer.Length >= wbLength
+            ? workingBuffer.Slice(0, wbLength)
+            : throw new ArgumentException(
+                $"Expected the working buffer to be at least of length {wbLength}, got {workingBuffer.Length}",
+                nameof(workingBuffer));
         this.Initialize();
-        this.FillMemoryBlocks(workingBuffer.Buffer.AsMemory());
+        this.FillMemoryBlocks(wb);
         return this.Final();
     }
 
@@ -122,7 +116,9 @@ public sealed partial class Argon2 : IDisposable
     /// </summary>
     public void Dispose()
     {
-        this.memories.ForEach(m => m.Dispose());
-        this.memories.Clear();
+        if (this.memoryIsOwned)
+        {
+            this.memory.Dispose();
+        }
     }
 }

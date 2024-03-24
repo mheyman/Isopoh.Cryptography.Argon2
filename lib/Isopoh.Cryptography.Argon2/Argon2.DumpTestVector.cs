@@ -27,39 +27,39 @@ public sealed partial class Argon2
             using var fileOut = new FileStream(VectorFileName, FileMode.Append);
             using var streamOut = new StreamWriter(fileOut);
             streamOut.WriteLine("=======================================");
-            switch (hasher.config.Type)
+            switch (hasher.Config.Type)
             {
                 case Argon2Type.DataDependentAddressing:
-                    streamOut.WriteLine($"Argon2d version number {(int)hasher.config.Version}");
+                    streamOut.WriteLine($"Argon2d version number {(int)hasher.Config.Version}");
                     break;
                 case Argon2Type.DataIndependentAddressing:
-                    streamOut.WriteLine($"Argon2i version number {(int)hasher.config.Version}");
+                    streamOut.WriteLine($"Argon2i version number {(int)hasher.Config.Version}");
                     break;
                 case Argon2Type.HybridAddressing:
-                    streamOut.WriteLine($"Argon2id version number {(int)hasher.config.Version}");
+                    streamOut.WriteLine($"Argon2id version number {(int)hasher.Config.Version}");
                     break;
                 default:
-                    streamOut.WriteLine($"Argon2id(as default from unknown type {(int)hasher.config.Type}) version number {(int)hasher.config.Version}");
+                    streamOut.WriteLine($"Argon2id(as default from unknown type {(int)hasher.Config.Type}) version number {(int)hasher.Config.Version}");
                     break;
             }
 
             streamOut.WriteLine("=======================================");
             streamOut.WriteLine(
-                $"Memory: {hasher.config.MemoryCost} KiB, Iterations: {hasher.config.TimeCost}, "
-                + $"Parallelism: {hasher.config.Lanes} lanes, Tag length: " + $"{hasher.config.HashLength} bytes");
-            string pwText = hasher.config.ClearPassword
+                $"Memory: {hasher.Config.MemoryCost} KiB, Iterations: {hasher.Config.TimeCost}, "
+                + $"Parallelism: {hasher.Config.Lanes} lanes, Tag length: " + $"{hasher.Config.HashLength} bytes");
+            string pwText = hasher.Config.ClearPassword
                 ? "CLEARED"
-                : BitConverter.ToString(hasher.config.Password ?? Array.Empty<byte>()).ToLowerInvariant().Replace('-', ' ');
-            streamOut.WriteLine($"Password[{hasher.config.Password?.Length ?? -1}]: {pwText} ");
+                : BitConverter.ToString(hasher.Config.Password ?? Array.Empty<byte>()).ToLowerInvariant().Replace('-', ' ');
+            streamOut.WriteLine($"Password[{hasher.Config.Password?.Length ?? -1}]: {pwText} ");
             streamOut.WriteLine(
-                $"Salt[{hasher.config.Salt?.Length ?? 0}]: "
-                + $"{(hasher.config.Salt == null ? string.Empty : BitConverter.ToString(hasher.config.Salt).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Salt[{hasher.Config.Salt?.Length ?? 0}]: "
+                + $"{(hasher.Config.Salt == null ? string.Empty : BitConverter.ToString(hasher.Config.Salt).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
-                $"Secret[{hasher.config.Secret?.Length ?? 0}]: "
-                + $"{(hasher.config.Secret == null ? string.Empty : BitConverter.ToString(hasher.config.Secret).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Secret[{hasher.Config.Secret?.Length ?? 0}]: "
+                + $"{(hasher.Config.Secret == null ? string.Empty : BitConverter.ToString(hasher.Config.Secret).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
-                $"Associated data[{hasher.config.AssociatedData?.Length ?? 0}]: "
-                + $"{(hasher.config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.config.AssociatedData).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Associated data[{hasher.Config.AssociatedData?.Length ?? 0}]: "
+                + $"{(hasher.Config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.Config.AssociatedData).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
                 $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
         }
