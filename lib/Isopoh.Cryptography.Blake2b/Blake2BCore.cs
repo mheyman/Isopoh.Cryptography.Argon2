@@ -38,26 +38,47 @@ using Isopoh.Cryptography.SecureArray;
 /// </summary>
 public partial class Blake2BCore : IDisposable
 {
+    /// <summary>
+    /// Gets the total size of the buffer needed to do <see cref="Blake2BCore"/> operations.
+    /// </summary>
+    public const int BufferTotalSize = 128 + (sizeof(ulong) * (16 + 8));
+
     private const int BlockSizeInBytes = 128;
 
     private const ulong Iv0 = 0x6A09E667F3BCC908UL;
+
     private const ulong Iv1 = 0xBB67AE8584CAA73BUL;
+
     private const ulong Iv2 = 0x3C6EF372FE94F82BUL;
+
     private const ulong Iv3 = 0xA54FF53A5F1D36F1UL;
+
     private const ulong Iv4 = 0x510E527FADE682D1UL;
+
     private const ulong Iv5 = 0x9B05688C2B3E6C1FUL;
+
     private const ulong Iv6 = 0x1F83D9ABFB41BD6BUL;
+
     private const ulong Iv7 = 0x5BE0CD19137E2179UL;
 
     private readonly SecureArray<byte>? secureArray;
+
     private readonly Memory<byte> buf;
+
     private readonly Memory<byte> mbufBacking;
+
     private readonly Memory<byte> hbufBacking;
+
     private bool isInitialized;
+
     private int bufferFilled;
+
     private ulong counter0;
+
     private ulong counter1;
+
     private ulong finalizationFlag0;
+
     private ulong finalizationFlag1;
 
     /// <summary>
@@ -101,11 +122,6 @@ public partial class Blake2BCore : IDisposable
         this.mbufBacking = fullBuf.Slice(128, 16 * sizeof(ulong));
         this.hbufBacking = fullBuf.Slice(128 + (16 * sizeof(ulong)), 8 * sizeof(ulong));
     }
-
-    /// <summary>
-    /// Gets the total size of the buffer needed to do <see cref="Blake2BCore"/> operations.
-    /// </summary>
-    public static int BufferTotalSize => 128 + (sizeof(ulong) * (16 + 8));
 
     private Span<ulong> Mbuf => MemoryMarshal.Cast<byte, ulong>(this.mbufBacking.Span);
 

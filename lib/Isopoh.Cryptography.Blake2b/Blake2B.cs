@@ -41,13 +41,13 @@ public static class Blake2B
     /// <summary>
     /// Gets the minimum total size in bytes of the <see cref="Blake2B"/> work buffer.
     /// </summary>
-    public static int BufferMinimumTotalSize => Blake2BHasher.BufferMinimumTotalSize;
+    public const int BufferMinimumTotalSize = Blake2BHasher.BufferMinimumTotalSize;
 
     /// <summary>
     /// Gets the minimum total size in bytes of the <see cref="Blake2B"/> work buffer if
     /// there is no <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>.
     /// </summary>
-    public static int NoKeyBufferMinimumTotalSize => Blake2BHasher.NoKeyBufferMinimumTotalSize;
+    public const int NoKeyBufferMinimumTotalSize = Blake2BHasher.NoKeyBufferMinimumTotalSize;
 
     /// <summary>
     /// Create a default Blake2 hash.

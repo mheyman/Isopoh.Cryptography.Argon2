@@ -57,7 +57,7 @@ public static class DecodeExtension
     public static bool DecodeString(
         this Argon2Config config,
         string str,
-        out SecureArray<byte>? hash)
+        out SecureArray<byte> hash)
     {
         if (config == null)
         {

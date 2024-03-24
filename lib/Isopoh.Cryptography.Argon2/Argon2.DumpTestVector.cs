@@ -19,7 +19,7 @@ public sealed partial class Argon2
     private static readonly string VectorFileName = true ? string.Empty : "argon2-test-vectors.txt";
 #pragma warning restore CS0162
 
-    private static void InitialKat(byte[] buffer, Argon2 hasher)
+    private static void InitialKat(ReadOnlySpan<byte> buffer, Argon2 hasher)
     {
         // ReSharper disable once InvertIf
         if (VectorFileName.Length != 0)
@@ -61,7 +61,7 @@ public sealed partial class Argon2
                 $"Associated data[{hasher.Config.AssociatedData?.Length ?? 0}]: "
                 + $"{(hasher.Config.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.Config.AssociatedData).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
-                $"Pre-hashing digest: {BitConverter.ToString(buffer, 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
+                $"Pre-hashing digest: {BitConverter.ToString(buffer.ToArray(), 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
         }
     }
 
@@ -87,14 +87,14 @@ public sealed partial class Argon2
         }
     }
 
-    private static void PrintTag(byte[] output)
+    private static void PrintTag(ReadOnlySpan<byte> output)
     {
         // ReSharper disable once InvertIf
         if (VectorFileName.Length != 0)
         {
             using var fileOut = new FileStream(VectorFileName, FileMode.Append);
             using var streamOut = new StreamWriter(fileOut);
-            streamOut.WriteLine($"Tag: {BitConverter.ToString(output).ToLowerInvariant().Replace('-', ' ')} ");
+            streamOut.WriteLine($"Tag: {BitConverter.ToString(output.ToArray()).ToLowerInvariant().Replace('-', ' ')} ");
         }
     }
 }

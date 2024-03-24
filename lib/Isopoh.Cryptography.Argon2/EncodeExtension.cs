@@ -62,7 +62,7 @@ public static class EncodeExtension
     /// </remarks>
     public static string EncodeString(
         this Argon2Config config,
-        byte[]? hash)
+        Span<byte> hash)
     {
         if (config == null)
         {
@@ -108,7 +108,7 @@ public static class EncodeExtension
         }
 
         dst.Append('$');
-        dst.Append(config.Salt.ToB64String());
+        dst.Append(config.Salt.AsSpan().ToB64String());
 
         if (hash == null || hash.Length == 0)
         {
@@ -126,7 +126,7 @@ public static class EncodeExtension
     /// <param name="buf">The buffer to convert to a string.</param>
     /// <returns>The Argon2 B64 string.</returns>
     public static string ToB64String(
-        this byte[]? buf)
+        this Span<byte> buf)
     {
         if (buf == null)
         {

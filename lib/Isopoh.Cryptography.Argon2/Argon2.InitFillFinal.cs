@@ -4,12 +4,11 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using System.Diagnostics;
-
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Isopoh.Cryptography.Blake2b;
 using Isopoh.Cryptography.SecureArray;
@@ -19,31 +18,48 @@ using Isopoh.Cryptography.SecureArray;
 /// </summary>
 public sealed partial class Argon2
 {
-    private void Initialize()
+    private void Initialize(Memory<byte> workingBuffer)
     {
-        using SecureArray<byte> blockHash = SecureArray<byte>.Best(PrehashSeedLength, this.Config.SecureArrayCall);
-        using (SecureArray<byte> initialHash = this.InitialHash())
+        if (workingBuffer.Length < PrehashSeedLength + BlockSize + (2 * Blake2B.OutputLength) + Blake2B.BufferMinimumTotalSize)
         {
-            Array.Copy(initialHash.Buffer, blockHash.Buffer, PrehashDigestLength);
+            throw new ArgumentException(
+                $"Expected at least {PrehashSeedLength + BlockSize + (2 * Blake2B.OutputLength) + Blake2B.BufferMinimumTotalSize} bytes, got {workingBuffer.Length}",
+                nameof(workingBuffer));
         }
 
-        InitialKat(blockHash.Buffer, this);
-        this.FillFirstBlocks(blockHash.Buffer);
+        var blockHash = workingBuffer.Span.Slice(0, PrehashSeedLength);
+        var initialHash = workingBuffer.Slice(blockHash.Length, Blake2B.OutputLength);
+        var initialHashWorkingBuffer = workingBuffer.Slice(blockHash.Length + initialHash.Length);
+        var fillFirstBlocksWorkingBuffer = workingBuffer.Slice(blockHash.Length);
+        this.InitialHash(initialHash, initialHashWorkingBuffer);
+        initialHash.Span.Slice(0, PrehashDigestLength).CopyTo(blockHash.Slice(0, PrehashDigestLength));
+        InitialKat(blockHash, this);
+        this.FillFirstBlocks(blockHash, fillFirstBlocksWorkingBuffer);
     }
 
-    private SecureArray<byte> InitialHash()
+    /// <summary>
+    /// Get the initial hash.
+    /// </summary>
+    /// <param name="hashResult"><see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/>-byte span to hold the result.</param>
+    /// <param name="workingBuffer">At least (4 + <see cref="Blake2B"/>.<see cref="Blake2B.NoKeyBufferMinimumTotalSize"/>)-bytes working buffer.</param>
+    private void InitialHash(Memory<byte> hashResult, Memory<byte> workingBuffer)
     {
-        SecureArray<byte> ret = SecureArray<byte>.Best(Blake2B.OutputLength, this.Config.SecureArrayCall);
+        if (workingBuffer.Length < 4 + Blake2B.NoKeyBufferMinimumTotalSize)
+        {
+            throw new ArgumentException(
+                $"Expected working buffer to be at least {4 + Blake2B.NoKeyBufferMinimumTotalSize}, got {workingBuffer.Length}");
+        }
+
         using Hasher blakeHash =
             Blake2B.Create(
                 new Blake2BConfig
                 {
                     OutputSizeInBytes = PrehashDigestLength,
-                    Result64ByteBuffer = ret.Buffer,
+                    Result64ByteBuffer = hashResult,
                 },
-                this.memory.Blake2bWorkingBuffer);
-        var value = new byte[4];
-        Store32(value, this.Config.Lanes);
+                workingBuffer.Slice(4));
+        var value = workingBuffer.Span.Slice(0, 4);
+        Store32(value, this.Config!.Lanes);
         blakeHash.Update(value);
         Store32(value, this.Config.HashLength);
         blakeHash.Update(value);
@@ -92,22 +108,34 @@ public sealed partial class Argon2
         }
 
         blakeHash.Finish();
-
-        return ret;
     }
 
-    private void FillFirstBlocks(Span<byte> blockHash)
+    /// <summary>
+    /// Fill <paramref name="initialHash"/> with the initial hash. Also set the initial <see cref="Memory"/> <see cref="Blocks"/>.
+    /// </summary>
+    /// <param name="initialHash"><see cref="PrehashSeedLength"/>-byte result of <see cref="InitialHash"/>.</param>
+    /// <param name="workingBuffer">At least <see cref="BlockSize"/> + (2 * <see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/>) + <see cref="Blake2B"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> bytes.</param>
+    /// <exception cref="ArgumentException">Bad <paramref name="workingBuffer"/>.</exception>
+    private void FillFirstBlocks(Span<byte> initialHash, Memory<byte> workingBuffer)
     {
-        using SecureArray<byte> blockHashBytes = SecureArray<byte>.Best(BlockSize, this.Config.SecureArrayCall);
+        if (workingBuffer.Length < BlockSize + (2 * Blake2B.OutputLength) + Blake2B.BufferMinimumTotalSize)
+        {
+            throw new ArgumentException(
+                $"Expected to have at least {BlockSize + (2 * Blake2B.OutputLength) + Blake2B.BufferMinimumTotalSize}-byte working buffer, got {workingBuffer.Length}.", nameof(workingBuffer));
+        }
+
+        var blockHashBytes = workingBuffer.Span.Slice(0, BlockSize);
+        var blake2BWorkingBuffer = workingBuffer.Slice(BlockSize);
+
         for (var l = 0; l < this.Config.Lanes; ++l)
         {
-            Store32(blockHash, PrehashDigestLength, 0);
-            Store32(blockHash, PrehashDigestLength + 4, l);
-            Blake2BLong(blockHashBytes.Buffer.AsSpan(), blockHash, this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
-            LoadBlock(this.Memory[l * this.LaneBlockCount], blockHashBytes.Buffer);
-            Store32(blockHash, PrehashDigestLength, 1);
-            Blake2BLong(blockHashBytes.Buffer.AsSpan(), blockHash, this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
-            LoadBlock(this.Memory[(l * this.LaneBlockCount) + 1], blockHashBytes.Buffer);
+            Store32(initialHash, PrehashDigestLength, 0);
+            Store32(initialHash, PrehashDigestLength + 4, l);
+            Blake2BLong(blockHashBytes, initialHash, blake2BWorkingBuffer);
+            LoadBlock(this.Memory[l * this.LaneBlockCount], blockHashBytes);
+            Store32(initialHash, PrehashDigestLength, 1);
+            Blake2BLong(blockHashBytes, initialHash, blake2BWorkingBuffer);
+            LoadBlock(this.Memory[(l * this.LaneBlockCount) + 1], blockHashBytes);
         }
     }
 
@@ -218,10 +246,18 @@ public sealed partial class Argon2
         }
     }
 
-    private SecureArray<byte> Final()
+    private void Final(Span<byte> destination, Memory<byte> workingBuffer)
     {
-        using SecureArray<ulong> blockHashBuffer = SecureArray<ulong>.Best(BlockSize / 8, this.Config.SecureArrayCall);
-        var blockHash = new BlockValues(blockHashBuffer.Buffer.AsMemory());
+        if (workingBuffer.Length < (2 * BlockSize) + (2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize)
+        {
+            throw new ArgumentException(
+                $"Expected {(2 * BlockSize) + (2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize}-byte working buffer. Got {workingBuffer.Length}");
+        }
+
+        var blockHashBuffer = Unsafe.As<Memory<byte>, Memory<ulong>>(ref workingBuffer).Slice(0, BlockSize / 8);
+        var blockHashBytes = workingBuffer.Span.Slice(BlockSize, BlockSize);
+        var blake2BLongWorkingBuffer = workingBuffer.Slice(2 * BlockSize);
+        var blockHash = new BlockValues(blockHashBuffer);
         blockHash.Copy(this.Memory[this.LaneBlockCount - 1]);
 
         // XOR last blocks
@@ -230,12 +266,9 @@ public sealed partial class Argon2
             blockHash.Xor(this.Memory[(l * this.LaneBlockCount) + (this.LaneBlockCount - 1)]);
         }
 
-        using SecureArray<byte> blockHashBytes = SecureArray<byte>.Best(BlockSize, this.Config.SecureArrayCall);
-        StoreBlock(blockHashBytes.Buffer.AsSpan(), blockHash);
-        SecureArray<byte> ret = SecureArray<byte>.Best(this.Config.HashLength, this.Config.SecureArrayCall);
-        Blake2BLong(ret.Buffer.AsSpan(), blockHashBytes.Buffer.AsSpan(), this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
-        PrintTag(ret.Buffer);
-        return ret;
+        StoreBlock(blockHashBytes, blockHash);
+        Blake2BLong(destination, blockHashBytes, blake2BLongWorkingBuffer);
+        PrintTag(destination);
     }
 
     /// <summary>

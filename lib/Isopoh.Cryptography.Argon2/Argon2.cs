@@ -83,11 +83,12 @@ public sealed partial class Argon2 : IDisposable
     /// <returns>
     /// The hash bytes.
     /// </returns>
-    public SecureArray<byte> Hash()
+    public Span<byte> Hash()
     {
-        this.Initialize();
+        this.Initialize(this.memory.Argon2WorkingBuffer);
         this.FillMemoryBlocks(this.memory.FillMemoryBlocksWorkingBuffer);
-        return this.Final();
+        this.Final(this.memory.Hash, this.memory.Argon2WorkingBuffer);
+        return this.memory.Hash;
     }
 
     /// <summary>

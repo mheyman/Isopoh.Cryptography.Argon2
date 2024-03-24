@@ -59,8 +59,8 @@ public static class RoundTrip
                 Threads = 2,
             };
             var argon2 = new Argon2(config);
-            SecureArray<byte> hash = argon2.Hash();
-            string passwordHash = config.EncodeString(hash.Buffer);
+            Span<byte> hash = argon2.Hash();
+            string passwordHash = config.EncodeString(hash);
             output.WriteLine($"{argon2Name} of {password} --> {passwordHash}");
             if (Argon2.Verify(passwordHash, passwordBytes, secretBytes, SecureArray.DefaultCall))
             {

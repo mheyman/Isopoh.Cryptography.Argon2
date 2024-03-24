@@ -24,22 +24,22 @@ public sealed partial class Argon2
     /// <param name="inputBuffer">
     /// What to hash.
     /// </param>
-    /// <param name="blake2BLongWorkingBuffer">
-    /// 2*<see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/> bytes long.
+    /// <param name="workingBuffer">
+    /// (2 * <see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/>) + <see cref="Blake2B"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> bytes long.
     /// </param>
-    /// <param name="blake2BWorkingBuffer"><see cref="Blake2B"/>.<see cref="Blake2B.BufferMinimumTotalSize"/>  bytes long.</param>
-    private static void Blake2BLong(Span<byte> hash, Span<byte> inputBuffer, Memory<byte> blake2BLongWorkingBuffer, Memory<byte> blake2BWorkingBuffer)
+    private static void Blake2BLong(Span<byte> hash, Span<byte> inputBuffer, Memory<byte> workingBuffer)
     {
         var outputLengthBytes = new byte[4];
-        if (blake2BLongWorkingBuffer.Length < 2 * Blake2B.OutputLength)
+        if (workingBuffer.Length < (2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize)
         {
             throw new ArgumentException(
-                $"Expected at least {2 * Blake2B.OutputLength} bytes, got {blake2BLongWorkingBuffer.Length}",
-                nameof(blake2BLongWorkingBuffer));
+                $"Expected at least {(2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize} bytes, got {workingBuffer.Length}",
+                nameof(workingBuffer));
         }
 
-        var resultBuffer = blake2BLongWorkingBuffer.Slice(0, Blake2B.OutputLength);
-        var toHash = blake2BLongWorkingBuffer.Slice(Blake2B.OutputLength, Blake2B.OutputLength);
+        var resultBuffer = workingBuffer.Slice(0, Blake2B.OutputLength);
+        var toHash = workingBuffer.Slice(Blake2B.OutputLength, Blake2B.OutputLength);
+        var blake2BWorkingBuffer = workingBuffer.Slice(2 * Blake2B.OutputLength, Blake2B.NoKeyBufferMinimumTotalSize);
         var blake2BConfig = new Blake2BConfig
         {
             Result64ByteBuffer = resultBuffer,

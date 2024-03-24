@@ -20,9 +20,26 @@ using Isopoh.Cryptography.SecureArray;
 /// </summary>
 public class Blake2BHasher : Hasher
 {
+    /// <summary>
+    /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
+    /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
+    /// field is the total required size.
+    /// </summary>
+    public const int NoKeyBufferMinimumTotalSize = Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8);
+
+    /// <summary>
+    /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
+    /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
+    /// field is the total required size.
+    /// </summary>
+    public const int BufferMinimumTotalSize = NoKeyBufferMinimumTotalSize + 128;
+
     private static readonly Blake2BConfig DefaultConfig = new();
+
     private readonly int keyLength;
+
     private readonly SecureArray<byte>? backingBuffer;
+
     private readonly Memory<byte> backingMemory;
 
     private readonly Blake2BCore core;
@@ -90,20 +107,6 @@ public class Blake2BHasher : Hasher
         this.defaultOutputBuffer = arg.Config.Result64ByteBuffer;
         this.Init();
     }
-
-    /// <summary>
-    /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
-    /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
-    /// field is the total required size.
-    /// </summary>
-    public static int BufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8) + 128;
-
-    /// <summary>
-    /// Gets the minimum total size in bytes of the <see cref="Blake2BHasher"/> buffer.
-    /// This length plus the length of the optional <see cref="Blake2BConfig"/>.<see cref="Blake2BConfig.Key"/>
-    /// field is the total required size.
-    /// </summary>
-    public static int NoKeyBufferMinimumTotalSize => Blake2BCore.BufferTotalSize + (sizeof(ulong) * 8);
 
     /// <summary>
     /// Gets the initialization vector used for the Blake2B hash.

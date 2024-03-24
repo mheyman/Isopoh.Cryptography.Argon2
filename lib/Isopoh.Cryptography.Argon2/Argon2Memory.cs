@@ -9,6 +9,7 @@ namespace Isopoh.Cryptography.Argon2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Isopoh.Cryptography.Blake2b;
 using Isopoh.Cryptography.SecureArray;
 
 /// <summary>
@@ -40,17 +41,43 @@ public sealed class Argon2Memory
     /// </summary>
     public const int CsharpMaxBlocksPerArray = 0X7FEFFFFF / Argon2.QwordsInBlock;
 
+    /// <summary>
+    /// Size in bytes required for the Argon2 working buffer.
+    /// </summary>
+    public const int Argon2WorkingBufferSize = Argon2InitWorkingBufferSize > Argon2FinalWorkingBufferSize
+        ? Argon2InitWorkingBufferSize
+
+        // ReSharper disable once HeuristicUnreachableCode
+        : Argon2FinalWorkingBufferSize;
+
+    /// <summary>
+    /// The working buffer size Argon2 requires for the <see cref="Argon2.Initialize"/> stage. Argon2 never keys the Blake2B hash.
+    /// </summary>
+    private const int Argon2InitWorkingBufferSize =
+        (2 * Argon2.BlockSize) + (2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize;
+
+    /// <summary>
+    /// The working buffer size Argon2 requires for the <see cref="Argon2.Final"/> stage. Argon2 never keys the Blake2B hash.
+    /// </summary>
+    private const int Argon2FinalWorkingBufferSize = Argon2.PrehashSeedLength + Argon2.BlockSize + (2 * Blake2B.OutputLength) + Blake2B.NoKeyBufferMinimumTotalSize;
+
     private readonly SecureArrayCall secureArrayCall;
 
     private readonly List<SecureArray<ulong>> blockSecureArrays = [];
 
     private readonly List<Memory<ulong>> blockMemories = [];
 
+    private readonly SecureArray<byte>? argon2SecureArray;
+
     private SecureArray<ulong>? workingSecureArray;
 
     private Memory<ulong> fillMemoryBlocksWorkingBuffer;
 
-    private SecureArray<byte> blake2BSecureArray;
+    private SecureArray<byte>? hashSecureArray;
+
+    private Memory<byte> hashMemory;
+
+    private int hashLength;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2Memory"/> class.
@@ -71,15 +98,18 @@ public sealed class Argon2Memory
                 config.SecureArrayCall,
                 lockMemory.Value);
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
-            this.blake2BSecureArray = SecureArray<byte>.Create(Blake2b.Blake2B.OutputLength * 2 + Blake2b.Blake2B.BufferMinimumTotalSize, this.secureArrayCall, lockMemory.Value);
-            this.Blake2BLongWorkingBuffer = new Memory<byte>(this.blake2BSecureArray.Buffer, Blake2b.Blake2B.BufferMinimumTotalSize, 2 * Blake2b.Blake2B.OutputLength);
-            this.Blake2bWorkingBuffer = new Memory<byte>(this.blake2BSecureArray.Buffer, 0, Blake2b.Blake2B.BufferMinimumTotalSize);
+            this.argon2SecureArray = SecureArray<byte>.Create(Argon2WorkingBufferSize, this.secureArrayCall, lockMemory.Value);
+            this.hashSecureArray = SecureArray<byte>.Create(config.HashLength, this.secureArrayCall, lockMemory.Value);
+            this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
+            this.hashLength = config.HashLength;
+            this.Argon2WorkingBuffer = new Memory<byte>(this.argon2SecureArray.Buffer);
         }
         else
         {
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(new ulong[this.FillMemoryBlocksWorkingBufferLength]);
-            this.Blake2BLongWorkingBuffer = new Memory<byte>(new byte[Blake2b.Blake2B.OutputLength * 2]);
-            this.Blake2bWorkingBuffer = new Memory<byte>(new byte[Blake2b.Blake2B.BufferMinimumTotalSize]);
+            this.Argon2WorkingBuffer = new Memory<byte>(new byte[Argon2WorkingBufferSize]);
+            this.hashMemory = new Memory<byte>(new byte[config.HashLength]);
+            this.hashLength = config.HashLength;
         }
 
         this.ShrinkMemoryPolicy = shrinkMemoryPolicy;
@@ -110,22 +140,32 @@ public sealed class Argon2Memory
     public int FillMemoryBlocksWorkingBufferLength { get; private set; }
 
     /// <summary>
-    /// Gets the working buffer sized to be used in <see cref="Argon2.FillMemoryBlocks"/>.
+    /// Gets the ulong-based working buffer sized to be used in <see cref="Argon2.FillMemoryBlocks"/>.
     /// </summary>
     /// <remarks>
+    /// This gets used and overwritten on every hash.
+    /// <para/>
     /// Can change on every call to <see cref="Reset"/>.
     /// </remarks>
     public Memory<ulong> FillMemoryBlocksWorkingBuffer => this.fillMemoryBlocksWorkingBuffer.Slice(0, this.FillMemoryBlocksWorkingBufferLength);
 
     /// <summary>
-    /// Gets the working buffer sized for BLake2B hashing.
+    /// Gets the byte-based working buffer sized for Argon2 to use internally.
     /// </summary>
-    public Memory<byte> Blake2BLongWorkingBuffer { get; }
+    /// <remarks>
+    /// This gets used and overwritten on every hash.
+    /// </remarks>
+    public Memory<byte> Argon2WorkingBuffer { get; }
 
     /// <summary>
-    /// Gets the working buffer sized for BLake2B hashing.
+    /// Gets the span associated with the final Argon2 hash value.
     /// </summary>
-    public Memory<byte> Blake2bWorkingBuffer { get; }
+    /// <remarks>
+    /// This gets used and overwritten on every hash.
+    /// <para/>
+    /// Can change on every call to <see cref="Reset"/>.
+    /// </remarks>
+    public Span<byte> Hash => this.hashMemory.Span.Slice(0, this.hashLength);
 
     /// <summary>
     /// Gets the memory block count for the latest <see cref="Argon2Config"/> that this <see cref="Argon2Memory"/> supports.
@@ -160,15 +200,20 @@ public sealed class Argon2Memory
     /// <summary>
     /// Gets the <see cref="Blocks"/> for this <see cref="Argon2Memory"/>.
     /// </summary>
+    /// <remarks>
+    /// This gets used and overwritten on every hash.
+    /// <para/>
+    /// Can change on every call to <see cref="Reset"/>.
+    /// </remarks>
     public Blocks Blocks { get; private set; }
 
     /// <summary>
     /// Gets the required block count for the given <see cref="Argon2Config"/>.
     /// </summary>
     /// <param name="config">Used to determine the required block count.</param>
-    /// <returns>The required block count for the given <see cref="Argon2Config"/>.</returns>
+    /// <returns>The required segment, lane, and total block count for the given <see cref="Argon2Config"/>.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="config"/> is null.</exception>
-    public static (int, int, ulong) RequiredBlockCount(Argon2Config config)
+    public static (int SegmentBlockCount, int LaneBlockCount, ulong BlockCount) RequiredBlockCounts(Argon2Config config)
     {
         if (config == null)
         {
@@ -206,7 +251,7 @@ public sealed class Argon2Memory
         // +-----------------------------------+--------------------------------
         // | Memory (2GB)                      | Memory (2GB)
         // +-----------------------------------+--------------------------------
-        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCount(config);
+        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCounts(config);
         this.BlockCount = (int)requiredMemoryBlockCount;
         this.SegmentBlockCount = segmentBlockCount;
         this.LaneBlockCount = laneBlockCount;
@@ -239,6 +284,17 @@ public sealed class Argon2Memory
             }
 
             this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+        }
+
+        if (this.hashLength != config.HashLength)
+        {
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.hashLength > config.HashLength) || this.hashMemory.Length < config.HashLength)
+            {
+                this.hashSecureArray = SecureArray<byte>.Create(config.HashLength, config.SecureArrayCall, lockMemory);
+                this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
+            }
+
+            this.hashLength = config.HashLength;
         }
 
         var currentMemoryBlockCount = this.blockMemories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
@@ -348,7 +404,17 @@ public sealed class Argon2Memory
 
             this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
         }
-        
+
+        if (this.hashLength != config.HashLength)
+        {
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.hashLength > config.HashLength) || this.hashMemory.Length < config.HashLength)
+            {
+                this.hashMemory = new Memory<byte>(new byte[config.HashLength]);
+            }
+
+            this.hashLength = config.HashLength;
+        }
+
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
         // |Block|Block|Block|Block|Block|Block|Block|Block|Block|Block|Block
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
@@ -432,7 +498,8 @@ public sealed class Argon2Memory
     {
         this.blockSecureArrays.ForEach(m => m.Dispose());
         this.workingSecureArray?.Dispose();
-        this.blake2BSecureArray?.Dispose();
+        this.argon2SecureArray?.Dispose();
+        this.hashSecureArray?.Dispose();
         this.blockSecureArrays.Clear();
         this.blockMemories.Clear();
         this.FillMemoryBlocksWorkingBufferLength = 0;

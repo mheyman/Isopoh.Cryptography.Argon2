@@ -50,10 +50,10 @@ public static class ThreadsDontMatter
         };
         using var argon2A = new Argon2(configA);
         using var argon2B = new Argon2(configB);
-        using SecureArray<byte> hashA = argon2A.Hash();
-        using SecureArray<byte> hashB = argon2B.Hash();
-        string hashTextA = configA.EncodeString(hashA.Buffer);
-        string hashTextB = configB.EncodeString(hashB.Buffer);
+        Span<byte> hashA = argon2A.Hash();
+        Span<byte> hashB = argon2B.Hash();
+        string hashTextA = configA.EncodeString(hashA);
+        string hashTextB = configB.EncodeString(hashB);
         bool res = string.Compare(hashTextA, hashTextB, StringComparison.Ordinal) == 0;
         string resText = res
             ? "ThreadsDontMatter Passed"

@@ -178,8 +178,8 @@ public sealed class Argon2TestVector
         try
         {
             var argon2 = new Argon2(this.Config);
-            SecureArray<byte> hash = argon2.Hash();
-            if (!hash.Buffer.Where((b, i) => b != this.Tag[i]).Any())
+            Span<byte> hash = argon2.Hash();
+            if (!hash.ToArray().Where((b, i) => b != this.Tag[i]).Any())
             {
                 string text = Argon2.Hash(this.Config);
                 if (string.CompareOrdinal(text, this.TagText) == 0)
@@ -195,7 +195,7 @@ public sealed class Argon2TestVector
                         + $"                Salt {BitConverter.ToString(this.Salt)}{nl}"
                         + $"              Secret {BitConverter.ToString(this.Secret)}{nl}"
                         + $"      AssociatedData {BitConverter.ToString(this.AssociatedData)}{nl}"
-                        + $"  Gave expected hash {BitConverter.ToString(hash.Buffer)}{nl}"
+                        + $"  Gave expected hash {BitConverter.ToString(hash.ToArray())}{nl}"
                         + $"             encoded {text}");
                 }
                 else
@@ -212,7 +212,7 @@ public sealed class Argon2TestVector
             {
                 output.WriteLine(
                     $"  Test {this.Name}: Got{nl}" +
-                    $"    {BitConverter.ToString(hash.Buffer)}{nl}" +
+                    $"    {BitConverter.ToString(hash.ToArray())}{nl}" +
                     $"  expected{nl}" +
                     $"    {BitConverter.ToString(this.Tag)}");
                 return false;

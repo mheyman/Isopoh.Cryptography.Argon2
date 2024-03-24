@@ -9,7 +9,6 @@ namespace TestLib;
 using System;
 using System.Linq;
 using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -113,7 +112,7 @@ public static class FromDraft3
             Argon2Version version,
             byte[] expectedHash)
         {
-            using SecureArray<byte> hash = new Argon2(
+            Span<byte> hash = new Argon2(
                 new Argon2Config
                 {
                     HashLength = expectedHash.Length,
@@ -126,9 +125,9 @@ public static class FromDraft3
                     Version = version,
                     Type = argon2Type,
                 }).Hash();
-            output.WriteLine($"     Actual Hash:   {BitConverter.ToString(hash.Buffer)}");
+            output.WriteLine($"     Actual Hash:   {BitConverter.ToString(hash.ToArray())}");
             output.WriteLine($"     Expected Hash: {BitConverter.ToString(expectedHash)}");
-            return !hash.Buffer.Where((b, i) => b != expectedHash[i]).Any();
+            return !hash.ToArray().Where((b, i) => b != expectedHash[i]).Any();
         }
     }
 }

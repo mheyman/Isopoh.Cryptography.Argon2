@@ -4,6 +4,8 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+using System;
+
 namespace Isopoh.Cryptography.Argon2;
 
 using System.Runtime.CompilerServices;
@@ -28,8 +30,8 @@ public sealed partial class Argon2
     public static string Hash(Argon2Config configToHash)
     {
         using var argon2 = new Argon2(configToHash);
-        using SecureArray<byte> hash = argon2.Hash();
-        return argon2.Config.EncodeString(hash.Buffer);
+        Span<byte> hash = argon2.Hash();
+        return argon2.Config.EncodeString(hash);
     }
 
     /// <summary>
@@ -248,9 +250,8 @@ public sealed partial class Argon2
             }
 
             using var hasherToVerify = new Argon2(configToVerify);
-            using SecureArray<byte> hashToVerify = hasherToVerify.Hash();
-
-            return FixedTimeEquals(hash, hashToVerify);
+            Span<byte> hashToVerify = hasherToVerify.Hash();
+            return FixedTimeEquals(hash.Buffer, hashToVerify);
         }
         finally
         {
@@ -566,27 +567,17 @@ public sealed partial class Argon2
     /// when available; otherwise implements a similar algorithm.
     /// </remarks>
     [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    public static bool FixedTimeEquals(SecureArray<byte> left, SecureArray<byte> right)
+    public static bool FixedTimeEquals(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right)
     {
-        if (left == null)
-        {
-            throw new System.ArgumentNullException(nameof(left));
-        }
-
-        if (right == null)
-        {
-            throw new System.ArgumentNullException(nameof(right));
-        }
-
 #if NETCOREAPP2_1 || NETCOREAPP2_2 || NETCOREAPP3_0 || NETCOREAPP3_1 || NETSTANDARD2_1
-        return CryptographicOperations.FixedTimeEquals(left.Buffer, right.Buffer);
+        return CryptographicOperations.FixedTimeEquals(left, right);
 #else
-        if (left.Buffer.Length != right.Buffer.Length)
+        if (left.Length != right.Length)
         {
                 return false;
         }
 
-        int length = left.Buffer.Length;
+        int length = left.Length;
         var accumulator = 0;
 
         for (var i = 0; i < length; i++)
