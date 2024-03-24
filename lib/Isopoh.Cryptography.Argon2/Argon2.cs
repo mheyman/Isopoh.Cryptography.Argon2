@@ -7,8 +7,6 @@
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Isopoh.Cryptography.SecureArray;
 
 /// <summary>
@@ -87,27 +85,8 @@ public sealed partial class Argon2 : IDisposable
     /// </returns>
     public SecureArray<byte> Hash()
     {
-        using SecureArray<ulong> workingBuffer = SecureArray<ulong>.Best(this.Config.WorkingBufferLength, this.Config.SecureArrayCall);
-        return this.Hash(workingBuffer.Buffer.AsMemory());
-    }
-
-    /// <summary>
-    /// Perform the hash.
-    /// </summary>
-    /// <param name="workingBuffer">Memory used during the hash operation. Must be at least <see cref="Config"/> <see cref="Argon2Config.WorkingBufferLength"/> in length.</param>
-    /// <returns>
-    /// The hash bytes.
-    /// </returns>
-    public SecureArray<byte> Hash(Memory<ulong> workingBuffer)
-    {
-        int wbLength = this.Config.WorkingBufferLength;
-        Memory<ulong> wb = workingBuffer.Length >= wbLength
-            ? workingBuffer.Slice(0, wbLength)
-            : throw new ArgumentException(
-                $"Expected the working buffer to be at least of length {wbLength}, got {workingBuffer.Length}",
-                nameof(workingBuffer));
         this.Initialize();
-        this.FillMemoryBlocks(wb);
+        this.FillMemoryBlocks(this.memory.FillMemoryBlocksWorkingBuffer);
         return this.Final();
     }
 

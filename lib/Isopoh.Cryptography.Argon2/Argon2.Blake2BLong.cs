@@ -24,60 +24,68 @@ public sealed partial class Argon2
     /// <param name="inputBuffer">
     /// What to hash.
     /// </param>
-    /// <param name="secureArrayCall">
-    /// The methods that get called to secure arrays. A null value defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+    /// <param name="blake2BLongWorkingBuffer">
+    /// 2*<see cref="Blake2B"/>.<see cref="Blake2B.OutputLength"/> bytes long.
     /// </param>
-    private static void Blake2BLong(byte[] hash, byte[] inputBuffer, SecureArrayCall secureArrayCall)
+    /// <param name="blake2BWorkingBuffer"><see cref="Blake2B"/>.<see cref="Blake2B.BufferMinimumTotalSize"/>  bytes long.</param>
+    private static void Blake2BLong(Span<byte> hash, Span<byte> inputBuffer, Memory<byte> blake2BLongWorkingBuffer, Memory<byte> blake2BWorkingBuffer)
     {
         var outputLengthBytes = new byte[4];
-        using SecureArray<byte> intermediateHash = SecureArray<byte>.Best(Blake2B.OutputLength, secureArrayCall);
+        if (blake2BLongWorkingBuffer.Length < 2 * Blake2B.OutputLength)
+        {
+            throw new ArgumentException(
+                $"Expected at least {2 * Blake2B.OutputLength} bytes, got {blake2BLongWorkingBuffer.Length}",
+                nameof(blake2BLongWorkingBuffer));
+        }
+
+        var resultBuffer = blake2BLongWorkingBuffer.Slice(0, Blake2B.OutputLength);
+        var toHash = blake2BLongWorkingBuffer.Slice(Blake2B.OutputLength, Blake2B.OutputLength);
         var blake2BConfig = new Blake2BConfig
         {
-            Result64ByteBuffer = intermediateHash.Buffer,
+            Result64ByteBuffer = resultBuffer,
             OutputSizeInBytes = hash.Length > 64 ? 64 : hash.Length,
         };
         Store32(outputLengthBytes, hash.Length);
-        using (Hasher blakeHash = Blake2B.Create(blake2BConfig, secureArrayCall))
+        using (Hasher blakeHash = Blake2B.Create(blake2BConfig, blake2BWorkingBuffer))
         {
             blakeHash.Update(outputLengthBytes);
             blakeHash.Update(inputBuffer);
             blakeHash.Finish();
         }
 
-        if (hash.Length <= intermediateHash.Buffer.Length)
+        if (hash.Length <= resultBuffer.Length)
         {
             // less than or equal to 64 bytes, just copy the hash result
-            Array.Copy(intermediateHash.Buffer, hash, hash.Length);
+            resultBuffer.Span.Slice(0, hash.Length).CopyTo(hash);
             return;
         }
 
         // greater than 64 bytes, copy a chain of half-hash results until the final up-to-full hash result
         const int b2B2 = Blake2B.OutputLength / 2;
-        Array.Copy(intermediateHash.Buffer, hash, b2B2); // copy half hash result
+        resultBuffer.Span.Slice(0, b2B2).CopyTo(hash.Slice(0, b2B2));
         int pos = b2B2;
         int lastHashIndex = hash.Length - Blake2B.OutputLength;
-        using SecureArray<byte> toHash = SecureArray<byte>.Best(Blake2B.OutputLength, secureArrayCall);
         while (pos < lastHashIndex)
         {
-            Array.Copy(intermediateHash.Buffer, toHash.Buffer, intermediateHash.Buffer.Length); // set toHash to be the previous hash
-            Blake2B.ComputeHash(toHash.Buffer, blake2BConfig, secureArrayCall);
-            Array.Copy(intermediateHash.Buffer, 0, hash, pos, b2B2); // copy half hash result
+            resultBuffer.CopyTo(toHash);
+            Blake2B.ComputeHash(toHash.Span, blake2BConfig, blake2BWorkingBuffer);
+            resultBuffer.Span.Slice(0, b2B2).CopyTo(hash.Slice(pos, b2B2));
             pos += b2B2;
         }
 
         // between 33 and 64 bytes left to load
-        Array.Copy(intermediateHash.Buffer, toHash.Buffer, intermediateHash.Buffer.Length); // set toHash to be the previous hash
+        resultBuffer.CopyTo(toHash);
         int remaining = hash.Length - pos;
         if (remaining < 64)
         {
             blake2BConfig = new Blake2BConfig
             {
-                Result64ByteBuffer = intermediateHash.Buffer,
+                Result64ByteBuffer = resultBuffer,
                 OutputSizeInBytes = hash.Length - pos,
             };
         }
 
-        Blake2B.ComputeHash(toHash.Buffer, blake2BConfig, secureArrayCall);
-        Array.Copy(intermediateHash.Buffer, 0, hash, pos, hash.Length - pos); // copy the final bytes from the first part of the hash result
+        Blake2B.ComputeHash(toHash.Span, blake2BConfig, blake2BWorkingBuffer);
+        resultBuffer.Span.Slice(0, hash.Length - pos).CopyTo(hash.Slice(pos));
     }
 }

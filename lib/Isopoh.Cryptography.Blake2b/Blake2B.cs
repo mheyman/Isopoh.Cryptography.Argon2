@@ -71,7 +71,7 @@ public static class Blake2B
     /// The configuration to use.
     /// </param>
     /// <param name="blake2BBuffer">
-    /// Must be at least <see cref="Blake2BHasher"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0).
+    /// Must be at least <see cref="Blake2B"/>.<see cref="Blake2B.BufferMinimumTotalSize"/> + (<paramref name="config"/>?.Key.Length ?? 0).
     /// </param>
     /// <returns>
     /// A <see cref="Hasher"/> that can be converted to a <see cref="HashAlgorithm"/>.

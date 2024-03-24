@@ -42,9 +42,15 @@ public sealed class Argon2Memory
 
     private readonly SecureArrayCall secureArrayCall;
 
-    private readonly List<SecureArray<ulong>> secureArrays = [];
+    private readonly List<SecureArray<ulong>> blockSecureArrays = [];
 
-    private readonly List<Memory<ulong>> memories = [];
+    private readonly List<Memory<ulong>> blockMemories = [];
+
+    private SecureArray<ulong>? workingSecureArray;
+
+    private Memory<ulong> fillMemoryBlocksWorkingBuffer;
+
+    private SecureArray<byte> blake2BSecureArray;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2Memory"/> class.
@@ -57,6 +63,25 @@ public sealed class Argon2Memory
     public Argon2Memory(Argon2Config config, Argon2MemoryPolicy shrinkMemoryPolicy, LockMemoryPolicy? lockMemory)
     {
         this.secureArrayCall = config.SecureArrayCall;
+        this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+        if (lockMemory.HasValue)
+        {
+            this.workingSecureArray = SecureArray<ulong>.Create(
+                this.FillMemoryBlocksWorkingBufferLength,
+                config.SecureArrayCall,
+                lockMemory.Value);
+            this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
+            this.blake2BSecureArray = SecureArray<byte>.Create(Blake2b.Blake2B.OutputLength * 2 + Blake2b.Blake2B.BufferMinimumTotalSize, this.secureArrayCall, lockMemory.Value);
+            this.Blake2BLongWorkingBuffer = new Memory<byte>(this.blake2BSecureArray.Buffer, Blake2b.Blake2B.BufferMinimumTotalSize, 2 * Blake2b.Blake2B.OutputLength);
+            this.Blake2bWorkingBuffer = new Memory<byte>(this.blake2BSecureArray.Buffer, 0, Blake2b.Blake2B.BufferMinimumTotalSize);
+        }
+        else
+        {
+            this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(new ulong[this.FillMemoryBlocksWorkingBufferLength]);
+            this.Blake2BLongWorkingBuffer = new Memory<byte>(new byte[Blake2b.Blake2B.OutputLength * 2]);
+            this.Blake2bWorkingBuffer = new Memory<byte>(new byte[Blake2b.Blake2B.BufferMinimumTotalSize]);
+        }
+
         this.ShrinkMemoryPolicy = shrinkMemoryPolicy;
         this.LockMemory = lockMemory;
         this.BlockCount = 0;
@@ -75,6 +100,32 @@ public sealed class Argon2Memory
     /// Gets the lock memory policy. Null to not secure arrays at all.
     /// </summary>
     public LockMemoryPolicy? LockMemory { get; }
+
+    /// <summary>
+    /// Gets the count of ulong values in the <see cref="FillMemoryBlocksWorkingBuffer"/>.
+    /// </summary>
+    /// <remarks>
+    /// Can change on every call to <see cref="Reset"/>.
+    /// </remarks>
+    public int FillMemoryBlocksWorkingBufferLength { get; private set; }
+
+    /// <summary>
+    /// Gets the working buffer sized to be used in <see cref="Argon2.FillMemoryBlocks"/>.
+    /// </summary>
+    /// <remarks>
+    /// Can change on every call to <see cref="Reset"/>.
+    /// </remarks>
+    public Memory<ulong> FillMemoryBlocksWorkingBuffer => this.fillMemoryBlocksWorkingBuffer.Slice(0, this.FillMemoryBlocksWorkingBufferLength);
+
+    /// <summary>
+    /// Gets the working buffer sized for BLake2B hashing.
+    /// </summary>
+    public Memory<byte> Blake2BLongWorkingBuffer { get; }
+
+    /// <summary>
+    /// Gets the working buffer sized for BLake2B hashing.
+    /// </summary>
+    public Memory<byte> Blake2bWorkingBuffer { get; }
 
     /// <summary>
     /// Gets the memory block count for the latest <see cref="Argon2Config"/> that this <see cref="Argon2Memory"/> supports.
@@ -163,9 +214,9 @@ public sealed class Argon2Memory
         {
             if (this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink)
             {
-                this.secureArrays.ForEach(m => m.Dispose());
-                this.secureArrays.Clear();
-                this.memories.Clear();
+                this.blockSecureArrays.ForEach(m => m.Dispose());
+                this.blockSecureArrays.Clear();
+                this.blockMemories.Clear();
                 this.Blocks = new Blocks(Array.Empty<Memory<ulong>>());
             }
 
@@ -179,20 +230,31 @@ public sealed class Argon2Memory
         }
 
         LockMemoryPolicy lockMemory = this.LockMemory.Value;
-        var currentMemoryBlockCount = this.memories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
+        if (this.FillMemoryBlocksWorkingBufferLength != config.WorkingBufferLength)
+        {
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < config.WorkingBufferLength)
+            {
+                this.workingSecureArray = SecureArray<ulong>.Create(config.WorkingBufferLength, config.SecureArrayCall, lockMemory);
+                this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
+            }
+
+            this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+        }
+
+        var currentMemoryBlockCount = this.blockMemories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
         if (requiredMemoryBlockCount > currentMemoryBlockCount && this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink)
         {
             var remainingMemoryBlockCount = currentMemoryBlockCount;
             while (true)
             {
-                var lastMemoryBlockCount = (ulong)(this.memories[this.memories.Count - 1].Length / Argon2.QwordsInBlock);
+                var lastMemoryBlockCount = (ulong)(this.blockMemories[this.blockMemories.Count - 1].Length / Argon2.QwordsInBlock);
                 if (remainingMemoryBlockCount - lastMemoryBlockCount < requiredMemoryBlockCount)
                 {
                     break;
                 }
 
-                this.secureArrays.RemoveAt(this.secureArrays.Count - 1);
-                this.memories.RemoveAt(this.memories.Count - 1);
+                this.blockSecureArrays.RemoveAt(this.blockSecureArrays.Count - 1);
+                this.blockMemories.RemoveAt(this.blockMemories.Count - 1);
             }
         }
 
@@ -206,28 +268,28 @@ public sealed class Argon2Memory
                 lastMemoryBlockCount = CsharpMaxBlocksPerArray;
             }
 
-            if (this.secureArrays.Count == 0)
+            if (this.blockSecureArrays.Count == 0)
             {
-                this.secureArrays.Add(
+                this.blockSecureArrays.Add(
                     SecureArray<ulong>.Create(
                         lastMemoryBlockCount * Argon2.QwordsInBlock,
                         this.secureArrayCall,
                         lockMemory));
-                this.memories.Add(this.secureArrays[0].Buffer);
+                this.blockMemories.Add(this.blockSecureArrays[0].Buffer);
             }
 
-            var lastSecureArray = this.secureArrays[this.secureArrays.Count - 1];
-            this.secureArrays.RemoveAt(this.secureArrays.Count - 1);
-            this.memories.RemoveAt(this.memories.Count - 1);
+            var lastSecureArray = this.blockSecureArrays[this.blockSecureArrays.Count - 1];
+            this.blockSecureArrays.RemoveAt(this.blockSecureArrays.Count - 1);
+            this.blockMemories.RemoveAt(this.blockMemories.Count - 1);
 
-            for (var i = (ulong)this.secureArrays.Count; i < fullMemoriesCount; ++i)
+            for (var i = (ulong)this.blockSecureArrays.Count; i < fullMemoriesCount; ++i)
             {
                 SecureArray<ulong> secureArray = SecureArray<ulong>.Create(
                     CsharpMaxBlocksPerArray * Argon2.QwordsInBlock,
                     this.secureArrayCall,
                     lockMemory);
-                this.secureArrays.Add(secureArray);
-                this.memories.Add(secureArray.Buffer);
+                this.blockSecureArrays.Add(secureArray);
+                this.blockMemories.Add(secureArray.Buffer);
             }
 
             if (lastMemoryBlockCount > lastSecureArray.Buffer.Length / Argon2.QwordsInBlock)
@@ -238,14 +300,14 @@ public sealed class Argon2Memory
                     lockMemory);
             }
 
-            this.secureArrays.Add(lastSecureArray);
-            this.memories.Add(lastSecureArray.Buffer);
-            this.Blocks = new Blocks(this.memories);
+            this.blockSecureArrays.Add(lastSecureArray);
+            this.blockMemories.Add(lastSecureArray.Buffer);
+            this.Blocks = new Blocks(this.blockMemories);
         }
         catch (OutOfMemoryException e)
         {
             this.Blocks = new Blocks(Array.Empty<Memory<ulong>>());
-            int memoryCount = this.memories.Count;
+            int memoryCount = this.blockMemories.Count;
 
             // be nice, clear allocated memory that will never be used sooner rather than later
             this.Clear();
@@ -277,6 +339,16 @@ public sealed class Argon2Memory
 
     private void ResetNoSecureArray(Argon2Config config, ulong requiredMemoryBlockCount)
     {
+        if (this.FillMemoryBlocksWorkingBufferLength != config.WorkingBufferLength)
+        {
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < config.WorkingBufferLength)
+            {
+                this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(new ulong[config.WorkingBufferLength]);
+            }
+
+            this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+        }
+        
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
         // |Block|Block|Block|Block|Block|Block|Block|Block|Block|Block|Block
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
@@ -284,19 +356,19 @@ public sealed class Argon2Memory
         // | Memory (2GB)                      | Memory (2GB)
         // +-----------------------------------+--------------------------------
 
-        var currentMemoryBlockCount = this.memories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
+        var currentMemoryBlockCount = this.blockMemories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
         if (requiredMemoryBlockCount > currentMemoryBlockCount && this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink)
         {
             var remainingMemoryBlockCount = currentMemoryBlockCount;
             while (true)
             {
-                var lastMemoryBlockCount = (ulong)(this.memories[this.memories.Count - 1].Length / Argon2.QwordsInBlock);
+                var lastMemoryBlockCount = (ulong)(this.blockMemories[this.blockMemories.Count - 1].Length / Argon2.QwordsInBlock);
                 if (remainingMemoryBlockCount - lastMemoryBlockCount < requiredMemoryBlockCount)
                 {
                     break;
                 }
 
-                this.memories.RemoveAt(this.memories.Count - 1);
+                this.blockMemories.RemoveAt(this.blockMemories.Count - 1);
             }
         }
 
@@ -310,17 +382,17 @@ public sealed class Argon2Memory
                 lastMemoryBlockCount = CsharpMaxBlocksPerArray;
             }
 
-            if (this.memories.Count == 0)
+            if (this.blockMemories.Count == 0)
             {
-                this.memories.Add(new ulong[lastMemoryBlockCount * Argon2.QwordsInBlock]);
+                this.blockMemories.Add(new ulong[lastMemoryBlockCount * Argon2.QwordsInBlock]);
             }
 
-            var lastMemory = this.memories[this.memories.Count - 1];
-            this.memories.RemoveAt(this.memories.Count - 1);
+            var lastMemory = this.blockMemories[this.blockMemories.Count - 1];
+            this.blockMemories.RemoveAt(this.blockMemories.Count - 1);
 
-            for (var i = (ulong)this.memories.Count; i < fullMemoriesCount; ++i)
+            for (var i = (ulong)this.blockMemories.Count; i < fullMemoriesCount; ++i)
             {
-                this.memories.Add(new ulong[CsharpMaxBlocksPerArray * Argon2.QwordsInBlock]);
+                this.blockMemories.Add(new ulong[CsharpMaxBlocksPerArray * Argon2.QwordsInBlock]);
             }
 
             if (lastMemoryBlockCount > lastMemory.Length / Argon2.QwordsInBlock)
@@ -328,13 +400,13 @@ public sealed class Argon2Memory
                 lastMemory = new ulong[lastMemoryBlockCount * Argon2.QwordsInBlock];
             }
 
-            this.memories.Add(lastMemory);
-            this.Blocks = new Blocks(this.memories);
+            this.blockMemories.Add(lastMemory);
+            this.Blocks = new Blocks(this.blockMemories);
         }
         catch (OutOfMemoryException e)
         {
             this.Blocks = new Blocks(Array.Empty<Memory<ulong>>());
-            int memoryCount = this.memories.Count;
+            int memoryCount = this.blockMemories.Count;
 
             // be nice, clear allocated memory that will never be used sooner rather than later
             this.Clear();
@@ -358,9 +430,12 @@ public sealed class Argon2Memory
 
     private void Clear()
     {
-        this.secureArrays.ForEach(m => m.Dispose());
-        this.secureArrays.Clear();
-        this.memories.Clear();
+        this.blockSecureArrays.ForEach(m => m.Dispose());
+        this.workingSecureArray?.Dispose();
+        this.blake2BSecureArray?.Dispose();
+        this.blockSecureArrays.Clear();
+        this.blockMemories.Clear();
+        this.FillMemoryBlocksWorkingBufferLength = 0;
         this.BlockCount = 0;
         this.SegmentBlockCount = 0;
         this.LaneBlockCount = 0;

@@ -41,7 +41,7 @@ public sealed partial class Argon2
                     OutputSizeInBytes = PrehashDigestLength,
                     Result64ByteBuffer = ret.Buffer,
                 },
-                this.Config.SecureArrayCall);
+                this.memory.Blake2bWorkingBuffer);
         var value = new byte[4];
         Store32(value, this.Config.Lanes);
         blakeHash.Update(value);
@@ -103,10 +103,10 @@ public sealed partial class Argon2
         {
             Store32(blockHash, PrehashDigestLength, 0);
             Store32(blockHash, PrehashDigestLength + 4, l);
-            Blake2BLong(blockHashBytes.Buffer, blockHash.ToArray(), this.Config.SecureArrayCall);
+            Blake2BLong(blockHashBytes.Buffer.AsSpan(), blockHash, this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
             LoadBlock(this.Memory[l * this.LaneBlockCount], blockHashBytes.Buffer);
             Store32(blockHash, PrehashDigestLength, 1);
-            Blake2BLong(blockHashBytes.Buffer, blockHash.ToArray(), this.Config.SecureArrayCall);
+            Blake2BLong(blockHashBytes.Buffer.AsSpan(), blockHash, this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
             LoadBlock(this.Memory[(l * this.LaneBlockCount) + 1], blockHashBytes.Buffer);
         }
     }
@@ -233,7 +233,7 @@ public sealed partial class Argon2
         using SecureArray<byte> blockHashBytes = SecureArray<byte>.Best(BlockSize, this.Config.SecureArrayCall);
         StoreBlock(blockHashBytes.Buffer.AsSpan(), blockHash);
         SecureArray<byte> ret = SecureArray<byte>.Best(this.Config.HashLength, this.Config.SecureArrayCall);
-        Blake2BLong(ret.Buffer, blockHashBytes.Buffer, this.Config.SecureArrayCall);
+        Blake2BLong(ret.Buffer.AsSpan(), blockHashBytes.Buffer.AsSpan(), this.memory.Blake2BLongWorkingBuffer, this.memory.Blake2bWorkingBuffer);
         PrintTag(ret.Buffer);
         return ret;
     }
