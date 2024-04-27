@@ -12,7 +12,7 @@ using Isopoh.Cryptography.SecureArray;
 /// <summary>
 /// Holds configuration needed to perform an Argon2 hash.
 /// </summary>
-public sealed class Argon2Config
+public sealed class Argon2Config : ICloneable
 {
     private int hashLength = 32;
 
@@ -254,6 +254,40 @@ public sealed class Argon2Config
             var segmentBlockCount = memoryBlockCount / (this.Lanes * Argon2.SyncPointCount);
 
             return (((this.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * Argon2.QwordsInBlock) + segmentBlockCount) * parallelCount;
+        }
+    }
+
+    /// <inheritdoc />
+    public object Clone()
+    {
+        return new Argon2Config
+        {
+            Version = this.Version,
+            Type = this.Type,
+            HashLength = this.HashLength,
+            Password = CloneArray(this.Password),
+            Salt = CloneArray(this.Salt),
+            Secret = CloneArray(this.Secret),
+            AssociatedData = CloneArray(this.AssociatedData),
+            TimeCost = this.TimeCost,
+            MemoryCost = this.MemoryCost,
+            Lanes = this.Lanes,
+            Threads = this.Threads,
+            ClearPassword = this.ClearPassword,
+            ClearSecret = this.ClearSecret,
+            SecureArrayCall = this.SecureArrayCall,
+        };
+
+        static byte[]? CloneArray(byte[]? data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            var ret = new byte[data.Length];
+            Array.Copy(data, ret, ret.Length);
+            return ret;
         }
     }
 }

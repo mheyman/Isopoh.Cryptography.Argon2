@@ -122,7 +122,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.%23ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall%2CIsopoh.Cryptography.SecureArray.LockMemoryPolicy)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L96">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L117">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)">Blake2BCore(SecureArrayCall, LockMemoryPolicy)</h4>
@@ -164,7 +164,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_System_Memory_System_Byte__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.%23ctor(System.Memory%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L69">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L90">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_System_Memory_System_Byte__" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(System.Memory{System.Byte})">Blake2BCore(Memory&lt;Byte&gt;)</h4>
@@ -193,25 +193,24 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
+  <h3 id="fields">Fields
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L108">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L44">View Source</a>
   </span>
-  <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize">BufferTotalSize</h4>
   <div class="markdown level1 summary"><p>Gets the total size of the buffer needed to do <a class="xref" href="Isopoh.Cryptography.Blake2b.Blake2BCore.html">Blake2BCore</a> operations.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int BufferTotalSize { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public const int BufferTotalSize = 320</code></pre>
   </div>
-  <h5 class="propertyValue">Property Value</h5>
+  <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -233,7 +232,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_ReadOnlySpan_System_Byte__System_Int32_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan%7BSystem.Byte%7D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L123">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L139">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_ReadOnlySpan_System_Byte__System_Int32_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)">BytesToUInt64(ReadOnlySpan&lt;Byte&gt;, Int32)</h4>
@@ -292,7 +291,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L397">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L413">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose">Dispose()</h4>
@@ -308,7 +307,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L407">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L423">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_System_Boolean_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)">Dispose(Boolean)</h4>
@@ -342,7 +341,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_ReadOnlySpan_System_Byte__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L205">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L221">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_ReadOnlySpan_System_Byte__" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan{System.Byte})">HashCore(ReadOnlySpan&lt;Byte&gt;)</h4>
@@ -376,7 +375,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L372">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L388">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal">HashFinal()</h4>
@@ -424,7 +423,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Boolean_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L387">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L403">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Boolean_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Boolean)">HashFinal(Boolean)</h4>
@@ -490,7 +489,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Byte___.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L338">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L354">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Byte___" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte[])">HashFinal(Byte[])</h4>
@@ -540,7 +539,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Byte___System_Boolean_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte%5B%5D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L359">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L375">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Byte___System_Boolean_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte[],System.Boolean)">HashFinal(Byte[], Boolean)</h4>
@@ -617,7 +616,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L323">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L339">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte})">HashFinal(Span&lt;Byte&gt;)</h4>
@@ -667,7 +666,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__System_Boolean_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span%7BSystem.Byte%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L271">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L287">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__System_Boolean_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte},System.Boolean)">HashFinal(Span&lt;Byte&gt;, Boolean)</h4>
@@ -744,7 +743,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_ReadOnlySpan_System_UInt64__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan%7BSystem.UInt64%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L161">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L177">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_ReadOnlySpan_System_UInt64__" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan{System.UInt64})">Initialize(ReadOnlySpan&lt;UInt64&gt;)</h4>
@@ -778,7 +777,7 @@ so the CLR can't move it and leave extraneous copies floating around in RAM.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Span_System_Byte__System_Int32_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64%2CSystem.Span%7BSystem.Byte%7D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L145">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Blake2b/Blake2BCore.cs/#L161">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes*"></a>
   <h4 id="Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Span_System_Byte__System_Int32_" data-uid="Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Span{System.Byte},System.Int32)">UInt64ToBytes(UInt64, Span&lt;Byte&gt;, Int32)</h4>

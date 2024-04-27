@@ -78,6 +78,7 @@ public sealed class Argon2Memory
     private Memory<byte> hashMemory;
 
     private int hashLength;
+    private Argon2MemoryPolicy shrinkMemoryPolicy;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2Memory"/> class.
@@ -89,27 +90,28 @@ public sealed class Argon2Memory
     /// <param name="lockMemory">The lock memory policy to use. Null to not secure memory at all.</param>
     public Argon2Memory(Argon2Config config, Argon2MemoryPolicy shrinkMemoryPolicy, LockMemoryPolicy? lockMemory)
     {
-        this.secureArrayCall = config.SecureArrayCall;
-        this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+        this.Config = (Argon2Config)config.Clone();
+        this.secureArrayCall = this.Config.SecureArrayCall;
+        this.FillMemoryBlocksWorkingBufferLength = this.Config.WorkingBufferLength;
         if (lockMemory.HasValue)
         {
             this.workingSecureArray = SecureArray<ulong>.Create(
                 this.FillMemoryBlocksWorkingBufferLength,
-                config.SecureArrayCall,
+                this.Config.SecureArrayCall,
                 lockMemory.Value);
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
             this.argon2SecureArray = SecureArray<byte>.Create(Argon2WorkingBufferSize, this.secureArrayCall, lockMemory.Value);
-            this.hashSecureArray = SecureArray<byte>.Create(config.HashLength, this.secureArrayCall, lockMemory.Value);
+            this.hashSecureArray = SecureArray<byte>.Create(this.Config.HashLength, this.secureArrayCall, lockMemory.Value);
             this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
-            this.hashLength = config.HashLength;
+            this.hashLength = this.Config.HashLength;
             this.Argon2WorkingBuffer = new Memory<byte>(this.argon2SecureArray.Buffer);
         }
         else
         {
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(new ulong[this.FillMemoryBlocksWorkingBufferLength]);
             this.Argon2WorkingBuffer = new Memory<byte>(new byte[Argon2WorkingBufferSize]);
-            this.hashMemory = new Memory<byte>(new byte[config.HashLength]);
-            this.hashLength = config.HashLength;
+            this.hashMemory = new Memory<byte>(new byte[this.Config.HashLength]);
+            this.hashLength = this.Config.HashLength;
         }
 
         this.ShrinkMemoryPolicy = shrinkMemoryPolicy;
@@ -118,13 +120,35 @@ public sealed class Argon2Memory
         this.SegmentBlockCount = 0;
         this.LaneBlockCount = 0;
         this.Blocks = new Blocks(Array.Empty<Memory<ulong>>());
-        this.Reset(config);
+        this.ResetNoConfigClone();
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the memory is currently in use.
+    /// </summary>
+    public bool InUse { get; private set; }
+
+    /// <summary>
+    /// Gets the <see cref="Argon2Config"/> associated with this <see cref="Argon2Memory"/>.
+    /// </summary>
+    public Argon2Config Config { get; private set; }
 
     /// <summary>
     /// Gets or sets the policy that determines whether to shrink memory when resetting with a new <see cref="Argon2Config"/>.
     /// </summary>
-    public Argon2MemoryPolicy ShrinkMemoryPolicy { get; set; }
+    public Argon2MemoryPolicy ShrinkMemoryPolicy
+    {
+        get => this.shrinkMemoryPolicy;
+        set
+        {
+            if (this.InUse)
+            {
+                throw new InvalidOperationException("Attempt to set Argon2Memory ShrinkMemoryPolicy while memory currently in use.");
+            }
+
+            this.shrinkMemoryPolicy = value;
+        }
+    }
 
     /// <summary>
     /// Gets the lock memory policy. Null to not secure arrays at all.
@@ -245,13 +269,48 @@ public sealed class Argon2Memory
     /// </exception>
     public void Reset(Argon2Config config)
     {
+        if (this.InUse)
+        {
+            throw new InvalidOperationException("Attempt to reset Argon2Memory currently in use.");
+        }
+
+        this.Config = (Argon2Config)config.Clone();
+        this.ResetNoConfigClone();
+    }
+
+    /// <summary>
+    /// Dispose.
+    /// </summary>
+    public void Dispose()
+    {
+        this.Clear();
+    }
+
+    /// <summary>
+    /// Start the use of this memory. <see cref="Argon2Memory"/> should not be used by more than one hash operation as a time.
+    /// </summary>
+    public void StartUse()
+    {
+        this.InUse = true;
+    }
+
+    /// <summary>
+    /// Mark this memory as free to use again.
+    /// </summary>
+    public void EndUse()
+    {
+        this.InUse = false;
+    }
+
+    private void ResetNoConfigClone()
+    {
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
         // |Block|Block|Block|Block|Block|Block|Block|Block|Block|Block|Block
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
         // +-----------------------------------+--------------------------------
         // | Memory (2GB)                      | Memory (2GB)
         // +-----------------------------------+--------------------------------
-        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCounts(config);
+        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCounts(this.Config);
         this.BlockCount = (int)requiredMemoryBlockCount;
         this.SegmentBlockCount = segmentBlockCount;
         this.LaneBlockCount = laneBlockCount;
@@ -270,31 +329,31 @@ public sealed class Argon2Memory
 
         if (this.LockMemory == null)
         {
-            this.ResetNoSecureArray(config, requiredMemoryBlockCount);
+            this.ResetNoSecureArray(this.Config, requiredMemoryBlockCount);
             return;
         }
 
         LockMemoryPolicy lockMemory = this.LockMemory.Value;
-        if (this.FillMemoryBlocksWorkingBufferLength != config.WorkingBufferLength)
+        if (this.FillMemoryBlocksWorkingBufferLength != this.Config.WorkingBufferLength)
         {
-            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < config.WorkingBufferLength)
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > this.Config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < this.Config.WorkingBufferLength)
             {
-                this.workingSecureArray = SecureArray<ulong>.Create(config.WorkingBufferLength, config.SecureArrayCall, lockMemory);
+                this.workingSecureArray = SecureArray<ulong>.Create(this.Config.WorkingBufferLength, this.Config.SecureArrayCall, lockMemory);
                 this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
             }
 
-            this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
+            this.FillMemoryBlocksWorkingBufferLength = this.Config.WorkingBufferLength;
         }
 
-        if (this.hashLength != config.HashLength)
+        if (this.hashLength != this.Config.HashLength)
         {
-            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.hashLength > config.HashLength) || this.hashMemory.Length < config.HashLength)
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.hashLength > this.Config.HashLength) || this.hashMemory.Length < this.Config.HashLength)
             {
-                this.hashSecureArray = SecureArray<byte>.Create(config.HashLength, config.SecureArrayCall, lockMemory);
+                this.hashSecureArray = SecureArray<byte>.Create(this.Config.HashLength, this.Config.SecureArrayCall, lockMemory);
                 this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
             }
 
-            this.hashLength = config.HashLength;
+            this.hashLength = this.Config.HashLength;
         }
 
         var currentMemoryBlockCount = this.blockMemories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
@@ -371,7 +430,7 @@ public sealed class Argon2Memory
             throw new OutOfMemoryException(
                 $"Failed to allocate {(requiredMemoryBlockCount > Argon2Memory.CsharpMaxBlocksPerArray ? Argon2Memory.CsharpMaxBlocksPerArray : requiredMemoryBlockCount) * Argon2.QwordsInBlock}-byte Argon2 block array, " +
                 $"{(memoryCount > 0 ? $" allocation {memoryCount + 1} of multiple-allocation," : string.Empty)}" +
-                $" memory cost {config.MemoryCost}, lane count {config.Lanes}.",
+                $" memory cost {this.Config.MemoryCost}, lane count {this.Config.Lanes}.",
                 e);
 #pragma warning restore S112
         }
@@ -383,14 +442,6 @@ public sealed class Argon2Memory
             this.Clear();
             throw;
         }
-    }
-
-    /// <summary>
-    /// Dispose.
-    /// </summary>
-    public void Dispose()
-    {
-        this.Clear();
     }
 
     private void ResetNoSecureArray(Argon2Config config, ulong requiredMemoryBlockCount)

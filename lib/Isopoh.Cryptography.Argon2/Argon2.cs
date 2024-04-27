@@ -25,22 +25,30 @@ public sealed partial class Argon2 : IDisposable
     /// </param>
     public Argon2(Argon2Config config)
     {
-        this.Config = config ?? throw new ArgumentNullException(nameof(config), "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
-        this.memory = new Argon2Memory(this.Config, Argon2MemoryPolicy.NoShrink, LockMemoryPolicy.BestEffort);
+        if (config == null)
+        {
+            throw new ArgumentNullException(
+                nameof(config),
+                "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
+        }
+
+        this.memory = new Argon2Memory(config, Argon2MemoryPolicy.NoShrink, LockMemoryPolicy.BestEffort);
         this.memoryIsOwned = true;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2"/> class.
     /// </summary>
-    /// <param name="config">
-    /// The configuration to use.
-    /// </param>
-    /// <param name="memory">The memory to use for the hash.</param>
-    /// <param name="memoryPolicy">Whether to shrink the memory to fit.</param>
-    public Argon2(Argon2Config config, Argon2Memory memory, Argon2MemoryPolicy memoryPolicy = Argon2MemoryPolicy.NoShrink)
+    /// <param name="memory">The memory (and <see cref="Argon2Config"/>) to use for the hash.</param>
+    public Argon2(Argon2Memory memory)
     {
-        this.Config = config ?? throw new ArgumentNullException(nameof(config), "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
+        if (memory?.Config == null)
+        {
+            throw new ArgumentNullException(
+                nameof(memory),
+                "Argon2 requires configuration information. Accepting the defaults except for the password is fine.");
+        }
+
         this.memory = memory;
         this.memoryIsOwned = false;
         this.memory.Reset(this.Config);
@@ -49,7 +57,7 @@ public sealed partial class Argon2 : IDisposable
     /// <summary>
     /// Gets the <see cref="Argon2Config"/> for this hash.
     /// </summary>
-    public Argon2Config Config { get; }
+    public Argon2Config Config => this.memory.Config;
 
     /// <summary>
     /// Gets the <see cref="MemoryBlockCount"/> blocks.
@@ -85,10 +93,18 @@ public sealed partial class Argon2 : IDisposable
     /// </returns>
     public Span<byte> Hash()
     {
-        this.Initialize(this.memory.Argon2WorkingBuffer);
-        this.FillMemoryBlocks(this.memory.FillMemoryBlocksWorkingBuffer);
-        this.Final(this.memory.Hash, this.memory.Argon2WorkingBuffer);
-        return this.memory.Hash;
+        try
+        {
+            this.memory.StartUse();
+            this.Initialize(this.memory.Argon2WorkingBuffer);
+            this.FillMemoryBlocks(this.memory.FillMemoryBlocksWorkingBuffer);
+            this.Final(this.memory.Hash, this.memory.Argon2WorkingBuffer);
+            return this.memory.Hash;
+        }
+        finally
+        {
+            this.memory.EndUse();
+        }
     }
 
     /// <summary>

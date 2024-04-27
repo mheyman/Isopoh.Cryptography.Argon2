@@ -42,14 +42,14 @@
     <None Include="wwwroot\web.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Uno.Extensions.Logging.WebAssembly.Console" Version="1.7.0" />
-    <PackageReference Include="Uno.UI.WebAssembly" Version="5.0.64" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="5.0.64" Condition="'$(Configuration)'=='Debug'" />
-    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="5.0.64" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="8.0.4" />
-    <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="8.0.4" />
+    <PackageReference Include="Uno.UI.WebAssembly" Version="5.2.95" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="5.2.95" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="5.2.95" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="8.0.14" />
+    <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="8.0.14" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />

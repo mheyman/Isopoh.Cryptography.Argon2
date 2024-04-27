@@ -122,7 +122,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2__ctor_Isopoh_Cryptography_Argon2_Argon2Config_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.%23ctor(Isopoh.Cryptography.Argon2.Argon2Config)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L27">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L26">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2__ctor_" data-uid="Isopoh.Cryptography.Argon2.Argon2.#ctor*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2__ctor_Isopoh_Cryptography_Argon2_Argon2Config_" data-uid="Isopoh.Cryptography.Argon2.Argon2.#ctor(Isopoh.Cryptography.Argon2.Argon2Config)">Argon2(Argon2Config)</h4>
@@ -147,6 +147,40 @@
         <td><a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Config.html">Argon2Config</a></td>
         <td><span class="parametername">config</span></td>
         <td><p>The configuration to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2__ctor_Isopoh_Cryptography_Argon2_Argon2Memory_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.%23ctor(Isopoh.Cryptography.Argon2.Argon2Memory)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L43">View Source</a>
+  </span>
+  <a id="Isopoh_Cryptography_Argon2_Argon2__ctor_" data-uid="Isopoh.Cryptography.Argon2.Argon2.#ctor*"></a>
+  <h4 id="Isopoh_Cryptography_Argon2_Argon2__ctor_Isopoh_Cryptography_Argon2_Argon2Memory_" data-uid="Isopoh.Cryptography.Argon2.Argon2.#ctor(Isopoh.Cryptography.Argon2.Argon2Memory)">Argon2(Argon2Memory)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Isopoh.Cryptography.Argon2.Argon2.html">Argon2</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Argon2(Argon2Memory memory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Memory.html">Argon2Memory</a></td>
+        <td><span class="parametername">memory</span></td>
+        <td><p>The memory (and <a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Config.html">Argon2Config</a>) to use for the hash.</p>
 </td>
       </tr>
     </tbody>
@@ -221,7 +255,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Constants.cs/#L32">View Source</a>
   </span>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_PrehashSeedLength" data-uid="Isopoh.Cryptography.Argon2.Argon2.PrehashSeedLength">PrehashSeedLength</h4>
-  <div class="markdown level1 summary"><p>Bytes required in the buffer passed into the <span class="xref">Isopoh.Cryptography.Argon2.Argon2.FillFirstBlocks(System.Span{System.Byte})</span> method.</p>
+  <div class="markdown level1 summary"><p>Bytes required in the buffer passed into the <span class="xref">Isopoh.Cryptography.Argon2.Argon2.FillFirstBlocks(System.Span{System.Byte},System.Memory{System.Byte})</span> method.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -310,7 +344,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Are.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Are%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L428">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L461">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Are_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Are*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Are" data-uid="Isopoh.Cryptography.Argon2.Argon2.Are">Are</h4>
@@ -340,7 +374,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Buf.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Buf%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L426">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L459">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Buf_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Buf*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Buf" data-uid="Isopoh.Cryptography.Argon2.Argon2.Buf">Buf</h4>
@@ -370,7 +404,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Config.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Config%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L78">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L60">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Config_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Config*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Config" data-uid="Isopoh.Cryptography.Argon2.Argon2.Config">Config</h4>
@@ -401,7 +435,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_LaneBlockCount.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L104">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L86">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_LaneBlockCount_" data-uid="Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_LaneBlockCount" data-uid="Isopoh.Cryptography.Argon2.Argon2.LaneBlockCount">LaneBlockCount</h4>
@@ -432,7 +466,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Memory.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Memory%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L83">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L65">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Memory_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Memory*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Memory" data-uid="Isopoh.Cryptography.Argon2.Argon2.Memory">Memory</h4>
@@ -463,7 +497,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_MemoryBlockCount.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.MemoryBlockCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L88">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L70">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_MemoryBlockCount_" data-uid="Isopoh.Cryptography.Argon2.Argon2.MemoryBlockCount*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_MemoryBlockCount" data-uid="Isopoh.Cryptography.Argon2.Argon2.MemoryBlockCount">MemoryBlockCount</h4>
@@ -494,7 +528,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Position.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L424">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.InitFillFinal.cs/#L457">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Position_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Position*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Position" data-uid="Isopoh.Cryptography.Argon2.Argon2.Position">Position</h4>
@@ -524,7 +558,7 @@
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_SegmentBlockCount.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L99">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L81">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_SegmentBlockCount_" data-uid="Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_SegmentBlockCount" data-uid="Isopoh.Cryptography.Argon2.Argon2.SegmentBlockCount">SegmentBlockCount</h4>
@@ -563,7 +597,7 @@ requested boundary.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Dispose.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L141">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L113">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Dispose_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Dispose*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Dispose" data-uid="Isopoh.Cryptography.Argon2.Argon2.Dispose">Dispose()</h4>
@@ -576,19 +610,19 @@ requested boundary.</p>
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray%7BSystem.Byte%7D%2CIsopoh.Cryptography.SecureArray.SecureArray%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_System_ReadOnlySpan_System_Byte__System_ReadOnlySpan_System_Byte__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan%7BSystem.Byte%7D%2CSystem.ReadOnlySpan%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L568">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L586">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_" data-uid="Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals*"></a>
-  <h4 id="Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__" data-uid="Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray{System.Byte},Isopoh.Cryptography.SecureArray.SecureArray{System.Byte})">FixedTimeEquals(SecureArray&lt;Byte&gt;, SecureArray&lt;Byte&gt;)</h4>
+  <h4 id="Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_System_ReadOnlySpan_System_Byte__System_ReadOnlySpan_System_Byte__" data-uid="Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte})">FixedTimeEquals(ReadOnlySpan&lt;Byte&gt;, ReadOnlySpan&lt;Byte&gt;)</h4>
   <div class="markdown level1 summary"><p>Compare two SecureArrays without leaking timing information.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool FixedTimeEquals(SecureArray&lt;byte&gt; left, SecureArray&lt;byte&gt; right)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool FixedTimeEquals(ReadOnlySpan&lt;byte&gt; left, ReadOnlySpan&lt;byte&gt; right)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -601,13 +635,13 @@ requested boundary.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray</a>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">System.ReadOnlySpan</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
         <td><span class="parametername">left</span></td>
         <td><p>The first SecureArray to compare.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray</a>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">System.ReadOnlySpan</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
         <td><span class="parametername">right</span></td>
         <td><p>The second SecureArray to compare.</p>
 </td>
@@ -630,7 +664,7 @@ requested boundary.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__Isopoh_Cryptography_SecureArray_SecureArray_System_Byte___remarks">Remarks</h5>
+  <h5 id="Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_System_ReadOnlySpan_System_Byte__System_ReadOnlySpan_System_Byte___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Uses <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptographicoperations.fixedtimeequals">System.Security.Cryptography.CryptographicOperations.FixedTimeEquals()</a>
 when available; otherwise implements a similar algorithm.</p>
 </div>
@@ -639,7 +673,7 @@ when available; otherwise implements a similar algorithm.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L112">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L94">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash">Hash()</h4>
@@ -648,7 +682,7 @@ when available; otherwise implements a similar algorithm.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SecureArray&lt;byte&gt; Hash()</code></pre>
+    <pre><code class="lang-csharp hljs">public Span&lt;byte&gt; Hash()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -660,7 +694,7 @@ when available; otherwise implements a similar algorithm.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray</a>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">System.Span</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
         <td><p>The hash bytes.</p>
 </td>
       </tr>
@@ -671,7 +705,7 @@ when available; otherwise implements a similar algorithm.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_Isopoh_Cryptography_Argon2_Argon2Config_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Config)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L28">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L30">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_Isopoh_Cryptography_Argon2_Argon2Config_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Config)">Hash(Argon2Config)</h4>
@@ -718,10 +752,60 @@ when available; otherwise implements a similar algorithm.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_Isopoh_Cryptography_Argon2_Argon2Memory_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Memory)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L46">View Source</a>
+  </span>
+  <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
+  <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_Isopoh_Cryptography_Argon2_Argon2Memory_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Memory)">Hash(Argon2Memory)</h4>
+  <div class="markdown level1 summary"><p>Hash the given password to an Argon2 hash string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string Hash(Argon2Memory memory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Memory.html">Argon2Memory</a></td>
+        <td><span class="parametername">memory</span></td>
+        <td><p>The memory, including the <a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Config.html">Argon2Config</a> containing the password, to use to create the hash.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The Argon2 hash of the given password.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_System_Byte___System_Byte___System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(System.Byte%5B%5D%2CSystem.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CIsopoh.Cryptography.Argon2.Argon2Type%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L71">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L89">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_System_Byte___System_Byte___System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(System.Byte[],System.Byte[],System.Int32,System.Int32,System.Int32,Isopoh.Cryptography.Argon2.Argon2Type,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Hash(Byte[], Byte[], Int32, Int32, Int32, Argon2Type, Int32, SecureArrayCall)</h4>
@@ -814,60 +898,10 @@ significantly longer.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_System_Memory_System_UInt64__.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(System.Memory%7BSystem.UInt64%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.cs/#L125">View Source</a>
-  </span>
-  <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
-  <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_System_Memory_System_UInt64__" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(System.Memory{System.UInt64})">Hash(Memory&lt;UInt64&gt;)</h4>
-  <div class="markdown level1 summary"><p>Perform the hash.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SecureArray&lt;byte&gt; Hash(Memory&lt;ulong&gt; workingBuffer)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Memory</span>&lt;<span class="xref">System.UInt64</span>&gt;</td>
-        <td><span class="parametername">workingBuffer</span></td>
-        <td><p>Memory used during the hash operation. Must be at least <a class="xref" href="Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Config">Config</a> <a class="xref" href="Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_WorkingBufferLength">WorkingBufferLength</a> in length.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Isopoh.Cryptography.SecureArray.SecureArray-1.html">SecureArray</a>&lt;<span class="xref">System.Byte</span>&gt;</td>
-        <td><p>The hash bytes.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_System_String_System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CIsopoh.Cryptography.Argon2.Argon2Type%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L214">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L233">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_System_String_System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(System.String,System.Int32,System.Int32,System.Int32,Isopoh.Cryptography.Argon2.Argon2Type,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Hash(String, Int32, Int32, Int32, Argon2Type, Int32, SecureArrayCall)</h4>
@@ -957,7 +991,7 @@ significantly longer.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Hash_System_String_System_String_System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Hash(System.String%2CSystem.String%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CIsopoh.Cryptography.Argon2.Argon2Type%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L138">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L157">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Hash_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Hash_System_String_System_String_System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Hash(System.String,System.String,System.Int32,System.Int32,System.Int32,Isopoh.Cryptography.Argon2.Argon2Type,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Hash(String, String, Int32, Int32, Int32, Argon2Type, Int32, SecureArrayCall)</h4>
@@ -1054,7 +1088,7 @@ significantly longer.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_Isopoh_Cryptography_Argon2_Argon2Config_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CIsopoh.Cryptography.Argon2.Argon2Config)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L238">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L257">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_Isopoh_Cryptography_Argon2_Argon2Config_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,Isopoh.Cryptography.Argon2.Argon2Config)">Verify(String, Argon2Config)</h4>
@@ -1110,7 +1144,7 @@ significantly longer.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.Byte%5B%5D%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L353">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L371">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, Byte[], SecureArrayCall)</h4>
@@ -1172,7 +1206,7 @@ significantly longer.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Byte___Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.Byte%5B%5D%2CSystem.Byte%5B%5D%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L279">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L297">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Byte___Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Byte[],Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, Byte[], Byte[], SecureArrayCall)</h4>
@@ -1240,7 +1274,7 @@ significantly longer.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.Byte%5B%5D%2CSystem.Byte%5B%5D%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L318">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L336">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, Byte[], Byte[], Int32, SecureArrayCall)</h4>
@@ -1316,7 +1350,7 @@ cause even more parallelism.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.Byte%5B%5D%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L383">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L401">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_Byte___System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.Byte[],System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, Byte[], Int32, SecureArrayCall)</h4>
@@ -1386,7 +1420,7 @@ cause even more parallelism.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.String%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L517">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L535">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, String, SecureArrayCall)</h4>
@@ -1448,7 +1482,7 @@ cause even more parallelism.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.String%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L547">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L565">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, String, Int32, SecureArrayCall)</h4>
@@ -1518,7 +1552,7 @@ cause even more parallelism.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.String%2CSystem.String%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L411">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L429">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_String_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.String,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, String, String, SecureArrayCall)</h4>
@@ -1587,7 +1621,7 @@ May be null for no secret. <code>string.Empty</code> is treated as null.</p>
     <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/new/reusable_memory/apiSpec/new?filename=Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_.md&amp;value=---%0Auid%3A%20Isopoh.Cryptography.Argon2.Argon2.Verify(System.String%2CSystem.String%2CSystem.String%2CSystem.Int32%2CIsopoh.Cryptography.SecureArray.SecureArrayCall)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L467">View Source</a>
+    <a href="https://github.com/mheyman/Isopoh.Cryptography.Argon2/blob/reusable_memory/lib/Isopoh.Cryptography.Argon2/Argon2.Helpers.cs/#L485">View Source</a>
   </span>
   <a id="Isopoh_Cryptography_Argon2_Argon2_Verify_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify*"></a>
   <h4 id="Isopoh_Cryptography_Argon2_Argon2_Verify_System_String_System_String_System_String_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_" data-uid="Isopoh.Cryptography.Argon2.Argon2.Verify(System.String,System.String,System.String,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)">Verify(String, String, String, Int32, SecureArrayCall)</h4>

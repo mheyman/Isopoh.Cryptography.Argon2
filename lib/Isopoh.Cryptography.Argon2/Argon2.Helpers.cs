@@ -37,6 +37,22 @@ public sealed partial class Argon2
     /// <summary>
     /// Hash the given password to an Argon2 hash string.
     /// </summary>
+    /// <param name="memory">
+    /// The memory, including the <see cref="Argon2Config"/> containing the password, to use to create the hash.
+    /// </param>
+    /// <returns>
+    /// The Argon2 hash of the given password.
+    /// </returns>
+    public static string Hash(Argon2Memory memory)
+    {
+        using var argon2 = new Argon2(memory);
+        Span<byte> hash = argon2.Hash();
+        return argon2.Config.EncodeString(hash);
+    }
+
+    /// <summary>
+    /// Hash the given password to an Argon2 hash string.
+    /// </summary>
     /// <param name="password">
     /// The password to hash. Gets UTF-8 encoded before hashing.
     /// </param>
@@ -99,6 +115,7 @@ public sealed partial class Argon2
                 SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
             });
     }
+
 
     /// <summary>
     /// Hash the given password to an Argon2 hash string.
