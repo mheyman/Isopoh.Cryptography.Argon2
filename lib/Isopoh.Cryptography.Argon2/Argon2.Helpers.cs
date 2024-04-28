@@ -4,10 +4,9 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-using System;
-
 namespace Isopoh.Cryptography.Argon2;
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -31,7 +30,7 @@ public sealed partial class Argon2
     {
         using var argon2 = new Argon2(configToHash);
         Span<byte> hash = argon2.Hash();
-        return argon2.Config.EncodeString(hash);
+        return argon2.memory.EncodeString(hash);
     }
 
     /// <summary>
@@ -47,7 +46,7 @@ public sealed partial class Argon2
     {
         using var argon2 = new Argon2(memory);
         Span<byte> hash = argon2.Hash();
-        return argon2.Config.EncodeString(hash);
+        return argon2.memory.EncodeString(hash);
     }
 
     /// <summary>
@@ -115,7 +114,6 @@ public sealed partial class Argon2
                 SecureArrayCall = secureArrayCall ?? SecureArray.DefaultCall,
             });
     }
-
 
     /// <summary>
     /// Hash the given password to an Argon2 hash string.

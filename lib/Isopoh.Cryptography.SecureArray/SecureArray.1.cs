@@ -41,7 +41,7 @@ using System;
 /// </remarks>
 public sealed class SecureArray<T> : SecureArray, IDisposable
 {
-    private T[] buffer;
+    private readonly T[] buffer;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SecureArray{T}"/> class.

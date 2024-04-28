@@ -74,7 +74,6 @@ public sealed partial class Argon2
     /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
     private static void FillBlock(ReadOnlyBlockValues prevBlock, ReadOnlyBlockValues refBlock, BlockValues nextBlock, Span<ulong> buf)
     {
-        // TODO: figure out and lift the code from Blake2BCore-FullyUnrolled.cs
         if (buf.Length != QwordsInBlock * 2)
         {
             throw new ArgumentException($"Expected length of {QwordsInBlock}, got {buf.Length}");

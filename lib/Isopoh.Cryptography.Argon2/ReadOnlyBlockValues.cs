@@ -63,12 +63,6 @@ public readonly ref struct ReadOnlyBlockValues
     public ReadOnlySpan<ulong> ReadOnlySpan => this;
 
     /// <summary>
-    /// Defines an implicit conversion of a <see cref="ReadOnlyBlockValues"/> to a <see cref="ReadOnlySpan{T}"/>.
-    /// </summary>
-    /// <param name="blockValues">The value to convert.</param>
-    public static implicit operator ReadOnlySpan<ulong>(ReadOnlyBlockValues blockValues) => blockValues.span;
-
-    /// <summary>
     /// Gets or sets the ulong element at the specified index.
     /// </summary>
     /// <param name="i">
@@ -78,4 +72,10 @@ public readonly ref struct ReadOnlyBlockValues
     /// The requested ulong element.
     /// </returns>
     public ulong this[int i] => this.span[i];
+
+    /// <summary>
+    /// Defines an implicit conversion of a <see cref="ReadOnlyBlockValues"/> to a <see cref="ReadOnlySpan{T}"/>.
+    /// </summary>
+    /// <param name="blockValues">The value to convert.</param>
+    public static implicit operator ReadOnlySpan<ulong>(ReadOnlyBlockValues blockValues) => blockValues.span;
 }

@@ -57,7 +57,6 @@ public readonly ref struct TempBlockValues
         this.span = span;
     }
 
-
     /// <summary>
     /// Gets or sets the ulong element at the specified index.
     /// </summary>

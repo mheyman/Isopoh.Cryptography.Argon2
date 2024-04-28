@@ -42,7 +42,7 @@ public sealed partial class Argon2 : IDisposable
     /// <param name="memory">The memory (and <see cref="Argon2Config"/>) to use for the hash.</param>
     public Argon2(Argon2Memory memory)
     {
-        if (memory?.Config == null)
+        if (memory == null)
         {
             throw new ArgumentNullException(
                 nameof(memory),
@@ -51,13 +51,7 @@ public sealed partial class Argon2 : IDisposable
 
         this.memory = memory;
         this.memoryIsOwned = false;
-        this.memory.Reset(this.Config);
     }
-
-    /// <summary>
-    /// Gets the <see cref="Argon2Config"/> for this hash.
-    /// </summary>
-    public Argon2Config Config => this.memory.Config;
 
     /// <summary>
     /// Gets the <see cref="MemoryBlockCount"/> blocks.

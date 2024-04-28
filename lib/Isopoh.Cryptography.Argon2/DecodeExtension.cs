@@ -57,7 +57,7 @@ public static class DecodeExtension
     public static bool DecodeString(
         this Argon2Config config,
         string str,
-        out SecureArray<byte> hash)
+        out SecureArray<byte>? hash)
     {
         if (config == null)
         {
@@ -531,7 +531,7 @@ public static class DecodeExtension
         int i = pos;
 
         val = 0;
-        for (; ; ++i)
+        while (true)
         {
             uint c = str[i];
             if (c is < '0' or > '9')
@@ -554,6 +554,7 @@ public static class DecodeExtension
             }
 
             val += c;
+            ++i;
         }
 
         // ReSharper disable once InvertIf

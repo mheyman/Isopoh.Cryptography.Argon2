@@ -59,52 +59,52 @@ public sealed partial class Argon2
                 },
                 workingBuffer.Slice(4));
         var value = workingBuffer.Span.Slice(0, 4);
-        Store32(value, this.Config!.Lanes);
+        Store32(value, this.memory.Lanes);
         blakeHash.Update(value);
-        Store32(value, this.Config.HashLength);
+        Store32(value, this.memory.HashLength);
         blakeHash.Update(value);
-        Store32(value, this.Config.MemoryCost);
+        Store32(value, this.memory.MemoryCost);
         blakeHash.Update(value);
-        Store32(value, this.Config.TimeCost);
+        Store32(value, this.memory.TimeCost);
         blakeHash.Update(value);
-        Store32(value, (uint)this.Config.Version);
+        Store32(value, (uint)this.memory.Version);
         blakeHash.Update(value);
-        Store32(value, (uint)this.Config.Type);
+        Store32(value, (uint)this.memory.Type);
         blakeHash.Update(value);
-        Store32(value, this.Config.Password?.Length ?? 0);
+        Store32(value, this.memory.Password?.Length ?? 0);
         blakeHash.Update(value);
-        if (this.Config.Password != null)
+        if (this.memory.Password != null)
         {
-            blakeHash.Update(this.Config.Password);
-            if (this.Config.ClearPassword)
+            blakeHash.Update(this.memory.Password);
+            if (this.memory.ClearPassword)
             {
-                SecureArray.Zero(this.Config.Password);
+                SecureArray.Zero(this.memory.Password);
             }
         }
 
-        Store32(value, this.Config.Salt?.Length ?? 0);
+        Store32(value, this.memory.Salt?.Length ?? 0);
         blakeHash.Update(value);
-        if (this.Config.Salt != null)
+        if (this.memory.Salt != null)
         {
-            blakeHash.Update(this.Config.Salt);
+            blakeHash.Update(this.memory.Salt);
         }
 
-        Store32(value, this.Config.Secret?.Length ?? 0);
+        Store32(value, this.memory.Secret?.Length ?? 0);
         blakeHash.Update(value);
-        if (this.Config.Secret != null)
+        if (this.memory.Secret != null)
         {
-            blakeHash.Update(this.Config.Secret);
-            if (this.Config.ClearSecret)
+            blakeHash.Update(this.memory.Secret);
+            if (this.memory.ClearSecret)
             {
-                SecureArray.Zero(this.Config.Secret);
+                SecureArray.Zero(this.memory.Secret);
             }
         }
 
-        Store32(value, this.Config.AssociatedData?.Length ?? 0);
+        Store32(value, this.memory.AssociatedData?.Length ?? 0);
         blakeHash.Update(value);
-        if (this.Config.AssociatedData != null)
+        if (this.memory.AssociatedData != null)
         {
-            blakeHash.Update(this.Config.AssociatedData);
+            blakeHash.Update(this.memory.AssociatedData);
         }
 
         blakeHash.Finish();
@@ -127,7 +127,7 @@ public sealed partial class Argon2
         var blockHashBytes = workingBuffer.Span.Slice(0, BlockSize);
         var blake2BWorkingBuffer = workingBuffer.Slice(BlockSize);
 
-        for (var l = 0; l < this.Config.Lanes; ++l)
+        for (var l = 0; l < this.memory.Lanes; ++l)
         {
             Store32(initialHash, PrehashDigestLength, 0);
             Store32(initialHash, PrehashDigestLength + 4, l);
@@ -151,8 +151,8 @@ public sealed partial class Argon2
     /// <exception cref="ArgumentException">If buf is improperly sized.</exception>
     private void FillMemoryBlocks(Memory<ulong> buf)
     {
-        int parallelCount = this.Config.Threads > this.Config.Lanes ? this.Config.Lanes : this.Config.Threads;
-        int threadWorkingBufferSize = (QwordsInBlock * (this.Config.Type == Argon2Type.DataDependentAddressing ? 2 : 6)) + this.SegmentBlockCount;
+        int parallelCount = this.memory.Threads > this.memory.Lanes ? this.memory.Lanes : this.memory.Threads;
+        int threadWorkingBufferSize = (QwordsInBlock * (this.memory.Type == Argon2Type.DataDependentAddressing ? 2 : 6)) + this.SegmentBlockCount;
         if (buf.Length != threadWorkingBufferSize * parallelCount)
         {
             throw new ArgumentException(
@@ -172,13 +172,13 @@ public sealed partial class Argon2
                 .Select(i => buf.Slice(i * threadWorkingBufferSize, threadWorkingBufferSize))
                 .ToArray();
 
-            for (var passNumber = 0; passNumber < this.Config.TimeCost; ++passNumber)
+            for (var passNumber = 0; passNumber < this.memory.TimeCost; ++passNumber)
             {
                 for (var sliceNumber = 0; sliceNumber < SyncPointCount; ++sliceNumber)
                 {
                     var laneNumber = 0;
-                    int remaining = this.Config.Lanes;
-                    for (; laneNumber < waitHandles.Length && laneNumber < this.Config.Lanes; ++laneNumber)
+                    int remaining = this.memory.Lanes;
+                    for (; laneNumber < waitHandles.Length && laneNumber < this.memory.Lanes; ++laneNumber)
                     {
                         ThreadPool.QueueUserWorkItem(
                             fs =>
@@ -193,7 +193,7 @@ public sealed partial class Argon2
                             new FillState(new Position { Pass = passNumber, Lane = laneNumber, Slice = sliceNumber, Index = 0 }, workingBuffers[laneNumber], (AutoResetEvent)waitHandles[laneNumber]));
                     }
 
-                    while (laneNumber < this.Config.Lanes)
+                    while (laneNumber < this.memory.Lanes)
                     {
                         int i = WaitHandle.WaitAny(waitHandles);
                         --remaining;
@@ -223,11 +223,11 @@ public sealed partial class Argon2
         }
         else
         {
-            for (var passNumber = 0; passNumber < this.Config.TimeCost; ++passNumber)
+            for (var passNumber = 0; passNumber < this.memory.TimeCost; ++passNumber)
             {
                 for (var sliceNumber = 0; sliceNumber < SyncPointCount; ++sliceNumber)
                 {
-                    for (var laneNumber = 0; laneNumber < this.Config.Lanes; ++laneNumber)
+                    for (var laneNumber = 0; laneNumber < this.memory.Lanes; ++laneNumber)
                     {
                         this.FillSegment(
                             new Position
@@ -261,7 +261,7 @@ public sealed partial class Argon2
         blockHash.Copy(this.Memory[this.LaneBlockCount - 1]);
 
         // XOR last blocks
-        for (var l = 1; l < this.Config.Lanes; ++l)
+        for (var l = 1; l < this.memory.Lanes; ++l)
         {
             blockHash.Xor(this.Memory[(l * this.LaneBlockCount) + (this.LaneBlockCount - 1)]);
         }
@@ -283,15 +283,15 @@ public sealed partial class Argon2
     /// <exception cref="ArgumentException">If <paramref name="buf"/> is improperly sized.</exception>
     private void FillSegment(Position position, Span<ulong> buf)
     {
-        int pseudoRandsOffset = (this.Config.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * QwordsInBlock;
+        int pseudoRandsOffset = (this.memory.Type == Argon2Type.DataDependentAddressing ? 2 : 6) * QwordsInBlock;
         int expectedBufLen = pseudoRandsOffset + this.SegmentBlockCount;
         if (buf.Length != expectedBufLen)
         {
             throw new ArgumentException($"Expected length of {expectedBufLen}, got {buf.Length}.", nameof(buf));
         }
 
-        bool dataIndependentAddressing = this.Config.Type == Argon2Type.DataIndependentAddressing ||
-            (this.Config.Type == Argon2Type.HybridAddressing && position is { Pass: 0, Slice: < SyncPointCount / 2 });
+        bool dataIndependentAddressing = this.memory.Type == Argon2Type.DataIndependentAddressing ||
+            (this.memory.Type == Argon2Type.HybridAddressing && position is { Pass: 0, Slice: < SyncPointCount / 2 });
         Span<ulong> pseudoRands = buf.Slice(pseudoRandsOffset, this.SegmentBlockCount);
         if (dataIndependentAddressing)
         {
@@ -318,7 +318,7 @@ public sealed partial class Argon2
             int refLane =
                 position is { Pass: 0, Slice: 0 }
                     ? position.Lane
-                    : (int)((uint)(pseudoRand >> 32) % (uint)this.Config.Lanes);
+                    : (int)((uint)(pseudoRand >> 32) % (uint)this.memory.Lanes);
 
             // compute possible number of reference blocks in lane
             position.Index = i;
@@ -326,7 +326,7 @@ public sealed partial class Argon2
 
             BlockValues refBlock = this.Memory[(this.LaneBlockCount * refLane) + refIndex];
             BlockValues curBlock = this.Memory[curOffset];
-            if (this.Config.Version == Argon2Version.Sixteen)
+            if (this.memory.Version == Argon2Version.Sixteen)
             {
                 // version 1.2.1 and earlier: overwrite, not XOR
                 FillBlock(this.Memory[prevOffset], refBlock, curBlock, fillBuf);
@@ -424,8 +424,8 @@ public sealed partial class Argon2
         inputBlock[1] = (ulong)position.Lane;
         inputBlock[2] = (ulong)position.Slice;
         inputBlock[3] = (ulong)this.MemoryBlockCount;
-        inputBlock[4] = (ulong)this.Config.TimeCost;
-        inputBlock[5] = (ulong)this.Config.Type;
+        inputBlock[4] = (ulong)this.memory.TimeCost;
+        inputBlock[5] = (ulong)this.memory.Type;
         for (var i = 0; i < this.SegmentBlockCount; ++i)
         {
             if (i % QwordsInBlock == 0)

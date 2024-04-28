@@ -35,5 +35,4 @@ public sealed partial class Argon2
     /// Number of synchronization points between lanes per pass.
     /// </summary>
     public const int SyncPointCount = 4;
-
 }
