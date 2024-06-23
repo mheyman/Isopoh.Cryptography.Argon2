@@ -1,4 +1,10 @@
-﻿namespace Isopoh.Cryptography.Argon2;
+﻿// <copyright file="Argon2Password.cs" company="Isopoh">
+// To the extent possible under law, the author(s) have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// </copyright>
+
+namespace Isopoh.Cryptography.Argon2;
 
 using System;
 

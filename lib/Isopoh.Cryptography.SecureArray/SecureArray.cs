@@ -287,7 +287,6 @@ public class SecureArray
         }
     }
 
-
     /// <summary>
     /// Zero <paramref name="buf"/> and release resources.
     /// </summary>

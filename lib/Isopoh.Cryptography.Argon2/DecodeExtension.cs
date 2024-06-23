@@ -43,7 +43,7 @@ public static class DecodeExtension
     private const string DependentHashTag = "d";
     private const string Version19 = "19";
 
-    private static readonly Regex Argon2Regex = new (Argon2Match, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace);
+    private static readonly Regex Argon2Regex = new(Argon2Match, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace);
 
     /// <summary>
     /// Finds the buffer lengths required given an Argon2 hash string.
@@ -84,9 +84,6 @@ public static class DecodeExtension
     /// <param name="hash">
     /// The string to decode.
     /// </param>
-    /// <returns>
-    /// True on success; false otherwise.
-    /// </returns>
     /// <remarks>
     /// <para>
     /// Expected format:
@@ -163,9 +160,12 @@ public static class DecodeExtension
             Version = optionalVersionGroup == null || optionalVersionGroup.Value == Version19
                 ? Argon2Version.Nineteen
                 : Argon2Version.Sixteen,
-            Type = typeGroup.Value == IndependentHashTag ? Argon2Type.DataIndependentAddressing :
-                typeGroup.Value == DependentHashTag ? Argon2Type.DataIndependentAddressing :
-                Argon2Type.HybridAddressing,
+            Type = typeGroup.Value switch
+            {
+                IndependentHashTag => Argon2Type.DataIndependentAddressing,
+                DependentHashTag => Argon2Type.DataIndependentAddressing,
+                _ => Argon2Type.HybridAddressing,
+            },
             HashLength = match.Groups["digest"].Success ? Base64Length(match.Groups["hash"].Value.ToCharArray()) : 0,
             Salt = saltBytes,
             AssociatedData = associatedDataBytes,
@@ -173,7 +173,7 @@ public static class DecodeExtension
             TimeCost = int.Parse(match.Groups["time"].Value),
             MemoryCost = int.Parse(match.Groups["memory"].Value),
             Lanes = parallelism,
-            Threads = parallelism
+            Threads = parallelism,
         };
 
         memory.Reset(config);

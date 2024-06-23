@@ -7,12 +7,11 @@
 // Tests because unit tests seem to be hard to get running.
 // </summary>
 
-using System.Linq;
-
 namespace TestApp;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestLib;
 using Xunit.Abstractions;
 

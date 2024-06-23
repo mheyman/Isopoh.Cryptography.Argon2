@@ -85,7 +85,7 @@ public sealed class Argon2Config : ICloneable
 
     /// <summary>
     /// Gets or sets the associated data used in the password hash. This should
-    /// be from zero to 32 bytes long if it is there at all
+    /// be from zero to 32 bytes long if it is there at all.
     /// </summary>
     public byte[]? AssociatedData { get; set; }
 
