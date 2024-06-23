@@ -88,6 +88,8 @@ then add the `ProjectReference` lines to your .csproj to reference
 Using the defaults:
 
 ```csharp
+using Isopoh.Cryptography.Argon2;
+
 var password = "password1";
 var passwordHash = Argon2.Hash(password);
 if (Argon2.Verify(passwordHash, password))
@@ -99,14 +101,18 @@ if (Argon2.Verify(passwordHash, password))
 Setting everything:
 
 ```csharp
-var password = "password1";
-byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
+
+byte[] passwordBytes = "password1"u8.ToArray();
+byte[] secret = { 0x6b, 0xc0, 0x19, 0x4c, 0x11, 0x46, 0x35, 0x69, 0x89, 0xd6, 0x50, 0x19, 0x56, 0xac, 0x69, 0x0e };
 byte[] salt = new byte[16];
+byte[] associatedData = "My Associated Data"u8.ToArray();
 
 // somewhere in the class definition:
 //   private static readonly RandomNumberGenerator Rng =
 //       System.Security.Cryptography.RandomNumberGenerator.Create();
-Rng.GetBytes(salt);
+new Random().NextBytes(salt);
 
 var config = new Argon2Config
 {
@@ -120,11 +126,11 @@ var config = new Argon2Config
     Salt = salt, // >= 8 bytes if not null
     Secret = secret, // from somewhere
     AssociatedData = associatedData, // from somewhere
-    HashLength = 20 // >= 4
+    HashLength = 20, // >= 4
 };
 var argon2A = new Argon2(config);
 string hashString;
-using(SecureArray<byte> hashA = argon2A.Hash())
+using (SecureArray<byte> hashA = argon2A.Hash())
 {
     hashString = config.EncodeString(hashA.Buffer);
 }
@@ -133,22 +139,20 @@ using(SecureArray<byte> hashA = argon2A.Hash())
 // Now pretend "passwordBytes" is what just came in and that it must be
 // verified against the known "hashString".
 //
-// Note setting "Threads" to different values doesn't effect the result,
+// Note setting "Threads" to different values doesn't affect the result,
 // just the time it takes to get the result.
 //
 var configOfPasswordToVerify = new Argon2Config { Password = passwordBytes, Threads = 1 };
-SecureArray<byte> hashB = null;
+SecureArray<byte>? hashB = null;
 try
 {
     if (configOfPasswordToVerify.DecodeString(hashString, out hashB) && hashB != null)
     {
         var argon2ToVerify = new Argon2(configOfPasswordToVerify);
-        using(var hashToVerify = argon2ToVerify.Hash())
+        using SecureArray<byte>? hashToVerify = argon2ToVerify.Hash();
+        if (Argon2.FixedTimeEquals(hashB, hashToVerify))
         {
-            if (Argon2.FixedTimeEquals(hashB, hashToVerify))
-            {
-                // verified
-            }
+            // verified
         }
     }
 }
@@ -164,7 +168,6 @@ if (Argon2.Verify(hashString, passwordBytes, 5))
 {
     // verified
 }
-
 ```
 
 ## API
