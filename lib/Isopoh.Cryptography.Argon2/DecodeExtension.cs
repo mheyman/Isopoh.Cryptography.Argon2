@@ -3,15 +3,12 @@
 // and related and neighboring rights to this software to the public domain
 // worldwide. This software is distributed without any warranty.
 // </copyright>
-
-using System.Text.RegularExpressions;
-
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Isopoh.Cryptography.SecureArray;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 /// <summary>
 /// Extension to decode Argon2 hash strings.
@@ -25,25 +22,36 @@ public static class DecodeExtension
     ///
     /// No validation of length of keyid (0-8 bytes or 0-11 characters), data
     /// (0-32 bytes or 0-43 characters), salt (0-48 bytes or 11-64 characters -
-    /// note this is shorter than allowed by the Argon2 algorithm but is as
-    /// limited by the string specification), hash (12-64 bytes or 16-86
-    /// characters - note Argon2 can actually output any length).
+    /// note this is shorter than allowed by the Argon2 algorithm but is
+    /// limited by the phc-sf-spec string specification), hash (12-64 bytes or
+    /// 16-86 characters - note Argon2 can actually output any length).
     /// </summary>
-    private static string Argon2Match =
+    private const string Argon2Match =
         @"^
             \$argon2(?<type>i|d|id)
-            (?<version>\$v=\d+)?
+            (?:\$v=(?<version>16|19))?
             \$m=(?<memory>\d+)
             ,t=(?<time>\d+)
             ,p=(?<parallel>\d+)
             (?:,keyid=(?<keyid>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)))?
             (?:,data=(?<data>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)))?
             (?:\$(?<salt>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)?)
-                (?:\$(?<digest>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)?))?)?
+                 (?:\$(?<digest>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)?))?)?
         $";
 
-    private static Regex Argon2Regex = new Regex(Argon2Match, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace);
+    private const string IndependentHashTag = "i";
+    private const string DependentHashTag = "d";
+    private const string Version19 = "19";
 
+    private static readonly Regex Argon2Regex = new (Argon2Match, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace);
+
+    /// <summary>
+    /// Finds the buffer lengths required given an Argon2 hash string.
+    /// </summary>
+    /// <param name="str">The Argon2 hash string.</param>
+    /// <returns>A tuple of required buffer lengths for: key id, associated data, salt, and hash.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is null.</exception>
+    /// <exception cref="ArgumentException"><paramref name="str"/> cannot be parsed.</exception>
     public static (
         int KeyIdLength,
         int AssociatedDataLength,
@@ -58,15 +66,56 @@ public static class DecodeExtension
         var match = Argon2Regex.Match(str);
         if (!match.Success)
         {
-            throw new ArgumentException($"Invalid Argon2 hash string. Should be of format $argon2(i|d|id)[$v=<num>]$m=<num>,t=<num>,p=<num>[,keyid=<b64>][,data=<b64>][$<b64>[$<b64>]] - the last two optional values are salt and hash.");
+            throw new ArgumentException("Invalid Argon2 hash string. Should be of format $argon2(i|d|id)[$v=(16|19)]$m=<num>,t=<num>,p=<num>[,keyid=<b64>][,data=<b64>][$<b64>[$<b64>]] - the last two optional values are salt and hash.");
         }
 
-        return (match.Groups["keyid"].Success ? Base64Length(match.Groups["keyid"].ValueSpan) : 0,
-            match.Groups["data"].Success ? Base64Length(match.Groups["data"].ValueSpan) : 0,
-            match.Groups["salt"].Success ? Base64Length(match.Groups["salt"].ValueSpan) : 0,
-            match.Groups["hash"].Success ? Base64Length(match.Groups["hash"].ValueSpan) : 0);
+        return (match.Groups["keyid"].Success ? Base64Length(match.Groups["keyid"].Value.ToCharArray()) : 0,
+            match.Groups["data"].Success ? Base64Length(match.Groups["data"].Value.ToCharArray()) : 0,
+            match.Groups["salt"].Success ? Base64Length(match.Groups["salt"].Value.ToCharArray()) : 0,
+            match.Groups["digest"].Success ? Base64Length(match.Groups["hash"].Value.ToCharArray()) : 0);
     }
 
+    /// <summary>
+    /// Decodes an Argon2 hash string into an Argon2 class instance.
+    /// </summary>
+    /// <param name="memory">
+    /// The <see cref="Argon2Memory"/>> to populate with the data found in <paramref name="hash"/>.
+    /// </param>
+    /// <param name="hash">
+    /// The string to decode.
+    /// </param>
+    /// <returns>
+    /// True on success; false otherwise.
+    /// </returns>
+    /// <remarks>
+    /// <para>
+    /// Expected format:
+    /// </para>
+    /// <para>
+    /// $argon2&lt;T>[$v=&lt;(16|19)>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
+    /// </para>
+    /// <para>
+    /// where &lt;T> is either 'd', 'i', or 'id'. &lt;num> is a decimal integer
+    /// (positive, fits in an 'unsigned long'), and &lt;bin> is Base64-encoded
+    /// data (no '=' padding characters, no newline or whitespace). The 'keyid'
+    /// is a binary identifier for a key (recommended up to 8 bytes); 'data' is
+    /// associated data (recommended up to 32 bytes). When the 'keyid' is
+    /// empty, then it is omitted from the output. Same for 'data'.
+    /// </para>
+    /// <para>
+    /// The last two binary chunks (encoded in Base64) are, in that order, the
+    /// salt and the output. Both are optional, but you cannot have an output
+    /// without a salt. The binary salt length is recommended to be between 8
+    /// and 48 bytes. The output length recommended to always be exactly 32
+    /// bytes.
+    /// </para>
+    /// <para>
+    /// Lengths for keyid, data, salt, and output are recommended as per the
+    /// pfc-sf-spec, in actuality, Argon2 allows any lengths for those values
+    /// although verifiers that verify against the pfc-sf-spec will fail
+    /// out-of-specification lengths.
+    /// </para>
+    /// </remarks>
     public static void DecodeString(this Argon2Memory memory, string hash)
     {
         if (hash == null)
@@ -80,19 +129,55 @@ public static class DecodeExtension
             throw new ArgumentException($"Invalid Argon2 hash string. Should be of format $argon2(i|d|id)[$v=<num>]$m=<num>,t=<num>,p=<num>[,keyid=<b64>][,data=<b64>][$<b64>[$<b64>]] - the last two optional values are salt and hash.");
         }
 
-        var typeGroup = match.Groups["type"];
+        var typeGroup = match.Groups["type"]!;
         var optionalVersionGroup = match.Groups["version"];
-        var memoryGroup = match.Groups["memory"];
-        var timeGroup = match.Groups["time"];
-        var parallelGroup = match.Groups["parallel"];
-        var optionalKeyIdGroup = match.Groups["keyid"];
-        var optionalAdditionalDataGroup = match.Groups["data"];
-        var optionalSaltGroup = match.Groups["salt"];
-        var optionalHashGroup = match.Groups["hash"];
-        if (typeGroup.ValueSpan == ['i'])
+        var (keyIdLength, associatedDataLength, saltLength, hashLength) = hash.Argon2RequiredBufferLengths();
+        var keyIdBytes = new byte[keyIdLength];
+        if (match.Groups["keyid"].Success)
         {
+            FromBase64(keyIdBytes, match.Groups["keyid"].Value, 0);
         }
 
+        var associatedDataBytes = new byte[associatedDataLength];
+        if (match.Groups["data"].Success)
+        {
+            FromBase64(associatedDataBytes, match.Groups["data"].Value, 0);
+        }
+
+        var saltBytes = new byte[saltLength];
+        if (match.Groups["salt"].Success)
+        {
+            FromBase64(saltBytes, match.Groups["salt"].Value, 0);
+        }
+
+        var hashBytes = new byte[hashLength];
+        if (match.Groups["digest"].Success)
+        {
+            FromBase64(hashBytes, match.Groups["digest"].Value, 0);
+        }
+
+        var parallelism = int.Parse(match.Groups["parallel"].Value);
+
+        var config = new Argon2Config
+        {
+            Version = optionalVersionGroup == null || optionalVersionGroup.Value == Version19
+                ? Argon2Version.Nineteen
+                : Argon2Version.Sixteen,
+            Type = typeGroup.Value == IndependentHashTag ? Argon2Type.DataIndependentAddressing :
+                typeGroup.Value == DependentHashTag ? Argon2Type.DataIndependentAddressing :
+                Argon2Type.HybridAddressing,
+            HashLength = match.Groups["digest"].Success ? Base64Length(match.Groups["hash"].Value.ToCharArray()) : 0,
+            Salt = saltBytes,
+            AssociatedData = associatedDataBytes,
+            KeyIdentifier = keyIdBytes,
+            TimeCost = int.Parse(match.Groups["time"].Value),
+            MemoryCost = int.Parse(match.Groups["memory"].Value),
+            Lanes = parallelism,
+            Threads = parallelism
+        };
+
+        memory.Reset(config);
+        hashBytes.AsSpan().CopyTo(memory.Hash);
     }
 
     /// <summary>
@@ -117,21 +202,28 @@ public static class DecodeExtension
     /// Expected format:
     /// </para>
     /// <para>
-    /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
+    /// $argon2&lt;T>[$v=&lt;(16|19)>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
     /// </para>
     /// <para>
-    /// where &lt;T> is either 'd' or 'i', &lt;num> is a decimal integer (positive, fits in
-    /// an 'unsigned long'), and &lt;bin> is Base64-encoded data (no '=' padding
-    /// characters, no newline or whitespace).
-    /// The "keyid" is a binary identifier for a key (up to 8 bytes);
-    /// "data" is associated data (up to 32 bytes). When the 'keyid'
-    /// (resp. the 'data') is empty, then it is omitted from the output.
+    /// where &lt;T> is either 'd', 'i', or 'id'. &lt;num> is a decimal integer
+    /// (positive, fits in an 'unsigned long'), and &lt;bin> is Base64-encoded
+    /// data (no '=' padding characters, no newline or whitespace). The 'keyid'
+    /// is a binary identifier for a key (recommended up to 8 bytes); 'data' is
+    /// associated data (recommended up to 32 bytes). When the 'keyid' is
+    /// empty, then it is omitted from the output. Same for 'data'.
     /// </para>
     /// <para>
-    /// The last two binary chunks (encoded in Base64) are, in that order,
-    /// the salt and the output. Both are optional, but you cannot have an
-    /// output without a salt. The binary salt length is between 8 and 48 bytes.
-    /// The output length is always exactly 32 bytes.
+    /// The last two binary chunks (encoded in Base64) are, in that order, the
+    /// salt and the output. Both are optional, but you cannot have an output
+    /// without a salt. The binary salt length is recommended to be between 8
+    /// and 48 bytes. The output length recommended to always be exactly 32
+    /// bytes.
+    /// </para>
+    /// <para>
+    /// Lengths for keyid, data, salt, and output are recommended as per the
+    /// pfc-sf-spec, in actuality, Argon2 allows any lengths for those values
+    /// although verifiers that verify against the pfc-sf-spec will fail
+    /// out-of-specification lengths.
     /// </para>
     /// </remarks>
     public static bool DecodeString(
@@ -499,7 +591,6 @@ public static class DecodeExtension
     /// Decode Base64 chars into bytes.
     /// </summary>
     /// <param name="src">to decode.</param>
-    /// <param name="pos">where to start decoding from.</param>
     /// <returns>
     /// The length of the buffer needed to hold the decoded value.
     /// </returns>
@@ -557,7 +648,6 @@ public static class DecodeExtension
 
         return ret;
     }
-
 
     /// <summary>
     /// Decode Base64 chars into bytes.

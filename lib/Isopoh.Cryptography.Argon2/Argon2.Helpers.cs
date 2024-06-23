@@ -164,7 +164,7 @@ public sealed partial class Argon2
     {
         if (password == null)
         {
-            throw new System.ArgumentNullException(nameof(password));
+            throw new ArgumentNullException(nameof(password));
         }
 
         SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)
@@ -280,8 +280,8 @@ public sealed partial class Argon2
     /// <param name="encoded">
     /// The Argon2 hash string. This has the actual hash along with other parameters used in the hash.
     /// </param>
-    /// <param name="configToVerify">
-    /// The configuration that contains the values used to created <paramref name="encoded"/>.
+    /// <param name="memoryToVerify">
+    /// The memory that will be used to limit allocations.
     /// </param>
     /// <returns>
     /// True on success; false otherwise.
@@ -290,26 +290,11 @@ public sealed partial class Argon2
         string encoded,
         Argon2Memory memoryToVerify)
     {
-        SecureArray<byte>? hash = null;
-        try
-        {
-            var (keyIdLength, associatedDataLength, saltLength, hashLength) = encoded.Argon2RequiredBufferLengths();
-
-            if (!memoryToVerify.DecodeString(encoded, out hash) || hash == null)
-            {
-                return false;
-            }
-
-            using var hasherToVerify = new Argon2(memoryToVerify);
-            Span<byte> hashToVerify = hasherToVerify.Hash();
-            return FixedTimeEquals(hash.Buffer, hashToVerify);
-        }
-        finally
-        {
-            hash?.Dispose();
-        }
+        memoryToVerify.Reset(encoded, Argon2Password.Keep);
+        using var hasherToVerify = new Argon2(memoryToVerify);
+        Span<byte> hashToVerify = hasherToVerify.Hash();
+        return FixedTimeEquals(hashToVerify, hashToVerify);
     }
-
 
     /// <summary>
     /// Verify the given Argon2 hash as being that of the given password.
@@ -469,7 +454,7 @@ public sealed partial class Argon2
     {
         if (password == null)
         {
-            throw new System.ArgumentNullException(nameof(password));
+            throw new ArgumentNullException(nameof(password));
         }
 
         SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)
@@ -526,7 +511,7 @@ public sealed partial class Argon2
     {
         if (password == null)
         {
-            throw new System.ArgumentNullException(nameof(password));
+            throw new ArgumentNullException(nameof(password));
         }
 
         SecureArray<byte>? secretBuf = string.IsNullOrEmpty(secret)

@@ -44,6 +44,24 @@ public ref struct Argon2Password
     }
 
     /// <summary>
+    /// Gets a <see cref="Argon2ExistingPasswordResetPolicy.Keep"/> <see cref="Argon2Password"/>.
+    /// </summary>
+    /// <remarks>
+    /// The same as <c>new Argon2Password(Argon2ExistingPasswordResetPolicy.Keep)</c>.
+    /// </remarks>
+    public static Argon2Password Keep => new(Argon2ExistingPasswordResetPolicy.Keep);
+
+    /// <summary>
+    /// Gets the password policy. Only relevant if <see cref="Password"/> is empty.
+    /// </summary>
+    public Argon2ExistingPasswordResetPolicy Policy { get; private set; }
+
+    /// <summary>
+    /// Gets the password.
+    /// </summary>
+    public Span<byte> Password { get; private set; }
+
+    /// <summary>
     /// Cast an <see cref="Argon2Password"/> to an <see cref="Argon2ExistingPasswordResetPolicy"/>.
     /// </summary>
     /// <param name="password">The password to get the policy for. Note only relevant if the <see cref="Password"/> is empty.</param>
@@ -66,14 +84,4 @@ public ref struct Argon2Password
     /// </summary>
     /// <param name="password">The password to cast.</param>
     public static explicit operator Argon2Password(Span<byte> password) => new Argon2Password(password);
-
-    /// <summary>
-    /// Gets the password policy. Only relevant if <see cref="Password"/> is empty.
-    /// </summary>
-    public Argon2ExistingPasswordResetPolicy Policy { get; private set; }
-
-    /// <summary>
-    /// Gets the password.
-    /// </summary>
-    public Span<byte> Password { get; private set; }
 }

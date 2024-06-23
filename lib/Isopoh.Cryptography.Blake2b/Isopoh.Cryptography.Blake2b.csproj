@@ -14,7 +14,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2022</Copyright>
+        <Copyright>Michael Heyman 2024</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
         <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
@@ -45,7 +45,7 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="9.24.0.89429">
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="9.27.0.93347">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
