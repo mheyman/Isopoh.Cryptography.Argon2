@@ -73,46 +73,52 @@ public sealed class Argon2Memory
 
     private Memory<ulong> fillMemoryBlocksWorkingBuffer;
 
-    private SecureArray<byte>? hashSecureArray;
+    private SecureArray<byte>? configSecureArray;
 
-    private Memory<byte> hashMemory;
+    private Memory<byte> configWorkingBuffer;
 
-    private int hashLength;
+    private int configAssociatedDataOffset;
+    private int configAssociatedDataLength;
+    private int configKeyIdentifierOffset;
+    private int configKeyIdentifierLength;
+    private int configHashOffset;
+    private int configHashLength;
+    private int configPasswordOffset;
+    private int configPasswordLength;
+    private int configSaltOffset;
+    private int configSaltLength;
+    private int configSecretOffset;
+    private int configSecretLength;
+    
     private Argon2MemoryPolicy shrinkMemoryPolicy;
-    private Argon2Config config;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Argon2Memory"/> class.
     /// </summary>
     /// <param name="config">The initial configuration to use. Can be updated later with a call to <see cref="Reset"/>.</param>
     /// <param name="shrinkMemoryPolicy">
-    /// Indicates whether to shrink memory to fit upon calling <see cref="Reset"/> with an <see cref="Argon2Config"/>
-    /// that requires less memory. Note: the memory will always grow as needed.</param>
+    /// Indicates whether to shrink memory to fit upon calling <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>
+    /// with an <see cref="Argon2Config"/> that requires less memory. Note: the memory will always grow as needed.
+    /// </param>
     /// <param name="lockMemory">The lock memory policy to use. Null to not secure memory at all.</param>
     public Argon2Memory(Argon2Config config, Argon2MemoryPolicy shrinkMemoryPolicy, LockMemoryPolicy? lockMemory)
     {
-        this.config = (Argon2Config)config.Clone();
-        this.secureArrayCall = this.config.SecureArrayCall;
-        this.FillMemoryBlocksWorkingBufferLength = this.config.WorkingBufferLength;
+        this.secureArrayCall = config.SecureArrayCall;
+        this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
         if (lockMemory.HasValue)
         {
             this.workingSecureArray = SecureArray<ulong>.Create(
                 this.FillMemoryBlocksWorkingBufferLength,
-                this.config.SecureArrayCall,
+                config.SecureArrayCall,
                 lockMemory.Value);
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
             this.argon2SecureArray = SecureArray<byte>.Create(Argon2WorkingBufferSize, this.secureArrayCall, lockMemory.Value);
-            this.hashSecureArray = SecureArray<byte>.Create(this.config.HashLength, this.secureArrayCall, lockMemory.Value);
-            this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
-            this.hashLength = this.config.HashLength;
             this.Argon2WorkingBuffer = new Memory<byte>(this.argon2SecureArray.Buffer);
         }
         else
         {
             this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(new ulong[this.FillMemoryBlocksWorkingBufferLength]);
             this.Argon2WorkingBuffer = new Memory<byte>(new byte[Argon2WorkingBufferSize]);
-            this.hashMemory = new Memory<byte>(new byte[this.config.HashLength]);
-            this.hashLength = this.config.HashLength;
         }
 
         this.ShrinkMemoryPolicy = shrinkMemoryPolicy;
@@ -121,7 +127,24 @@ public sealed class Argon2Memory
         this.SegmentBlockCount = 0;
         this.LaneBlockCount = 0;
         this.Blocks = new Blocks(Array.Empty<Memory<ulong>>());
-        this.ResetNoConfigClone();
+        this.ClearPassword = config.ClearPassword;
+        this.ClearSecret = config.ClearSecret;
+        this.HashLength = config.HashLength;
+        this.Lanes = config.Lanes;
+        this.MemoryCost = config.MemoryCost;
+        this.Threads = config.Threads;
+        this.TimeCost = config.TimeCost;
+        this.Type = config.Type;
+        this.Version = config.Version;
+        (this.configSecureArray, this.configWorkingBuffer,
+         this.configAssociatedDataOffset, this.configAssociatedDataLength,
+         this.configKeyIdentifierOffset, this.configHashOffset,
+         this.configHashLength, this.configKeyIdentifierLength,
+         this.configPasswordOffset, this.configPasswordLength,
+         this.configSaltOffset, this.configSaltLength,
+         this.configSecretOffset, this.configSecretLength) =
+            CopyConfig(config, this.configSecureArray, this.configWorkingBuffer, this.secureArrayCall, this.LockMemory, this.shrinkMemoryPolicy);
+        this.ResetNonConfigBuffers(config);
     }
 
     /// <summary>
@@ -155,7 +178,7 @@ public sealed class Argon2Memory
     /// Gets the count of ulong values in the <see cref="FillMemoryBlocksWorkingBuffer"/>.
     /// </summary>
     /// <remarks>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public int FillMemoryBlocksWorkingBufferLength { get; private set; }
 
@@ -165,7 +188,7 @@ public sealed class Argon2Memory
     /// <remarks>
     /// This gets used and overwritten on every hash.
     /// <para/>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public Memory<ulong> FillMemoryBlocksWorkingBuffer => this.fillMemoryBlocksWorkingBuffer.Slice(0, this.FillMemoryBlocksWorkingBufferLength);
 
@@ -183,15 +206,15 @@ public sealed class Argon2Memory
     /// <remarks>
     /// This gets used and overwritten on every hash.
     /// <para/>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
-    public Span<byte> Hash => this.hashMemory.Span.Slice(0, this.hashLength);
+    public Span<byte> Hash => this.configWorkingBuffer.Span.Slice(this.configHashOffset, this.configHashLength);
 
     /// <summary>
     /// Gets the memory block count for the latest <see cref="Argon2Config"/> that this <see cref="Argon2Memory"/> supports.
     /// </summary>
     /// <remarks>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public int BlockCount { get; private set; }
 
@@ -205,7 +228,7 @@ public sealed class Argon2Memory
     /// requested boundary.
     /// </summary>
     /// <remarks>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to  <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public int SegmentBlockCount { get; private set; }
 
@@ -213,7 +236,7 @@ public sealed class Argon2Memory
     /// Gets the number of memory blocks per lane. <see cref="SegmentBlockCount"/> * <see cref="Argon2.SyncPointCount"/>.
     /// </summary>
     /// <remarks>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public int LaneBlockCount { get; private set; }
 
@@ -223,9 +246,36 @@ public sealed class Argon2Memory
     /// <remarks>
     /// This gets used and overwritten on every hash.
     /// <para/>
-    /// Can change on every call to <see cref="Reset"/>.
+    /// Can change on every call to <see cref="Reset(string)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
     public Blocks Blocks { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether to clear the password as
+    /// soon as it is no longer needed.
+    /// </summary>
+    /// <remarks>
+    /// If true and the configuration has a password, the configuration
+    /// cannot be used more than once without resetting the password
+    /// (unless you want an all zero password).
+    /// </remarks>
+    public bool ClearPassword { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether to clear the secret as
+    /// soon as it is no longer needed.
+    /// </summary>
+    /// <remarks>
+    /// If true and the configuration has a secret, the configuration
+    /// cannot be used more than once without resetting the secret
+    /// (unless you want an all zero secret).
+    /// </remarks>
+    public bool ClearSecret { get; private set; }
+
+    /// <summary>
+    /// Gets the hash length to output. Minimum of 4. Default 32.
+    /// </summary>
+    public int HashLength { get; private set; }
 
     /// <summary>
     /// Gets the lanes used in the password hash. Minimum of 1. Defaults to 4.
@@ -236,12 +286,7 @@ public sealed class Argon2Memory
     /// to a value greater than one when there is more than one lane will allow the
     /// use of multiple cores to speed up hashing.
     /// </remarks>
-    public int Lanes => this.config.Lanes;
-
-    /// <summary>
-    /// Gets the hash length to output. Minimum of 4. Default 32.
-    /// </summary>
-    public int HashLength => this.config.HashLength;
+    public int Lanes { get; private set; }
 
     /// <summary>
     /// Gets the memory cost used in the password hash. Minimum of 1. Defaults to 65536.
@@ -261,72 +306,7 @@ public sealed class Argon2Memory
     /// cref="Argon2.SyncPointCount"/>*<see cref="Lanes"/>.
     /// </para>
     /// </remarks>
-    public int MemoryCost => this.config.MemoryCost;
-
-    /// <summary>
-    /// Gets the time cost used in the password hash. Minimum of 1. Defaults to 3.
-    /// </summary>
-    /// <remarks>
-    /// This is the number of iterations to perform. There are attacks on the
-    /// <see cref="Argon2Version"/>.<see cref="Argon2Version.Sixteen"/> with less than
-    /// three iterations (if I'm reading the paper correctly). So, use a value
-    /// greater than 3 here if you are not using <see cref="Argon2Version"/>.<see
-    /// cref="Argon2Version.Nineteen"/>.
-    /// </remarks>
-    public int TimeCost => this.config.TimeCost;
-
-    /// <summary>
-    /// Gets the Argon2 version used in the password hash. Defaults to
-    /// <see cref="Argon2Version"/>.<see cref="Argon2Version.Nineteen"/> (0x13).
-    /// </summary>
-    public Argon2Version Version => this.config.Version;
-
-    /// <summary>
-    /// Gets the Argon2 type. Default to hybrid.
-    /// </summary>
-    public Argon2Type Type => this.config.Type;
-
-    /// <summary>
-    /// Gets the password to hash.
-    /// </summary>
-    public byte[]? Password => this.config.Password;
-
-    /// <summary>
-    /// Gets a value indicating whether to clear the password as
-    /// soon as it is no longer needed.
-    /// </summary>
-    /// <remarks>
-    /// If true and the configuration has a password, the configuration
-    /// cannot be used more than once without resetting the password
-    /// (unless you want an all zero password).
-    /// </remarks>
-    public bool ClearPassword => this.config.ClearPassword;
-
-    /// <summary>
-    /// Gets the salt used in the password hash. If non-null, must be at least 8 bytes.
-    /// </summary>
-    public byte[]? Salt => this.config.Salt;
-
-    /// <summary>
-    /// Gets the secret used in the password hash.
-    /// </summary>
-    public byte[]? Secret => this.config.Secret;
-
-    /// <summary>
-    /// Gets a value indicating whether to clear the secret as
-    /// soon as it is no longer needed.
-    /// </summary>
-    /// <remarks>
-    /// If true and the configuration has a secret, the configuration
-    /// cannot be used more than once without resetting the secret
-    /// (unless you want an all zero secret).
-    /// </remarks>
-    public bool ClearSecret => this.config.ClearSecret;
-
-    /// <summary>
-    /// Gets the associated data used in the password hash.
-    /// </summary>
-    public byte[]? AssociatedData => this.config.AssociatedData;
+    public int MemoryCost { get; private set; }
 
     /// <summary>
     /// Gets the threads used in the password hash. Minimum of 1. Defaults to 1.
@@ -343,7 +323,56 @@ public sealed class Argon2Memory
     /// in more than <see cref="Lanes"/> threads running.
     /// </para>
     /// </remarks>
-    public int Threads => this.config.Threads;
+    public int Threads { get; private set; }
+
+    /// <summary>
+    /// Gets the time cost used in the password hash. Minimum of 1. Defaults to 3.
+    /// </summary>
+    /// <remarks>
+    /// This is the number of iterations to perform. There are attacks on the
+    /// <see cref="Argon2Version"/>.<see cref="Argon2Version.Sixteen"/> with less than
+    /// three iterations (if I'm reading the paper correctly). So, use a value
+    /// greater than 3 here if you are not using <see cref="Argon2Version"/>.<see
+    /// cref="Argon2Version.Nineteen"/>.
+    /// </remarks>
+    public int TimeCost { get; private set; }
+
+    /// <summary>
+    /// Gets the Argon2 type. Default to hybrid.
+    /// </summary>
+    public Argon2Type Type { get; private set; }
+
+    /// <summary>
+    /// Gets the Argon2 version used in the password hash. Defaults to
+    /// <see cref="Argon2Version"/>.<see cref="Argon2Version.Nineteen"/> (0x13).
+    /// </summary>
+    public Argon2Version Version { get; private set; }
+
+    /// <summary>
+    /// Gets the associated data used in the password hash.
+    /// </summary>
+    public Span<byte> AssociatedData => this.configWorkingBuffer.Span.Slice(this.configAssociatedDataOffset, this.configAssociatedDataLength);
+
+    /// <summary>
+    /// Gets the key identifier used in the password hash.
+    /// </summary>
+    public Span<byte> KeyIdentifier => this.configWorkingBuffer.Span.Slice(this.configKeyIdentifierOffset, this.configKeyIdentifierLength);
+
+    /// <summary>
+    /// Gets the password to hash.
+    /// </summary>
+    public Span<byte> Password =>
+        this.configWorkingBuffer.Span.Slice(this.configPasswordOffset, this.configPasswordLength);
+
+    /// <summary>
+    /// Gets the salt used in the password hash. If non-null, must be at least 8 bytes.
+    /// </summary>
+    public Span<byte> Salt => this.configWorkingBuffer.Span.Slice(this.configSaltOffset, this.configSaltLength);
+
+    /// <summary>
+    /// Gets the secret used in the password hash.
+    /// </summary>
+    public Span<byte> Secret => this.configWorkingBuffer.Span.Slice(this.configSecretOffset, this.configSecretLength);
 
     /// <summary>
     /// Gets the required block count for the given <see cref="Argon2Config"/>.
@@ -372,60 +401,76 @@ public sealed class Argon2Memory
     }
 
     /// <summary>
-    /// Encodes an Argon2 instance into a string.
-    /// </summary>
-    /// <param name="hash">
-    /// The hash to put in the encoded string. May be null.
-    /// </param>
-    /// <returns>
-    /// The encoded Argon2 instance.
-    /// </returns>
-    /// <remarks>
-    /// <para>
-    /// Resulting format:
-    /// </para>
-    /// <para>
-    /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
-    /// </para>
-    /// <para>
-    /// where &lt;T> is either 'd' or 'i', &lt;num> is a decimal integer (positive, fits in
-    /// an 'unsigned long'), and &lt;bin> is Base64-encoded data (no '=' padding
-    /// characters, no newline or whitespace).
-    /// The "keyid" is a binary identifier for a key (up to 8 bytes);
-    /// "data" is associated data (up to 32 bytes). When the 'keyid'
-    /// (resp. the 'data') is empty, then it is omitted from the output.
-    /// </para>
-    /// <para>
-    /// The last two binary chunks (encoded in Base64) are, in that order,
-    /// the salt and the output. Both are optional, but you cannot have an
-    /// output without a salt. The binary salt length is between 8 and 48 bytes.
-    /// The output length is always exactly 32 bytes.
-    /// </para>
-    /// </remarks>
-    public string EncodeString(Span<byte> hash)
-    {
-        return this.config.EncodeString(hash);
-    }
-
-    /// <summary>
     /// Reset this <see cref="Argon2Memory"/> to what the given <see cref="Argon2Config"/> requires.
     /// </summary>
-    /// <param name="resetConfig">
+    /// <param name="config">
     /// The configuration used to determine memory required.
     /// </param>
     /// <exception cref="OutOfMemoryException">
     /// If the memory could not be allocated. Usually because of operating system
     /// enforced limits on securing the allocated arrays.
     /// </exception>
-    public void Reset(Argon2Config resetConfig)
+    public void Reset(Argon2Config config)
     {
         if (this.InUse)
         {
             throw new InvalidOperationException("Attempt to reset Argon2Memory currently in use.");
         }
 
-        this.config = (Argon2Config)resetConfig.Clone();
-        this.ResetNoConfigClone();
+        this.ClearPassword = config.ClearPassword;
+        this.ClearSecret = config.ClearSecret;
+        this.HashLength = config.HashLength;
+        this.Lanes = config.Lanes;
+        this.MemoryCost = config.MemoryCost;
+        this.Threads = config.Threads;
+        this.TimeCost = config.TimeCost;
+        this.Type = config.Type;
+        this.Version = config.Version;
+        (this.configSecureArray, this.configWorkingBuffer, this.configAssociatedDataOffset,
+                this.configHashOffset, this.configHashLength,
+                this.configKeyIdentifierOffset, this.configKeyIdentifierLength,
+                this.configAssociatedDataLength, this.configPasswordOffset, this.configPasswordLength,
+                this.configSaltOffset, this.configSaltLength, this.configSecretOffset, this.configSecretLength) =
+            CopyConfig(config, this.configSecureArray, this.configWorkingBuffer, this.secureArrayCall, this.LockMemory, this.shrinkMemoryPolicy);
+        this.ResetNonConfigBuffers(config);
+    }
+
+    public void Reset(string hash, Argon2Password password)
+    {
+        var (keyIdLength, associatedDataLength, saltLength, hashLength) = hash.Argon2RequiredBufferLengths();
+        bool newPassword = password.Password.Length > 0;
+        bool keepPassword = !newPassword && password.Policy == Argon2ExistingPasswordResetPolicy.Keep;
+        var configLength = associatedDataLength + keyIdLength + hashLength + saltLength + (newPassword ? password.Password.Length : keepPassword ? this.configPasswordLength : 0);
+        if (keepPassword)
+        {
+            var myPassword = this.Password;
+            Resize(configLength);
+            myPassword.CopyTo(this.Password);
+        }
+        else
+        {
+            Resize(configLength);
+        }
+
+        void Resize(int i)
+        {
+            if (this.LockMemory.HasValue)
+            {
+                if (this.configSecureArray == null || this.configSecureArray.Buffer.Length < i || (this.configSecureArray.Buffer.Length > i && this.shrinkMemoryPolicy == Argon2MemoryPolicy.Shrink))
+                {
+                    this.configSecureArray = SecureArray<byte>.Create(i, this.secureArrayCall, this.LockMemory.Value);
+                }
+
+                this.configWorkingBuffer = new Memory<byte>(this.configSecureArray.Buffer);
+            }
+            else
+            {
+                if (this.configWorkingBuffer.Length < i || (this.configWorkingBuffer.Length > i && this.shrinkMemoryPolicy == Argon2MemoryPolicy.Shrink))
+                {
+                    this.configWorkingBuffer = new Memory<byte>(new byte[i]);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -452,7 +497,79 @@ public sealed class Argon2Memory
         this.InUse = false;
     }
 
-    private void ResetNoConfigClone()
+    private static int ConfigBufferSize(Argon2Config config)
+    {
+        return (config.AssociatedData?.Length ?? 0) + (config.Password?.Length ?? 0) +
+            (config.Salt?.Length ?? 0) + (config.Secret?.Length ?? 0);
+    }
+
+    private static (SecureArray<byte>? ConfigSecureArray, Memory<byte> ConfigWorkingBuffer, int
+        ConfigAssociatedDataOffset, int ConfigAssociatedDataLength, int ConfigHashOffset, int ConfigHashLength, int ConfigKeyIdentifierOffset, int ConfigKeyIdentifierLength, int ConfigPasswordOffset, int ConfigPasswordLength,
+        int ConfigSaltOffset, int ConfigSaltLength, int ConfigSecretOffset, int ConfigSecretLength) CopyConfig(
+            Argon2Config config,
+            SecureArray<byte>? configSecureArray,
+            Memory<byte> configWorkingBuffer,
+            SecureArrayCall? secureArrayCall,
+            LockMemoryPolicy? lockMemory,
+            Argon2MemoryPolicy memoryPolicy)
+    {
+        int configLength = 0;
+        (configLength, int configAssociatedDataOffset, int configAssociatedDataLength) = Offsets(configLength, config.AssociatedData, configWorkingBuffer);
+        (configLength, int configKeyIdentifierOffset, int configKeyIdentifierLength) = Offsets(configLength, config.KeyIdentifier, configWorkingBuffer);
+        int configHashOffset = configLength;
+        int configHashLength = config.HashLength;
+        configLength += configHashLength;
+        (configLength, int configPasswordOffset, int configPasswordLength) = Offsets(configLength, config.Password, configWorkingBuffer);
+        (configLength, int configSaltOffset, int configSaltLength) = Offsets(configLength, config.Salt, configWorkingBuffer);
+        (configLength, int configSecretOffset, int configSecretLength) = Offsets(configLength, config.Secret, configWorkingBuffer);
+        if (lockMemory.HasValue)
+        {
+            if (secureArrayCall == null)
+            {
+                throw new ArgumentException(
+                    "Must have non-null SecureArrayCall when allocating a SecureArray for configuration parameters.");
+            }
+
+            if (configSecureArray == null || configSecureArray.Buffer.Length < configLength || (configSecureArray.Buffer.Length > configLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
+            {
+                configSecureArray = SecureArray<byte>.Create(configLength, secureArrayCall, lockMemory.Value);
+            }
+
+            configWorkingBuffer = new Memory<byte>(configSecureArray.Buffer);
+        }
+        else
+        {
+            if (configSecureArray != null)
+            {
+                throw new ArgumentException(
+                    "Called with non-null config SecureArray when there is no LockMemory policy. This should not have happened.");
+            }
+
+            if (configWorkingBuffer.Length < configLength || (configWorkingBuffer.Length > configLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
+            {
+                configWorkingBuffer = new Memory<byte>(new byte[configLength]);
+            }
+        }
+
+        return (configSecureArray, configWorkingBuffer, configAssociatedDataOffset, configAssociatedDataLength,
+            configHashOffset, configHashLength,
+            configKeyIdentifierOffset, configKeyIdentifierLength,
+            configPasswordOffset, configPasswordLength, configSaltOffset, configSaltLength, configSecretOffset,
+            configSecretLength);
+
+        static (int, int, int) Offsets(int currentOffset, byte[]? buf, Memory<byte> workingBuffer)
+        {
+            if (buf != null)
+            {
+                buf.AsSpan().CopyTo(workingBuffer.Span.Slice(currentOffset, buf.Length));
+                return (currentOffset + buf.Length, currentOffset, buf.Length);
+            }
+
+            return (currentOffset, 0, 0);
+        }
+    }
+
+    private void ResetNonConfigBuffers(Argon2Config config)
     {
         // +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------
         // |Block|Block|Block|Block|Block|Block|Block|Block|Block|Block|Block
@@ -460,7 +577,7 @@ public sealed class Argon2Memory
         // +-----------------------------------+--------------------------------
         // | Memory (2GB)                      | Memory (2GB)
         // +-----------------------------------+--------------------------------
-        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCounts(this.config);
+        var (segmentBlockCount, laneBlockCount, requiredMemoryBlockCount) = RequiredBlockCounts(config);
         this.BlockCount = (int)requiredMemoryBlockCount;
         this.SegmentBlockCount = segmentBlockCount;
         this.LaneBlockCount = laneBlockCount;
@@ -479,31 +596,20 @@ public sealed class Argon2Memory
 
         if (this.LockMemory == null)
         {
-            this.ResetNoSecureArray(this.config, requiredMemoryBlockCount);
+            this.ResetNonConfigBuffersNoSecureArray(config, requiredMemoryBlockCount);
             return;
         }
 
         LockMemoryPolicy lockMemory = this.LockMemory.Value;
-        if (this.FillMemoryBlocksWorkingBufferLength != this.config.WorkingBufferLength)
+        if (this.FillMemoryBlocksWorkingBufferLength != config.WorkingBufferLength)
         {
-            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > this.config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < this.config.WorkingBufferLength)
+            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.FillMemoryBlocksWorkingBufferLength > config.WorkingBufferLength) || this.fillMemoryBlocksWorkingBuffer.Length < config.WorkingBufferLength)
             {
-                this.workingSecureArray = SecureArray<ulong>.Create(this.config.WorkingBufferLength, this.config.SecureArrayCall, lockMemory);
+                this.workingSecureArray = SecureArray<ulong>.Create(config.WorkingBufferLength, this.secureArrayCall, lockMemory);
                 this.fillMemoryBlocksWorkingBuffer = new Memory<ulong>(this.workingSecureArray.Buffer);
             }
 
-            this.FillMemoryBlocksWorkingBufferLength = this.config.WorkingBufferLength;
-        }
-
-        if (this.hashLength != this.config.HashLength)
-        {
-            if ((this.ShrinkMemoryPolicy == Argon2MemoryPolicy.Shrink && this.hashLength > this.config.HashLength) || this.hashMemory.Length < this.config.HashLength)
-            {
-                this.hashSecureArray = SecureArray<byte>.Create(this.config.HashLength, this.config.SecureArrayCall, lockMemory);
-                this.hashMemory = new Memory<byte>(this.hashSecureArray.Buffer);
-            }
-
-            this.hashLength = this.config.HashLength;
+            this.FillMemoryBlocksWorkingBufferLength = config.WorkingBufferLength;
         }
 
         var currentMemoryBlockCount = this.blockMemories.Aggregate(0UL, (sum, m) => sum + (ulong)(m.Length / Argon2.QwordsInBlock));
@@ -580,7 +686,7 @@ public sealed class Argon2Memory
             throw new OutOfMemoryException(
                 $"Failed to allocate {(requiredMemoryBlockCount > Argon2Memory.CsharpMaxBlocksPerArray ? Argon2Memory.CsharpMaxBlocksPerArray : requiredMemoryBlockCount) * Argon2.QwordsInBlock}-byte Argon2 block array, " +
                 $"{(memoryCount > 0 ? $" allocation {memoryCount + 1} of multiple-allocation," : string.Empty)}" +
-                $" memory cost {this.config.MemoryCost}, lane count {this.config.Lanes}.",
+                $" memory cost {config.MemoryCost}, lane count {config.Lanes}.",
                 e);
 #pragma warning restore S112
         }
@@ -594,7 +700,7 @@ public sealed class Argon2Memory
         }
     }
 
-    private void ResetNoSecureArray(Argon2Config resetConfig, ulong requiredMemoryBlockCount)
+    private void ResetNonConfigBuffersNoSecureArray(Argon2Config resetConfig, ulong requiredMemoryBlockCount)
     {
         if (this.FillMemoryBlocksWorkingBufferLength != resetConfig.WorkingBufferLength)
         {
@@ -702,6 +808,7 @@ public sealed class Argon2Memory
         this.hashSecureArray?.Dispose();
         this.blockSecureArrays.Clear();
         this.blockMemories.Clear();
+        this.configSecureArray?.Dispose();
         this.FillMemoryBlocksWorkingBufferLength = 0;
         this.BlockCount = 0;
         this.SegmentBlockCount = 0;

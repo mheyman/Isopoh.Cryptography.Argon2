@@ -49,17 +49,17 @@ public sealed partial class Argon2
                 + $"Parallelism: {hasher.memory.Lanes} lanes, Tag length: " + $"{hasher.memory.HashLength} bytes");
             string pwText = hasher.memory.ClearPassword
                 ? "CLEARED"
-                : BitConverter.ToString(hasher.memory.Password ?? Array.Empty<byte>()).ToLowerInvariant().Replace('-', ' ');
-            streamOut.WriteLine($"Password[{hasher.memory.Password?.Length ?? -1}]: {pwText} ");
+                : BitConverter.ToString(hasher.memory.Password.ToArray()).ToLowerInvariant().Replace('-', ' ');
+            streamOut.WriteLine($"Password[{hasher.memory.Password.Length}]: {pwText} ");
             streamOut.WriteLine(
-                $"Salt[{hasher.memory.Salt?.Length ?? 0}]: "
-                + $"{(hasher.memory.Salt == null ? string.Empty : BitConverter.ToString(hasher.memory.Salt).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Salt[{hasher.memory.Salt.Length}]: "
+                + $"{(hasher.memory.Salt == null ? string.Empty : BitConverter.ToString(hasher.memory.Salt.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
-                $"Secret[{hasher.memory.Secret?.Length ?? 0}]: "
-                + $"{(hasher.memory.Secret == null ? string.Empty : BitConverter.ToString(hasher.memory.Secret).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Secret[{hasher.memory.Secret.ToArray().Length}]: "
+                + $"{(hasher.memory.Secret == null ? string.Empty : BitConverter.ToString(hasher.memory.Secret.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
-                $"Associated data[{hasher.memory.AssociatedData?.Length ?? 0}]: "
-                + $"{(hasher.memory.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.memory.AssociatedData).ToLowerInvariant().Replace('-', ' '))} ");
+                $"Associated data[{hasher.memory.AssociatedData.Length}]: "
+                + $"{(hasher.memory.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.memory.AssociatedData.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
                 $"Pre-hashing digest: {BitConverter.ToString(buffer.ToArray(), 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
         }

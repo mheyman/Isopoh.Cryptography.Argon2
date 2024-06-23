@@ -4,17 +4,97 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+using System.Text.RegularExpressions;
+
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
 using System.Collections.Generic;
 using Isopoh.Cryptography.SecureArray;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 /// <summary>
 /// Extension to decode Argon2 hash strings.
 /// </summary>
 public static class DecodeExtension
 {
+    /// <summary>
+    /// Regular expression to match an Argon2 string. Note: this accepts the
+    /// '=' at the end of the B64 encoded values. These values are not supposed
+    /// to be there according to spec but some implementations include them.
+    ///
+    /// No validation of length of keyid (0-8 bytes or 0-11 characters), data
+    /// (0-32 bytes or 0-43 characters), salt (0-48 bytes or 11-64 characters -
+    /// note this is shorter than allowed by the Argon2 algorithm but is as
+    /// limited by the string specification), hash (12-64 bytes or 16-86
+    /// characters - note Argon2 can actually output any length).
+    /// </summary>
+    private static string Argon2Match =
+        @"^
+            \$argon2(?<type>i|d|id)
+            (?<version>\$v=\d+)?
+            \$m=(?<memory>\d+)
+            ,t=(?<time>\d+)
+            ,p=(?<parallel>\d+)
+            (?:,keyid=(?<keyid>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)))?
+            (?:,data=(?<data>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)))?
+            (?:\$(?<salt>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](?:==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)?)
+                (?:\$(?<digest>(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw](==)?|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=?)?))?)?
+        $";
+
+    private static Regex Argon2Regex = new Regex(Argon2Match, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace);
+
+    public static (
+        int KeyIdLength,
+        int AssociatedDataLength,
+        int SaltLength,
+        int HashLength) Argon2RequiredBufferLengths(this string str)
+    {
+        if (str == null)
+        {
+            throw new ArgumentNullException(nameof(str));
+        }
+
+        var match = Argon2Regex.Match(str);
+        if (!match.Success)
+        {
+            throw new ArgumentException($"Invalid Argon2 hash string. Should be of format $argon2(i|d|id)[$v=<num>]$m=<num>,t=<num>,p=<num>[,keyid=<b64>][,data=<b64>][$<b64>[$<b64>]] - the last two optional values are salt and hash.");
+        }
+
+        return (match.Groups["keyid"].Success ? Base64Length(match.Groups["keyid"].ValueSpan) : 0,
+            match.Groups["data"].Success ? Base64Length(match.Groups["data"].ValueSpan) : 0,
+            match.Groups["salt"].Success ? Base64Length(match.Groups["salt"].ValueSpan) : 0,
+            match.Groups["hash"].Success ? Base64Length(match.Groups["hash"].ValueSpan) : 0);
+    }
+
+    public static void DecodeString(this Argon2Memory memory, string hash)
+    {
+        if (hash == null)
+        {
+            throw new ArgumentNullException(nameof(hash));
+        }
+
+        var match = Argon2Regex.Match(hash);
+        if (!match.Success)
+        {
+            throw new ArgumentException($"Invalid Argon2 hash string. Should be of format $argon2(i|d|id)[$v=<num>]$m=<num>,t=<num>,p=<num>[,keyid=<b64>][,data=<b64>][$<b64>[$<b64>]] - the last two optional values are salt and hash.");
+        }
+
+        var typeGroup = match.Groups["type"];
+        var optionalVersionGroup = match.Groups["version"];
+        var memoryGroup = match.Groups["memory"];
+        var timeGroup = match.Groups["time"];
+        var parallelGroup = match.Groups["parallel"];
+        var optionalKeyIdGroup = match.Groups["keyid"];
+        var optionalAdditionalDataGroup = match.Groups["data"];
+        var optionalSaltGroup = match.Groups["salt"];
+        var optionalHashGroup = match.Groups["hash"];
+        if (typeGroup.ValueSpan == ['i'])
+        {
+        }
+
+    }
+
     /// <summary>
     /// Decodes an Argon2 hash string into an Argon2 class instance.
     /// </summary>
@@ -414,6 +494,70 @@ public static class DecodeExtension
 
         return i;
     }
+
+    /// <summary>
+    /// Decode Base64 chars into bytes.
+    /// </summary>
+    /// <param name="src">to decode.</param>
+    /// <param name="pos">where to start decoding from.</param>
+    /// <returns>
+    /// The length of the buffer needed to hold the decoded value.
+    /// </returns>
+    /// <remarks>
+    /// Decoding stops when a non-Base64 character is encountered. If an
+    /// error occurred then -1 is returned; otherwise, the returned index
+    /// points to the first non-Base64 character in the source stream.
+    /// </remarks>
+    private static int Base64Length(ReadOnlySpan<char> src)
+    {
+        var ret = 0;
+        int i = 0;
+        uint acc = 0;
+        uint accLen = 0;
+        while (true)
+        {
+            if (i == src.Length)
+            {
+                break;
+            }
+
+            uint d = Base64CharToByte(src[i]);
+            if (d == 0xFF)
+            {
+                // ReSharper disable once GrammarMistakeInComment
+                // scan past trailing '=' (could calculate expected number of '='s)
+                while (i < src.Length && src[i] == '=')
+                {
+                    ++i;
+                }
+
+                break;
+            }
+
+            ++i;
+            acc = (acc << 6) + d;
+            accLen += 6;
+
+            // ReSharper disable once InvertIf
+            if (accLen >= 8)
+            {
+                accLen -= 8;
+                ++ret;
+            }
+        }
+
+        // If the input length is equal to 1 modulo 4 (which is
+        // invalid), then there will remain 6 unprocessed bits;
+        // otherwise, only 0, 2 or 4 bits are buffered. The buffered
+        // bits must also all be zero.
+        if (accLen > 4 || (acc & ((1U << (int)accLen) - 1)) != 0)
+        {
+            return -1;
+        }
+
+        return ret;
+    }
+
 
     /// <summary>
     /// Decode Base64 chars into bytes.

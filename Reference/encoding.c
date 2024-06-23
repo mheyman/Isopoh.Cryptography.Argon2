@@ -314,6 +314,8 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
 
     size_t maxsaltlen = ctx->saltlen;
     size_t maxoutlen = ctx->outlen;
+    size_t maxkidlen = ctx->kidlen;
+    size_t maxadlen = ctx->adlen;
     int validation_result;
     const char* type_string;
 
@@ -337,6 +339,8 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     CC(",p=");
     DECIMAL_U32(ctx->lanes);
     ctx->threads = ctx->lanes;
+    CC_opt(",keyid=", BIN(ctx->kid, maxkidlen, ctx->kidlen));
+    CC_opt(",data=", BIN(ctx->ad, maxadlen, ctx->adlen));
 
     CC("$");
     BIN(ctx->salt, maxsaltlen, ctx->saltlen);
@@ -411,7 +415,6 @@ int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
       return validation_result;
     }
 
-
     SS("$");
     SS(type_string);
 
@@ -424,12 +427,27 @@ int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
     SX(ctx->t_cost);
     SS(",p=");
     SX(ctx->lanes);
+    if(ctx->kidlen)
+    {
+        SS(",kid=");
+        SB(ctx->kid, ctx->kidlen);
+    }
+    if (ctx->adlen)
+    {
+        SS(",data=");
+        SB(ctx->ad, ctx->adlen);
+    }
+    if (ctx->saltlen)
+    {
+        SS("$");
+        SB(ctx->salt, ctx->saltlen);
 
-    SS("$");
-    SB(ctx->salt, ctx->saltlen);
-
-    SS("$");
-    SB(ctx->out, ctx->outlen);
+        if (ctx->outlen)
+        {
+            SS("$");
+            SB(ctx->out, ctx->outlen);
+        }
+    }
     return ARGON2_OK;
 
 #undef SS

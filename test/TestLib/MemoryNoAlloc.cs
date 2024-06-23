@@ -51,7 +51,8 @@ public static class MemoryNoAlloc
         };
         const int maxIteration = 10;
         var memory = new Argon2Memory(config, Argon2MemoryPolicy.NoShrink, LockMemoryPolicy.BestEffort);
-        Argon2.Hash(memory);
+        var hash = Argon2.Hash(memory);
+        Argon2.Verify(hash, config);
         int firstLockCount = lockCount;
         for (var i = 0; i < maxIteration; i++)
         {

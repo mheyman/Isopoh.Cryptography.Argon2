@@ -71,7 +71,7 @@ public sealed partial class Argon2
         blakeHash.Update(value);
         Store32(value, (uint)this.memory.Type);
         blakeHash.Update(value);
-        Store32(value, this.memory.Password?.Length ?? 0);
+        Store32(value, this.memory.Password.Length);
         blakeHash.Update(value);
         if (this.memory.Password != null)
         {
@@ -82,14 +82,14 @@ public sealed partial class Argon2
             }
         }
 
-        Store32(value, this.memory.Salt?.Length ?? 0);
+        Store32(value, this.memory.Salt.Length);
         blakeHash.Update(value);
         if (this.memory.Salt != null)
         {
             blakeHash.Update(this.memory.Salt);
         }
 
-        Store32(value, this.memory.Secret?.Length ?? 0);
+        Store32(value, this.memory.Secret.Length);
         blakeHash.Update(value);
         if (this.memory.Secret != null)
         {
@@ -100,7 +100,7 @@ public sealed partial class Argon2
             }
         }
 
-        Store32(value, this.memory.AssociatedData?.Length ?? 0);
+        Store32(value, this.memory.AssociatedData.Length);
         blakeHash.Update(value);
         if (this.memory.AssociatedData != null)
         {

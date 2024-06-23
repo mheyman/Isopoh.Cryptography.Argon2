@@ -204,6 +204,9 @@ typedef struct Argon2_Context {
     uint8_t *ad;    /* associated data array */
     uint32_t adlen; /* associated data length */
 
+    uint8_t* kid;    /* key identifier array */
+    uint32_t kidlen; /* key identifier length */
+
     uint32_t t_cost;  /* number of passes */
     uint32_t m_cost;  /* amount of memory requested (KB) */
     uint32_t lanes;   /* number of lanes */
@@ -259,6 +262,8 @@ ARGON2_PUBLIC int argon2_ctx(argon2_context *context, argon2_type type);
  * @param secretlen Secret size in bytes
  * @param ad Pointer to additional data
  * @param adlen Additional data size in bytes
+ * @param kid Pointer to key identifier
+ * @param kidlen Key identifier size in bytes
  * @param hashlen Desired length of the hash in bytes
  * @param encoded Buffer where to write the encoded hash
  * @param encodedlen Size of the buffer (thus max size of the encoded hash)
@@ -270,8 +275,9 @@ ARGON2_PUBLIC int argon2i_hash_encoded(const uint32_t t_cost,
                                        const uint32_t parallelism,
                                        const void *pwd, const size_t pwdlen,
                                        const void *salt, const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen,
+                                       const size_t secretlen, void *ad,
+                                       const size_t adlen, void* kid,
+                                       const size_t kidlen,
                                        const size_t hashlen, char *encoded,
                                        const size_t encodedlen);
 
@@ -288,6 +294,8 @@ ARGON2_PUBLIC int argon2i_hash_encoded(const uint32_t t_cost,
  * @param secretlen Secret size in bytes
  * @param ad Pointer to additional data
  * @param adlen Additional data size in bytes
+ * @param kid Pointer to key identifier
+ * @param kidlen Key identifier size in bytes
  * @param hash Buffer where to write the raw hash - updated by the function
  * @param hashlen Desired length of the hash in bytes
  * @pre   Different parallelism levels will give different results
@@ -297,8 +305,9 @@ ARGON2_PUBLIC int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                                    const uint32_t parallelism, const void *pwd,
                                    const size_t pwdlen, const void *salt,
                                    const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen, void *hash,
+                                   const size_t secretlen, void *ad,
+                                   const size_t adlen, void* kid,
+                                   const size_t kidlen, void *hash,
                                    const size_t hashlen);
 
 ARGON2_PUBLIC int argon2d_hash_encoded(const uint32_t t_cost,
@@ -306,8 +315,9 @@ ARGON2_PUBLIC int argon2d_hash_encoded(const uint32_t t_cost,
                                        const uint32_t parallelism,
                                        const void *pwd, const size_t pwdlen,
                                        const void *salt, const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen,
+                                       const size_t secretlen, void *ad,
+                                       const size_t adlen, void* kid,
+                                       const size_t kidlen,
                                        const size_t hashlen, char *encoded,
                                        const size_t encodedlen);
 
@@ -315,8 +325,9 @@ ARGON2_PUBLIC int argon2d_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                                    const uint32_t parallelism, const void *pwd,
                                    const size_t pwdlen, const void *salt,
                                    const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen, void *hash,
+                                   const size_t secretlen, void *ad,
+                                   const size_t adlen, void* kid,
+                                   const size_t kidlen, void *hash,
                                    const size_t hashlen);
 
 ARGON2_PUBLIC int argon2id_hash_encoded(const uint32_t t_cost,
@@ -324,8 +335,9 @@ ARGON2_PUBLIC int argon2id_hash_encoded(const uint32_t t_cost,
                                         const uint32_t parallelism,
                                         const void *pwd, const size_t pwdlen,
                                         const void *salt, const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen,
+                                        const size_t secretlen, void *ad,
+                                        const size_t adlen, void* kid,
+                                        const size_t kidlen,
                                         const size_t hashlen, char *encoded,
                                         const size_t encodedlen);
 
@@ -334,8 +346,9 @@ ARGON2_PUBLIC int argon2id_hash_raw(const uint32_t t_cost,
                                     const uint32_t parallelism, const void *pwd,
                                     const size_t pwdlen, const void *salt,
                                     const size_t saltlen, void *secret,
-    const size_t secretlen, void *ad,
-    const size_t adlen, void *hash,
+                                    const size_t secretlen, void *ad,
+                                    const size_t adlen, void* kid,
+                                    const size_t kidlen, void *hash,
                                     const size_t hashlen);
 
 /* generic function underlying the above ones */
@@ -344,7 +357,8 @@ ARGON2_PUBLIC int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
                               const size_t pwdlen, const void *salt,
                               const size_t saltlen, void *secret,
                               const size_t secretlen, void *ad,
-                              const size_t adlen, void *hash,
+                              const size_t adlen, void* kid,
+                              const size_t kidlen, void *hash,
                               const size_t hashlen, char *encoded,
                               const size_t encodedlen, argon2_type type,
                               const uint32_t version);
@@ -443,13 +457,15 @@ ARGON2_PUBLIC const char *argon2_error_message(int error_code);
  * @param t_cost  Number of iterations
  * @param m_cost  Memory usage in kibibytes
  * @param parallelism  Number of threads; used to compute lanes
+ * @param adlen  Additional data size in bytes
+ * @param kidlen  Key identifier size in bytes
  * @param saltlen  Salt size in bytes
  * @param hashlen  Hash size in bytes
  * @param type The argon2_type that we want the encoded length for
  * @return  The encoded hash length in bytes
  */
 ARGON2_PUBLIC size_t argon2_encodedlen(uint32_t t_cost, uint32_t m_cost,
-                                       uint32_t parallelism, uint32_t saltlen,
+                                       uint32_t parallelism, uint32_t adlen, uint32_t kidlen, uint32_t saltlen,
                                        uint32_t hashlen, argon2_type type);
 
 #if defined(__cplusplus)

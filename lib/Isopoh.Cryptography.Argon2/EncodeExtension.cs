@@ -69,8 +69,141 @@ public static class EncodeExtension
             throw new ArgumentNullException(nameof(config));
         }
 
+        return EncodeString(
+            config.Type,
+            config.Version,
+            config.MemoryCost,
+            config.TimeCost,
+            config.Lanes,
+            config.KeyIdentifier == null ? Span<byte>.Empty : config.KeyIdentifier.AsSpan(),
+            config.AssociatedData == null ? Span<byte>.Empty : config.AssociatedData.AsSpan(),
+            config.Salt == null ? Span<byte>.Empty : config.Salt.AsSpan(),
+            hash);
+    }
+
+    /// <summary>
+    /// Encodes an Argon2 instance into a string.
+    /// </summary>
+    /// <param name="memory">
+    /// To encode.
+    /// </param>
+    /// <param name="hash">
+    /// The hash to put in the encoded string. May be null.
+    /// </param>
+    /// <returns>
+    /// The encoded Argon2 instance.
+    /// </returns>
+    /// <remarks>
+    /// <para>
+    /// Resulting format:
+    /// </para>
+    /// <para>
+    /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
+    /// </para>
+    /// <para>
+    /// where &lt;T> is either 'd' 'i', or 'id', &lt;num> is a decimal integer
+    /// (positive, fits in an 'unsigned long'), and &lt;bin> is Base64-encoded
+    /// data (no '=' padding characters, no newline or whitespace).
+    /// The "keyid" is a binary identifier for a key (up to 8 bytes);
+    /// "data" is associated data (up to 32 bytes). When the 'keyid'
+    /// (resp. the 'data') is empty, then it is omitted from the output.
+    /// </para>
+    /// <para>
+    /// The last two binary chunks (encoded in Base64) are, in that order,
+    /// the salt and the output. Both are optional, but you cannot have an
+    /// output without a salt. The binary salt length is between 8 and 48 bytes.
+    /// The output length is always exactly 32 bytes.
+    /// </para>
+    /// </remarks>
+    public static string EncodeString(
+        this Argon2Memory memory,
+        Span<byte> hash)
+    {
+        if (memory == null)
+        {
+            throw new ArgumentNullException(nameof(memory));
+        }
+
+        return EncodeString(
+            memory.Type,
+            memory.Version,
+            memory.MemoryCost,
+            memory.TimeCost,
+            memory.Lanes,
+            memory.KeyIdentifier,
+            memory.AssociatedData,
+            memory.Salt,
+            hash);
+    }
+
+    /// <summary>
+    /// Encodes an Argon2 instance into a string.
+    /// </summary>
+    /// <param name="type">
+    /// Type to put in the encoded string.
+    /// </param>
+    /// <param name="version">
+    /// Version to put in the encoded string.
+    /// </param>
+    /// <param name="memoryCost">
+    /// Memory cost to put in the encoded string.
+    /// </param>
+    /// <param name="timeCost">
+    /// Time cost to put in the encoded string.
+    /// </param>
+    /// <param name="lanes">
+    /// Lanes to put in the encoded string.
+    /// </param>
+    /// <param name="keyId">
+    /// The key identifier to place in the hash string. May be empty.
+    /// </param>
+    /// <param name="associatedData">
+    /// The associated data to place in the hash string. May be empty.
+    /// </param>
+    /// <param name="salt">
+    /// The salt to put in the encoded string. May be empty.
+    /// </param>
+    /// <param name="hash">
+    /// The hash to put in the encoded string. May be empty.
+    /// </param>
+    /// <returns>
+    /// The encoded Argon2 instance.
+    /// </returns>
+    /// <remarks>
+    /// <para>
+    /// Resulting format:
+    /// </para>
+    /// <para>
+    /// $argon2&lt;T>[$v=&lt;num>]$m=&lt;num>,t=&lt;num>,p=&lt;num>[,keyid=&lt;bin>][,data=&lt;bin>][$&lt;bin>[$&lt;bin>]].
+    /// </para>
+    /// <para>
+    /// where &lt;T> is either 'd' 'i', or 'id', &lt;num> is a decimal integer
+    /// (positive, fits in an 'unsigned long'), and &lt;bin> is Base64-encoded
+    /// data (no '=' padding characters, no newline or whitespace).
+    /// The "keyid" is a binary identifier for a key (up to 8 bytes);
+    /// "data" is associated data (up to 32 bytes). When the 'keyid'
+    /// (resp. the 'data') is empty, then it is omitted from the output.
+    /// </para>
+    /// <para>
+    /// The last two binary chunks (encoded in Base64) are, in that order,
+    /// the salt and the output. Both are optional, but you cannot have an
+    /// output without a salt. The binary salt length is between 8 and 48 bytes.
+    /// The output length is always exactly 32 bytes.
+    /// </para>
+    /// </remarks>
+    public static string EncodeString(
+        Argon2Type type,
+        Argon2Version version,
+        int memoryCost,
+        int timeCost,
+        int lanes,
+        Span<byte> keyId,
+        Span<byte> associatedData,
+        Span<byte> salt,
+        Span<byte> hash)
+    {
         var dst = new StringBuilder();
-        switch (config.Type)
+        switch (type)
         {
             case Argon2Type.DataIndependentAddressing:
                 dst.Append("$argon2i$v=");
@@ -85,30 +218,36 @@ public static class EncodeExtension
                 throw new ArgumentException(
                     $"Expected one of {Argon2Type.DataDependentAddressing}, "
                     + $"{Argon2Type.DataIndependentAddressing}, or {Argon2Type.HybridAddressing}, "
-                    + $"got {config.Type}",
-                    nameof(config));
+                    + $"got {type}",
+                    nameof(type));
         }
 
-        dst.Append($"{(int)config.Version:D}");
+        dst.Append($"{(int)version:D}");
         dst.Append("$m=");
-        dst.Append($"{config.MemoryCost:D}");
+        dst.Append($"{memoryCost:D}");
         dst.Append(",t=");
-        dst.Append($"{config.TimeCost:D}");
+        dst.Append($"{timeCost:D}");
         dst.Append(",p=");
-        dst.Append($"{config.Lanes:D}");
-////            if (config.AssociatedData is { Length: > 0 })
-////            {
-////                dst.Append(",data=");
-////                dst.Append(config.AssociatedData.ToB64String());
-////            }
+        dst.Append($"{lanes:D}");
+        if (keyId.Length > 0)
+        {
+            dst.Append(",data=");
+            dst.Append(keyId.ToB64String());
+        }
 
-        if (config.Salt == null || config.Salt.Length == 0)
+        if (associatedData.Length > 0)
+        {
+            dst.Append(",data=");
+            dst.Append(associatedData.ToB64String());
+        }
+
+        if (salt.Length == 0)
         {
             return dst.ToString();
         }
 
         dst.Append('$');
-        dst.Append(config.Salt.AsSpan().ToB64String());
+        dst.Append(salt.ToB64String());
 
         if (hash == null || hash.Length == 0)
         {

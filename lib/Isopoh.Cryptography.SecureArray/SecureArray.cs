@@ -196,6 +196,32 @@ public class SecureArray
     }
 
     /// <summary>
+    /// Gets the size of the buffer element. Will throw a
+    /// <see cref="NotSupportedException"/> if the element type is not
+    /// a built-in type.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The array element type to return the size of.
+    /// </typeparam>
+    /// <param name="buffer">
+    /// The array.
+    /// </param>
+    /// <returns>
+    /// The lengths in bytes of the size of the element in <paramref name="buffer"/>.
+    /// </returns>
+    public static int BuiltInTypeElementSize<T>(Span<T> buffer)
+    {
+        if (!TypeSizes.TryGetValue(typeof(T), out int elementSize))
+        {
+            throw new NotSupportedException(
+                $"Type {typeof(T).Name} not a built in type. "
+                + $"Valid types: {string.Join(", ", TypeSizes.Keys.Select(t => t.Name))}");
+        }
+
+        return elementSize;
+    }
+
+    /// <summary>
     /// Zero the given buffer in a way that will not be optimized away.
     /// </summary>
     /// <typeparam name="T">
@@ -227,6 +253,40 @@ public class SecureArray
             bufHandle.Free();
         }
     }
+
+    /// <summary>
+    /// Zero the given buffer in a way that will not be optimized away.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the elements in the buffer.
+    /// </typeparam>
+    /// <param name="buffer">
+    /// The buffer to zero.
+    /// </param>
+    /// <param name="call">
+    /// The methods to call to secure the array. Defaults to <see cref="SecureArray"/>.<see cref="SecureArray.DefaultCall"/>.
+    /// </param>
+    public static void Zero<T>(Span<T> buffer, SecureArrayCall? call = null)
+        where T : struct
+    {
+        if (buffer == null)
+        {
+            throw new ArgumentNullException(nameof(buffer));
+        }
+
+        GCHandle bufHandle = GCHandle.Alloc(buffer.GetPinnableReference(), GCHandleType.Pinned);
+        try
+        {
+            IntPtr bufPtr = bufHandle.AddrOfPinnedObject();
+            var cnt = new UIntPtr((uint)buffer.Length * (uint)BuiltInTypeElementSize(buffer));
+            (call?.ZeroMemory ?? DefaultCall.ZeroMemory)(bufPtr, cnt);
+        }
+        finally
+        {
+            bufHandle.Free();
+        }
+    }
+
 
     /// <summary>
     /// Zero <paramref name="buf"/> and release resources.

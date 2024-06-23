@@ -38,7 +38,7 @@
 static void usage(const char *cmd) {
     printf("Usage:  %s [-h] salt [-i|-d|-id] [-t iterations] "
            "[-m log2(memory in KiB) | -k memory in KiB] [-p parallelism] "
-           "[-l hash length] [-e|-r] [-v (10|13)]\n",
+           "[-l hash length] [-e|-r] [-v (10|13)] [-a additional data] [-kid key id]\n",
            cmd);
     printf("Parameters:\n");
     printf("\tsalt\t\tThe salt to use, at least 8 characters\n");
@@ -48,6 +48,7 @@ static void usage(const char *cmd) {
     printf("\t-x password\t\tPassword\n");
     printf("\t-s secret\t\tOptional secret\n");
     printf("\t-a ad\t\tOptional additional data\n");
+    printf("\t-kid key_id\t\tOptional key identifier\n");
     printf("\t-t N\t\tSets the number of iterations to N (default = %d)\n",
            T_COST_DEF);
     printf("\t-m N\t\tSets the memory usage of 2^N KiB (default %d)\n",
@@ -93,11 +94,11 @@ Base64-encoded hash string
 @raw_only display only the hexadecimal of the hash
 @version Argon2 version
 */
-static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *secret, char *ad, uint32_t t_cost,
+static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *secret, char *ad, char *kid, uint32_t t_cost,
                 uint32_t m_cost, uint32_t lanes, uint32_t threads,
                 argon2_type type, int encoded_only, int raw_only, uint32_t version) {
     clock_t start_time, stop_time;
-    size_t saltlen, secretlen, adlen, encodedlen;
+    size_t saltlen, secretlen, adlen, kidlen, encodedlen;
     int result;
     unsigned char * out = NULL;
     char * encoded = NULL;
@@ -120,6 +121,7 @@ static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *sec
 
     secretlen = secret ? strlen(secret) : 0;
     adlen = ad ? strlen(ad) : 0;
+    kidlen = kid ? strlen(kid) : 0;
 
 
     UNUSED_PARAMETER(lanes);
@@ -130,14 +132,14 @@ static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *sec
         fatal("could not allocate memory for output");
     }
 
-    encodedlen = argon2_encodedlen(t_cost, m_cost, lanes, (uint32_t)saltlen, outlen, type);
+    encodedlen = argon2_encodedlen(t_cost, m_cost, lanes, (uint32_t)adlen, (uint32_t)kidlen, (uint32_t)saltlen, outlen, type);
     encoded = malloc(encodedlen + 1);
     if (!encoded) {
         clear_internal_memory(pwd, pwdlen);
         fatal("could not allocate memory for hash");
     }
 
-    result = argon2_hash(t_cost, m_cost, threads, pwd, pwdlen, salt, saltlen, secret, secretlen, ad, adlen,
+    result = argon2_hash(t_cost, m_cost, threads, pwd, pwdlen, salt, saltlen, secret, secretlen, ad, adlen, kid, kidlen,
                          out, outlen, encoded, encodedlen, type,
                          version);
     if (result != ARGON2_OK)
@@ -187,7 +189,7 @@ int main(int argc, char *argv[]) {
     uint32_t version = ARGON2_VERSION_NUMBER;
     int i;
     size_t pwdlen = 0;
-    char *pwd = NULL, *salt, *secret = NULL, *ad = NULL;
+    char *pwd = NULL, *salt, *secret = NULL, *ad = NULL, *kid = NULL;
 
     if (argc < 2) {
         usage(argv[0]);
@@ -322,7 +324,20 @@ int main(int argc, char *argv[]) {
             {
                 fatal("missing -a argument");
             }
-        } else if (!strcmp(a, "-i")) {
+        }
+        else if (!strcmp(a, "-kid"))
+        {
+            if (i < argc - 1)
+            {
+                i++;
+                kid = argv[i];
+                continue;
+            }
+            else
+            {
+                fatal("missing -kid argument");
+            }
+            } else if (!strcmp(a, "-i")) {
             type = Argon2_i;
             ++types_specified;
         } else if (!strcmp(a, "-d")) {
@@ -368,7 +383,7 @@ int main(int argc, char *argv[]) {
         fflush(stdout);
     }
 
-    run(outlen, pwd, pwdlen, salt, secret, ad, t_cost, m_cost, lanes, threads, type,
+    run(outlen, pwd, pwdlen, salt, secret, ad, kid, t_cost, m_cost, lanes, threads, type,
        encoded_only, raw_only, version);
 
     return ARGON2_OK;

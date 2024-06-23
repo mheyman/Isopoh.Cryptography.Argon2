@@ -84,9 +84,16 @@ public sealed class Argon2Config : ICloneable
     public byte[]? Secret { get; set; }
 
     /// <summary>
-    /// Gets or sets the associated data used in the password hash.
+    /// Gets or sets the associated data used in the password hash. This should
+    /// be from zero to 32 bytes long if it is there at all
     /// </summary>
     public byte[]? AssociatedData { get; set; }
+
+    /// <summary>
+    /// Gets or sets the key identifier used in the password hash. This should
+    /// be from 0 to 8 bytes long if it is there at all.
+    /// </summary>
+    public byte[]? KeyIdentifier { get; set; }
 
     /// <summary>
     /// Gets or sets the time cost used in the password hash. Minimum of 1. Defaults to 3.
