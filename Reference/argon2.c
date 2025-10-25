@@ -270,7 +270,7 @@ static int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
 }
 
 int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
-                  argon2_type type) {
+                  const void *secret, const size_t secretlen, argon2_type type) {
 
     argon2_context ctx;
     uint8_t *desired_result = NULL;
@@ -310,13 +310,16 @@ int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
         goto fail;
     }
 
-    ctx.pwd = (uint8_t *)pwd;
-    ctx.pwdlen = (uint32_t)pwdlen;
 
     ret = decode_string(&ctx, encoded, type);
     if (ret != ARGON2_OK) {
         goto fail;
     }
+
+    ctx.pwd = (uint8_t*)pwd;
+    ctx.pwdlen = (uint32_t)pwdlen;
+    ctx.secret = (uint8_t*)secret;
+    ctx.secretlen = (uint32_t)secretlen;
 
     /* Set aside the desired result, and get a new buffer. */
     desired_result = ctx.out;
@@ -339,19 +342,19 @@ fail:
     return ret;
 }
 
-int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen) {
+int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen, const void* secret, size_t secretlen) {
 
-    return argon2_verify(encoded, pwd, pwdlen, Argon2_i);
+    return argon2_verify(encoded, pwd, pwdlen, secret, secretlen, Argon2_i);
 }
 
-int argon2d_verify(const char *encoded, const void *pwd, const size_t pwdlen) {
+int argon2d_verify(const char *encoded, const void *pwd, const size_t pwdlen, const void* secret, size_t secretlen) {
 
-    return argon2_verify(encoded, pwd, pwdlen, Argon2_d);
+    return argon2_verify(encoded, pwd, pwdlen, secret, secretlen, Argon2_d);
 }
 
-int argon2id_verify(const char *encoded, const void *pwd, const size_t pwdlen) {
+int argon2id_verify(const char *encoded, const void *pwd, const size_t pwdlen, const void *secret, size_t secretlen) {
 
-    return argon2_verify(encoded, pwd, pwdlen, Argon2_id);
+    return argon2_verify(encoded, pwd, pwdlen, secret, secretlen, Argon2_id);
 }
 
 int argon2d_ctx(argon2_context *context) {
@@ -474,6 +477,6 @@ const char *argon2_error_message(int error_code) {
 size_t argon2_encodedlen(uint32_t t_cost, uint32_t m_cost, uint32_t parallelism, uint32_t adlen, uint32_t kidlen,
                          uint32_t saltlen, uint32_t hashlen, argon2_type type) {
   return strlen("$$v=$m=,t=,p=$$") + strlen(argon2_type2string(type, 0)) +
-         numlen(t_cost) + numlen(m_cost) + numlen(parallelism) + b64len(adlen) + b64len(kidlen) +
+         numlen(t_cost) + numlen(m_cost) + numlen(parallelism) + (kidlen ? strlen(",keyid=") : 0) + b64len(kidlen) + (adlen ? strlen(",data=") : 0) + b64len(adlen) +
          b64len(saltlen) + b64len(hashlen) + numlen(ARGON2_VERSION_NUMBER) + 1;
 }

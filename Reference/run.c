@@ -15,6 +15,8 @@
  * software. If not, they may be obtained at the above URLs.
  */
 
+// ReSharper disable CppClangTidyModernizeMacroToEnum
+// ReSharper disable CppClangTidyClangDiagnosticUnusedMacros
 #define _GNU_SOURCE 1
 
 #include <stdint.h>
@@ -168,7 +170,7 @@ static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *sec
     printf("%2.3f seconds\n",
            ((double)stop_time - start_time) / (CLOCKS_PER_SEC));
 
-    result = argon2_verify(encoded, pwd, pwdlen, type);
+    result = argon2_verify(encoded, pwd, pwdlen, secret, secretlen, type);
     if (result != ARGON2_OK)
         fatal(argon2_error_message(result));
     printf("Verification ok\n");

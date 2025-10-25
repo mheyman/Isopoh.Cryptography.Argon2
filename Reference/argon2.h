@@ -368,20 +368,25 @@ ARGON2_PUBLIC int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
  * Encoded string is restricted as in validate_inputs()
  * @param encoded String encoding parameters, salt, hash
  * @param pwd Pointer to password
+ * @param secret Pointer to secret
  * @pre   Returns ARGON2_OK if successful
  */
 ARGON2_PUBLIC int argon2i_verify(const char *encoded, const void *pwd,
-                                 const size_t pwdlen);
+                                 const size_t pwdlen, const void* secret,
+                                 const size_t secretlen);
 
 ARGON2_PUBLIC int argon2d_verify(const char *encoded, const void *pwd,
-                                 const size_t pwdlen);
+                                 const size_t pwdlen, const void* secret,
+                                 const size_t secretlen);
 
 ARGON2_PUBLIC int argon2id_verify(const char *encoded, const void *pwd,
-                                  const size_t pwdlen);
+                                  const size_t pwdlen, const void* secret,
+                                  const size_t secretlen);
 
 /* generic function underlying the above ones */
 ARGON2_PUBLIC int argon2_verify(const char *encoded, const void *pwd,
-                                const size_t pwdlen, argon2_type type);
+                                const size_t pwdlen, const void* secret,
+                                const size_t secretlen, argon2_type type);
 
 /**
  * Argon2d: Version of Argon2 that picks memory blocks depending

@@ -15,6 +15,8 @@
  * software. If not, they may be obtained at the above URLs.
  */
 
+// ReSharper disable CppInconsistentNaming
+// ReSharper disable CppClangTidyClangDiagnosticUnusedMacros
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -268,12 +270,16 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     } while ((void)0, 0)
 
 /* optional prefix checking with supplied code */
-#define CC_opt(prefix, code)                                                   \
+#define CC_opt(prefix, code, field_ptr, field_len)                             \
     do {                                                                       \
         size_t cc_len = strlen(prefix);                                        \
         if (strncmp(str, prefix, cc_len) == 0) {                               \
             str += cc_len;                                                     \
             { code; }                                                          \
+        }                                                                      \
+        else {                                                                 \
+            (field_ptr) = NULL;                                                \
+            (field_len) = 0;                                                   \
         }                                                                      \
     } while ((void)0, 0)
 
@@ -330,7 +336,9 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
 
     /* Reading the version number if the default is suppressed */
     ctx->version = ARGON2_VERSION_10;
-    CC_opt("$v=", DECIMAL_U32(ctx->version));
+    void* dummy_ptr;
+    int dummy_len;
+    CC_opt("$v=", DECIMAL_U32(ctx->version), dummy_ptr, dummy_len);
 
     CC("$m=");
     DECIMAL_U32(ctx->m_cost);
@@ -339,8 +347,8 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     CC(",p=");
     DECIMAL_U32(ctx->lanes);
     ctx->threads = ctx->lanes;
-    CC_opt(",keyid=", BIN(ctx->kid, maxkidlen, ctx->kidlen));
-    CC_opt(",data=", BIN(ctx->ad, maxadlen, ctx->adlen));
+    CC_opt(",keyid=", BIN(ctx->kid, maxkidlen, ctx->kidlen), ctx->kid, ctx->kidlen);
+    CC_opt(",data=", BIN(ctx->ad, maxadlen, ctx->adlen), ctx->kid, ctx->adlen);
 
     CC("$");
     BIN(ctx->salt, maxsaltlen, ctx->saltlen);
@@ -350,8 +358,6 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     /* The rest of the fields get the default values */
     ctx->secret = NULL;
     ctx->secretlen = 0;
-    ctx->ad = NULL;
-    ctx->adlen = 0;
     ctx->allocate_cbk = NULL;
     ctx->free_cbk = NULL;
     ctx->flags = ARGON2_DEFAULT_FLAGS;
@@ -429,7 +435,7 @@ int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
     SX(ctx->lanes);
     if(ctx->kidlen)
     {
-        SS(",kid=");
+        SS(",keyid=");
         SB(ctx->kid, ctx->kidlen);
     }
     if (ctx->adlen)
