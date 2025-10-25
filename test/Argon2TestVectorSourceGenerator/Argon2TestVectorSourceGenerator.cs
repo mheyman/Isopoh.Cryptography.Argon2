@@ -4,6 +4,7 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
+#pragma warning disable SA1402
 namespace Argon2TestVectorSourceGenerator;
 
 using System;
@@ -13,56 +14,54 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Argon2TestVectorType;
-using Isopoh.Cryptography.Argon2;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+
+#pragma warning disable SA1602
+/// <summary>
+/// Minimal local types used only by the source generator at compile-time.
+/// These mirror the consumer types (names / member names) but live inside the
+/// generator assembly so the generator does not depend on the consumer assembly.
+/// The generator emits source that references the real consumer types.
+/// </summary>
+internal enum Argon2TypeLocal
+{
+    DataDependentAddressing = 0,
+    DataIndependentAddressing = 1,
+    HybridAddressing = 2,
+}
+
+#pragma warning disable SA1600
+internal enum Argon2VersionLocal
+{
+    Sixteen = 0x10,
+    Nineteen = 0x13,
+}
+
+internal enum Argon2OutputLocal
+{
+    Raw,
+    Encoded,
+    Full,
+}
+#pragma warning restore SA1600
+#pragma warning restore SA1602
 
 /// <summary>
 /// Generate source code.
 /// </summary>
-[Generator(LanguageNames.CSharp)]
+[Generator]
 public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
 {
-    private static readonly List<OfficialTestVector> OfficialTestVectors =
-    [
-        new OfficialTestVector(
-            Argon2Type.DataDependentAddressing,
-            Argon2Version.Nineteen,
-            3,
-            32,
-            4,
-            new string((char)1, 32),
-            new string((char)2, 16),
-            new string((char)3, 8),
-            new string((char)4, 12),
-            "512b391b6f1162975371d30919734294f868e3be3984f3c1a13a4db9fabe4acb"),
-
-        new OfficialTestVector(
-            Argon2Type.DataIndependentAddressing,
-            Argon2Version.Nineteen,
-            3,
-            32,
-            4,
-            new string((char)1, 32),
-            new string((char)2, 16),
-            new string((char)3, 8),
-            new string((char)4, 12),
-            "c814d9d1dc7f37aa13f0d77f2494bda1c8de6b016dd388d29952a4c4672b6ce8"),
-
-        new OfficialTestVector(
-            Argon2Type.HybridAddressing,
-            Argon2Version.Nineteen,
-            3,
-            32,
-            4,
-            new string((char)1, 32),
-            new string((char)2, 16),
-            new string((char)3, 8),
-            new string((char)4, 12),
-            "0d640df58d78766c08c037a34a8b53c9d01ef0452d75b65eb52520e96b01e659"),
-
-    ];
+    private static readonly DiagnosticDescriptor LogMessage = new(
+#pragma warning disable RS2008
+        id: "A2TVSG001",
+#pragma warning restore RS2008
+        title: "Generator Log",
+        messageFormat: "{0}",
+        category: "Argon2TestVectorSourceGenerator",
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 
     /// <summary>
     /// Called to initialize the generator and register generation steps via callbacks
@@ -71,37 +70,105 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
     /// <param name="context">The <see cref="IncrementalGeneratorInitializationContext"/> to register callbacks on.</param>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        ////if (!Debugger.IsAttached)
-        ////{
-        ////    Debugger.Launch();
-        ////}
+        /////if (!Debugger.IsAttached)
+        /////{
+        /////    Debugger.Launch();
+        /////}
 
         IncrementalValueProvider<Compilation> compilationProvider = context.CompilationProvider;
+
+        // Refactor: collect generator log messages during the Select steps and report them once
+        // from a single RegisterSourceOutput. This avoids registering a new source output per message.
         IncrementalValueProvider<string> solutionDir = compilationProvider.Select((_, _) => GetSolutionDir());
         IncrementalValueProvider<string> argon2 = compilationProvider.Combine(solutionDir)
             .Select(
                 (x, _) => Directory.GetFiles(x.Right, "argon2.exe", SearchOption.AllDirectories)
                         .FirstOrDefault() ??
                     throw new Exception($"argon2.exe not found in {x.Right}"));
-        IncrementalValueProvider<string> validatedArgon2 = compilationProvider.Combine(argon2).Select((x, _) =>
+
+        // validatedArgon2 now produces the found path plus a mutable List<string> that collects logs
+        IncrementalValueProvider<(string Path, List<string> Logs)> validatedArgon2 =
+            compilationProvider.Combine(argon2).Select((x, _) =>
+            {
+                var logs = new List<string>();
+
+                // pass a local reporter that appends to the logs list
+                Validate(msg => logs.Add(msg), x.Right);
+                return (x.Right, logs);
+            });
+
+        // Create vectors while appending any runtime messages to the logs list created above.
+        IncrementalValueProvider<(IEnumerable<string> Vectors, List<string> Logs)> textNewTestVectorList =
+            compilationProvider.Combine(validatedArgon2)
+                .Select((x, _) =>
+                {
+                    var argon2Path = x.Right.Path;
+                    var logs = x.Right.Logs;
+                    Action<string> report = s => logs.Add(s);
+
+                    var vectors = Argon2Parameters().Select(parameters =>
+                        TextNewTestVector(report, argon2Path, parameters));
+
+                    return (Vectors: vectors, Logs: logs);
+                });
+
+        // Single output: add the generated source and report all collected diagnostics for this run.
+        context.RegisterSourceOutput(textNewTestVectorList, (productionContext, value) =>
         {
-            Validate(x.Right);
-            return x.Right;
+            // Report collected logs as diagnostics
+            foreach (var msg in value.Logs)
+            {
+                var diagnostic = Diagnostic.Create(LogMessage, location: null, msg);
+                productionContext.ReportDiagnostic(diagnostic);
+            }
+
+            // Add generated source
+            productionContext.AddSource("Test.g.cs", GenerateSource(value.Vectors));
         });
+    }
 
-        IncrementalValueProvider<IEnumerable<string>> textNewTestVectorList = compilationProvider.Combine(validatedArgon2)
-            .Select((x, _) => Argon2Parameters().Select(parameters => TextNewTestVector(x.Right, parameters)));
+    // Move the "official" vectors out of static initialization to avoid type/load-time exceptions
+    // when the generator assembly is loaded by the compiler host.
+    private static List<OfficialTestVectorLocal> GetOfficialTestVectors()
+    {
+        return new List<OfficialTestVectorLocal>
+        {
+            new(
+                Argon2TypeLocal.DataDependentAddressing,
+                Argon2VersionLocal.Nineteen,
+                3,
+                32,
+                4,
+                new string((char)1, 32),
+                new string((char)2, 16),
+                new string((char)3, 8),
+                new string((char)4, 12),
+                "512b391b6f1162975371d30919734294f868e3be3984f3c1a13a4db9fabe4acb"),
 
-        try
-        {
-            context.RegisterSourceOutput(textNewTestVectorList, static (c, textNewVectors) => c.AddSource("Test.g.cs", GenerateSource(textNewVectors)));
-        }
-        catch (Exception e)
-        {
-            string? msg = e.Message;
-            Console.WriteLine(msg);
-            throw;
-        }
+            new(
+                Argon2TypeLocal.DataIndependentAddressing,
+                Argon2VersionLocal.Nineteen,
+                3,
+                32,
+                4,
+                new string((char)1, 32),
+                new string((char)2, 16),
+                new string((char)3, 8),
+                new string((char)4, 12),
+                "c814d9d1dc7f37aa13f0d77f2494bda1c8de6b016dd388d29952a4c4672b6ce8"),
+
+            new(
+                Argon2TypeLocal.HybridAddressing,
+                Argon2VersionLocal.Nineteen,
+                3,
+                32,
+                4,
+                new string((char)1, 32),
+                new string((char)2, 16),
+                new string((char)3, 8),
+                new string((char)4, 12),
+                "0d640df58d78766c08c037a34a8b53c9d01ef0452d75b65eb52520e96b01e659"),
+        };
     }
 
     private static SourceText GenerateSource(IEnumerable<string> textNewTestVectors)
@@ -141,12 +208,21 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         return SourceText.From(source, Encoding.ASCII);
     }
 
-    private static IEnumerable<(Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength)> Argon2Parameters()
+    private static IEnumerable<(
+        Argon2TypeLocal Type,
+        string Password,
+        string Salt,
+        int IterationCount,
+        string? Secret,
+        string? AssociatedData,
+        int MemoryKByteFactor,
+        int Parallelism,
+        int TagLength)> Argon2Parameters()
     {
         const string salt = "test salt";
-        var types = new List<Argon2Type>
+        var types = new List<Argon2TypeLocal>
         {
-            Argon2Type.DataIndependentAddressing, Argon2Type.DataDependentAddressing, Argon2Type.HybridAddressing,
+            Argon2TypeLocal.DataIndependentAddressing, Argon2TypeLocal.DataDependentAddressing, Argon2TypeLocal.HybridAddressing,
         };
         const string password = "test password";
         var iterationCounts = new List<int> { 3, 17 };
@@ -155,7 +231,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         var memoryKByteFactors = new List<int> { 1, 2 };
         var parallelisms = new List<int> { 1, 4 };
         var tagLengths = new List<int> { 63, 64, 65, 511, 512, 513 };
-        List<(Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int
+        List<(Argon2TypeLocal Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int
             MemoryKByteFactor, int Parallelism, int TagLength)> runArgs = types
             .SelectMany(_ => iterationCounts, (type, iterationCount) => new { type, iterationCount })
             .SelectMany(_ => secrets, (a, secret) => new { a.type, a.iterationCount, secret })
@@ -166,13 +242,22 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
                 _ => memoryKByteFactors,
                 (a, memoryKByteFactor) => new
                 {
-                    a.type, a.iterationCount, a.secret, a.associatedData, memoryKByteFactor,
+                    a.type,
+                    a.iterationCount,
+                    a.secret,
+                    a.associatedData,
+                    memoryKByteFactor,
                 })
             .SelectMany(
                 _ => parallelisms,
                 (a, parallelism) => new
                 {
-                    a.type, a.iterationCount, a.secret, a.associatedData, a.memoryKByteFactor, parallelism,
+                    a.type,
+                    a.iterationCount,
+                    a.secret,
+                    a.associatedData,
+                    a.memoryKByteFactor,
+                    parallelism,
                 })
             .SelectMany(
                 _ => tagLengths,
@@ -183,15 +268,21 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
 
         // put on the "official" test vectors. These are already known to work because of their use in the Validate() call.
         runArgs.AddRange(
-            OfficialTestVectors.Select(
+            GetOfficialTestVectors().Select(
                 a => (a.Type, a.Password, a.Salt, a.IterationCount, (string?)a.Secret, (string?)a.AssociatedData,
                     a.MemoryKByteCount / 8 / a.Parallelism, a.Parallelism, a.Tag.Length / 2)));
         return runArgs;
     }
 
-    private static string TextNewTestVector(string argon2, (Argon2Type Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength) args)
+    private static string TextNewTestVector(
+        Action<string> reportDiagnostic,
+        string argon2,
+        (Argon2TypeLocal Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength) args)
     {
-        return $"new TestVector(Argon2Type.{args.Type}, Argon2Version.Nineteen, {args.IterationCount}, {args.MemoryKByteFactor * 8 * args.Parallelism}, {args.Parallelism}, {Arg(args.Password)}, {Arg(args.Salt)}, {Arg(args.Secret)}, {Arg(args.AssociatedData)}, {args.TagLength}, {Arg(RunArgon2(argon2, args.Salt, args.Type, args.Password, args.IterationCount, args.Secret, args.AssociatedData, args.MemoryKByteFactor * 8 * args.Parallelism, args.Parallelism, args.TagLength, Argon2Output.Encoded))})";
+        // Note: args.Type.ToString() will produce the enum member name such as "DataIndependentAddressing".
+        // The generated source intentionally writes `Argon2Type.{name}` so the consumer's Argon2TestVectorType
+        // enums are referenced at compile-time there.
+        return $"new TestVector(Argon2Type.{args.Type}, Argon2Version.Nineteen, {args.IterationCount}, {args.MemoryKByteFactor * 8 * args.Parallelism}, {args.Parallelism}, {Arg(args.Password)}, {Arg(args.Salt)}, {Arg(args.Secret)}, {Arg(args.AssociatedData)}, {args.TagLength}, {Arg(RunArgon2(reportDiagnostic, argon2, args.Salt, args.Type, args.Password, args.IterationCount, args.Secret, args.AssociatedData, args.MemoryKByteFactor * 8 * args.Parallelism, args.Parallelism, args.TagLength, Argon2OutputLocal.Encoded))})";
 
         static string Arg(string? a)
         {
@@ -217,11 +308,14 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             ?? throw new Exception($"Parent directory of \"{path}\" (from Roslyn) was null");
     }
 
-    private static void Validate(string argon2)
+    private static void Validate(
+        Action<string> reportDiagnostic,
+        string argon2)
     {
-        foreach (OfficialTestVector? tv in OfficialTestVectors)
+        foreach (OfficialTestVectorLocal? tv in GetOfficialTestVectors())
         {
             string res = RunArgon2(
+                reportDiagnostic,
                 argon2,
                 tv.Salt,
                 tv.Type,
@@ -232,7 +326,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
                 tv.MemoryKByteCount,
                 tv.Parallelism,
                 tv.Tag.Length / 2,
-                Argon2Output.Raw);
+                Argon2OutputLocal.Raw);
             if (string.CompareOrdinal(res, tv.Tag) != 0)
             {
                 throw new Exception(
@@ -242,9 +336,10 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
     }
 
     private static string RunArgon2(
+        Action<string> reportDiagnostic,
         string argon2,
         string salt,
-        Argon2Type type,
+        Argon2TypeLocal type,
         string password,
         int iterations,
         string? secret,
@@ -252,7 +347,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         int memoryKBytes,
         int parallelism,
         int tagLength,
-        Argon2Output output)
+        Argon2OutputLocal output)
     {
         var startInfo = new ProcessStartInfo
         {
@@ -264,7 +359,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             //// RedirectStandardError = true,
             Arguments = BuildCommandLineFromArgs(
                 salt,
-                type switch { Argon2Type.DataIndependentAddressing => "-i", Argon2Type.DataDependentAddressing => "-d", _ => "-id" },
+                type switch { Argon2TypeLocal.DataIndependentAddressing => "-i", Argon2TypeLocal.DataDependentAddressing => "-d", _ => "-id" },
                 "-x",
                 password,
                 "-t",
@@ -279,12 +374,13 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
                 $"{parallelism}",
                 "-l",
                 $"{tagLength}",
-                output switch { Argon2Output.Raw => "-r", Argon2Output.Encoded => "-e", _ => null }),
+                output switch { Argon2OutputLocal.Raw => "-r", Argon2OutputLocal.Encoded => "-e", _ => null }),
         };
         using Process p = Process.Start(startInfo) ?? throw new Exception($"Failed to start {startInfo.FileName}");
         string res = p.StandardOutput.ReadToEnd().TrimEnd('\r', '\n');
         //// var resError = p.StandardError.ReadToEnd().TrimEnd(new char[] { '\r', '\n' });
         p.WaitForExit();
+        reportDiagnostic($"Ran: {startInfo.FileName} {startInfo.Arguments}, got: {res}");
         return res;
     }
 
@@ -321,7 +417,7 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             foreach (string arg in args.Where(s => s != null).Cast<string>())
             {
                 bool enclosedInApo = arg.LastIndexOfAny(
-                    new[] { ' ', '\t', '|', '@', '^', '<', '>', '&' }) >= 0;
+                    [' ', '\t', '|', '@', '^', '<', '>', '&']) >= 0;
                 bool wasApo = enclosedInApo;
                 var subResult = string.Empty;
                 for (int i = arg.Length - 1; i >= 0; i--)
@@ -350,3 +446,33 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         return result;
     }
 }
+
+#pragma warning disable SA1516
+#pragma warning disable SA1600
+#pragma warning disable SA1649
+internal sealed class OfficialTestVectorLocal(
+    Argon2TypeLocal type,
+    Argon2VersionLocal version,
+    int iterationCount,
+    int memoryKByteCount,
+    int parallelism,
+    string password,
+    string salt,
+    string secret,
+    string associatedData,
+    string tag)
+{
+    public Argon2TypeLocal Type { get; set; } = type;
+    public Argon2VersionLocal Version { get; set; } = version;
+    public int IterationCount { get; set; } = iterationCount;
+    public int MemoryKByteCount { get; set; } = memoryKByteCount;
+    public int Parallelism { get; set; } = parallelism;
+    public string Password { get; set; } = password;
+    public string Salt { get; set; } = salt;
+    public string Secret { get; set; } = secret;
+    public string AssociatedData { get; set; } = associatedData;
+    public string Tag { get; set; } = tag;
+}
+#pragma warning restore SA1649
+#pragma warning restore SA1600
+#pragma warning restore SA1516
