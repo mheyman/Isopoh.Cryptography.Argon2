@@ -249,7 +249,7 @@ public static class EncodeExtension
         dst.Append('$');
         dst.Append(salt.ToB64String());
 
-        if (hash == null || hash.Length == 0)
+        if (hash == Span<byte>.Empty)
         {
             return dst.ToString();
         }
@@ -267,7 +267,7 @@ public static class EncodeExtension
     public static string ToB64String(
         this Span<byte> buf)
     {
-        if (buf == null)
+        if (buf == Span<byte>.Empty)
         {
             throw new ArgumentNullException(nameof(buf));
         }

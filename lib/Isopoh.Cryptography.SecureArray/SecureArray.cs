@@ -269,11 +269,6 @@ public class SecureArray
     public static void Zero<T>(Span<T> buffer, SecureArrayCall? call = null)
         where T : struct
     {
-        if (buffer == null)
-        {
-            throw new ArgumentNullException(nameof(buffer));
-        }
-
         GCHandle bufHandle = GCHandle.Alloc(buffer.GetPinnableReference(), GCHandleType.Pinned);
         try
         {

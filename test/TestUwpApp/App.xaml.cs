@@ -74,7 +74,10 @@ namespace TestUwpApp
         /// </summary>
         /// <param name="sender">The Frame which failed navigation.</param>
         /// <param name="e">Details about the navigation failure.</param>
+#pragma warning disable S2325
+        // ReSharper disable once MemberCanBeMadeStatic.Local
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e) => throw new IOException("Failed to load Page " + e.SourcePageType.FullName);
+#pragma warning restore S2325
 
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
@@ -83,7 +86,10 @@ namespace TestUwpApp
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
+#pragma warning disable S2325
+        // ReSharper disable once MemberCanBeMadeStatic.Local
         private void OnSuspending(object sender, SuspendingEventArgs e)
+#pragma warning restore S2325
         {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
 

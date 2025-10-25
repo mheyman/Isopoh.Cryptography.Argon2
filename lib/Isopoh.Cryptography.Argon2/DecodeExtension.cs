@@ -762,6 +762,12 @@ public static class DecodeExtension
     /// <returns>the next position to look at; -1 on failure.</returns>
     private static int DecodeDecimal(string str, int pos, out uint val)
     {
+        if (pos >= str.Length)
+        {
+            val = 0;
+            return pos == str.Length ? pos : -1;
+        }
+
         int i = pos;
 
         val = 0;
@@ -789,13 +795,10 @@ public static class DecodeExtension
 
             val += c;
             ++i;
-        }
-
-        // ReSharper disable once InvertIf
-        if (i == pos)
-        {
-            val = 0;
-            return -1;
+            if (i == str.Length)
+            {
+                break;
+            }
         }
 
         return i;

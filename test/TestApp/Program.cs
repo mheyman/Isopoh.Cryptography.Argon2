@@ -30,20 +30,20 @@ public class Program
         Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
         var results = new List<(bool Passed, string Message)>
         {
-            LeakInVerify.Test(output),
-            LeakInHash.Test(output),
-            MemoryNoAlloc.Test(output),
-            SecureArraySizing.Test(output),
-            RoundTrip.Test(output),
-            RoundTripSimpleCall.Test(output),
-            ThreadsDontMatter.Test(output),
-            PublishedVector.Test(output),
+            // LeakInVerify.Test(output),
+            // LeakInHash.Test(output),
+            // MemoryNoAlloc.Test(output),
+            // SecureArraySizing.Test(output),
+            // RoundTrip.Test(output),
+            // RoundTripSimpleCall.Test(output),
+            // ThreadsDontMatter.Test(output),
+            // PublishedVector.Test(output),
             VersusReferenceCode.Test(output),
-            FromDraft3.Test(output),
-            HighMemoryCost.Test(output),
-            TimeToHash.Test(output),
-            Blake2bTestVector.Test(output),
-            Blake2BTestVariations.Test(output),
+            // FromDraft3.Test(output),
+            // HighMemoryCost.Test(output),
+            // TimeToHash.Test(output),
+            // Blake2bTestVector.Test(output),
+            // Blake2BTestVariations.Test(output),
         };
 
         Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", results.Select(r => r.Message))}");

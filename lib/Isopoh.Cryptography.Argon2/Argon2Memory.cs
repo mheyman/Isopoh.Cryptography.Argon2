@@ -77,18 +77,12 @@ public sealed class Argon2Memory
 
     private Memory<byte> configWorkingBuffer;
 
-    private int configAssociatedDataOffset;
-    private int configAssociatedDataLength;
-    private int configKeyIdentifierOffset;
-    private int configKeyIdentifierLength;
-    private int configHashOffset;
-    private int configHashLength;
-    private int configPasswordOffset;
-    private int configPasswordLength;
-    private int configSaltOffset;
-    private int configSaltLength;
-    private int configSecretOffset;
-    private int configSecretLength;
+    private ConfigAssociatedData configAssociatedData;
+    private ConfigKeyIdentifier configKeyIdentifier;
+    private ConfigHash configHash;
+    private ConfigPassword configPassword;
+    private ConfigSalt configSalt;
+    private ConfigSecret configSecret;
 
     private Argon2MemoryPolicy shrinkMemoryPolicy;
 
@@ -143,12 +137,12 @@ public sealed class Argon2Memory
         this.Type = config.Type;
         this.Version = config.Version;
         (this.configSecureArray, this.configWorkingBuffer,
-         this.configAssociatedDataOffset, this.configAssociatedDataLength,
-         this.configKeyIdentifierOffset, this.configHashOffset,
-         this.configHashLength, this.configKeyIdentifierLength,
-         this.configPasswordOffset, this.configPasswordLength,
-         this.configSaltOffset, this.configSaltLength,
-         this.configSecretOffset, this.configSecretLength) =
+         this.configAssociatedData,
+         this.configHash,
+         this.configKeyIdentifier,
+         this.configPassword,
+         this.configSalt,
+         this.configSecret) =
             CopyConfig(config, this.configSecureArray, this.configWorkingBuffer, this.secureArrayCall, this.LockMemory, this.shrinkMemoryPolicy);
         this.ResetNonConfigBuffers(config);
     }
@@ -214,7 +208,7 @@ public sealed class Argon2Memory
     /// <para/>
     /// Can change on every call to <see cref="Reset(string, Argon2Password)"/> or <see cref="Reset(Argon2Config)"/>.
     /// </remarks>
-    public Span<byte> Hash => this.configWorkingBuffer.Span.Slice(this.configHashOffset, this.configHashLength);
+    public Span<byte> Hash => this.configWorkingBuffer.Span.Slice(this.configHash.Offset, this.configHash.Length);
 
     /// <summary>
     /// Gets the memory block count for the latest <see cref="Argon2Config"/> that this <see cref="Argon2Memory"/> supports.
@@ -357,28 +351,28 @@ public sealed class Argon2Memory
     /// <summary>
     /// Gets the associated data used in the password hash.
     /// </summary>
-    public Span<byte> AssociatedData => this.configWorkingBuffer.Span.Slice(this.configAssociatedDataOffset, this.configAssociatedDataLength);
+    public Span<byte> AssociatedData => this.configWorkingBuffer.Span.Slice(this.configAssociatedData.Offset, this.configAssociatedData.Length);
 
     /// <summary>
     /// Gets the key identifier used in the password hash.
     /// </summary>
-    public Span<byte> KeyIdentifier => this.configWorkingBuffer.Span.Slice(this.configKeyIdentifierOffset, this.configKeyIdentifierLength);
+    public Span<byte> KeyIdentifier => this.configWorkingBuffer.Span.Slice(this.configKeyIdentifier.Offset, this.configKeyIdentifier.Length);
 
     /// <summary>
     /// Gets the password to hash.
     /// </summary>
     public Span<byte> Password =>
-        this.configWorkingBuffer.Span.Slice(this.configPasswordOffset, this.configPasswordLength);
+        this.configWorkingBuffer.Span.Slice(this.configPassword.Offset, this.configPassword.Length);
 
     /// <summary>
     /// Gets the salt used in the password hash. If non-null, must be at least 8 bytes.
     /// </summary>
-    public Span<byte> Salt => this.configWorkingBuffer.Span.Slice(this.configSaltOffset, this.configSaltLength);
+    public Span<byte> Salt => this.configWorkingBuffer.Span.Slice(this.configSalt.Offset, this.configSalt.Length);
 
     /// <summary>
     /// Gets the secret used in the password hash.
     /// </summary>
-    public Span<byte> Secret => this.configWorkingBuffer.Span.Slice(this.configSecretOffset, this.configSecretLength);
+    public Span<byte> Secret => this.configWorkingBuffer.Span.Slice(this.configSecret.Offset, this.configSecret.Length);
 
     /// <summary>
     /// Gets the required block count for the given <see cref="Argon2Config"/>.
@@ -431,11 +425,14 @@ public sealed class Argon2Memory
         this.TimeCost = config.TimeCost;
         this.Type = config.Type;
         this.Version = config.Version;
-        (this.configSecureArray, this.configWorkingBuffer, this.configAssociatedDataOffset,
-                this.configHashOffset, this.configHashLength,
-                this.configKeyIdentifierOffset, this.configKeyIdentifierLength,
-                this.configAssociatedDataLength, this.configPasswordOffset, this.configPasswordLength,
-                this.configSaltOffset, this.configSaltLength, this.configSecretOffset, this.configSecretLength) =
+        (this.configSecureArray,
+                this.configWorkingBuffer,
+                this.configAssociatedData,
+                this.configHash,
+                this.configKeyIdentifier,
+                this.configPassword,
+                this.configSalt,
+                this.configSecret) =
             CopyConfig(config, this.configSecureArray, this.configWorkingBuffer, this.secureArrayCall, this.LockMemory, this.shrinkMemoryPolicy);
         this.ResetNonConfigBuffers(config);
     }
@@ -458,7 +455,7 @@ public sealed class Argon2Memory
         var (keyIdLength, associatedDataLength, saltLength, hashLength) = hash.Argon2RequiredBufferLengths();
         bool newPassword = password.Password.Length > 0;
         bool keepPassword = !newPassword && password.Policy == Argon2ExistingPasswordResetPolicy.Keep;
-        int passwordLength = newPassword ? password.Password.Length : (keepPassword ? this.configPasswordLength : 0);
+        int passwordLength = newPassword ? password.Password.Length : (keepPassword ? this.configPassword.Length : 0);
         var configLength = associatedDataLength + keyIdLength + hashLength + saltLength + passwordLength;
         if (keepPassword)
         {
@@ -516,9 +513,15 @@ public sealed class Argon2Memory
         this.InUse = false;
     }
 
-    private static (SecureArray<byte>? ConfigSecureArray, Memory<byte> ConfigWorkingBuffer, int
-        ConfigAssociatedDataOffset, int ConfigAssociatedDataLength, int ConfigHashOffset, int ConfigHashLength, int ConfigKeyIdentifierOffset, int ConfigKeyIdentifierLength, int ConfigPasswordOffset, int ConfigPasswordLength,
-        int ConfigSaltOffset, int ConfigSaltLength, int ConfigSecretOffset, int ConfigSecretLength) CopyConfig(
+    private static (
+        SecureArray<byte>? ConfigSecureArray,
+        Memory<byte> ConfigWorkingBuffer,
+        ConfigAssociatedData ConfigAssociatedData,
+        ConfigHash ConfigHash,
+        ConfigKeyIdentifier ConfigKeyIdentifier,
+        ConfigPassword ConfigPassword,
+        ConfigSalt ConfigSalt,
+        ConfigSecret ConfigSecret) CopyConfig(
             Argon2Config config,
             SecureArray<byte>? configSecureArray,
             Memory<byte> configWorkingBuffer,
@@ -526,15 +529,12 @@ public sealed class Argon2Memory
             LockMemoryPolicy? lockMemory,
             Argon2MemoryPolicy memoryPolicy)
     {
-        int configLength = 0;
-        (configLength, int configAssociatedDataOffset, int configAssociatedDataLength) = Offsets(configLength, config.AssociatedData, configWorkingBuffer);
-        (configLength, int configKeyIdentifierOffset, int configKeyIdentifierLength) = Offsets(configLength, config.KeyIdentifier, configWorkingBuffer);
-        int configHashOffset = configLength;
-        int configHashLength = config.HashLength;
-        configLength += configHashLength;
-        (configLength, int configPasswordOffset, int configPasswordLength) = Offsets(configLength, config.Password, configWorkingBuffer);
-        (configLength, int configSaltOffset, int configSaltLength) = Offsets(configLength, config.Salt, configWorkingBuffer);
-        (configLength, int configSecretOffset, int configSecretLength) = Offsets(configLength, config.Secret, configWorkingBuffer);
+        int requiredLength = (config.AssociatedData?.Length ?? 0) +
+            (config.KeyIdentifier?.Length ?? 0) +
+            config.HashLength +
+            (config.Password?.Length ?? 0) +
+            (config.Salt?.Length ?? 0) +
+            (config.Secret?.Length ?? 0);
         if (lockMemory.HasValue)
         {
             if (secureArrayCall == null)
@@ -543,9 +543,9 @@ public sealed class Argon2Memory
                     "Must have non-null SecureArrayCall when allocating a SecureArray for configuration parameters.");
             }
 
-            if (configSecureArray == null || configSecureArray.Buffer.Length < configLength || (configSecureArray.Buffer.Length > configLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
+            if (configSecureArray == null || configSecureArray.Buffer.Length < requiredLength || (configSecureArray.Buffer.Length > requiredLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
             {
-                configSecureArray = SecureArray<byte>.Create(configLength, secureArrayCall, lockMemory.Value);
+                configSecureArray = SecureArray<byte>.Create(requiredLength, secureArrayCall, lockMemory.Value);
             }
 
             configWorkingBuffer = new Memory<byte>(configSecureArray.Buffer);
@@ -558,17 +558,31 @@ public sealed class Argon2Memory
                     "Called with non-null config SecureArray when there is no LockMemory policy. This should not have happened.");
             }
 
-            if (configWorkingBuffer.Length < configLength || (configWorkingBuffer.Length > configLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
+            if (configWorkingBuffer.Length < requiredLength || (configWorkingBuffer.Length > requiredLength && memoryPolicy == Argon2MemoryPolicy.Shrink))
             {
-                configWorkingBuffer = new Memory<byte>(new byte[configLength]);
+                configWorkingBuffer = new Memory<byte>(new byte[requiredLength]);
             }
         }
 
-        return (configSecureArray, configWorkingBuffer, configAssociatedDataOffset, configAssociatedDataLength,
-            configHashOffset, configHashLength,
-            configKeyIdentifierOffset, configKeyIdentifierLength,
-            configPasswordOffset, configPasswordLength, configSaltOffset, configSaltLength, configSecretOffset,
-            configSecretLength);
+        int configLength = 0;
+        (configLength, int configAssociatedDataOffset, int configAssociatedDataLength) = Offsets(configLength, config.AssociatedData, configWorkingBuffer);
+        (configLength, int configKeyIdentifierOffset, int configKeyIdentifierLength) = Offsets(configLength, config.KeyIdentifier, configWorkingBuffer);
+        int configHashOffset = configLength;
+        int configHashLength = config.HashLength;
+        configLength += configHashLength;
+        (configLength, int configPasswordOffset, int configPasswordLength) = Offsets(configLength, config.Password, configWorkingBuffer);
+        (configLength, int configSaltOffset, int configSaltLength) = Offsets(configLength, config.Salt, configWorkingBuffer);
+        (_, int configSecretOffset, int configSecretLength) = Offsets(configLength, config.Secret, configWorkingBuffer);
+
+        return (
+            configSecureArray,
+            configWorkingBuffer,
+            new ConfigAssociatedData(configAssociatedDataOffset, configAssociatedDataLength),
+            new ConfigHash(configHashOffset, configHashLength),
+            new ConfigKeyIdentifier(configKeyIdentifierOffset, configKeyIdentifierLength),
+            new ConfigPassword(configPasswordOffset, configPasswordLength),
+            new ConfigSalt(configSaltOffset, configSaltLength),
+            new ConfigSecret(configSecretOffset, configSecretLength));
 
         static (int, int, int) Offsets(int currentOffset, byte[]? buf, Memory<byte> workingBuffer)
         {
@@ -816,4 +830,16 @@ public sealed class Argon2Memory
         this.SegmentBlockCount = 0;
         this.LaneBlockCount = 0;
     }
+
+    private record struct ConfigAssociatedData(int Offset, int Length);
+
+    private record struct ConfigKeyIdentifier(int Offset, int Length);
+
+    private record struct ConfigHash(int Offset, int Length);
+
+    private record struct ConfigPassword(int Offset, int Length);
+
+    private record struct ConfigSalt(int Offset, int Length);
+
+    private record struct ConfigSecret(int Offset, int Length);
 }

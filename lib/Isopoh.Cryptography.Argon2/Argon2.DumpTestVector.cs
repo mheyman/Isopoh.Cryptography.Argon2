@@ -53,13 +53,13 @@ public sealed partial class Argon2
             streamOut.WriteLine($"Password[{hasher.memory.Password.Length}]: {pwText} ");
             streamOut.WriteLine(
                 $"Salt[{hasher.memory.Salt.Length}]: "
-                + $"{(hasher.memory.Salt == null ? string.Empty : BitConverter.ToString(hasher.memory.Salt.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
+                + $"{(hasher.memory.Salt == Span<byte>.Empty ? string.Empty : BitConverter.ToString(hasher.memory.Salt.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
                 $"Secret[{hasher.memory.Secret.ToArray().Length}]: "
-                + $"{(hasher.memory.Secret == null ? string.Empty : BitConverter.ToString(hasher.memory.Secret.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
+                + $"{(hasher.memory.Secret == Span<byte>.Empty ? string.Empty : BitConverter.ToString(hasher.memory.Secret.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
                 $"Associated data[{hasher.memory.AssociatedData.Length}]: "
-                + $"{(hasher.memory.AssociatedData == null ? string.Empty : BitConverter.ToString(hasher.memory.AssociatedData.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
+                + $"{(hasher.memory.AssociatedData == Span<byte>.Empty ? string.Empty : BitConverter.ToString(hasher.memory.AssociatedData.ToArray()).ToLowerInvariant().Replace('-', ' '))} ");
             streamOut.WriteLine(
                 $"Pre-hashing digest: {BitConverter.ToString(buffer.ToArray(), 0, PrehashDigestLength).ToLowerInvariant().Replace('-', ' ')} ");
         }

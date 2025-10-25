@@ -176,11 +176,6 @@ public partial class Blake2BCore : IDisposable
     /// <param name="config">8-element configuration array.</param>
     public void Initialize(ReadOnlySpan<ulong> config)
     {
-        if (config == null)
-        {
-            throw new ArgumentNullException(nameof(config));
-        }
-
         if (config.Length != 8)
         {
             throw new ArgumentException("config length must be 8 words", nameof(config));
@@ -223,11 +218,6 @@ public partial class Blake2BCore : IDisposable
         if (!this.isInitialized)
         {
             throw new InvalidOperationException("Not initialized");
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
         }
 
         var offset = 0;
