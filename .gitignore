@@ -70,6 +70,9 @@ AplPed.TACOP/AplPed.TACOP.ExplorerWidget/Scripts/apl/apl.earth.js
 ####################################
 !source/widgets/PedWidgets/PedWidgets/Scripts/apl.ped.bs.js
 
+# Never checkin user CMake presets
+####################################
+CMakeUserPresets.json
 # build/edit artifacts #
 ########################
 .vs
@@ -147,6 +150,7 @@ dllFun.csv
 dllFun.xml
 TestResults
 /nuget
+Reference/build
 # copied around code signing keys
 Isopoh.Cryptography.Argon2/isopoh.pfx
 Isopoh.Cryptography.Blake2b/isopoh.pfx

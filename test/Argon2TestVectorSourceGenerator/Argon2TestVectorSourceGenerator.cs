@@ -70,21 +70,37 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
     /// <param name="context">The <see cref="IncrementalGeneratorInitializationContext"/> to register callbacks on.</param>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        /////if (!Debugger.IsAttached)
-        /////{
-        /////    Debugger.Launch();
-        /////}
-
         IncrementalValueProvider<Compilation> compilationProvider = context.CompilationProvider;
 
-        // Refactor: collect generator log messages during the Select steps and report them once
-        // from a single RegisterSourceOutput. This avoids registering a new source output per message.
+        // Resolve the repository/solution directory
         IncrementalValueProvider<string> solutionDir = compilationProvider.Select((_, _) => GetSolutionDir());
+
+        // Prefer environment variable REFERENCE_RUN_PATH (CI will set this), otherwise search for common binary names.
         IncrementalValueProvider<string> argon2 = compilationProvider.Combine(solutionDir)
-            .Select(
-                (x, _) => Directory.GetFiles(x.Right, "argon2.exe", SearchOption.AllDirectories)
-                        .FirstOrDefault() ??
-                    throw new Exception($"argon2.exe not found in {x.Right}"));
+            .Select((x, _) =>
+            {
+                string solutionDirectory = x.Right;
+                // 1) env var
+                string? env = Environment.GetEnvironmentVariable("REFERENCE_RUN_PATH");
+                if (!string.IsNullOrEmpty(env) && File.Exists(env))
+                {
+                    return env;
+                }
+
+                // 2) search repository for common binary names
+                var candidates = new[] { "run", "run.exe", "argon2", "argon2.exe" };
+                foreach (var name in candidates)
+                {
+                    var found = Directory.GetFiles(solutionDirectory, name, SearchOption.AllDirectories).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(found))
+                    {
+                        return found;
+                    }
+                }
+
+                throw new Exception(
+                    $"Native reference binary not found. Set environment variable REFERENCE_RUN_PATH to the full path of the native binary, or place one of: {string.Join(", ", candidates)} under {solutionDirectory}");
+            });
 
         // validatedArgon2 now produces the found path plus a mutable List<string> that collects logs
         IncrementalValueProvider<(string Path, List<string> Logs)> validatedArgon2 =
@@ -200,10 +216,6 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
                            }
                        }
                        """;
-        ////if (!Debugger.IsAttached)
-        ////{
-        ////    Debugger.Launch();
-        ////}
 
         return SourceText.From(source, Encoding.ASCII);
     }
@@ -266,7 +278,6 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
                         a.parallelism, tagLength))
             .ToList();
 
-        // put on the "official" test vectors. These are already known to work because of their use in the Validate() call.
         runArgs.AddRange(
             GetOfficialTestVectors().Select(
                 a => (a.Type, a.Password, a.Salt, a.IterationCount, (string?)a.Secret, (string?)a.AssociatedData,
@@ -279,9 +290,6 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         string argon2,
         (Argon2TypeLocal Type, string Password, string Salt, int IterationCount, string? Secret, string? AssociatedData, int MemoryKByteFactor, int Parallelism, int TagLength) args)
     {
-        // Note: args.Type.ToString() will produce the enum member name such as "DataIndependentAddressing".
-        // The generated source intentionally writes `Argon2Type.{name}` so the consumer's Argon2TestVectorType
-        // enums are referenced at compile-time there.
         return $"new TestVector(Argon2Type.{args.Type}, Argon2Version.Nineteen, {args.IterationCount}, {args.MemoryKByteFactor * 8 * args.Parallelism}, {args.Parallelism}, {Arg(args.Password)}, {Arg(args.Salt)}, {Arg(args.Secret)}, {Arg(args.AssociatedData)}, {args.TagLength}, {Arg(RunArgon2(reportDiagnostic, argon2, args.Salt, args.Type, args.Password, args.IterationCount, args.Secret, args.AssociatedData, args.MemoryKByteFactor * 8 * args.Parallelism, args.Parallelism, args.TagLength, Argon2OutputLocal.Encoded))})";
 
         static string Arg(string? a)
@@ -291,10 +299,10 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
     }
 
     /// <summary>
-    /// Use Roslyn to get the path to this file and go up one to get the solution directory.
+    /// Use Roslyn to get the path to this file and go up to the repository root.
     /// </summary>
     /// <param name="path">Roslyn sets to the path of the current file.</param>
-    /// <returns>The path to the solution directory.</returns>
+    /// <returns>The path to the repository root.</returns>
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     private static string GetSolutionDir([CallerFilePath] string path = null)
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -356,7 +364,6 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             FileName = argon2,
             WindowStyle = ProcessWindowStyle.Hidden,
             RedirectStandardOutput = true,
-            //// RedirectStandardError = true,
             Arguments = BuildCommandLineFromArgs(
                 salt,
                 type switch { Argon2TypeLocal.DataIndependentAddressing => "-i", Argon2TypeLocal.DataDependentAddressing => "-d", _ => "-id" },
@@ -378,7 +385,6 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
         };
         using Process p = Process.Start(startInfo) ?? throw new Exception($"Failed to start {startInfo.FileName}");
         string res = p.StandardOutput.ReadToEnd().TrimEnd('\r', '\n');
-        //// var resError = p.StandardError.ReadToEnd().TrimEnd(new char[] { '\r', '\n' });
         p.WaitForExit();
         reportDiagnostic($"Ran: {startInfo.FileName} {startInfo.Arguments}, got: {res}");
         return res;
