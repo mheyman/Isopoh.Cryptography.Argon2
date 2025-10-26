@@ -32,8 +32,8 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      - name: Configure (CMake preset: release)
+      - name: "Configure CMake (CMake build preset: release)"
         run: cmake --preset release
 
-      - name: Build and Run Tests (CMake build preset: release-test)
+      - name: "Build and Run Tests (CMake build preset: release-test)"
         run: cmake --build --preset release-test
