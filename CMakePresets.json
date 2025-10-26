@@ -90,7 +90,7 @@
         },
         {
             "name": "release-test",
-            "displayName": "Build Release Tests (no signing)",
+            "displayName": "Build and Run Release Tests (no signing)",
             "configurePreset": "release",
             "targets": [
                 "dotnet-test"
@@ -99,7 +99,7 @@
         },
         {
             "name": "debug-test",
-            "displayName": "Build Debug Tests (no signing)",
+            "displayName": "Build and Run Debug Tests (no signing)",
             "configurePreset": "debug",
             "targets": [
                 "dotnet-test"
