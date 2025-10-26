@@ -98,6 +98,12 @@ if(FILTERED_CS_PROJS)
   endforeach()
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(DOTNET_CONFIGURATION "Debug")
+else()
+    set(DOTNET_CONFIGURATION "Release")
+endif()
+
 # Dotnet targets that run with REFERENCE_RUN_PATH pointing at the native binary produced by the 'argon2' target.
 # Ensure generate-dotnet-sln runs before dotnet restore/build/test.
 add_custom_target(dotnet-restore
@@ -108,24 +114,75 @@ add_custom_target(dotnet-restore
 )
 
 add_custom_target(dotnet-build
-  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build ${DOTNET_SOLUTION} --configuration Release
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build ${DOTNET_SOLUTION} --configuration ${DOTNET_CONFIGURATION} 
   DEPENDS dotnet-restore
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "dotnet build (Release) with REFERENCE_RUN_PATH"
 )
 
 add_custom_target(dotnet-test
-  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} test ${DOTNET_SOLUTION} --configuration Release --no-build
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} test ${DOTNET_SOLUTION} --configuration ${DOTNET_CONFIGURATION}
   DEPENDS dotnet-build
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "dotnet test with REFERENCE_RUN_PATH"
 )
+
+add_custom_target(dotnet-build-test-uno-wasm
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestUno/TestUno.Wasm  --configuration ${DOTNET_CONFIGURATION}
+  DEPENDS dotnet-build
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "dotnet build test uno wasm"
+)
+
+add_custom_target(dotnet-build-test-blazor-wasm
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestBlazor/Wasm  --configuration ${DOTNET_CONFIGURATION}
+  DEPENDS dotnet-build
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "dotnet build test blazor wasm"
+)
+
+add_custom_target(dotnet-build-test-blazor-server
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestBlazor/Server --configuration ${DOTNET_CONFIGURATION}
+  DEPENDS dotnet-build
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "dotnet build test blazor server"
+)
+
+add_custom_target(dotnet-build-test-app
+  COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestApp --configuration ${DOTNET_CONFIGURATION}
+  DEPENDS dotnet-build
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "dotnet build test app"
+)
+
+set(TEST_APPS "dotnet-build-test-uno-wasm;dotnet-build-test-blazor-wasm;dotnet-build-test-blazor-server;dotnet-build-test-app")
+
+if(WINDOWS_STORE) # TODO - we should be able to build UWP with proper workloads installed 
+    add_custom_target(dotnet-build-test-uwp
+        COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestUwpApp --configuration ${DOTNET_CONFIGURATION}
+        DEPENDS dotnet-build
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "dotnet build test uwp"
+    )
+
+    add_custom_target(dotnet-build-test-uno-uwp
+      COMMAND ${CMAKE_COMMAND} -E env REFERENCE_RUN_PATH=$<TARGET_FILE:argon2> ${DOTNET_CLI} build test/TestUno/TestUno.UWP --configuration ${DOTNET_CONFIGURATION}
+      DEPENDS dotnet-build
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      COMMENT "dotnet build test uno uwp"
+    )
+    list(APPEND TEST_APPS "dotnet-build-test-uwp" "dotnet-build-test-uno-uwp")
+endif()
+
 
 # Convenience target that builds native and dotnet build
 add_custom_target(all-with-dotnet
   ALL
   DEPENDS argon2 dotnet-build
 )
+
+# Convenience target that builds the test apps
+add_custom_target(dotnet-build-test-apps DEPENDS ${TEST_APPS})
 
 # Find the Windows Kits root directory
 set(WINDOWS_KITS_ROOT "")

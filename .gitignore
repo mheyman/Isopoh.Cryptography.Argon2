@@ -73,6 +73,7 @@ AplPed.TACOP/AplPed.TACOP.ExplorerWidget/Scripts/apl/apl.earth.js
 # Never checkin user CMake presets
 ####################################
 CMakeUserPresets.json
+
 # build/edit artifacts #
 ########################
 .vs
@@ -151,6 +152,7 @@ dllFun.xml
 TestResults
 /nuget
 Reference/build
+_dotnet_build.sln
 # copied around code signing keys
 Isopoh.Cryptography.Argon2/isopoh.pfx
 Isopoh.Cryptography.Blake2b/isopoh.pfx

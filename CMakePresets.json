@@ -81,10 +81,46 @@
         },
         {
             "name": "debug-build",
-            "displayName": "Build Release (no signing)",
+            "displayName": "Build Debug (no signing)",
             "configurePreset": "debug",
             "targets": [
                 "all-with-dotnet"
+            ],
+            "configuration": "Debug"
+        },
+        {
+            "name": "release-test",
+            "displayName": "Build Release Tests (no signing)",
+            "configurePreset": "release",
+            "targets": [
+                "dotnet-test"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "debug-test",
+            "displayName": "Build Debug Tests (no signing)",
+            "configurePreset": "debug",
+            "targets": [
+                "dotnet-test"
+            ],
+            "configuration": "Debug"
+        },
+        {
+            "name": "release-test-apps",
+            "displayName": "Build Release Tests (no signing)",
+            "configurePreset": "release",
+            "targets": [
+                "dotnet-build-test-apps"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "debug-test-apps",
+            "displayName": "Build Debug Tests (no signing)",
+            "configurePreset": "debug",
+            "targets": [
+                "dotnet-build-test-apps"
             ],
             "configuration": "Debug"
         }

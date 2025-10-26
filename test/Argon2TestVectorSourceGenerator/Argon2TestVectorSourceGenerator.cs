@@ -80,14 +80,12 @@ public class Argon2TestVectorSourceGenerator : IIncrementalGenerator
             .Select((x, _) =>
             {
                 string solutionDirectory = x.Right;
-                // 1) env var
                 string? env = Environment.GetEnvironmentVariable("REFERENCE_RUN_PATH");
                 if (!string.IsNullOrEmpty(env) && File.Exists(env))
                 {
                     return env;
                 }
 
-                // 2) search repository for common binary names
                 var candidates = new[] { "run", "run.exe", "argon2", "argon2.exe" };
                 foreach (var name in candidates)
                 {

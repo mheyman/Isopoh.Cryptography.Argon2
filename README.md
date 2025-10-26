@@ -2,7 +2,7 @@
 
 # FULLY MANAGED .NET CORE ARGON2 IMPLEMENTATION
 [d]: #project
-**[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [LICENSE][cpl]**
+**[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [DEVELOP][dev] | [LICENSE][cpl]**
 
 > Argon2 is a hash generator optimized to produce hashes suitable for
 > credential storage, key derivation, or other situations requiring a
@@ -249,6 +249,11 @@ The API Documentation at [https://mheyman.github.io/Isopoh.Cryptography.Argon2](
 gets generated automatically upon build. This happens via a dummy C# "Doc"
 project that uses the [*DocFx*](https://github.com/dotnet/docfx) NuGet
 package to produce the API documentation.
+
+## Developers
+[dev]: #developers 'Developer guide'
+
+See [Developers.md](Developers.md) for information on building the project.
 
 ## AUTHOR
 [auth]: #author 'Credits & author\'s contacts info'
