@@ -24,7 +24,7 @@
         Here we implement an abstraction layer for the simpĺe requirements
         of the Argon2 code. We only require 3 primitives---thread creation,
         joining, and termination---so full emulation of the pthreads API
-        is unwarranted. Currently we wrap pthreads and Win32 threads.
+        is unwarranted. Currently, we wrap pthreads and Win32 threads.
 
         The API defines 2 types: the function pointer type,
    argon2_thread_func_t,
@@ -53,7 +53,7 @@ int argon2_thread_create(argon2_thread_handle_t *handle,
                          argon2_thread_func_t func, void *args);
 
 /* Waits for a thread to terminate
- * @param handle Handle to a thread created with argon2_thread_create.
+ * @param handle thread handle created with argon2_thread_create.
  * @return 0 if @handle is a valid handle, and joining completed successfully.
 */
 int argon2_thread_join(argon2_thread_handle_t handle);

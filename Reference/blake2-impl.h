@@ -124,7 +124,7 @@ static BLAKE2_INLINE uint64_t load48(const void *src) {
     w |= (uint64_t)(*p++) << 16;
     w |= (uint64_t)(*p++) << 24;
     w |= (uint64_t)(*p++) << 32;
-    w |= (uint64_t)(*p++) << 40;
+    w |= (uint64_t)(*p) << 40;
     return w;
 }
 
@@ -140,7 +140,7 @@ static BLAKE2_INLINE void store48(void *dst, uint64_t w) {
     w >>= 8;
     *p++ = (uint8_t)w;
     w >>= 8;
-    *p++ = (uint8_t)w;
+    *p = (uint8_t)w;
 }
 
 static BLAKE2_INLINE uint32_t rotr32(const uint32_t w, const unsigned c) {
@@ -151,6 +151,6 @@ static BLAKE2_INLINE uint64_t rotr64(const uint64_t w, const unsigned c) {
     return (w >> c) | (w << (64 - c));
 }
 
-void clear_internal_memory(void *v, size_t n);
+void clear_internal_memory(void *v, size_t n);  // NOLINT(readability-redundant-declaration)
 
 #endif

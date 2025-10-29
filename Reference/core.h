@@ -204,7 +204,7 @@ int initialize(argon2_instance_t *instance, argon2_context *context);
  * @pre if context->free_cbk is not NULL, it should point to a function that
  * deallocates memory
  */
-void finalize(const argon2_context *context, argon2_instance_t *instance);
+void finalize(const argon2_context *context, argon2_instance_t const*instance);
 
 /*
  * Function that fills the segment using previous segments also from other

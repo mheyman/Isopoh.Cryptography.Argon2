@@ -37,8 +37,8 @@ int argon2_thread_create(argon2_thread_handle_t *handle,
 
 int argon2_thread_join(argon2_thread_handle_t handle) {
 #if defined(_WIN32)
-    if (WaitForSingleObject((HANDLE)handle, INFINITE) == WAIT_OBJECT_0) {
-        return CloseHandle((HANDLE)handle) != 0 ? 0 : -1;
+    if (WaitForSingleObject((HANDLE)handle, INFINITE) == WAIT_OBJECT_0) {  // NOLINT(performance-no-int-to-ptr)
+        return CloseHandle((HANDLE)handle) != 0 ? 0 : -1;  // NOLINT(performance-no-int-to-ptr)
     }
     return -1;
 #else

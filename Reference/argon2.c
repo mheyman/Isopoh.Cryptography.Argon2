@@ -17,7 +17,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "argon2.h"
 #include "encoding.h"
@@ -39,7 +38,6 @@ const char *argon2_type2string(argon2_type type, int uppercase) {
 int argon2_ctx(argon2_context *context, argon2_type type) {
     /* 1. Validate all inputs */
     int result = validate_inputs(context);
-    uint32_t memory_blocks, segment_length;
     argon2_instance_t instance;
 
     if (ARGON2_OK != result) {
@@ -52,13 +50,13 @@ int argon2_ctx(argon2_context *context, argon2_type type) {
 
     /* 2. Align memory size */
     /* Minimum memory_blocks = 8L blocks, where L is the number of lanes */
-    memory_blocks = context->m_cost;
+    uint32_t memory_blocks = context->m_cost;
 
     if (memory_blocks < 2 * ARGON2_SYNC_POINTS * context->lanes) {
         memory_blocks = 2 * ARGON2_SYNC_POINTS * context->lanes;
     }
 
-    segment_length = memory_blocks / (context->lanes * ARGON2_SYNC_POINTS);
+    uint32_t segment_length = memory_blocks / (context->lanes * ARGON2_SYNC_POINTS);
     /* Ensure that all segments have equal length */
     memory_blocks = segment_length * (context->lanes * ARGON2_SYNC_POINTS);
 
@@ -108,8 +106,6 @@ int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
                 const uint32_t version){
 
     argon2_context context;
-    int result;
-    uint8_t *out;
 
     if (pwdlen > ARGON2_MAX_PWD_LENGTH) {
         return ARGON2_PWD_TOO_LONG;
@@ -127,7 +123,7 @@ int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
         return ARGON2_OUTPUT_TOO_SHORT;
     }
 
-    out = malloc(hashlen);
+    uint8_t* out = malloc(hashlen);
     if (!out) {
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
@@ -153,7 +149,7 @@ int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
     context.flags = ARGON2_DEFAULT_FLAGS;
     context.version = version;
 
-    result = argon2_ctx(&context, type);
+    int result = argon2_ctx(&context, type);
 
     if (result != ARGON2_OK) {
         clear_internal_memory(out, hashlen);
@@ -260,10 +256,9 @@ int argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
 }
 
 static int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
-    size_t i;
     uint8_t d = 0U;
 
-    for (i = 0U; i < len; i++) {
+    for (size_t i = 0U; i < len; i++) {
         d |= b1[i] ^ b2[i];
     }
     return (int)((1 & ((d - 1) >> 8)) - 1);
@@ -275,10 +270,7 @@ int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
     argon2_context ctx;
     uint8_t *desired_result = NULL;
 
-    int ret = ARGON2_OK;
-
-    size_t encoded_len;
-    uint32_t max_field_len;
+    int ret;
 
     if (pwdlen > ARGON2_MAX_PWD_LENGTH) {
         return ARGON2_PWD_TOO_LONG;
@@ -288,13 +280,13 @@ int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
         return ARGON2_DECODING_FAIL;
     }
 
-    encoded_len = strlen(encoded);
+    size_t encoded_len = strlen(encoded);
     if (encoded_len > UINT32_MAX) {
         return ARGON2_DECODING_FAIL;
     }
 
     /* No field can be longer than the encoded length */
-    max_field_len = (uint32_t)encoded_len;
+    uint32_t max_field_len = (uint32_t)encoded_len;
 
     ctx.saltlen = max_field_len;
     ctx.outlen = max_field_len;
@@ -316,9 +308,9 @@ int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
         goto fail;
     }
 
-    ctx.pwd = (uint8_t*)pwd;
+    ctx.pwd = (uint8_t *)pwd;  // NOLINT(clang-diagnostic-cast-qual)
     ctx.pwdlen = (uint32_t)pwdlen;
-    ctx.secret = (uint8_t*)secret;
+    ctx.secret = (uint8_t*)secret; // NOLINT(clang-diagnostic-cast-qual)
     ctx.secretlen = (uint32_t)secretlen;
 
     /* Set aside the desired result, and get a new buffer. */
@@ -376,7 +368,7 @@ int argon2_verify_ctx(argon2_context *context, const char *hash,
         return ret;
     }
 
-    if (argon2_compare((uint8_t *)hash, context->out, context->outlen)) {
+    if (argon2_compare((uint8_t const *)hash, context->out, context->outlen)) {
         return ARGON2_VERIFY_MISMATCH;
     }
 

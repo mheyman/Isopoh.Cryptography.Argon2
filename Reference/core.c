@@ -23,12 +23,11 @@
 #if defined __STDC_LIB_EXT1__
 #define __STDC_WANT_LIB_EXT1__ 1
 #endif
-#define VC_GE_2005(version) (version >= 1400)
+#define VC_GE_2005(version) ((version) >= 1400)
 
 /* for explicit_bzero() on glibc */
-#define _DEFAULT_SOURCE
+#define _DEFAULT_SOURCE  // NOLINT(clang-diagnostic-reserved-macro-identifier, clang-diagnostic-unused-macros, bugprone-reserved-identifier)
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -64,22 +63,19 @@ void copy_block(block *dst, const block *src) {
 }
 
 void xor_block(block *dst, const block *src) {
-    int i;
-    for (i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
+    for (int i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
         dst->v[i] ^= src->v[i];
     }
 }
 
 static void load_block(block *dst, const void *input) {
-    unsigned i;
-    for (i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
+    for (unsigned i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
         dst->v[i] = load64((const uint8_t *)input + i * sizeof(dst->v[i]));
     }
 }
 
 static void store_block(void *output, const block *src) {
-    unsigned i;
-    for (i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
+    for (unsigned i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
         store64((uint8_t *)output + i * sizeof(src->v[i]), src->v[i]);
     }
 }
@@ -152,15 +148,14 @@ void clear_internal_memory(void *v, size_t n) {
   }
 }
 
-void finalize(const argon2_context *context, argon2_instance_t *instance) {
+void finalize(const argon2_context *context, argon2_instance_t const*instance) {
     if (context != NULL && instance != NULL) {
         block blockhash;
-        uint32_t l;
 
         copy_block(&blockhash, instance->memory + instance->lane_length - 1);
 
         /* XOR the last blocks */
-        for (l = 1; l < instance->lanes; ++l) {
+        for (uint32_t l = 1; l < instance->lanes; ++l) {
             uint32_t last_block_in_lane =
                 l * instance->lane_length + (instance->lane_length - 1);
             xor_block(&blockhash, instance->memory + last_block_in_lane);
@@ -200,8 +195,6 @@ uint32_t index_alpha(const argon2_instance_t *instance,
      *      Other lanes : (SYNC_POINTS - 1) last segments
      */
     uint32_t reference_area_size;
-    uint64_t relative_position;
-    uint32_t start_position, absolute_position;
 
     if (0 == position->pass) {
         /* First pass */
@@ -236,13 +229,13 @@ uint32_t index_alpha(const argon2_instance_t *instance,
 
     /* 1.2.4. Mapping pseudo_rand to 0..<reference_area_size-1> and produce
      * relative position */
-    relative_position = pseudo_rand;
+    uint64_t relative_position = pseudo_rand;
     relative_position = relative_position * relative_position >> 32;
     relative_position = reference_area_size - 1 -
                         (reference_area_size * relative_position >> 32);
 
     /* 1.2.5 Computing starting position */
-    start_position = 0;
+    uint32_t start_position = 0;
 
     if (0 != position->pass) {
         start_position = (position->slice == ARGON2_SYNC_POINTS - 1)
@@ -251,18 +244,16 @@ uint32_t index_alpha(const argon2_instance_t *instance,
     }
 
     /* 1.2.6. Computing absolute position */
-    absolute_position = (start_position + relative_position) %
-                        instance->lane_length; /* absolute position */
+    uint32_t absolute_position = (start_position + relative_position) %
+        instance->lane_length; /* absolute position */
     return absolute_position;
 }
 
 /* Single-threaded version for p=1 case */
 static int fill_memory_blocks_st(argon2_instance_t *instance) {
-    uint32_t r, s, l;
-
-    for (r = 0; r < instance->passes; ++r) {
-        for (s = 0; s < ARGON2_SYNC_POINTS; ++s) {
-            for (l = 0; l < instance->lanes; ++l) {
+    for (uint32_t r = 0; r < instance->passes; ++r) {
+        for (uint32_t s = 0; s < ARGON2_SYNC_POINTS; ++s) {
+            for (uint32_t l = 0; l < instance->lanes; ++l) {
                 argon2_position_t position = {r, l, (uint8_t)s, 0};
                 fill_segment(instance, position);
             }
@@ -288,10 +279,9 @@ static void *fill_segment_thr(void *thread_data)
     return 0;
 }
 
-/* Multi-threaded version for p > 1 case */
+/* Multithreaded version for p > 1 case */
 static int fill_memory_blocks_mt(argon2_instance_t *instance) {
-    uint32_t r, s;
-    argon2_thread_handle_t *thread = NULL;
+    argon2_thread_handle_t *thread;
     argon2_thread_data *thr_data = NULL;
     int rc = ARGON2_OK;
 
@@ -308,9 +298,9 @@ static int fill_memory_blocks_mt(argon2_instance_t *instance) {
         goto fail;
     }
 
-    for (r = 0; r < instance->passes; ++r) {
-        for (s = 0; s < ARGON2_SYNC_POINTS; ++s) {
-            uint32_t l, ll;
+    for (uint32_t r = 0; r < instance->passes; ++r) {
+        for (uint32_t s = 0; s < ARGON2_SYNC_POINTS; ++s) {
+            uint32_t l;
 
             /* 2. Calling threads */
             for (l = 0; l < instance->lanes; ++l) {
@@ -336,7 +326,7 @@ static int fill_memory_blocks_mt(argon2_instance_t *instance) {
                 if (argon2_thread_create(&thread[l], &fill_segment_thr,
                                          (void *)&thr_data[l])) {
                     /* Wait for already running threads */
-                    for (ll = 0; ll < l; ++ll)
+                    for (uint32_t ll = 0; ll < l; ++ll)
                         argon2_thread_join(thread[ll]);
                     rc = ARGON2_THREAD_FAIL;
                     goto fail;
@@ -410,6 +400,7 @@ int validate_inputs(const argon2_context *context) {
         }
     }
 
+    // ReSharper disable once CppUnreachableCode
     if (ARGON2_MIN_PWD_LENGTH > context->pwdlen) {
       return ARGON2_PWD_TOO_SHORT;
     }
@@ -439,6 +430,7 @@ int validate_inputs(const argon2_context *context) {
             return ARGON2_SECRET_PTR_MISMATCH;
         }
     } else {
+        // ReSharper disable once CppUnreachableCode
         if (ARGON2_MIN_SECRET > context->secretlen) {
             return ARGON2_SECRET_TOO_SHORT;
         }
@@ -453,6 +445,7 @@ int validate_inputs(const argon2_context *context) {
             return ARGON2_AD_PTR_MISMATCH;
         }
     } else {
+        // ReSharper disable once CppUnreachableCode
         if (ARGON2_MIN_AD_LENGTH > context->adlen) {
             return ARGON2_AD_TOO_SHORT;
         }
@@ -513,11 +506,10 @@ int validate_inputs(const argon2_context *context) {
 }
 
 void fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance) {
-    uint32_t l;
     /* Make the first and second block in each lane as G(H0||0||i) or
        G(H0||1||i) */
     uint8_t blockhash_bytes[ARGON2_BLOCK_SIZE];
-    for (l = 0; l < instance->lanes; ++l) {
+    for (uint32_t l = 0; l < instance->lanes; ++l) {
 
         store32(blockhash + ARGON2_PREHASH_DIGEST_LENGTH, 0);
         store32(blockhash + ARGON2_PREHASH_DIGEST_LENGTH + 4, l);
@@ -611,15 +603,14 @@ void initial_hash(uint8_t *blockhash, argon2_context *context,
 
 int initialize(argon2_instance_t *instance, argon2_context *context) {
     uint8_t blockhash[ARGON2_PREHASH_SEED_LENGTH];
-    int result = ARGON2_OK;
 
     if (instance == NULL || context == NULL)
         return ARGON2_INCORRECT_PARAMETER;
     instance->context_ptr = context;
 
     /* 1. Memory allocation */
-    result = allocate_memory(context, (uint8_t **)&(instance->memory),
-                             instance->memory_blocks, sizeof(block));
+    int result = allocate_memory(context, (uint8_t**)&(instance->memory),
+                                 instance->memory_blocks, sizeof(block));
     if (result != ARGON2_OK) {
         return result;
     }
