@@ -14,12 +14,12 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
         <Authors>Michael Heyman</Authors>
-        <Copyright>Michael Heyman 2022</Copyright>
+        <Copyright>Michael Heyman 2024</Copyright>
         <PackageTags>blake2 blake2b hash crypto cryptography</PackageTags>
         <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
         <AssemblyTitle>Isopoh.Cryptography.Blake2b</AssemblyTitle>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
-        <Nullable>warnings</Nullable>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net9.0;net10.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>Isopoh.Cryptography.Blake2b</AssemblyName>
         <PackageId>Isopoh.Cryptography.Blake2b</PackageId>
@@ -28,8 +28,8 @@
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
         <SignAssembly>true</SignAssembly>
-        <DelaySign>false</DelaySign>
-        <AssemblyOriginatorKeyFile>..\..\isopoh.pfx</AssemblyOriginatorKeyFile>
+        <DelaySign>true</DelaySign>
+        <AssemblyOriginatorKeyFile>..\..\isopoh-pub.snk</AssemblyOriginatorKeyFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -39,20 +39,29 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
+    <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+      <IsAotCompatible>true</IsAotCompatible>
+      <VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="9.7.0.75501">
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+      <PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.507">
+      <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.556">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="System.Memory" Version="4.6.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -65,6 +74,7 @@
 
   <ItemGroup>
     <None Include="..\..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>

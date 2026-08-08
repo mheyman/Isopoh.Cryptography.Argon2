@@ -1,8 +1,8 @@
-![Isopoh](https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/master/.github/images/isopoh144.png)
+![Isopoh](https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/main/.github/images/isopoh144.png)
 
 # FULLY MANAGED .NET CORE ARGON2 IMPLEMENTATION
 [d]: #project
-**[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [LICENSE][cpl]**
+**[INSTALL][i] | [USAGE][u] | [PORTING](PORTING.md) | [API][a] | [AUTHOR][auth] | [DEVELOP][dev] | [LICENSE][cpl]**
 
 > Argon2 is a hash generator optimized to produce hashes suitable for
 > credential storage, key derivation, or other situations requiring a
@@ -250,6 +250,11 @@ gets generated automatically upon build. This happens via a dummy C# "Doc"
 project that uses the [*DocFx*](https://github.com/dotnet/docfx) NuGet
 package to produce the API documentation.
 
+## Developers
+[dev]: #developers 'Developer guide'
+
+See [Developers.md](Developers.md) for information on building the project.
+
 ## AUTHOR
 [auth]: #author 'Credits & author\'s contacts info'
 [Michael Heyman](https://github.com/mheyman)
@@ -287,4 +292,3 @@ List of people and project that inspired creation of this one:
 You should be aware that this project is supported solely by me and provided as is.
 
 Go back to the **[project description][d]**
-

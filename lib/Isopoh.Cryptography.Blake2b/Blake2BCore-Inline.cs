@@ -10,10 +10,9 @@
 // this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 // ReSharper disable once EmptyNamespace
-namespace Isopoh.Cryptography.Blake2b
-{
+namespace Isopoh.Cryptography.Blake2b;
 #if false
-    public sealed partial class Blake2BCore
+    public partial class Blake2BCore
     {
             private static readonly int[] Sigma = new int[NumberOfRounds * 16] {
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -191,4 +190,3 @@ namespace Isopoh.Cryptography.Blake2b
         }
     }
 #endif
-}

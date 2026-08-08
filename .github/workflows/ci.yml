@@ -1,0 +1,92 @@
+name: CI - Build and Test (Release)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_full_tests:
+        description: Run the long-running managed test suite
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build
+
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          choco install -y cmake
+          choco install -y ninja
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+
+      - name: "Configure CMake (CMake build preset: release)"
+        run: cmake --preset release
+
+      - name: Build native reference implementation
+        run: cmake --build --preset release --target argon2
+
+      - name: Build .NET 10 libraries with AOT analysis
+        run: dotnet build lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj -c Release -f net10.0 -p:GeneratePackageOnBuild=false
+
+      - name: Publish Native AOT smoke test (Linux)
+        if: runner.os == 'Linux'
+        run: dotnet publish test/AotSmokeTest/AotSmokeTest.csproj -c Release -r linux-x64
+
+      - name: Run Native AOT smoke test (Linux)
+        if: runner.os == 'Linux'
+        run: ./test/AotSmokeTest/bin/Release/net10.0/linux-x64/publish/AotSmokeTest
+
+      - name: Publish Native AOT smoke test (Windows)
+        if: runner.os == 'Windows'
+        run: dotnet publish test/AotSmokeTest/AotSmokeTest.csproj -c Release -r win-x64
+
+      - name: Run Native AOT smoke test (Windows)
+        if: runner.os == 'Windows'
+        run: ./test/AotSmokeTest/bin/Release/net10.0/win-x64/publish/AotSmokeTest.exe
+
+  full-managed-tests:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_full_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+
+      - name: Configure release build
+        run: cmake --preset release
+
+      - name: Run full managed test suite
+        run: cmake --build --preset release-test

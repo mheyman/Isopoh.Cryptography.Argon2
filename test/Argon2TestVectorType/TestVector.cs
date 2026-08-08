@@ -25,6 +25,7 @@ namespace Argon2TestVectorType
         /// <param name="salt">The salt hashed.</param>
         /// <param name="secret">The secret hashed.</param>
         /// <param name="associatedData">The associated data hashed.</param>
+        /// <param name="tagLength">The length of the unencoded tag.</param>
         /// <param name="encodedTag">The encoded tag resulting from the hash.</param>
         public TestVector(
             Argon2Type type,

@@ -5,9 +5,11 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
+
 using System.Collections.Generic;
 using System.Linq;
+using Argon2TestVectorType;
+using Isopoh.Cryptography.Argon2;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -21,11 +23,11 @@ public static class VersusReferenceCode
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>Result text.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
-        var testVectors = new global::Argon2TestVector.Test().Argon2Vectors;
+        List<TestVector>? testVectors = new global::Argon2TestVector.Test().Argon2Vectors;
         var faileds = new List<int>();
-        foreach (var (i, testVector) in testVectors.Select((a, i) => (i, a)))
+        foreach ((int i, TestVector testVector) in testVectors.Select((a, i) => (i, a)))
         {
             if (!Argon2TestVectorTypeBasicCheck.Test(i, testVector, output))
             {
@@ -33,7 +35,7 @@ public static class VersusReferenceCode
             }
         }
 
-        var res = faileds.Any() ? $"Argon2AgainstReference FAILED {faileds.Count}/{testVectors.Count} [{string.Join(", ", faileds.Select(a => $"{a}"))}]" : $"Argon2AgainstReference Passed {testVectors.Count} checks";
+        string res = faileds.Any() ? $"Argon2AgainstReference FAILED {faileds.Count}/{testVectors.Count} [{string.Join(", ", faileds.Select(a => $"{a}"))}]" : $"Argon2AgainstReference Passed {testVectors.Count} checks";
         return (!faileds.Any(), res);
     }
 }

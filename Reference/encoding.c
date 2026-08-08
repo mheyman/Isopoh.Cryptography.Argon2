@@ -15,6 +15,8 @@
  * software. If not, they may be obtained at the above URLs.
  */
 
+// ReSharper disable CppInconsistentNaming
+// ReSharper disable CppClangTidyClangDiagnosticUnusedMacros
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -81,10 +83,10 @@
  * Convert value x (0..63) to corresponding Base64 character.
  */
 static int b64_byte_to_char(unsigned x) {
-    return (LT(x, 26) & (x + 'A')) |
+    return (int)((LT(x, 26) & (x + 'A')) |
            (GE(x, 26) & LT(x, 52) & (x + ('a' - 26))) |
            (GE(x, 52) & LT(x, 62) & (x + ('0' - 52))) | (EQ(x, 62) & '+') |
-           (EQ(x, 63) & '/');
+           (EQ(x, 63) & '/'));
 }
 
 /*
@@ -92,13 +94,11 @@ static int b64_byte_to_char(unsigned x) {
  * is not a Base64 character, then 0xFF (255) is returned.
  */
 static unsigned b64_char_to_byte(int c) {
-    unsigned x;
-
-    x = (GE(c, 'A') & LE(c, 'Z') & (c - 'A')) |
+    unsigned const x = (GE(c, 'A') & LE(c, 'Z') & (c - 'A')) |
         (GE(c, 'a') & LE(c, 'z') & (c - ('a' - 26))) |
         (GE(c, '0') & LE(c, '9') & (c - ('0' - 52))) | (EQ(c, '+') & 62) |
         (EQ(c, '/') & 63);
-    return x | (EQ(x, 0) & (EQ(c, 'A') ^ 0xFF));
+    return x | (EQ(x, 0) & (EQ(c, 'A') ^ 0xFF));  // NOLINT(misc-redundant-expression)
 }
 
 /*
@@ -111,25 +111,23 @@ static unsigned b64_char_to_byte(int c) {
  */
 size_t to_base64(char *dst, size_t dst_len, const void *src,
                         size_t src_len) {
-    size_t olen;
-    const unsigned char *buf;
-    unsigned acc, acc_len;
-
-    olen = (src_len / 3) << 2;
+    size_t olen = (src_len / 3) << 2;
     switch (src_len % 3) {
     case 2:
         olen++;
     /* fall through */
-    case 1:
+    case 1:  // NOLINT(clang-diagnostic-implicit-fallthrough)
         olen += 2;
         break;
+    default:
+        /* nothing to do */;
     }
     if (dst_len <= olen) {
         return (size_t)-1;
     }
-    acc = 0;
-    acc_len = 0;
-    buf = (const unsigned char *)src;
+    unsigned acc = 0;
+    unsigned acc_len = 0;
+    const unsigned char* buf = (const unsigned char*)src;
     while (src_len-- > 0) {
         acc = (acc << 8) + (*buf++);
         acc_len += 8;
@@ -141,7 +139,7 @@ size_t to_base64(char *dst, size_t dst_len, const void *src,
     if (acc_len > 0) {
         *dst++ = (char)b64_byte_to_char((acc << (6 - acc_len)) & 0x3F);
     }
-    *dst++ = 0;
+    *dst = 0;
     return olen;
 }
 
@@ -159,18 +157,12 @@ size_t to_base64(char *dst, size_t dst_len, const void *src,
  * may be the terminating zero.
  */
 static const char *from_base64(void *dst, size_t *dst_len, const char *src) {
-    size_t len;
-    unsigned char *buf;
-    unsigned acc, acc_len;
-
-    buf = (unsigned char *)dst;
-    len = 0;
-    acc = 0;
-    acc_len = 0;
+    unsigned char* buf = (unsigned char*)dst;
+    size_t len = 0;
+    unsigned acc = 0;
+    unsigned acc_len = 0;
     for (;;) {
-        unsigned d;
-
-        d = b64_char_to_byte(*src);
+        unsigned const d = b64_char_to_byte(*src);
         if (d == 0xFF) {
             break;
         }
@@ -208,13 +200,10 @@ static const char *from_base64(void *dst, size_t *dst_len, const char *src) {
  */
 static const char *decode_decimal(const char *str, unsigned long *v) {
     const char *orig;
-    unsigned long acc;
 
-    acc = 0;
+    unsigned long acc = 0;
     for (orig = str;; str++) {
-        int c;
-
-        c = *str;
+        int c = *str;  // NOLINT(bugprone-signed-char-misuse)
         if (c < '0' || c > '9') {
             break;
         }
@@ -268,12 +257,16 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     } while ((void)0, 0)
 
 /* optional prefix checking with supplied code */
-#define CC_opt(prefix, code)                                                   \
+#define CC_opt(prefix, code, field_ptr, field_len)                             \
     do {                                                                       \
         size_t cc_len = strlen(prefix);                                        \
         if (strncmp(str, prefix, cc_len) == 0) {                               \
             str += cc_len;                                                     \
             { code; }                                                          \
+        }                                                                      \
+        else {                                                                 \
+            (field_ptr) = NULL;                                                \
+            (field_len) = 0;                                                   \
         }                                                                      \
     } while ((void)0, 0)
 
@@ -312,13 +305,13 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
         (len) = (uint32_t)bin_len;                                             \
     } while ((void)0, 0)
 
-    size_t maxsaltlen = ctx->saltlen;
-    size_t maxoutlen = ctx->outlen;
-    int validation_result;
-    const char* type_string;
+    size_t const maxsaltlen = ctx->saltlen;
+    size_t const maxoutlen = ctx->outlen;
+    size_t const maxkidlen = ctx->kidlen;
+    size_t const maxadlen = ctx->adlen;
 
     /* We should start with the argon2_type we are using */
-    type_string = argon2_type2string(type, 0);
+    const char* type_string = argon2_type2string(type, 0);
     if (!type_string) {
         return ARGON2_INCORRECT_TYPE;
     }
@@ -328,7 +321,9 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
 
     /* Reading the version number if the default is suppressed */
     ctx->version = ARGON2_VERSION_10;
-    CC_opt("$v=", DECIMAL_U32(ctx->version));
+    void* dummy_ptr;
+    int dummy_len;
+    CC_opt("$v=", DECIMAL_U32(ctx->version), dummy_ptr, dummy_len);
 
     CC("$m=");
     DECIMAL_U32(ctx->m_cost);
@@ -337,6 +332,8 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     CC(",p=");
     DECIMAL_U32(ctx->lanes);
     ctx->threads = ctx->lanes;
+    CC_opt(",keyid=", BIN(ctx->kid, maxkidlen, ctx->kidlen), ctx->kid, ctx->kidlen);
+    CC_opt(",data=", BIN(ctx->ad, maxadlen, ctx->adlen), ctx->kid, ctx->adlen);
 
     CC("$");
     BIN(ctx->salt, maxsaltlen, ctx->saltlen);
@@ -346,14 +343,12 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
     /* The rest of the fields get the default values */
     ctx->secret = NULL;
     ctx->secretlen = 0;
-    ctx->ad = NULL;
-    ctx->adlen = 0;
     ctx->allocate_cbk = NULL;
     ctx->free_cbk = NULL;
     ctx->flags = ARGON2_DEFAULT_FLAGS;
 
     /* On return, must have valid context */
-    validation_result = validate_inputs(ctx);
+    int validation_result = validate_inputs(ctx);
     if (validation_result != ARGON2_OK) {
         return validation_result;
     }
@@ -370,7 +365,7 @@ int decode_string(argon2_context *ctx, const char *str, argon2_type type) {
 #undef BIN
 }
 
-int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
+int encode_string(char *dst, size_t dst_len, argon2_context const *ctx,
                   argon2_type type) {
 #define SS(str)                                                                \
     do {                                                                       \
@@ -411,7 +406,6 @@ int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
       return validation_result;
     }
 
-
     SS("$");
     SS(type_string);
 
@@ -424,12 +418,27 @@ int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
     SX(ctx->t_cost);
     SS(",p=");
     SX(ctx->lanes);
+    if(ctx->kidlen)
+    {
+        SS(",keyid=");
+        SB(ctx->kid, ctx->kidlen);
+    }
+    if (ctx->adlen)
+    {
+        SS(",data=");
+        SB(ctx->ad, ctx->adlen);
+    }
+    if (ctx->saltlen)
+    {
+        SS("$");
+        SB(ctx->salt, ctx->saltlen);
 
-    SS("$");
-    SB(ctx->salt, ctx->saltlen);
-
-    SS("$");
-    SB(ctx->out, ctx->outlen);
+        if (ctx->outlen)
+        {
+            SS("$");
+            SB(ctx->out, ctx->outlen);
+        }
+    }
     return ARGON2_OK;
 
 #undef SS
@@ -444,9 +453,11 @@ size_t b64len(uint32_t len) {
     case 2:
         olen++;
     /* fall through */
-    case 1:
+    case 1:  // NOLINT(clang-diagnostic-implicit-fallthrough)
         olen += 2;
         break;
+    default:
+        /* nothing to do */;
     }
 
     return olen;

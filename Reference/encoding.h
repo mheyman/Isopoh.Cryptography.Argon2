@@ -41,7 +41,7 @@ size_t to_base64(char *dst, size_t dst_len, const void *src, size_t src_len);
 *
 * on success, ARGON2_OK is returned.
 */
-int encode_string(char *dst, size_t dst_len, argon2_context *ctx,
+int encode_string(char *dst, size_t dst_len, argon2_context const*ctx,
                   argon2_type type);
 
 /*

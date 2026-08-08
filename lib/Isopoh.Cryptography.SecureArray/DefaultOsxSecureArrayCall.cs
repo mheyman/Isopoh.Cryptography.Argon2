@@ -4,29 +4,28 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-namespace Isopoh.Cryptography.SecureArray
-{
-    using System.Runtime.InteropServices;
-    using Isopoh.Cryptography.SecureArray.OsxNative;
+namespace Isopoh.Cryptography.SecureArray;
 
+using System.Runtime.InteropServices;
+using Isopoh.Cryptography.SecureArray.OsxNative;
+
+/// <summary>
+/// A <see cref="SecureArrayCall"/> with defaults for the OSX operating system.
+/// </summary>
+public class DefaultOsxSecureArrayCall : SecureArrayCall
+{
     /// <summary>
-    /// A <see cref="SecureArrayCall"/> with defaults for the OSX operating system.
+    /// Initializes a new instance of the <see cref="DefaultOsxSecureArrayCall"/> class.
     /// </summary>
-    public class DefaultOsxSecureArrayCall : SecureArrayCall
+    public DefaultOsxSecureArrayCall()
+        : base(
+            (m, l) => UnsafeNativeMethods.OsxMemset(m, 0, l),
+            (m, l) => UnsafeNativeMethods.OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
+            (m, l) =>
+            {
+                _ = UnsafeNativeMethods.OsxMunlock(m, l);
+            },
+            "OSX")
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultOsxSecureArrayCall"/> class.
-        /// </summary>
-        public DefaultOsxSecureArrayCall()
-            : base(
-                  (m, l) => UnsafeNativeMethods.OsxMemset(m, 0, l),
-                  (m, l) => UnsafeNativeMethods.OsxMlock(m, l) != 0 ? $"mlock error code: {Marshal.GetLastWin32Error()}" : null,
-                  (m, l) =>
-                  {
-                      _ = UnsafeNativeMethods.OsxMunlock(m, l);
-                  },
-                  "OSX")
-        {
-        }
     }
 }

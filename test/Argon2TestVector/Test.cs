@@ -4,19 +4,19 @@
 // worldwide. This software is distributed without any warranty.
 // </copyright>
 
-namespace Argon2TestVector
-{
-    using System.Collections.Generic;
-    using Argon2TestVectorType;
+namespace Argon2TestVector;
 
+using System.Collections.Generic;
+using Argon2TestVectorType;
+
+/// <summary>
+/// Holds <see cref="Test.Argon2Vectors"/> generated from the reference C implementation.
+/// </summary>
+public partial class Test
+{
     /// <summary>
-    /// Holds <see cref="Test.Argon2Vectors"/> generated from the reference C implementation.
+    /// Gets the list of vectors generated at compile time from C-language reference argon2 command line example code.
     /// </summary>
-    public partial class Test
-    {
-        /// <summary>
-        /// Gets the list of vectors generated at compile time from C-language reference argon2 command line example code.
-        /// </summary>
-        public List<TestVector> Argon2Vectors => generatedVectors;
-    }
+    // ReSharper disable once ConvertToAutoProperty
+    public List<TestVector> Argon2Vectors => this.generatedVectors;
 }

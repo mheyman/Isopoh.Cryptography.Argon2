@@ -1,0 +1,128 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "unsigned",
+            "hidden": true,
+            "cacheVariables": {
+                "SIGN_ASSEMBLIES": "OFF"
+            }
+        },
+        {
+            "name": "signed",
+            "hidden": true,
+            "cacheVariables": {
+                "SIGN_ASSEMBLIES": "ON",
+                "SIGNING_CERT_PFX": "isopoh-nopass.pfx",
+                "SIGNING_PFX_PASSWORD": "",
+                "SIGNING_CERT_SUBJECT": "",
+                "SIGNING_TIMESTAMP_URL": "http://timestamp.digicert.com",
+                "SIGN_TARGET_PROJECTS": "lib/Isopoh.Cryptography.SecureArray;lib/Isopoh.Cryptography.Blake2b;lib/Isopoh.Cryptography.Argon2"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release (no signing)",
+            "description": "Configure Release build without signing",
+            "generator": "Ninja",
+            "inherits": ["unsigned"],
+            "binaryDir": "${sourceDir}/out/build/Release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug (no signing)",
+            "description": "Configure Debug build without signing",
+            "generator": "Ninja",
+            "inherits": [ "unsigned" ],
+            "binaryDir": "${sourceDir}/out/build/Debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "sign-release",
+            "displayName": "Release (enable signing)",
+            "description": "Configure Release build with signing enabled. Set PFX/password via CMakeUserPresets.json or CLI to avoid committing secrets.",
+            "generator": "Ninja",
+            "inherits": [ "signed" ],
+            "binaryDir": "${sourceDir}/out/build/SignRelease",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "sign-release-build",
+            "displayName": "Build Release and sign managed/native outputs",
+            "description": "Build using configure preset 'sign-release' and run the project target that triggers signing (dotnet-build).",
+            "configurePreset": "sign-release",
+            "targets": [
+                "dotnet-build"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "release-build",
+            "displayName": "Build Release (no signing)",
+            "configurePreset": "release",
+            "targets": [
+                "all-with-dotnet"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "debug-build",
+            "displayName": "Build Debug (no signing)",
+            "configurePreset": "debug",
+            "targets": [
+                "all-with-dotnet"
+            ],
+            "configuration": "Debug"
+        },
+        {
+            "name": "release-test",
+            "displayName": "Build and Run Release Tests (no signing)",
+            "configurePreset": "release",
+            "targets": [
+                "dotnet-test"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "debug-test",
+            "displayName": "Build and Run Debug Tests (no signing)",
+            "configurePreset": "debug",
+            "targets": [
+                "dotnet-test"
+            ],
+            "configuration": "Debug"
+        },
+        {
+            "name": "release-test-apps",
+            "displayName": "Build Release Tests (no signing)",
+            "configurePreset": "release",
+            "targets": [
+                "dotnet-build-test-apps"
+            ],
+            "configuration": "Release"
+        },
+        {
+            "name": "debug-test-apps",
+            "displayName": "Build Debug Tests (no signing)",
+            "configurePreset": "debug",
+            "targets": [
+                "dotnet-build-test-apps"
+            ],
+            "configuration": "Debug"
+        }
+    ]
+}

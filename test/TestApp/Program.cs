@@ -8,8 +8,10 @@
 // </summary>
 
 namespace TestApp;
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestLib;
 using Xunit.Abstractions;
 
@@ -26,20 +28,26 @@ public class Program
     {
         var output = new Output();
         Console.WriteLine("Testing Isopoh.Cryptography.Argon2");
-        var resultTexts = new List<string>
+        var results = new List<(bool Passed, string Message)>
         {
-            LeakInVerify.Test(output).Item2,
-            SecureArraySizing.Test(output).Item2,
-            RoundTrip.Test(output).Item2,
-            RoundTripSimpleCall.Test(output).Item2,
-            ThreadsDontMatter.Test(output).Item2,
-            PublishedVector.Test(output).Item2,
-            VersusReferenceCode.Test(output).Item2,
-            FromDraft3.Test(output).Item2,
-            HighMemoryCost.Test(output).Item2,
-            TimeToHash.Test(output).Item2,
+            LeakInVerify.Test(output),
+            LeakInHash.Test(output),
+            MemoryNoAlloc.Test(output),
+            SecureArraySizing.Test(output),
+            RoundTrip.Test(output),
+            RoundTripSimpleCall.Test(output),
+            ThreadsDontMatter.Test(output),
+            PublishedVector.Test(output),
+            VersusReferenceCode.Test(output),
+            FromDraft3.Test(output),
+            HighMemoryCost.Test(output),
+            TimeToHash.Test(output),
+            Blake2bTestVector.Test(output),
+            Blake2BTestVariations.Test(output),
         };
-        Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", resultTexts)}");
+
+        Console.WriteLine($"Tests complete:{Environment.NewLine}  {string.Join($"{Environment.NewLine}  ", results.Select(r => r.Message))}");
+        Console.WriteLine($"Passed {results.Count(r => r.Passed)} / {results.Count}");
     }
 
     private class Output : ITestOutputHelper

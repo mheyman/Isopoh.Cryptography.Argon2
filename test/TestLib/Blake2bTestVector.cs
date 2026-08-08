@@ -5,21 +5,23 @@
 // </copyright>
 
 namespace TestLib;
+
+using System;
 using Isopoh.Cryptography.Blake2b;
 using Isopoh.Cryptography.SecureArray;
-using System;
 using Xunit.Abstractions;
 
 /// <summary>
 /// Official test vectors for Blake2b.
 /// </summary>
 // ReSharper disable once InconsistentNaming
+// ReSharper disable once UnusedMember.Global
 public class Blake2bTestVector
 {
     /// <summary>
-    /// From https://github.com/BLAKE2/BLAKE2/blob/master/testvectors/blake2b-kat.txt
+    /// From https://github.com/BLAKE2/BLAKE2/blob/master/testvectors/blake2b-kat.txt.
     /// </summary>
-    private static readonly TestVector[] TestVectors = new[]
+    private static readonly TestVector[] TestVectors =
     {
         // ReSharper disable StringLiteralTypo
         TestVector.FromText(
@@ -1310,12 +1312,13 @@ public class Blake2bTestVector
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
-        bool ret = true;
-        int vectorIndex = 0;
-        int failCount = 0;
-        foreach (var testVector in TestVectors)
+        var ret = true;
+        var vectorIndex = 0;
+        var failCount = 0;
+        var buf = new Memory<byte>(new byte[Blake2B.BufferMinimumTotalSize + 128]);
+        foreach (TestVector testVector in TestVectors)
         {
             ++vectorIndex;
             var hash = new byte[64];
@@ -1325,36 +1328,70 @@ public class Blake2bTestVector
                 Result64ByteBuffer = hash,
                 OutputSizeInBytes = testVector.Hash.Length,
             };
-            using (var blakeHash = Blake2B.Create(config, SecureArray.DefaultCall))
+            using Hasher spanBlake2BHash = Blake2B.Create(config, buf);
+            using Hasher secureArrayBlake2BHash = Blake2B.Create(config, SecureArray.DefaultCall);
+            const int chunkSize = 10;
+            for (var i = 0; i < testVector.Data.Length; i += chunkSize)
             {
-                blakeHash.Update(testVector.Data);
-                blakeHash.Finish();
+                spanBlake2BHash.Update(testVector.Data, i, i + chunkSize > testVector.Data.Length ? testVector.Data.Length - i : chunkSize);
+                secureArrayBlake2BHash.Update(testVector.Data, i, i + chunkSize > testVector.Data.Length ? testVector.Data.Length - i : chunkSize);
             }
 
+            byte[] secureArrayBlake2BResult = secureArrayBlake2BHash.Finish().ToArray();
             if (hash.Where((b, i) => b != testVector.Hash[i]).Any())
             {
                 ++failCount;
                 ret = false;
                 output.WriteLine($"  Blake2b Test Vector {vectorIndex}");
-                output.WriteLine($"    Actual Hash:   {BitConverter.ToString(hash)}");
-                output.WriteLine($"    Expected Hash: {BitConverter.ToString(testVector.Hash)}");
+                output.WriteLine($"    Actual (span) Hash:   {BitConverter.ToString(hash)}");
+                output.WriteLine($"    Expected Hash:        {BitConverter.ToString(testVector.Hash)}");
+            }
+
+            byte[] spanBlake2BResult = spanBlake2BHash.Finish().ToArray();
+            if (hash.Where((b, i) => b != testVector.Hash[i]).Any())
+            {
+                ++failCount;
+                ret = false;
+                output.WriteLine($"  Blake2b Test Vector {vectorIndex}");
+                output.WriteLine($"    Actual (SecureArray) Hash:   {BitConverter.ToString(hash)}");
+                output.WriteLine($"    Expected Hash:               {BitConverter.ToString(testVector.Hash)}");
+            }
+
+            if (spanBlake2BResult.Where((b, i) => b != secureArrayBlake2BResult[i]).Any())
+            {
+                ++failCount;
+                ret = false;
+                output.WriteLine($"  Blake2b Test Vector {vectorIndex}");
+                output.WriteLine($"    span hash:         {BitConverter.ToString(hash)}");
+                output.WriteLine($"    secure array hash: {BitConverter.ToString(testVector.Hash)}");
             }
         }
 
-        return (ret, $"Blake2bTestVector: {(ret ? $"Passed ({vectorIndex} test vectors)" : $"FAILED {failCount} of {vectorIndex} test vectors")}");
+        return (ret, $"Blake2bTestVector: {(ret ? $"Passed ({vectorIndex * 3} tests, {vectorIndex} test vectors)" : $"FAILED {failCount} of {vectorIndex * 3} tests ({vectorIndex} test vectors)")}");
     }
 
-    record TestVector(byte[] Data, byte[] Key, byte[] Hash)
+    /// <summary>
+    /// Blake2B test vector.
+    /// </summary>
+    /// <param name="Data">The data to be hashed.</param>
+    /// <param name="Key">The hash key.</param>
+    /// <param name="Hash">The hash.</param>
+    public record TestVector(byte[] Data, byte[] Key, byte[] Hash)
     {
+        /// <summary>
+        /// Create a <see cref="TestVector"/> from strings.
+        /// </summary>
+        /// <param name="bufHexText">The buffer in hexadecimal string.</param>
+        /// <param name="keyHexText">The key in hexadecimal string.</param>
+        /// <param name="hashHexText">The expected hash in hexadecimal string.</param>
+        /// <returns>The <see cref="TestVector"/>.</returns>
+        /// <exception cref="Exception">A hexadecimal string has an odd number of digits.</exception>
         public static TestVector FromText(string bufHexText, string keyHexText, string hashHexText)
         {
+            return new TestVector(FromHex(bufHexText), FromHex(keyHexText), FromHex(hashHexText));
+
             static byte[] FromHex(string hex)
             {
-                static int Val(char c)
-                {
-                    return c - (c < 58 ? 48 : (c < 97 ? 55 : 87));
-                }
-
                 if (hex.Length % 2 == 1)
                 {
                     throw new Exception("The binary key cannot have an odd number of digits");
@@ -1362,15 +1399,18 @@ public class Blake2bTestVector
 
                 var arr = new byte[hex.Length >> 1];
 
-                for (int i = 0; i < hex.Length >> 1; ++i)
+                for (var i = 0; i < hex.Length >> 1; ++i)
                 {
                     arr[i] = (byte)((Val(hex[i << 1]) << 4) + Val(hex[(i << 1) + 1]));
                 }
 
                 return arr;
-            }
 
-            return new TestVector(FromHex(bufHexText), FromHex(keyHexText), FromHex(hashHexText));
+                static int Val(char c)
+                {
+                    return c - (c < 58 ? 48 : (c < 97 ? 55 : 87));
+                }
+            }
         }
     }
 }

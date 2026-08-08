@@ -5,6 +5,7 @@
 // </copyright>
 
 namespace TestLib;
+
 using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
@@ -23,10 +24,10 @@ public static class SecureArraySizing
     /// <remarks>
     /// <see cref="SecureArray"/> does this to some extent internally when throwing its failed exception.
     /// </remarks>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
-        int size = 100;
-        int smallestFailedSize = int.MaxValue;
+        var size = 100;
+        var smallestFailedSize = int.MaxValue;
         int largestSuccessfulSize = size;
         while (true)
         {

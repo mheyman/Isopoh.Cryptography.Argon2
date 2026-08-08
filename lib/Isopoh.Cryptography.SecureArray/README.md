@@ -23,9 +23,13 @@ RAM for other processes and puts stress on your particular executable by
 denying freedom to the garbage collector to reduce fragmentation as needed
 for best performance.
 
-Note: when using SecureArray in the browser (for example, under Blazor or UnoPlatform),
-the memory cannot be locked into RAM so SecureArray does its best effort to protect the
-data by zeroing the buffer when it is disposed.
+When using SecureArray in a browser or WebAssembly environment (for example, under
+Blazor or Uno Platform), memory cannot be locked into RAM. With
+`LockMemoryPolicy.BestEffort`, SecureArray falls back to a pinned buffer and zeroes it
+when disposed. `SecureArray.DefaultCall.IsMemoryLockSupported` reports whether locking
+is available, and an instance's `ProtectionType` reports the protection actually
+obtained. `LockMemoryPolicy.Enforce` throws when locking is unavailable. Browser code
+must treat this as best-effort lifetime reduction, not OS-protected secret storage.
 
 Note similarly: when using SecureArray in a Universal Windows Platform (UWP)
 application, I have yet to figure out how to use the supposedly available
@@ -66,4 +70,3 @@ List of people and project that inspired creation of this one:
 You should be aware that this project is supported solely by me and provided as is.
 
 Go back to the **[top][seca]**
-

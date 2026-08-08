@@ -33,7 +33,8 @@ enum blake2b_constant {
 };
 
 #pragma pack(push, 1)
-typedef struct __blake2b_param {
+typedef struct blake2b_param
+{
     uint8_t digest_length;                   /* 1 */
     uint8_t key_length;                      /* 2 */
     uint8_t fanout;                          /* 3 */
@@ -48,7 +49,7 @@ typedef struct __blake2b_param {
 } blake2b_param;
 #pragma pack(pop)
 
-typedef struct __blake2b_state {
+typedef struct blake2_b_state {
     uint64_t h[8];
     uint64_t t[2];
     uint64_t f[2];
@@ -61,9 +62,11 @@ typedef struct __blake2b_state {
 /* Ensure param structs have not been wrongly padded */
 /* Poor man's static_assert */
 enum {
-    blake2_size_check_0 = 1 / !!(CHAR_BIT == 8),
+    // ReSharper disable once CppRedundantComplexityInComparison
+    blake2_size_check_0 = 1 / !!(CHAR_BIT == 8),  // NOLINT(misc-redundant-expression)
     blake2_size_check_2 =
-        1 / !!(sizeof(blake2b_param) == sizeof(uint64_t) * CHAR_BIT)
+    // ReSharper disable once CppRedundantComplexityInComparison
+    1 / !!(sizeof(blake2b_param) == sizeof(uint64_t) * CHAR_BIT)
 };
 
 /* Streaming API */

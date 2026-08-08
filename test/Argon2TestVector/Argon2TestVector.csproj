@@ -1,32 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
-    <LangVersion>Latest</LangVersion>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <GeneratedFolder>Generated</GeneratedFolder>
-    <CompilerGeneratedFilesOutputPath>$(GeneratedFolder)\$(TargetFramework)</CompilerGeneratedFilesOutputPath>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net9.0</TargetFrameworks>
+        <LangVersion>Latest</LangVersion>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <GeneratedFolder>Generated</GeneratedFolder>
+        <CompilerGeneratedFilesOutputPath>$(GeneratedFolder)\$(TargetFramework)</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\test\Argon2TestVectorType\Argon2TestVectorType.csproj" />
-    <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\test\Argon2TestVectorType\Argon2TestVectorType.csproj" />
+        <ProjectReference Include="..\..\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
+    </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\test\Argon2TestVectorSourceGenerator\Argon2TestVectorSourceGenerator.csproj" PrivateAssets="all" ReferenceOutputAssembly="false" OutputItemType="Analyzer" SetTargetFramework="TargetFramework=netstandard2.0" />
-  </ItemGroup>
-
+    </ItemGroup>
+    <ItemGroup>
+        <!-- Prevent committed generator output from being compiled (adjust path as necessary) -->
+        <Compile Remove="Generated\**\*.cs" />
+    </ItemGroup>
 </Project>

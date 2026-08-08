@@ -19,6 +19,12 @@ references:
   commentId: M:Isopoh.Cryptography.Argon2.Argon2.#ctor(Isopoh.Cryptography.Argon2.Argon2Config)
   fullName: Isopoh.Cryptography.Argon2.Argon2.Argon2(Isopoh.Cryptography.Argon2.Argon2Config)
   nameWithType: Argon2.Argon2(Argon2Config)
+- uid: Isopoh.Cryptography.Argon2.Argon2.#ctor(Isopoh.Cryptography.Argon2.Argon2Memory)
+  name: Argon2(Argon2Memory)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2__ctor_Isopoh_Cryptography_Argon2_Argon2Memory_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.#ctor(Isopoh.Cryptography.Argon2.Argon2Memory)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Argon2(Isopoh.Cryptography.Argon2.Argon2Memory)
+  nameWithType: Argon2.Argon2(Argon2Memory)
 - uid: Isopoh.Cryptography.Argon2.Argon2.#ctor*
   name: Argon2
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2__ctor_
@@ -26,18 +32,51 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.Argon2
   nameWithType: Argon2.Argon2
+- uid: Isopoh.Cryptography.Argon2.Argon2.Are
+  name: Are
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Are
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Are
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Are
+  nameWithType: Argon2.Are
+- uid: Isopoh.Cryptography.Argon2.Argon2.Are*
+  name: Are
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Are_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Are
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Are
+  nameWithType: Argon2.Are
 - uid: Isopoh.Cryptography.Argon2.Argon2.BlockSize
   name: BlockSize
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_BlockSize
   commentId: F:Isopoh.Cryptography.Argon2.Argon2.BlockSize
   fullName: Isopoh.Cryptography.Argon2.Argon2.BlockSize
   nameWithType: Argon2.BlockSize
-- uid: Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
-  name: CsharpMaxBlocksPerArray
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_CsharpMaxBlocksPerArray
-  commentId: F:Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
-  fullName: Isopoh.Cryptography.Argon2.Argon2.CsharpMaxBlocksPerArray
-  nameWithType: Argon2.CsharpMaxBlocksPerArray
+- uid: Isopoh.Cryptography.Argon2.Argon2.Buf
+  name: Buf
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Buf
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Buf
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Buf
+  nameWithType: Argon2.Buf
+- uid: Isopoh.Cryptography.Argon2.Argon2.Buf*
+  name: Buf
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Buf_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Buf
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Buf
+  nameWithType: Argon2.Buf
+- uid: Isopoh.Cryptography.Argon2.Argon2.Config
+  name: Config
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Config
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Config
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Config
+  nameWithType: Argon2.Config
+- uid: Isopoh.Cryptography.Argon2.Argon2.Config*
+  name: Config
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Config_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Config
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Config
+  nameWithType: Argon2.Config
 - uid: Isopoh.Cryptography.Argon2.Argon2.Dispose
   name: Dispose()
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Dispose
@@ -51,15 +90,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.Dispose
   nameWithType: Argon2.Dispose
-- uid: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray{System.Byte},Isopoh.Cryptography.SecureArray.SecureArray{System.Byte})
-  name: FixedTimeEquals(SecureArray<Byte>, SecureArray<Byte>)
-  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__Isopoh_Cryptography_SecureArray_SecureArray_System_Byte__
-  commentId: M:Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray{System.Byte},Isopoh.Cryptography.SecureArray.SecureArray{System.Byte})
-  name.vb: FixedTimeEquals(SecureArray(Of Byte), SecureArray(Of Byte))
-  fullName: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray<System.Byte>, Isopoh.Cryptography.SecureArray.SecureArray<System.Byte>)
-  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(Isopoh.Cryptography.SecureArray.SecureArray(Of System.Byte), Isopoh.Cryptography.SecureArray.SecureArray(Of System.Byte))
-  nameWithType: Argon2.FixedTimeEquals(SecureArray<Byte>, SecureArray<Byte>)
-  nameWithType.vb: Argon2.FixedTimeEquals(SecureArray(Of Byte), SecureArray(Of Byte))
+- uid: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte})
+  name: FixedTimeEquals(ReadOnlySpan<Byte>, ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_System_ReadOnlySpan_System_Byte__System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte})
+  name.vb: FixedTimeEquals(ReadOnlySpan(Of Byte), ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan<System.Byte>, System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals(System.ReadOnlySpan(Of System.Byte), System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Argon2.FixedTimeEquals(ReadOnlySpan<Byte>, ReadOnlySpan<Byte>)
+  nameWithType.vb: Argon2.FixedTimeEquals(ReadOnlySpan(Of Byte), ReadOnlySpan(Of Byte))
 - uid: Isopoh.Cryptography.Argon2.Argon2.FixedTimeEquals*
   name: FixedTimeEquals
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_FixedTimeEquals_
@@ -79,6 +118,12 @@ references:
   commentId: M:Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Config)
   fullName: Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Config)
   nameWithType: Argon2.Hash(Argon2Config)
+- uid: Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Memory)
+  name: Hash(Argon2Memory)
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Hash_Isopoh_Cryptography_Argon2_Argon2Memory_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Memory)
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Hash(Isopoh.Cryptography.Argon2.Argon2Memory)
+  nameWithType: Argon2.Hash(Argon2Memory)
 - uid: Isopoh.Cryptography.Argon2.Argon2.Hash(System.Byte[],System.Byte[],System.Int32,System.Int32,System.Int32,Isopoh.Cryptography.Argon2.Argon2Type,System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: Hash(Byte[], Byte[], Int32, Int32, Int32, Argon2Type, Int32, SecureArrayCall)
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Hash_System_Byte___System_Byte___System_Int32_System_Int32_System_Int32_Isopoh_Cryptography_Argon2_Argon2Type_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_
@@ -146,6 +191,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2.MemoryBlockCount
   nameWithType: Argon2.MemoryBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2.Position
+  name: Position
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Position
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2.Position
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Position
+  nameWithType: Argon2.Position
+- uid: Isopoh.Cryptography.Argon2.Argon2.Position*
+  name: Position
+  href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_Position_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2.Position
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2.Position
+  nameWithType: Argon2.Position
 - uid: Isopoh.Cryptography.Argon2.Argon2.PrehashDigestLength
   name: PrehashDigestLength
   href: api/Isopoh.Cryptography.Argon2.Argon2.html#Isopoh_Cryptography_Argon2_Argon2_PrehashDigestLength
@@ -301,6 +359,19 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2Config.ClearSecret
   nameWithType: Argon2Config.ClearSecret
+- uid: Isopoh.Cryptography.Argon2.Argon2Config.Clone
+  name: Clone()
+  href: api/Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_Clone
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Config.Clone
+  fullName: Isopoh.Cryptography.Argon2.Argon2Config.Clone()
+  nameWithType: Argon2Config.Clone()
+- uid: Isopoh.Cryptography.Argon2.Argon2Config.Clone*
+  name: Clone
+  href: api/Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_Clone_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Config.Clone
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Config.Clone
+  nameWithType: Argon2Config.Clone
 - uid: Isopoh.Cryptography.Argon2.Argon2Config.HashLength
   name: HashLength
   href: api/Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_HashLength
@@ -444,6 +515,292 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.Argon2Config.Version
   nameWithType: Argon2Config.Version
+- uid: Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength
+  name: WorkingBufferLength
+  href: api/Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_WorkingBufferLength
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength
+  fullName: Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength
+  nameWithType: Argon2Config.WorkingBufferLength
+- uid: Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength*
+  name: WorkingBufferLength
+  href: api/Isopoh.Cryptography.Argon2.Argon2Config.html#Isopoh_Cryptography_Argon2_Argon2Config_WorkingBufferLength_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Config.WorkingBufferLength
+  nameWithType: Argon2Config.WorkingBufferLength
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory
+  name: Argon2Memory
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html
+  commentId: T:Isopoh.Cryptography.Argon2.Argon2Memory
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory
+  nameWithType: Argon2Memory
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.#ctor(Isopoh.Cryptography.Argon2.Argon2Config,Isopoh.Cryptography.Argon2.Argon2MemoryPolicy,System.Nullable{Isopoh.Cryptography.SecureArray.LockMemoryPolicy})
+  name: Argon2Memory(Argon2Config, Argon2MemoryPolicy, Nullable<LockMemoryPolicy>)
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory__ctor_Isopoh_Cryptography_Argon2_Argon2Config_Isopoh_Cryptography_Argon2_Argon2MemoryPolicy_System_Nullable_Isopoh_Cryptography_SecureArray_LockMemoryPolicy__
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.#ctor(Isopoh.Cryptography.Argon2.Argon2Config,Isopoh.Cryptography.Argon2.Argon2MemoryPolicy,System.Nullable{Isopoh.Cryptography.SecureArray.LockMemoryPolicy})
+  name.vb: Argon2Memory(Argon2Config, Argon2MemoryPolicy, Nullable(Of LockMemoryPolicy))
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2Memory(Isopoh.Cryptography.Argon2.Argon2Config, Isopoh.Cryptography.Argon2.Argon2MemoryPolicy, System.Nullable<Isopoh.Cryptography.SecureArray.LockMemoryPolicy>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2Memory(Isopoh.Cryptography.Argon2.Argon2Config, Isopoh.Cryptography.Argon2.Argon2MemoryPolicy, System.Nullable(Of Isopoh.Cryptography.SecureArray.LockMemoryPolicy))
+  nameWithType: Argon2Memory.Argon2Memory(Argon2Config, Argon2MemoryPolicy, Nullable<LockMemoryPolicy>)
+  nameWithType.vb: Argon2Memory.Argon2Memory(Argon2Config, Argon2MemoryPolicy, Nullable(Of LockMemoryPolicy))
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.#ctor*
+  name: Argon2Memory
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory__ctor_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.#ctor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2Memory
+  nameWithType: Argon2Memory.Argon2Memory
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer
+  name: Argon2WorkingBuffer
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Argon2WorkingBuffer
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer
+  nameWithType: Argon2Memory.Argon2WorkingBuffer
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer*
+  name: Argon2WorkingBuffer
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Argon2WorkingBuffer_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBuffer
+  nameWithType: Argon2Memory.Argon2WorkingBuffer
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBufferSize
+  name: Argon2WorkingBufferSize
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Argon2WorkingBufferSize
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBufferSize
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Argon2WorkingBufferSize
+  nameWithType: Argon2Memory.Argon2WorkingBufferSize
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount
+  name: BlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_BlockCount
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount
+  nameWithType: Argon2Memory.BlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount*
+  name: BlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_BlockCount_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.BlockCount
+  nameWithType: Argon2Memory.BlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Blocks
+  name: Blocks
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Blocks
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.Blocks
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Blocks
+  nameWithType: Argon2Memory.Blocks
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Blocks*
+  name: Blocks
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Blocks_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Blocks
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Blocks
+  nameWithType: Argon2Memory.Blocks
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Config
+  name: Config
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Config
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.Config
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Config
+  nameWithType: Argon2Memory.Config
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Config*
+  name: Config
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Config_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Config
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Config
+  nameWithType: Argon2Memory.Config
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.CsharpMaxBlocksPerArray
+  name: CsharpMaxBlocksPerArray
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_CsharpMaxBlocksPerArray
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2Memory.CsharpMaxBlocksPerArray
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.CsharpMaxBlocksPerArray
+  nameWithType: Argon2Memory.CsharpMaxBlocksPerArray
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Dispose
+  name: Dispose()
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Dispose
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.Dispose
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Dispose()
+  nameWithType: Argon2Memory.Dispose()
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Dispose*
+  name: Dispose
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Dispose_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Dispose
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Dispose
+  nameWithType: Argon2Memory.Dispose
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.EndUse
+  name: EndUse()
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_EndUse
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.EndUse
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.EndUse()
+  nameWithType: Argon2Memory.EndUse()
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.EndUse*
+  name: EndUse
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_EndUse_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.EndUse
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.EndUse
+  nameWithType: Argon2Memory.EndUse
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer
+  name: FillMemoryBlocksWorkingBuffer
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_FillMemoryBlocksWorkingBuffer
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer
+  nameWithType: Argon2Memory.FillMemoryBlocksWorkingBuffer
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer*
+  name: FillMemoryBlocksWorkingBuffer
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_FillMemoryBlocksWorkingBuffer_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBuffer
+  nameWithType: Argon2Memory.FillMemoryBlocksWorkingBuffer
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength
+  name: FillMemoryBlocksWorkingBufferLength
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_FillMemoryBlocksWorkingBufferLength
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength
+  nameWithType: Argon2Memory.FillMemoryBlocksWorkingBufferLength
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength*
+  name: FillMemoryBlocksWorkingBufferLength
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_FillMemoryBlocksWorkingBufferLength_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.FillMemoryBlocksWorkingBufferLength
+  nameWithType: Argon2Memory.FillMemoryBlocksWorkingBufferLength
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Hash
+  name: Hash
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Hash
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.Hash
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Hash
+  nameWithType: Argon2Memory.Hash
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Hash*
+  name: Hash
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Hash_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Hash
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Hash
+  nameWithType: Argon2Memory.Hash
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.InUse
+  name: InUse
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_InUse
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.InUse
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.InUse
+  nameWithType: Argon2Memory.InUse
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.InUse*
+  name: InUse
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_InUse_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.InUse
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.InUse
+  nameWithType: Argon2Memory.InUse
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount
+  name: LaneBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_LaneBlockCount
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount
+  nameWithType: Argon2Memory.LaneBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount*
+  name: LaneBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_LaneBlockCount_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.LaneBlockCount
+  nameWithType: Argon2Memory.LaneBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory
+  name: LockMemory
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_LockMemory
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory
+  nameWithType: Argon2Memory.LockMemory
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory*
+  name: LockMemory
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_LockMemory_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.LockMemory
+  nameWithType: Argon2Memory.LockMemory
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts(Isopoh.Cryptography.Argon2.Argon2Config)
+  name: RequiredBlockCounts(Argon2Config)
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_RequiredBlockCounts_Isopoh_Cryptography_Argon2_Argon2Config_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts(Isopoh.Cryptography.Argon2.Argon2Config)
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts(Isopoh.Cryptography.Argon2.Argon2Config)
+  nameWithType: Argon2Memory.RequiredBlockCounts(Argon2Config)
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts*
+  name: RequiredBlockCounts
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_RequiredBlockCounts_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.RequiredBlockCounts
+  nameWithType: Argon2Memory.RequiredBlockCounts
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Reset(Isopoh.Cryptography.Argon2.Argon2Config)
+  name: Reset(Argon2Config)
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Reset_Isopoh_Cryptography_Argon2_Argon2Config_
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.Reset(Isopoh.Cryptography.Argon2.Argon2Config)
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Reset(Isopoh.Cryptography.Argon2.Argon2Config)
+  nameWithType: Argon2Memory.Reset(Argon2Config)
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.Reset*
+  name: Reset
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_Reset_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.Reset
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.Reset
+  nameWithType: Argon2Memory.Reset
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount
+  name: SegmentBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_SegmentBlockCount
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount
+  nameWithType: Argon2Memory.SegmentBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount*
+  name: SegmentBlockCount
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_SegmentBlockCount_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.SegmentBlockCount
+  nameWithType: Argon2Memory.SegmentBlockCount
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy
+  name: ShrinkMemoryPolicy
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_ShrinkMemoryPolicy
+  commentId: P:Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy
+  nameWithType: Argon2Memory.ShrinkMemoryPolicy
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy*
+  name: ShrinkMemoryPolicy
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_ShrinkMemoryPolicy_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.ShrinkMemoryPolicy
+  nameWithType: Argon2Memory.ShrinkMemoryPolicy
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.StartUse
+  name: StartUse()
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_StartUse
+  commentId: M:Isopoh.Cryptography.Argon2.Argon2Memory.StartUse
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.StartUse()
+  nameWithType: Argon2Memory.StartUse()
+- uid: Isopoh.Cryptography.Argon2.Argon2Memory.StartUse*
+  name: StartUse
+  href: api/Isopoh.Cryptography.Argon2.Argon2Memory.html#Isopoh_Cryptography_Argon2_Argon2Memory_StartUse_
+  commentId: Overload:Isopoh.Cryptography.Argon2.Argon2Memory.StartUse
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.Argon2Memory.StartUse
+  nameWithType: Argon2Memory.StartUse
+- uid: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy
+  name: Argon2MemoryPolicy
+  href: api/Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.html
+  commentId: T:Isopoh.Cryptography.Argon2.Argon2MemoryPolicy
+  fullName: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy
+  nameWithType: Argon2MemoryPolicy
+- uid: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.NoShrink
+  name: NoShrink
+  href: api/Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.html#Isopoh_Cryptography_Argon2_Argon2MemoryPolicy_NoShrink
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.NoShrink
+  fullName: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.NoShrink
+  nameWithType: Argon2MemoryPolicy.NoShrink
+- uid: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.Shrink
+  name: Shrink
+  href: api/Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.html#Isopoh_Cryptography_Argon2_Argon2MemoryPolicy_Shrink
+  commentId: F:Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.Shrink
+  fullName: Isopoh.Cryptography.Argon2.Argon2MemoryPolicy.Shrink
+  nameWithType: Argon2MemoryPolicy.Shrink
 - uid: Isopoh.Cryptography.Argon2.Argon2Type
   name: Argon2Type
   href: api/Isopoh.Cryptography.Argon2.Argon2Type.html
@@ -492,15 +849,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.Blocks
   fullName: Isopoh.Cryptography.Argon2.Blocks
   nameWithType: Blocks
-- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
-  name: Blocks(IEnumerable<UInt64[]>)
-  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_UInt64____
-  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.UInt64[]})
-  name.vb: Blocks(IEnumerable(Of UInt64()))
-  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.UInt64[]>)
-  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.UInt64()))
-  nameWithType: Blocks.Blocks(IEnumerable<UInt64[]>)
-  nameWithType.vb: Blocks.Blocks(IEnumerable(Of UInt64()))
+- uid: Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.Memory{System.UInt64}})
+  name: Blocks(IEnumerable<Memory<UInt64>>)
+  href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_System_Collections_Generic_IEnumerable_System_Memory_System_UInt64___
+  commentId: M:Isopoh.Cryptography.Argon2.Blocks.#ctor(System.Collections.Generic.IEnumerable{System.Memory{System.UInt64}})
+  name.vb: Blocks(IEnumerable(Of Memory(Of UInt64)))
+  fullName: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable<System.Memory<System.UInt64>>)
+  fullName.vb: Isopoh.Cryptography.Argon2.Blocks.Blocks(System.Collections.Generic.IEnumerable(Of System.Memory(Of System.UInt64)))
+  nameWithType: Blocks.Blocks(IEnumerable<Memory<UInt64>>)
+  nameWithType.vb: Blocks.Blocks(IEnumerable(Of Memory(Of UInt64)))
 - uid: Isopoh.Cryptography.Argon2.Blocks.#ctor*
   name: Blocks
   href: api/Isopoh.Cryptography.Argon2.Blocks.html#Isopoh_Cryptography_Argon2_Blocks__ctor_
@@ -543,15 +900,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.BlockValues
   fullName: Isopoh.Cryptography.Argon2.BlockValues
   nameWithType: BlockValues
-- uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.UInt64[],System.Int32)
-  name: BlockValues(UInt64[], Int32)
-  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_System_UInt64___System_Int32_
-  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.UInt64[],System.Int32)
-  name.vb: BlockValues(UInt64(), Int32)
-  fullName: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.UInt64[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.UInt64(), System.Int32)
-  nameWithType: BlockValues.BlockValues(UInt64[], Int32)
-  nameWithType.vb: BlockValues.BlockValues(UInt64(), Int32)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.Memory{System.UInt64})
+  name: BlockValues(Memory<UInt64>)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_System_Memory_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.#ctor(System.Memory{System.UInt64})
+  name.vb: BlockValues(Memory(Of UInt64))
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.Memory<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.BlockValues(System.Memory(Of System.UInt64))
+  nameWithType: BlockValues.BlockValues(Memory<UInt64>)
+  nameWithType.vb: BlockValues.BlockValues(Memory(Of UInt64))
 - uid: Isopoh.Cryptography.Argon2.BlockValues.#ctor*
   name: BlockValues
   href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues__ctor_
@@ -559,12 +916,12 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.BlockValues.BlockValues
   nameWithType: BlockValues.BlockValues
-- uid: Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.BlockValues)
-  name: Copy(BlockValues)
-  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Copy_Isopoh_Cryptography_Argon2_BlockValues_
-  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.BlockValues)
-  fullName: Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.BlockValues)
-  nameWithType: BlockValues.Copy(BlockValues)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  name: Copy(ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Copy_Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: BlockValues.Copy(ReadOnlyBlockValues)
 - uid: Isopoh.Cryptography.Argon2.BlockValues.Copy*
   name: Copy
   href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Copy_
@@ -601,12 +958,40 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.BlockValues.Item
   nameWithType: BlockValues.Item
-- uid: Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.BlockValues)
-  name: Xor(BlockValues)
-  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Xor_Isopoh_Cryptography_Argon2_BlockValues_
-  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.BlockValues)
-  fullName: Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.BlockValues)
-  nameWithType: BlockValues.Xor(BlockValues)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.op_Implicit(Isopoh.Cryptography.Argon2.BlockValues)~Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  name: Implicit(BlockValues to ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_op_Implicit_Isopoh_Cryptography_Argon2_BlockValues__Isopoh_Cryptography_Argon2_ReadOnlyBlockValues
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.op_Implicit(Isopoh.Cryptography.Argon2.BlockValues)~Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  name.vb: Widening(BlockValues to ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.Implicit(Isopoh.Cryptography.Argon2.BlockValues to Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.Widening(Isopoh.Cryptography.Argon2.BlockValues to Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: BlockValues.Implicit(BlockValues to ReadOnlyBlockValues)
+  nameWithType.vb: BlockValues.Widening(BlockValues to ReadOnlyBlockValues)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.op_Implicit(Isopoh.Cryptography.Argon2.BlockValues)~Isopoh.Cryptography.Argon2.TempBlockValues
+  name: Implicit(BlockValues to TempBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_op_Implicit_Isopoh_Cryptography_Argon2_BlockValues__Isopoh_Cryptography_Argon2_TempBlockValues
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.op_Implicit(Isopoh.Cryptography.Argon2.BlockValues)~Isopoh.Cryptography.Argon2.TempBlockValues
+  name.vb: Widening(BlockValues to TempBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.Implicit(Isopoh.Cryptography.Argon2.BlockValues to Isopoh.Cryptography.Argon2.TempBlockValues)
+  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.Widening(Isopoh.Cryptography.Argon2.BlockValues to Isopoh.Cryptography.Argon2.TempBlockValues)
+  nameWithType: BlockValues.Implicit(BlockValues to TempBlockValues)
+  nameWithType.vb: BlockValues.Widening(BlockValues to TempBlockValues)
+- uid: Isopoh.Cryptography.Argon2.BlockValues.op_Implicit*
+  name: Implicit
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_op_Implicit_
+  commentId: Overload:Isopoh.Cryptography.Argon2.BlockValues.op_Implicit
+  isSpec: "True"
+  name.vb: Widening
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.Implicit
+  fullName.vb: Isopoh.Cryptography.Argon2.BlockValues.Widening
+  nameWithType: BlockValues.Implicit
+  nameWithType.vb: BlockValues.Widening
+- uid: Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  name: Xor(ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Xor_Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_
+  commentId: M:Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.BlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: BlockValues.Xor(ReadOnlyBlockValues)
 - uid: Isopoh.Cryptography.Argon2.BlockValues.Xor*
   name: Xor
   href: api/Isopoh.Cryptography.Argon2.BlockValues.html#Isopoh_Cryptography_Argon2_BlockValues_Xor_
@@ -642,15 +1027,15 @@ references:
   commentId: T:Isopoh.Cryptography.Argon2.EncodeExtension
   fullName: Isopoh.Cryptography.Argon2.EncodeExtension
   nameWithType: EncodeExtension
-- uid: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config,System.Byte[])
-  name: EncodeString(Argon2Config, Byte[])
-  href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_EncodeString_Isopoh_Cryptography_Argon2_Argon2Config_System_Byte___
-  commentId: M:Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config,System.Byte[])
-  name.vb: EncodeString(Argon2Config, Byte())
-  fullName: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config, System.Byte[])
-  fullName.vb: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config, System.Byte())
-  nameWithType: EncodeExtension.EncodeString(Argon2Config, Byte[])
-  nameWithType.vb: EncodeExtension.EncodeString(Argon2Config, Byte())
+- uid: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config,System.Span{System.Byte})
+  name: EncodeString(Argon2Config, Span<Byte>)
+  href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_EncodeString_Isopoh_Cryptography_Argon2_Argon2Config_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config,System.Span{System.Byte})
+  name.vb: EncodeString(Argon2Config, Span(Of Byte))
+  fullName: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config, System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString(Isopoh.Cryptography.Argon2.Argon2Config, System.Span(Of System.Byte))
+  nameWithType: EncodeExtension.EncodeString(Argon2Config, Span<Byte>)
+  nameWithType.vb: EncodeExtension.EncodeString(Argon2Config, Span(Of Byte))
 - uid: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString*
   name: EncodeString
   href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_EncodeString_
@@ -658,15 +1043,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.EncodeExtension.EncodeString
   nameWithType: EncodeExtension.EncodeString
-- uid: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Byte[])
-  name: ToB64String(Byte[])
-  href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_ToB64String_System_Byte___
-  commentId: M:Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Byte[])
-  name.vb: ToB64String(Byte())
-  fullName: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Byte[])
-  fullName.vb: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Byte())
-  nameWithType: EncodeExtension.ToB64String(Byte[])
-  nameWithType.vb: EncodeExtension.ToB64String(Byte())
+- uid: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Span{System.Byte})
+  name: ToB64String(Span<Byte>)
+  href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_ToB64String_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Span{System.Byte})
+  name.vb: ToB64String(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String(System.Span(Of System.Byte))
+  nameWithType: EncodeExtension.ToB64String(Span<Byte>)
+  nameWithType.vb: EncodeExtension.ToB64String(Span(Of Byte))
 - uid: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String*
   name: ToB64String
   href: api/Isopoh.Cryptography.Argon2.EncodeExtension.html#Isopoh_Cryptography_Argon2_EncodeExtension_ToB64String_
@@ -674,6 +1059,190 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Argon2.EncodeExtension.ToB64String
   nameWithType: EncodeExtension.ToB64String
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  name: ReadOnlyBlockValues
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html
+  commentId: T:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  nameWithType: ReadOnlyBlockValues
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor(System.ReadOnlySpan{System.UInt64})
+  name: ReadOnlyBlockValues(ReadOnlySpan<UInt64>)
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues__ctor_System_ReadOnlySpan_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor(System.ReadOnlySpan{System.UInt64})
+  name.vb: ReadOnlyBlockValues(ReadOnlySpan(Of UInt64))
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlyBlockValues(System.ReadOnlySpan<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlyBlockValues(System.ReadOnlySpan(Of System.UInt64))
+  nameWithType: ReadOnlyBlockValues.ReadOnlyBlockValues(ReadOnlySpan<UInt64>)
+  nameWithType.vb: ReadOnlyBlockValues.ReadOnlyBlockValues(ReadOnlySpan(Of UInt64))
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor(System.Span{System.UInt64},System.UInt64)
+  name: ReadOnlyBlockValues(Span<UInt64>, UInt64)
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues__ctor_System_Span_System_UInt64__System_UInt64_
+  commentId: M:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor(System.Span{System.UInt64},System.UInt64)
+  name.vb: ReadOnlyBlockValues(Span(Of UInt64), UInt64)
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlyBlockValues(System.Span<System.UInt64>, System.UInt64)
+  fullName.vb: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlyBlockValues(System.Span(Of System.UInt64), System.UInt64)
+  nameWithType: ReadOnlyBlockValues.ReadOnlyBlockValues(Span<UInt64>, UInt64)
+  nameWithType.vb: ReadOnlyBlockValues.ReadOnlyBlockValues(Span(Of UInt64), UInt64)
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor*
+  name: ReadOnlyBlockValues
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues__ctor_
+  commentId: Overload:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.#ctor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlyBlockValues
+  nameWithType: ReadOnlyBlockValues.ReadOnlyBlockValues
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_Item_System_Int32_
+  commentId: P:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item[System.Int32]
+  fullName.vb: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item(System.Int32)
+  nameWithType: ReadOnlyBlockValues.Item[Int32]
+  nameWithType.vb: ReadOnlyBlockValues.Item(Int32)
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item*
+  name: Item
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_Item_
+  commentId: Overload:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Item
+  nameWithType: ReadOnlyBlockValues.Item
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.op_Implicit(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)~System.ReadOnlySpan{System.UInt64}
+  name: Implicit(ReadOnlyBlockValues to ReadOnlySpan<UInt64>)
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_op_Implicit_Isopoh_Cryptography_Argon2_ReadOnlyBlockValues__System_ReadOnlySpan_System_UInt64_
+  commentId: M:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.op_Implicit(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)~System.ReadOnlySpan{System.UInt64}
+  name.vb: Widening(ReadOnlyBlockValues to ReadOnlySpan(Of UInt64))
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Implicit(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues to System.ReadOnlySpan<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Widening(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues to System.ReadOnlySpan(Of System.UInt64))
+  nameWithType: ReadOnlyBlockValues.Implicit(ReadOnlyBlockValues to ReadOnlySpan<UInt64>)
+  nameWithType.vb: ReadOnlyBlockValues.Widening(ReadOnlyBlockValues to ReadOnlySpan(Of UInt64))
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.op_Implicit*
+  name: Implicit
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_op_Implicit_
+  commentId: Overload:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.op_Implicit
+  isSpec: "True"
+  name.vb: Widening
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Implicit
+  fullName.vb: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.Widening
+  nameWithType: ReadOnlyBlockValues.Implicit
+  nameWithType.vb: ReadOnlyBlockValues.Widening
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan
+  name: ReadOnlySpan
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_ReadOnlySpan
+  commentId: P:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan
+  nameWithType: ReadOnlyBlockValues.ReadOnlySpan
+- uid: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan*
+  name: ReadOnlySpan
+  href: api/Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.html#Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_ReadOnlySpan_
+  commentId: Overload:Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.ReadOnlyBlockValues.ReadOnlySpan
+  nameWithType: ReadOnlyBlockValues.ReadOnlySpan
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues
+  name: TempBlockValues
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html
+  commentId: T:Isopoh.Cryptography.Argon2.TempBlockValues
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues
+  nameWithType: TempBlockValues
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.#ctor(System.Span{System.UInt64})
+  name: TempBlockValues(Span<UInt64>)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues__ctor_System_Span_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.#ctor(System.Span{System.UInt64})
+  name.vb: TempBlockValues(Span(Of UInt64))
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.TempBlockValues(System.Span<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Argon2.TempBlockValues.TempBlockValues(System.Span(Of System.UInt64))
+  nameWithType: TempBlockValues.TempBlockValues(Span<UInt64>)
+  nameWithType.vb: TempBlockValues.TempBlockValues(Span(Of UInt64))
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.#ctor(System.Span{System.UInt64},System.UInt64)
+  name: TempBlockValues(Span<UInt64>, UInt64)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues__ctor_System_Span_System_UInt64__System_UInt64_
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.#ctor(System.Span{System.UInt64},System.UInt64)
+  name.vb: TempBlockValues(Span(Of UInt64), UInt64)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.TempBlockValues(System.Span<System.UInt64>, System.UInt64)
+  fullName.vb: Isopoh.Cryptography.Argon2.TempBlockValues.TempBlockValues(System.Span(Of System.UInt64), System.UInt64)
+  nameWithType: TempBlockValues.TempBlockValues(Span<UInt64>, UInt64)
+  nameWithType.vb: TempBlockValues.TempBlockValues(Span(Of UInt64), UInt64)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.#ctor*
+  name: TempBlockValues
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues__ctor_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.#ctor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.TempBlockValues
+  nameWithType: TempBlockValues.TempBlockValues
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  name: Copy(ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Copy_Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Copy(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: TempBlockValues.Copy(ReadOnlyBlockValues)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Copy*
+  name: Copy
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Copy_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.Copy
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Copy
+  nameWithType: TempBlockValues.Copy
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Init(System.UInt64)
+  name: Init(UInt64)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Init_System_UInt64_
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.Init(System.UInt64)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Init(System.UInt64)
+  nameWithType: TempBlockValues.Init(UInt64)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Init*
+  name: Init
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Init_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.Init
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Init
+  nameWithType: TempBlockValues.Init
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Item_System_Int32_
+  commentId: P:Isopoh.Cryptography.Argon2.TempBlockValues.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Item[System.Int32]
+  fullName.vb: Isopoh.Cryptography.Argon2.TempBlockValues.Item(System.Int32)
+  nameWithType: TempBlockValues.Item[Int32]
+  nameWithType.vb: TempBlockValues.Item(Int32)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Item*
+  name: Item
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Item_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.Item
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Item
+  nameWithType: TempBlockValues.Item
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.op_Implicit(Isopoh.Cryptography.Argon2.TempBlockValues)~Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  name: Implicit(TempBlockValues to ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_op_Implicit_Isopoh_Cryptography_Argon2_TempBlockValues__Isopoh_Cryptography_Argon2_ReadOnlyBlockValues
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.op_Implicit(Isopoh.Cryptography.Argon2.TempBlockValues)~Isopoh.Cryptography.Argon2.ReadOnlyBlockValues
+  name.vb: Widening(TempBlockValues to ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Implicit(Isopoh.Cryptography.Argon2.TempBlockValues to Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName.vb: Isopoh.Cryptography.Argon2.TempBlockValues.Widening(Isopoh.Cryptography.Argon2.TempBlockValues to Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: TempBlockValues.Implicit(TempBlockValues to ReadOnlyBlockValues)
+  nameWithType.vb: TempBlockValues.Widening(TempBlockValues to ReadOnlyBlockValues)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.op_Implicit*
+  name: Implicit
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_op_Implicit_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.op_Implicit
+  isSpec: "True"
+  name.vb: Widening
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Implicit
+  fullName.vb: Isopoh.Cryptography.Argon2.TempBlockValues.Widening
+  nameWithType: TempBlockValues.Implicit
+  nameWithType.vb: TempBlockValues.Widening
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  name: Xor(ReadOnlyBlockValues)
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Xor_Isopoh_Cryptography_Argon2_ReadOnlyBlockValues_
+  commentId: M:Isopoh.Cryptography.Argon2.TempBlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Xor(Isopoh.Cryptography.Argon2.ReadOnlyBlockValues)
+  nameWithType: TempBlockValues.Xor(ReadOnlyBlockValues)
+- uid: Isopoh.Cryptography.Argon2.TempBlockValues.Xor*
+  name: Xor
+  href: api/Isopoh.Cryptography.Argon2.TempBlockValues.html#Isopoh_Cryptography_Argon2_TempBlockValues_Xor_
+  commentId: Overload:Isopoh.Cryptography.Argon2.TempBlockValues.Xor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Argon2.TempBlockValues.Xor
+  nameWithType: TempBlockValues.Xor
 - uid: Isopoh.Cryptography.Blake2b
   name: Isopoh.Cryptography.Blake2b
   href: api/Isopoh.Cryptography.Blake2b.html
@@ -686,6 +1255,12 @@ references:
   commentId: T:Isopoh.Cryptography.Blake2b.Blake2B
   fullName: Isopoh.Cryptography.Blake2b.Blake2B
   nameWithType: Blake2B
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_BufferMinimumTotalSize
+  commentId: F:Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.BufferMinimumTotalSize
+  nameWithType: Blake2B.BufferMinimumTotalSize
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.Byte[],Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: ComputeHash(Byte[], Blake2BConfig, SecureArrayCall)
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_System_Byte___Isopoh_Cryptography_Blake2b_Blake2BConfig_Isopoh_Cryptography_SecureArray_SecureArrayCall_
@@ -722,6 +1297,15 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.Byte(), System.Int32, System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.ComputeHash(Byte[], Int32, Int32, SecureArrayCall)
   nameWithType.vb: Blake2B.ComputeHash(Byte(), Int32, Int32, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan{System.Byte},Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: ComputeHash(ReadOnlySpan<Byte>, Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_System_ReadOnlySpan_System_Byte__Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan{System.Byte},Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: ComputeHash(ReadOnlySpan(Of Byte), Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan<System.Byte>, Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash(System.ReadOnlySpan(Of System.Byte), Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2B.ComputeHash(ReadOnlySpan<Byte>, Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2B.ComputeHash(ReadOnlySpan(Of Byte), Blake2BConfig, Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.ComputeHash*
   name: ComputeHash
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_ComputeHash_
@@ -735,12 +1319,30 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.Create(Blake2BConfig, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: Create(Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: Create(Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2B.Create(Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2B.Create(Blake2BConfig, Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   name: Create(SecureArrayCall)
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_Isopoh_Cryptography_SecureArray_SecureArrayCall_
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(Isopoh.Cryptography.SecureArray.SecureArrayCall)
   nameWithType: Blake2B.Create(SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory{System.Byte})
+  name: Create(Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory{System.Byte})
+  name.vb: Create(Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2B.Create(System.Memory(Of System.Byte))
+  nameWithType: Blake2B.Create(Memory<Byte>)
+  nameWithType.vb: Blake2B.Create(Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.Create*
   name: Create
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_Create_
@@ -748,6 +1350,12 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2B.Create
   nameWithType: Blake2B.Create
+- uid: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_NoKeyBufferMinimumTotalSize
+  commentId: F:Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2B.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2B.NoKeyBufferMinimumTotalSize
 - uid: Isopoh.Cryptography.Blake2b.Blake2B.OutputLength
   name: OutputLength
   href: api/Isopoh.Cryptography.Blake2b.Blake2B.html#Isopoh_Cryptography_Blake2b_Blake2B_OutputLength
@@ -870,12 +1478,21 @@ references:
   commentId: T:Isopoh.Cryptography.Blake2b.Blake2BCore
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore
   nameWithType: Blake2BCore
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   name: Blake2BCore(SecureArrayCall, LockMemoryPolicy)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_Blake2b_LockMemoryPolicy_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.Blake2b.LockMemoryPolicy)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
   nameWithType: Blake2BCore.Blake2BCore(SecureArrayCall, LockMemoryPolicy)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(System.Memory{System.Byte})
+  name: Blake2BCore(Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor(System.Memory{System.Byte})
+  name.vb: Blake2BCore(Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore(System.Memory(Of System.Byte))
+  nameWithType: Blake2BCore.Blake2BCore(Memory<Byte>)
+  nameWithType.vb: Blake2BCore.Blake2BCore(Memory(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.#ctor*
   name: Blake2BCore
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore__ctor_
@@ -883,15 +1500,21 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Blake2BCore
   nameWithType: Blake2BCore.Blake2BCore
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
-  name: BytesToUInt64(Byte[], Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_Byte___System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[],System.Int32)
-  name.vb: BytesToUInt64(Byte(), Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.Byte(), System.Int32)
-  nameWithType: Blake2BCore.BytesToUInt64(Byte[], Int32)
-  nameWithType.vb: Blake2BCore.BytesToUInt64(Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  name: BufferTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BufferTotalSize
+  commentId: F:Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BufferTotalSize
+  nameWithType: Blake2BCore.BufferTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)
+  name: BytesToUInt64(ReadOnlySpan<Byte>, Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_System_ReadOnlySpan_System_Byte__System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan{System.Byte},System.Int32)
+  name.vb: BytesToUInt64(ReadOnlySpan(Of Byte), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan<System.Byte>, System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64(System.ReadOnlySpan(Of System.Byte), System.Int32)
+  nameWithType: Blake2BCore.BytesToUInt64(ReadOnlySpan<Byte>, Int32)
+  nameWithType.vb: Blake2BCore.BytesToUInt64(ReadOnlySpan(Of Byte), Int32)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.BytesToUInt64*
   name: BytesToUInt64
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_BytesToUInt64_
@@ -905,6 +1528,12 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose()
   nameWithType: Blake2BCore.Dispose()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose(System.Boolean)
+  nameWithType: Blake2BCore.Dispose(Boolean)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose*
   name: Dispose
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Dispose_
@@ -912,15 +1541,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Dispose
   nameWithType: Blake2BCore.Dispose
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[],System.Int32,System.Int32)
-  name: HashCore(Byte[], Int32, Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_Byte___System_Int32_System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[],System.Int32,System.Int32)
-  name.vb: HashCore(Byte(), Int32, Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte[], System.Int32, System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.Byte(), System.Int32, System.Int32)
-  nameWithType: Blake2BCore.HashCore(Byte[], Int32, Int32)
-  nameWithType.vb: Blake2BCore.HashCore(Byte(), Int32, Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan{System.Byte})
+  name: HashCore(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan{System.Byte})
+  name.vb: HashCore(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Blake2BCore.HashCore(ReadOnlySpan<Byte>)
+  nameWithType.vb: Blake2BCore.HashCore(ReadOnlySpan(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashCore*
   name: HashCore
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashCore_
@@ -958,6 +1587,24 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Byte(), System.Boolean)
   nameWithType: Blake2BCore.HashFinal(Byte[], Boolean)
   nameWithType.vb: Blake2BCore.HashFinal(Byte(), Boolean)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte})
+  name: HashFinal(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte})
+  name.vb: HashFinal(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span(Of System.Byte))
+  nameWithType: Blake2BCore.HashFinal(Span<Byte>)
+  nameWithType.vb: Blake2BCore.HashFinal(Span(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte},System.Boolean)
+  name: HashFinal(Span<Byte>, Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_System_Span_System_Byte__System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span{System.Byte},System.Boolean)
+  name.vb: HashFinal(Span(Of Byte), Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span<System.Byte>, System.Boolean)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal(System.Span(Of System.Byte), System.Boolean)
+  nameWithType: Blake2BCore.HashFinal(Span<Byte>, Boolean)
+  nameWithType.vb: Blake2BCore.HashFinal(Span(Of Byte), Boolean)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal*
   name: HashFinal
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_HashFinal_
@@ -965,15 +1612,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.HashFinal
   nameWithType: Blake2BCore.HashFinal
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  name: Initialize(UInt64[])
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_UInt64___
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  name.vb: Initialize(UInt64())
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64[])
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.UInt64())
-  nameWithType: Blake2BCore.Initialize(UInt64[])
-  nameWithType.vb: Blake2BCore.Initialize(UInt64())
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan{System.UInt64})
+  name: Initialize(ReadOnlySpan<UInt64>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_System_ReadOnlySpan_System_UInt64__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan{System.UInt64})
+  name.vb: Initialize(ReadOnlySpan(Of UInt64))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan<System.UInt64>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize(System.ReadOnlySpan(Of System.UInt64))
+  nameWithType: Blake2BCore.Initialize(ReadOnlySpan<UInt64>)
+  nameWithType.vb: Blake2BCore.Initialize(ReadOnlySpan(Of UInt64))
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize*
   name: Initialize
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_Initialize_
@@ -981,15 +1628,15 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.Initialize
   nameWithType: Blake2BCore.Initialize
-- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
-  name: UInt64ToBytes(UInt64, Byte[], Int32)
-  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Byte___System_Int32_
-  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Byte[],System.Int32)
-  name.vb: UInt64ToBytes(UInt64, Byte(), Int32)
-  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte[], System.Int32)
-  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Byte(), System.Int32)
-  nameWithType: Blake2BCore.UInt64ToBytes(UInt64, Byte[], Int32)
-  nameWithType.vb: Blake2BCore.UInt64ToBytes(UInt64, Byte(), Int32)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Span{System.Byte},System.Int32)
+  name: UInt64ToBytes(UInt64, Span<Byte>, Int32)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_System_UInt64_System_Span_System_Byte__System_Int32_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64,System.Span{System.Byte},System.Int32)
+  name.vb: UInt64ToBytes(UInt64, Span(Of Byte), Int32)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Span<System.Byte>, System.Int32)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes(System.UInt64, System.Span(Of System.Byte), System.Int32)
+  nameWithType: Blake2BCore.UInt64ToBytes(UInt64, Span<Byte>, Int32)
+  nameWithType.vb: Blake2BCore.UInt64ToBytes(UInt64, Span(Of Byte), Int32)
 - uid: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes*
   name: UInt64ToBytes
   href: api/Isopoh.Cryptography.Blake2b.Blake2BCore.html#Isopoh_Cryptography_Blake2b_Blake2BCore_UInt64ToBytes_
@@ -997,6 +1644,136 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Blake2BCore.UInt64ToBytes
   nameWithType: Blake2BCore.UInt64ToBytes
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher
+  name: Blake2BHasher
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html
+  commentId: T:Isopoh.Cryptography.Blake2b.Blake2BHasher
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher
+  nameWithType: Blake2BHasher
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  name: Blake2BHasher(Blake2BConfig, SecureArrayCall)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_Isopoh_Cryptography_Blake2b_Blake2BConfig_Isopoh_Cryptography_SecureArray_SecureArrayCall_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, Isopoh.Cryptography.SecureArray.SecureArrayCall)
+  nameWithType: Blake2BHasher.Blake2BHasher(Blake2BConfig, SecureArrayCall)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name: Blake2BHasher(Blake2BConfig, Memory<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_Isopoh_Cryptography_Blake2b_Blake2BConfig_System_Memory_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor(Isopoh.Cryptography.Blake2b.Blake2BConfig,System.Memory{System.Byte})
+  name.vb: Blake2BHasher(Blake2BConfig, Memory(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher(Isopoh.Cryptography.Blake2b.Blake2BConfig, System.Memory(Of System.Byte))
+  nameWithType: Blake2BHasher.Blake2BHasher(Blake2BConfig, Memory<Byte>)
+  nameWithType.vb: Blake2BHasher.Blake2BHasher(Blake2BConfig, Memory(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor*
+  name: Blake2BHasher
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher__ctor_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.#ctor
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Blake2BHasher
+  nameWithType: Blake2BHasher.Blake2BHasher
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  name: BufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_BufferMinimumTotalSize
+  commentId: F:Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.BufferMinimumTotalSize
+  nameWithType: Blake2BHasher.BufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Dispose_System_Boolean_
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose(System.Boolean)
+  nameWithType: Blake2BHasher.Dispose(Boolean)
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose*
+  name: Dispose
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Dispose_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Dispose
+  nameWithType: Blake2BHasher.Dispose
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  name: Finish()
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish()
+  nameWithType: Blake2BHasher.Finish()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span{System.Byte})
+  name: Finish(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span{System.Byte})
+  name.vb: Finish(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span(Of System.Byte))
+  nameWithType: Blake2BHasher.Finish(Span<Byte>)
+  nameWithType.vb: Blake2BHasher.Finish(Span(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish*
+  name: Finish
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Finish_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish
+  nameWithType: Blake2BHasher.Finish
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  name: Init()
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Init
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init()
+  nameWithType: Blake2BHasher.Init()
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init*
+  name: Init
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Init_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Init
+  nameWithType: Blake2BHasher.Init
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  name: Iv
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Iv
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  nameWithType: Blake2BHasher.Iv
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv*
+  name: Iv
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Iv_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Iv
+  nameWithType: Blake2BHasher.Iv
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  name: Key
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Key
+  commentId: P:Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  nameWithType: Blake2BHasher.Key
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key*
+  name: Key
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Key_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Key
+  nameWithType: Blake2BHasher.Key
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  name: NoKeyBufferMinimumTotalSize
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_NoKeyBufferMinimumTotalSize
+  commentId: F:Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.NoKeyBufferMinimumTotalSize
+  nameWithType: Blake2BHasher.NoKeyBufferMinimumTotalSize
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan{System.Byte})
+  name: Update(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Update_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan{System.Byte})
+  name.vb: Update(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Blake2BHasher.Update(ReadOnlySpan<Byte>)
+  nameWithType.vb: Blake2BHasher.Update(ReadOnlySpan(Of Byte))
+- uid: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update*
+  name: Update
+  href: api/Isopoh.Cryptography.Blake2b.Blake2BHasher.html#Isopoh_Cryptography_Blake2b_Blake2BHasher_Update_
+  commentId: Overload:Isopoh.Cryptography.Blake2b.Blake2BHasher.Update
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.Blake2b.Blake2BHasher.Update
+  nameWithType: Blake2BHasher.Update
 - uid: Isopoh.Cryptography.Blake2b.Blake2BTreeConfig
   name: Blake2BTreeConfig
   href: api/Isopoh.Cryptography.Blake2b.Blake2BTreeConfig.html
@@ -1125,6 +1902,15 @@ references:
   commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Finish
   fullName: Isopoh.Cryptography.Blake2b.Hasher.Finish()
   nameWithType: Hasher.Finish()
+- uid: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span{System.Byte})
+  name: Finish(Span<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Finish_System_Span_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span{System.Byte})
+  name.vb: Finish(Span(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Finish(System.Span(Of System.Byte))
+  nameWithType: Hasher.Finish(Span<Byte>)
+  nameWithType.vb: Hasher.Finish(Span(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Hasher.Finish*
   name: Finish
   href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Finish_
@@ -1163,6 +1949,15 @@ references:
   fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Update(System.Byte(), System.Int32, System.Int32)
   nameWithType: Hasher.Update(Byte[], Int32, Int32)
   nameWithType.vb: Hasher.Update(Byte(), Int32, Int32)
+- uid: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan{System.Byte})
+  name: Update(ReadOnlySpan<Byte>)
+  href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Update_System_ReadOnlySpan_System_Byte__
+  commentId: M:Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan{System.Byte})
+  name.vb: Update(ReadOnlySpan(Of Byte))
+  fullName: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Isopoh.Cryptography.Blake2b.Hasher.Update(System.ReadOnlySpan(Of System.Byte))
+  nameWithType: Hasher.Update(ReadOnlySpan<Byte>)
+  nameWithType.vb: Hasher.Update(ReadOnlySpan(Of Byte))
 - uid: Isopoh.Cryptography.Blake2b.Hasher.Update*
   name: Update
   href: api/Isopoh.Cryptography.Blake2b.Hasher.html#Isopoh_Cryptography_Blake2b_Hasher_Update_
@@ -1170,30 +1965,6 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.Blake2b.Hasher.Update
   nameWithType: Hasher.Update
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  name: LockMemoryPolicy
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html
-  commentId: T:Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy
-  nameWithType: LockMemoryPolicy
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  name: BestEffort
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_BestEffort
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.BestEffort
-  nameWithType: LockMemoryPolicy.BestEffort
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  name: Enforce
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_Enforce
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.Enforce
-  nameWithType: LockMemoryPolicy.Enforce
-- uid: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  name: None
-  href: api/Isopoh.Cryptography.Blake2b.LockMemoryPolicy.html#Isopoh_Cryptography_Blake2b_LockMemoryPolicy_None
-  commentId: F:Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  fullName: Isopoh.Cryptography.Blake2b.LockMemoryPolicy.None
-  nameWithType: LockMemoryPolicy.None
 - uid: Isopoh.Cryptography.SecureArray
   name: Isopoh.Cryptography.SecureArray
   href: api/Isopoh.Cryptography.SecureArray.html
@@ -1307,12 +2078,6 @@ references:
   commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException()
   nameWithType: LockFailException.LockFailException()
-- uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-  name: LockFailException(SerializationInfo, StreamingContext)
-  href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
-  commentId: M:Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-  fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
-  nameWithType: LockFailException.LockFailException(SerializationInfo, StreamingContext)
 - uid: Isopoh.Cryptography.SecureArray.LockFailException.#ctor(System.String)
   name: LockFailException(String)
   href: api/Isopoh.Cryptography.SecureArray.LockFailException.html#Isopoh_Cryptography_SecureArray_LockFailException__ctor_System_String_
@@ -1332,6 +2097,30 @@ references:
   isSpec: "True"
   fullName: Isopoh.Cryptography.SecureArray.LockFailException.LockFailException
   nameWithType: LockFailException.LockFailException
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  name: LockMemoryPolicy
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html
+  commentId: T:Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy
+  nameWithType: LockMemoryPolicy
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  name: BestEffort
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_BestEffort
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.BestEffort
+  nameWithType: LockMemoryPolicy.BestEffort
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  name: Enforce
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_Enforce
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.Enforce
+  nameWithType: LockMemoryPolicy.Enforce
+- uid: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  name: None
+  href: api/Isopoh.Cryptography.SecureArray.LockMemoryPolicy.html#Isopoh_Cryptography_SecureArray_LockMemoryPolicy_None
+  commentId: F:Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  fullName: Isopoh.Cryptography.SecureArray.LockMemoryPolicy.None
+  nameWithType: LockMemoryPolicy.None
 - uid: Isopoh.Cryptography.SecureArray.SecureArray
   name: SecureArray
   href: api/Isopoh.Cryptography.SecureArray.SecureArray.html
@@ -1551,6 +2340,23 @@ references:
   fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Buffer
   nameWithType: SecureArray<T>.Buffer
   nameWithType.vb: SecureArray(Of T).Buffer
+- uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Create(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  name: Create(Int32, SecureArrayCall, LockMemoryPolicy)
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Create_System_Int32_Isopoh_Cryptography_SecureArray_SecureArrayCall_Isopoh_Cryptography_SecureArray_LockMemoryPolicy_
+  commentId: M:Isopoh.Cryptography.SecureArray.SecureArray`1.Create(System.Int32,Isopoh.Cryptography.SecureArray.SecureArrayCall,Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray<T>.Create(System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Create(System.Int32, Isopoh.Cryptography.SecureArray.SecureArrayCall, Isopoh.Cryptography.SecureArray.LockMemoryPolicy)
+  nameWithType: SecureArray<T>.Create(Int32, SecureArrayCall, LockMemoryPolicy)
+  nameWithType.vb: SecureArray(Of T).Create(Int32, SecureArrayCall, LockMemoryPolicy)
+- uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Create*
+  name: Create
+  href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Create_
+  commentId: Overload:Isopoh.Cryptography.SecureArray.SecureArray`1.Create
+  isSpec: "True"
+  fullName: Isopoh.Cryptography.SecureArray.SecureArray<T>.Create
+  fullName.vb: Isopoh.Cryptography.SecureArray.SecureArray(Of T).Create
+  nameWithType: SecureArray<T>.Create
+  nameWithType.vb: SecureArray(Of T).Create
 - uid: Isopoh.Cryptography.SecureArray.SecureArray`1.Dispose
   name: Dispose()
   href: api/Isopoh.Cryptography.SecureArray.SecureArray-1.html#Isopoh_Cryptography_SecureArray_SecureArray_1_Dispose

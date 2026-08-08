@@ -13,3 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Naming", "CA1724:Type names should not match namespaces", Justification = "breaking", Scope = "type", Target = "~T:Isopoh.Cryptography.Blake2b.Blake2B")]
 [assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1633:File should have header", Justification = "Alternate copyright", Scope = "namespace", Target = "~N:Isopoh.Cryptography.Blake2b")]
 [assembly: SuppressMessage("Minor Code Smell", "S3261:Namespaces should not be empty", Justification = "reviewed", Scope = "namespace", Target = "~N:Isopoh.Cryptography.Blake2b")]
+[assembly: SuppressMessage("Major Code Smell", "S3358:Ternary operators should not be nested", Justification = "prettier", Scope = "member", Target = "~M:Isopoh.Cryptography.Blake2b.Blake2BHasher.Finish(System.Span{System.Byte})~System.Span{System.Byte}")]

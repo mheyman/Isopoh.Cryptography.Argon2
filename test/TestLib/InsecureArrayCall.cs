@@ -5,8 +5,9 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.SecureArray;
+
 using System;
+using Isopoh.Cryptography.SecureArray;
 
 /// <summary>
 /// Does not zero or lock memory.

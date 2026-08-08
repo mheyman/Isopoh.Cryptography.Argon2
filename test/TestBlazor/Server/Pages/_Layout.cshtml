@@ -10,6 +10,7 @@
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
+    @* ReSharper disable once Html.PathError *@
     <link href="BlazorApp1.styles.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
@@ -27,6 +28,8 @@
     <a class="dismiss">🗙</a>
 </div>
 
+@* ReSharper disable Html.PathError *@
 <script src="_framework/blazor.server.js"></script>
+@* ReSharper restore Html.PathError *@
 </body>
 </html>

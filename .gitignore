@@ -70,6 +70,10 @@ AplPed.TACOP/AplPed.TACOP.ExplorerWidget/Scripts/apl/apl.earth.js
 ####################################
 !source/widgets/PedWidgets/PedWidgets/Scripts/apl.ped.bs.js
 
+# Never checkin user CMake presets
+####################################
+CMakeUserPresets.json
+
 # build/edit artifacts #
 ########################
 .vs
@@ -136,12 +140,19 @@ source/widgets/webapps/owf.war
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.person.js
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.javascriptconfig.js
 source/widgets/PedWidgets/PedWidgets/Scripts/aplped.common.js
-Argon2TestVector/Generated
+test/Argon2TestVector/Generated/
+civetweb.conf
+docs
+isopoh-nopass.pfx
+isopoh.snk
+private.key
 
 dllFun.csv
 dllFun.xml
 TestResults
 /nuget
+Reference/build
+_dotnet_build.sln
 # copied around code signing keys
 Isopoh.Cryptography.Argon2/isopoh.pfx
 Isopoh.Cryptography.Blake2b/isopoh.pfx

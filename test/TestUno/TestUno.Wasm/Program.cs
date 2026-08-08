@@ -1,14 +1,14 @@
-﻿namespace TestUno.Wasm
+﻿namespace TestUno.Wasm;
+
+public class Program
 {
-    public class Program
+    // ReSharper disable once NotAccessedField.Local
+    private static App app;
+
+    private static int Main()
     {
-        private static App _app;
+        Windows.UI.Xaml.Application.Start(_ => app = new App());
 
-        static int Main(string[] args)
-        {
-            Windows.UI.Xaml.Application.Start(_ => _app = new App());
-
-            return 0;
-        }
+        return 0;
     }
 }

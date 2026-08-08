@@ -5,10 +5,11 @@
 // </copyright>
 
 namespace TestLib;
-using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
+
 using System.Collections.Generic;
 using System.Linq;
+using Isopoh.Cryptography.Argon2;
+using Isopoh.Cryptography.SecureArray;
 using Xunit.Abstractions;
 
 /// <summary>
@@ -21,13 +22,14 @@ public static class LeakInVerify
     /// </summary>
     /// <param name="output">Used to write output.</param>
     /// <returns>String with pass/fail message.</returns>
-    public static (bool, string) Test(ITestOutputHelper output)
+    public static (bool Passed, string Message) Test(ITestOutputHelper output)
     {
-        var locks = new Dictionary<IntPtr, int>();
-        int lockCount = 0;
+        var locks = new Dictionary<IntPtr, (UIntPtr, int)>(); // address to (size, index)
+        var lockCount = 0;
+        var failedLocks = new List<(IntPtr, UIntPtr)>(); // (address, size)
         var badLocks = new List<int>();
-        int badUnlockCount = 0;
-        SecureArrayCall secureArrayCall = new SecureArrayCall(
+        var badUnlockCount = 0;
+        var secureArrayCall = new SecureArrayCall(
             SecureArray.DefaultCall.ZeroMemory,
             (m, l) =>
             {
@@ -37,14 +39,17 @@ public static class LeakInVerify
                     lock (locks)
                     {
                         ++lockCount;
-                        if (locks.ContainsKey(m))
+                        if (!locks.TryAdd(m, (l, lockCount)))
                         {
                             badLocks.Add(lockCount);
                         }
-                        else
-                        {
-                            locks.Add(m, lockCount);
-                        }
+                    }
+                }
+                else
+                {
+                    lock (locks)
+                    {
+                        failedLocks.Add((m, l));
                     }
                 }
 
@@ -67,28 +72,37 @@ public static class LeakInVerify
             },
             $"Wrapped {SecureArray.DefaultCall.Os}");
 
-        var hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
-        var password = "b";
+        const string hashString = "$argon2i$v=19$m=65536,t=3,p=1$M2f6+jnVc4dyL3BfMQRzoA==$jO/fOrgqxX90XDVhiYZgIVJJcw0lzIXtRFRCEggXYV8=";
+        const string password = "b";
         const int maxIteration = 10;
         var memoryDiff = new long[maxIteration];
-        for (int i = 0; i < maxIteration; i++)
+        for (var i = 0; i < maxIteration; i++)
         {
-            output.WriteLine($"TestLeaks: Iteration {i + 1} of {maxIteration}");
-            var prevTotalMemory = GC.GetTotalMemory(true);
+            output.WriteLine($"TestVerifyLeaks: Iteration {i + 1} of {maxIteration}");
+            Thread.Sleep(100);
+            long prevTotalMemory = GC.GetTotalMemory(true);
             Argon2.Verify(hashString, password, secureArrayCall);
-            var postTotalMemory = GC.GetTotalMemory(true);
+            Thread.Sleep(100);
+            long postTotalMemory = GC.GetTotalMemory(true);
             memoryDiff[i] = postTotalMemory - prevTotalMemory;
+        }
+
+        string? failedLockMessage = null;
+        if (failedLocks.Count > 0)
+        {
+            string s = failedLocks.Count > 1 ? "s" : string.Empty;
+            failedLockMessage = $"{failedLocks.Count} / {lockCount} failed lock{s}, size{s}=[{string.Join(", ", failedLocks.Select(x => $"0x{x.Item1.ToInt64():x8}:{x.Item2.ToUInt64()}"))}].";
         }
 
         var errs = new List<string>();
         if (memoryDiff.All(v => v > 0))
         {
-            errs.Add($"Leaked {memoryDiff.Min()} bytes. [{string.Join(", ", memoryDiff.Select(v => $"{v}"))}]");
+            errs.Add($"Leaked {memoryDiff.Min()} bytes. [{string.Join(", ", memoryDiff.Select(v => $"{v}"))}].");
         }
 
         if (badLocks.Any())
         {
-            errs.Add($"{badLocks.Count} bad locks: [{string.Join(", ", badLocks.Select(l => $"{l}"))}].");
+            errs.Add($"{badLocks.Count} / {lockCount} bad locks: [{string.Join(", ", badLocks.Select(l => $"{l}"))}].");
         }
 
         if (badUnlockCount > 0)
@@ -98,9 +112,9 @@ public static class LeakInVerify
 
         if (locks.Any())
         {
-            errs.Add($"Leaked {locks.Count} locks: addresses=[{string.Join(", ", locks.Keys.Select(k => $"0x{k.ToInt64():x8}"))}], lock index=[{string.Join(", ", locks.Keys.Select(k => $"{locks[k]}"))}].");
+            errs.Add($"Leaked {locks.Count} / {lockCount} locks: address:size:index=[{string.Join(", ", locks.Select(kv => $"0x{kv.Key.ToInt64():x8}:{kv.Value.Item1.ToUInt64()}:{kv.Value.Item2}"))}].");
         }
 
-        return (!errs.Any(), errs.Any() ? $"Leaks: FAILED: {string.Join(" ", errs)}" : "Leaks: Passed");
+        return (!errs.Any(), errs.Any() ? $"Verify leaks: FAILED: {string.Join(" ", errs)}{(failedLockMessage == null ? string.Empty : $" {failedLockMessage}")}" : "Leaks: Passed");
     }
 }

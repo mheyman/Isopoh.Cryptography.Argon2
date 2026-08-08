@@ -21,7 +21,6 @@
 
 #include "blake2.h"
 #include "blake2-impl.h"
-#include "encoding.h"
 
 static const uint64_t blake2b_IV[8] = {
     UINT64_C(0x6a09e667f3bcc908), UINT64_C(0xbb67ae8584caa73b),
@@ -73,7 +72,6 @@ static BLAKE2_INLINE void blake2b_init0(blake2b_state *S) {
 
 int blake2b_init_param(blake2b_state *S, const blake2b_param *P) {
     const unsigned char *p = (const unsigned char *)P;
-    unsigned int i;
 
     if (NULL == P || NULL == S) {
         return -1;
@@ -81,7 +79,7 @@ int blake2b_init_param(blake2b_state *S, const blake2b_param *P) {
 
     blake2b_init0(S);
     /* IV XOR Parameter Block */
-    for (i = 0; i < 8; ++i) {
+    for (unsigned int i = 0; i < 8; ++i) {
         S->h[i] ^= load64(&p[i * sizeof(S->h[i])]);
     }
     S->outlen = P->digest_length;
@@ -154,8 +152,7 @@ int blake2b_init_key(blake2b_state *S, size_t outlen, const void *key,
     }
 
     {
-        uint8_t block[BLAKE2B_BLOCKBYTES];
-        memset(block, 0, BLAKE2B_BLOCKBYTES);
+        uint8_t block[BLAKE2B_BLOCKBYTES] = {0};
         memcpy(block, key, keylen);
         blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
         /* Burn the key from stack */
@@ -167,7 +164,7 @@ int blake2b_init_key(blake2b_state *S, size_t outlen, const void *key,
 static void blake2b_compress(blake2b_state *S, const uint8_t *block) {
     uint64_t m[16];
     uint64_t v[16];
-    unsigned int i, r;
+    unsigned int i;
 
     for (i = 0; i < 16; ++i) {
         m[i] = load64(block + i * sizeof(m[i]));
@@ -188,14 +185,14 @@ static void blake2b_compress(blake2b_state *S, const uint8_t *block) {
 
 #define G(r, i, a, b, c, d)                                                    \
     do {                                                                       \
-        a = a + b + m[blake2b_sigma[r][2 * i + 0]];                            \
-        d = rotr64(d ^ a, 32);                                                 \
-        c = c + d;                                                             \
-        b = rotr64(b ^ c, 24);                                                 \
-        a = a + b + m[blake2b_sigma[r][2 * i + 1]];                            \
-        d = rotr64(d ^ a, 16);                                                 \
-        c = c + d;                                                             \
-        b = rotr64(b ^ c, 63);                                                 \
+        (a) = (a) + (b) + m[blake2b_sigma[r][2 * (i) + 0]];                    \
+        (d) = rotr64((d) ^ (a), 32);                                           \
+        (c) = (c) + (d);                                                       \
+        (b) = rotr64((b) ^ (c), 24);                                           \
+        (a) = (a) + (b) + m[blake2b_sigma[r][2 * (i) + 1]];                    \
+        (d) = rotr64((d) ^ (a), 16);                                           \
+        (c) = (c) + (d);                                                       \
+        (b) = rotr64((b) ^ (c), 63);                                           \
     } while ((void)0, 0)
 
 #define ROUND(r)                                                               \
@@ -210,7 +207,7 @@ static void blake2b_compress(blake2b_state *S, const uint8_t *block) {
         G(r, 7, v[3], v[4], v[9], v[14]);                                      \
     } while ((void)0, 0)
 
-    for (r = 0; r < 12; ++r) {
+    for (unsigned int r = 0; r < 12; ++r) {
         ROUND(r);
     }
 
@@ -264,7 +261,6 @@ int blake2b_update(blake2b_state *S, const void *in, size_t inlen) {
 
 int blake2b_final(blake2b_state *S, void *out, size_t outlen) {
     uint8_t buffer[BLAKE2B_OUTBYTES] = {0};
-    unsigned int i;
 
     /* Sanity checks */
     if (S == NULL || out == NULL || outlen < S->outlen) {
@@ -281,7 +277,7 @@ int blake2b_final(blake2b_state *S, void *out, size_t outlen) {
     memset(&S->buf[S->buflen], 0, BLAKE2B_BLOCKBYTES - S->buflen); /* Padding */
     blake2b_compress(S, S->buf);
 
-    for (i = 0; i < 8; ++i) { /* Output full hash to temp buffer */
+    for (unsigned int i = 0; i < 8; ++i) { /* Output full hash to temp buffer */
         store64(buffer + sizeof(S->h[i]) * i, S->h[i]);
     }
 

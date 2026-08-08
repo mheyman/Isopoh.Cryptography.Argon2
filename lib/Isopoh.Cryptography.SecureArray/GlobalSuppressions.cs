@@ -29,3 +29,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces", Justification = "Old code")]
 [assembly: SuppressMessage("Major Code Smell", "S1854:Unused assignments should be removed", Justification = "Things are strange in p/invoke code - this is probably correct...", Scope = "member", Target = "~M:Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.GetWorkingSetSize(System.IntPtr)~System.UInt64")]
 [assembly: SuppressMessage("Major Code Smell", "S3358:Ternary operators should not be nested", Justification = "Reviewed", Scope = "member", Target = "~P:Isopoh.Cryptography.SecureArray.SecureArray.ProtectionType")]
+[assembly: SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "keep it", Scope = "member", Target = "~P:Isopoh.Cryptography.SecureArray.DefaultWindowsSecureArrayCall.VirtualAlloc")]

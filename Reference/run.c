@@ -15,7 +15,9 @@
  * software. If not, they may be obtained at the above URLs.
  */
 
-#define _GNU_SOURCE 1
+// ReSharper disable CppClangTidyModernizeMacroToEnum
+// ReSharper disable CppClangTidyClangDiagnosticUnusedMacros
+#define _GNU_SOURCE 1  // NOLINT(bugprone-reserved-identifier)
 
 #include <stdint.h>
 #include <stdio.h>
@@ -38,7 +40,7 @@
 static void usage(const char *cmd) {
     printf("Usage:  %s [-h] salt [-i|-d|-id] [-t iterations] "
            "[-m log2(memory in KiB) | -k memory in KiB] [-p parallelism] "
-           "[-l hash length] [-e|-r] [-v (10|13)]\n",
+           "[-l hash length] [-e|-r] [-v (10|13)] [-a additional data] [-kid key id]\n",
            cmd);
     printf("Parameters:\n");
     printf("\tsalt\t\tThe salt to use, at least 8 characters\n");
@@ -48,6 +50,7 @@ static void usage(const char *cmd) {
     printf("\t-x password\t\tPassword\n");
     printf("\t-s secret\t\tOptional secret\n");
     printf("\t-a ad\t\tOptional additional data\n");
+    printf("\t-kid key_id\t\tOptional key identifier\n");
     printf("\t-t N\t\tSets the number of iterations to N (default = %d)\n",
            T_COST_DEF);
     printf("\t-m N\t\tSets the memory usage of 2^N KiB (default %d)\n",
@@ -61,18 +64,18 @@ static void usage(const char *cmd) {
     printf("\t-e\t\tOutput only encoded hash\n");
     printf("\t-r\t\tOutput only the raw bytes of the hash\n");
     printf("\t-v (10|13)\tArgon2 version (defaults to the most recent version, currently %x)\n",
-            ARGON2_VERSION_NUMBER);
+            ARGON2_VERSION_NUMBER);  // NOLINT(clang-diagnostic-format)
     printf("\t-h\t\tPrint %s usage\n", cmd);
 }
 
-static void fatal(const char *error) {
-    fprintf(stderr, "Error: %s\n", error);
-    exit(1);
+static void fatal(const char *error)
+{  // NOLINT(clang-diagnostic-missing-noreturn)
+    fprintf(stderr, "Error: %s\n", error); // NOLINT(cert-err33-c)
+    exit(1); // NOLINT(concurrency-mt-unsafe)
 }
 
-static void print_hex(uint8_t *bytes, size_t bytes_len) {
-    size_t i;
-    for (i = 0; i < bytes_len; ++i) {
+static void print_hex(uint8_t const *bytes, size_t bytes_len) {
+    for (size_t i = 0; i < bytes_len; ++i) {
         printf("%02x", bytes[i]);
     }
     printf("\n");
@@ -93,16 +96,10 @@ Base64-encoded hash string
 @raw_only display only the hexadecimal of the hash
 @version Argon2 version
 */
-static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *secret, char *ad, uint32_t t_cost,
+static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char const *secret, char const *ad, char const *kid, uint32_t t_cost,
                 uint32_t m_cost, uint32_t lanes, uint32_t threads,
                 argon2_type type, int encoded_only, int raw_only, uint32_t version) {
-    clock_t start_time, stop_time;
-    size_t saltlen, secretlen, adlen, encodedlen;
-    int result;
-    unsigned char * out = NULL;
-    char * encoded = NULL;
-
-    start_time = clock();
+    clock_t start_time = clock();
 
     if (!pwd) {
         fatal("password missing");
@@ -113,37 +110,40 @@ static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *sec
         fatal("salt missing");
     }
 
-    saltlen = strlen(salt);
+    size_t saltlen = strlen(salt);
     if(UINT32_MAX < saltlen) {
         fatal("salt is too long");
     }
 
-    secretlen = secret ? strlen(secret) : 0;
-    adlen = ad ? strlen(ad) : 0;
+    size_t secretlen = secret ? strlen(secret) : 0;
+    size_t adlen = ad ? strlen(ad) : 0;
+    size_t kidlen = kid ? strlen(kid) : 0;
 
 
     UNUSED_PARAMETER(lanes);
 
-    out = malloc(outlen + 1);
+    unsigned char* out = malloc(outlen + 1);
     if (!out) {
         clear_internal_memory(pwd, pwdlen);
         fatal("could not allocate memory for output");
     }
 
-    encodedlen = argon2_encodedlen(t_cost, m_cost, lanes, (uint32_t)saltlen, outlen, type);
-    encoded = malloc(encodedlen + 1);
+    size_t encodedlen = argon2_encodedlen(t_cost, m_cost, lanes, (uint32_t)adlen, (uint32_t)kidlen, (uint32_t)saltlen,
+                                          outlen, type);
+    char* encoded = malloc(encodedlen + 1);
     if (!encoded) {
         clear_internal_memory(pwd, pwdlen);
         fatal("could not allocate memory for hash");
     }
 
-    result = argon2_hash(t_cost, m_cost, threads, pwd, pwdlen, salt, saltlen, secret, secretlen, ad, adlen,
-                         out, outlen, encoded, encodedlen, type,
-                         version);
+    int result = argon2_hash(t_cost, m_cost, threads, pwd, pwdlen, salt, saltlen, secret, secretlen, ad, adlen, kid,
+                             kidlen,
+                             out, outlen, encoded, encodedlen, type,
+                             version);
     if (result != ARGON2_OK)
         fatal(argon2_error_message(result));
 
-    stop_time = clock();
+    clock_t stop_time = clock();
 
     if (encoded_only)
         puts(encoded);
@@ -166,7 +166,7 @@ static void run(uint32_t outlen, char *pwd, size_t pwdlen, char *salt, char *sec
     printf("%2.3f seconds\n",
            ((double)stop_time - start_time) / (CLOCKS_PER_SEC));
 
-    result = argon2_verify(encoded, pwd, pwdlen, type);
+    result = argon2_verify(encoded, pwd, pwdlen, secret, secretlen, type);
     if (result != ARGON2_OK)
         fatal(argon2_error_message(result));
     printf("Verification ok\n");
@@ -185,29 +185,34 @@ int main(int argc, char *argv[]) {
     int encoded_only = 0;
     int raw_only = 0;
     uint32_t version = ARGON2_VERSION_NUMBER;
-    int i;
     size_t pwdlen = 0;
-    char *pwd = NULL, *salt, *secret = NULL, *ad = NULL;
+    char *pwd = NULL;
+    char const *kid = NULL;
+    char const *ad = NULL;
+    char const *secret = NULL;
 
     if (argc < 2) {
         usage(argv[0]);
         return ARGON2_MISSING_ARGS;
-    } else if (argc >= 2 && strcmp(argv[1], "-h") == 0) {
+    }
+
+    if (argc >= 2 && strcmp(argv[1], "-h") == 0) {
         usage(argv[0]);
         return 1;
     }
 
 
-    salt = argv[1];
+    char* salt = argv[1];
 
     /* parse options */
-    for (i = 2; i < argc; i++) {
+    for (int i = 2; i < argc; i++) {
         const char *a = argv[i];
-        unsigned long input = 0;
+        unsigned long input;
         if (!strcmp(a, "-h")) {
             usage(argv[0]);
             return 1;
-        } else if (!strcmp(a, "-m")) {
+        }
+        if (!strcmp(a, "-m")) {
             if (m_cost_specified) {
                 fatal("-m or -k can only be used once");
             }
@@ -219,14 +224,14 @@ int main(int argc, char *argv[]) {
                     input > ARGON2_MAX_MEMORY_BITS) {
                     fatal("bad numeric input for -m");
                 }
-                m_cost = ARGON2_MIN(UINT64_C(1) << input, UINT32_C(0xFFFFFFFF));
+                m_cost = (uint32_t)ARGON2_MIN(UINT64_C(1) << input, UINT32_C(0xFFFFFFFF));
                 if (m_cost > ARGON2_MAX_MEMORY) {
                     fatal("m_cost overflow");
                 }
                 continue;
-            } else {
-                fatal("missing -m argument");
             }
+
+            fatal("missing -m argument");
         } else if (!strcmp(a, "-k")) {
             if (m_cost_specified) {
                 fatal("-m or -k can only be used once");
@@ -243,9 +248,9 @@ int main(int argc, char *argv[]) {
                     fatal("m_cost overflow");
                 }
                 continue;
-            } else {
-                fatal("missing -k argument");
             }
+
+            fatal("missing -k argument");
         } else if (!strcmp(a, "-t")) {
             if (i < argc - 1) {
                 i++;
@@ -256,32 +261,32 @@ int main(int argc, char *argv[]) {
                 }
                 t_cost = input;
                 continue;
-            } else {
-                fatal("missing -t argument");
             }
+
+            fatal("missing -t argument");
         } else if (!strcmp(a, "-p")) {
             if (i < argc - 1) {
                 i++;
                 input = strtoul(argv[i], NULL, 10);
                 if (input == 0 || input == ULONG_MAX ||
-                    input > ARGON2_MAX_THREADS || input > ARGON2_MAX_LANES) {
+                    input > ARGON2_MAX_THREADS || input > ARGON2_MAX_LANES) {  // NOLINT(misc-redundant-expression)
                     fatal("bad numeric input for -p");
                 }
                 threads = input;
                 lanes = threads;
                 continue;
-            } else {
-                fatal("missing -p argument");
             }
+
+            fatal("missing -p argument");
         } else if (!strcmp(a, "-l")) {
             if (i < argc - 1) {
                 i++;
                 input = strtoul(argv[i], NULL, 10);
                 outlen = input;
                 continue;
-            } else {
-                fatal("missing -l argument");
             }
+
+            fatal("missing -l argument");
         }
         else if (!strcmp(a, "-x"))
         {
@@ -292,10 +297,8 @@ int main(int argc, char *argv[]) {
                 pwdlen = strlen(pwd);
                 continue;
             }
-            else
-            {
-                fatal("missing -x argument");
-            }
+
+            fatal("missing -x argument");
         }
         else if (!strcmp(a, "-s"))
         {
@@ -305,10 +308,8 @@ int main(int argc, char *argv[]) {
                 secret = argv[i];
                 continue;
             }
-            else
-            {
-                fatal("missing -s argument");
-            }
+
+            fatal("missing -s argument");
         }
         else if (!strcmp(a, "-a"))
         {
@@ -318,10 +319,19 @@ int main(int argc, char *argv[]) {
                 ad = argv[i];
                 continue;
             }
-            else
+
+            fatal("missing -a argument");
+        }
+        else if (!strcmp(a, "-kid"))
+        {
+            if (i < argc - 1)
             {
-                fatal("missing -a argument");
+                i++;
+                kid = argv[i];
+                continue;
             }
+
+            fatal("missing -kid argument");
         } else if (!strcmp(a, "-i")) {
             type = Argon2_i;
             ++types_specified;
@@ -365,10 +375,10 @@ int main(int argc, char *argv[]) {
         printf("Iterations:\t%u\n", t_cost);
         printf("Memory:\t\t%u KiB\n", m_cost);
         printf("Parallelism:\t%u\n", lanes);
-        fflush(stdout);
+        fflush(stdout);  // NOLINT(cert-err33-c)
     }
 
-    run(outlen, pwd, pwdlen, salt, secret, ad, t_cost, m_cost, lanes, threads, type,
+    run(outlen, pwd, pwdlen, salt, secret, ad, kid, t_cost, m_cost, lanes, threads, type,
        encoded_only, raw_only, version);
 
     return ARGON2_OK;

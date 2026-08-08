@@ -25,7 +25,7 @@ namespace TestUno
         {
             this.InitializeComponent();
             this.Os.Text = $"Operating System: {SecureArray.DefaultCall.Os}, {IntPtr.Size * 8}-bit";
-            this.Secret.LostFocus += (o, a) => Task.Run(
+            this.Secret.LostFocus += (sender, e) => Task.Run(
                 async () => await this.CalculateHashAsync());
             this.TimeCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;
             this.MemoryCost.BeforeTextChanging += this.OnBeforePositiveIntTextChange;

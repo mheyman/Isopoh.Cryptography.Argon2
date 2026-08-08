@@ -6,7 +6,7 @@
     <Description>
       A managed class that can hold an array in RAM and zero it
       on disposal. The code has the capability to throw if it cannot lock
-      the array in RAM or gracefully degrade to merely pinning the memory
+      the array in RAM or gracefully degrade to merely pinning the span
       to prevent the CLR from moving it and risking exposure to other part
       of the executable.
     </Description>
@@ -16,12 +16,12 @@
     <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>Michael Heyman</Authors>
-    <Copyright>Michael Heyman 2022</Copyright>
+    <Copyright>Michael Heyman 2024</Copyright>
     <PackageTags>sensitive array</PackageTags>
     <PackageReleaseNotes>Bump version to match Isopoh.Cryptography.Argon2.</PackageReleaseNotes>
     <AssemblyTitle>Isopoh.Cryptography.SecureArray</AssemblyTitle>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
-    <Nullable>warnings</Nullable>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net9.0;net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Isopoh.Cryptography.SecureArray</AssemblyName>
     <PackageId>Isopoh.Cryptography.SecureArray</PackageId>
@@ -29,9 +29,9 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <SignAssembly>True</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\isopoh.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\isopoh-pub.snk</AssemblyOriginatorKeyFile>
     <DisablePackageAssetsCache>true</DisablePackageAssetsCache>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -40,6 +40,11 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
     <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <IsAotCompatible>true</IsAotCompatible>
+    <VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.2|AnyCPU'">
@@ -51,13 +56,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.7.0.75501">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +75,7 @@
 
   <ItemGroup>
     <None Include="..\..\images\isopoh.png" Link="isopoh.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
