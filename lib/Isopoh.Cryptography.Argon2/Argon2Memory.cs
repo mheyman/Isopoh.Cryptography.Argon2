@@ -487,8 +487,8 @@ public sealed class Argon2Memory
         }
         finally
         {
-            CryptographicOperations.ZeroMemory(expectedHash);
-            CryptographicOperations.ZeroMemory(passwordBytes);
+            SecureArray.Zero(expectedHash, this.secureArrayCall);
+            SecureArray.Zero(passwordBytes, this.secureArrayCall);
         }
     }
 

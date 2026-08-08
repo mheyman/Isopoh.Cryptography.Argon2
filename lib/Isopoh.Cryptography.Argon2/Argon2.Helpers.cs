@@ -300,7 +300,7 @@ public sealed partial class Argon2
         }
         finally
         {
-            CryptographicOperations.ZeroMemory(expectedHash);
+            SecureArray.Zero(expectedHash);
         }
     }
 
