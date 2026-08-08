@@ -43,6 +43,25 @@ if (Argon2.Verify(hash, reusableMemory))
     throw new InvalidOperationException("Reusable-memory verification accepted an incorrect password.");
 }
 
+if (OperatingSystem.IsMacOS())
+{
+    if (SecureArray.DefaultCall.Os != "OSX")
+    {
+        throw new InvalidOperationException(
+            $"Expected the macOS SecureArray implementation, got {SecureArray.DefaultCall.Os}.");
+    }
+
+    using SecureArray<byte> lockedBuffer = SecureArray<byte>.Create(
+        4096,
+        SecureArray.DefaultCall,
+        LockMemoryPolicy.Enforce);
+    if (lockedBuffer.ProtectionType != SecureArrayType.ZeroedPinnedAndNoSwap)
+    {
+        throw new InvalidOperationException(
+            $"Expected locked memory, got {lockedBuffer.ProtectionType}.");
+    }
+}
+
 var browserLikeCall = new SecureArrayCall(
     (pointer, length) => Marshal.Copy(new byte[(int)length], 0, pointer, (int)length),
     (pointer, length) => "Memory locking is unavailable",
