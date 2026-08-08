@@ -1,16 +1,16 @@
 ![Isopoh](https://raw.githubusercontent.com/mheyman/Isopoh.Cryptography.Argon2/main/.github/images/isopoh144.png)
 
-# FULLY MANAGED .NET CORE ARGON2 IMPLEMENTATION
+# FULLY MANAGED .NET ARGON2 IMPLEMENTATION
 [d]: #project
-**[INSTALL][i] | [USAGE][u] | [PORTING](PORTING.md) | [API][a] | [AUTHOR][auth] | [DEVELOP][dev] | [LICENSE][cpl]**
+**[INSTALL][i] | [USAGE][u] | [PORTING TO 2.0](PORTING.md) | [DOCUMENTATION](https://mheyman.github.io/Isopoh.Cryptography.Argon2/) | [API][a] | [DEVELOP][dev] | [LICENSE][cpl]**
 
 > Argon2 is a hash generator optimized to produce hashes suitable for
 > credential storage, key derivation, or other situations requiring a
 > cryptographically secure password hash. Argon2 was the winner of the
 > 2015 [Password Hashing Competition](https://password-hashing.net/).
 >
-> This fully managed implementation of Argon2 runs in ***.NET Core***, ***.NET
-> Framework***, or ***WebAssembly*** (via [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+> This fully managed implementation of Argon2 runs in ***.NET***, compatible
+> ***.NET Framework*** applications, or ***WebAssembly*** (via [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 > or [Uno Platform](https://platform.uno/)).
 
 Standard Argon2 Hashing:
@@ -26,7 +26,9 @@ if (Argon2.Verify(passwordHash, password))
 }
 ```
 
-All Argon2 options available for your hashing needs...
+Version 2.0 adds reusable working memory for allocation-sensitive server workloads and
+explicit .NET 10 Native AOT compatibility. See the [1.x to 2.0 porting
+guide](PORTING.md) for migration and pooling guidance.
 
 ## MOTIVATION
 [mo]: #motivation 'Why C# Argon2'
@@ -50,10 +52,10 @@ This requires a .NET environment and runs on Windows, Linux, MacOS, and WebAssem
 #### NUGET
 [nuget]: #nuget 'Install via NuGet'
 
-The recommended way to get started is by use the NuGet package:
+The recommended way to get started is to use the NuGet package:
 
 ```shell
-Install-Package Isopoh.Cryptography.Argon2
+dotnet add package Isopoh.Cryptography.Argon2
 ```
 
 from [https://www.nuget.org/packages/Isopoh.Cryptography.Argon2](https://www.nuget.org/packages/Isopoh.Cryptography.Argon2).
@@ -65,20 +67,17 @@ just adding the NuGet package as a dependency.
 #### CLONE
 [clone]: #clone 'Install via clone'
 
-You can also, of course, go old-school and clone the repository and link use
-the .csproj files directly:
+You can also clone the repository and reference the project files directly:
 
 ```shell
 git clone https://github.com/mheyman/Isopoh.Cryptography.Argon2.git
 ```
 
-then add the `ProjectReference` lines to your .csproj to reference
-...`Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj`,
-...`Isopoh.Cryptography.Blake2b\Isopoh.Cryptography.Blake2b.csproj`, and
-...`Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj`. For example:
+The Argon2 project already references Blake2b and SecureArray, so applications only
+need the top-level project reference. For example:
 ```xml
 <ItemGroup>
-    <ProjectReference Include="..\..\..\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.SecureArray\Isopoh.Cryptography.SecureArray.csproj" />
+    <ProjectReference Include="..\Isopoh.Cryptography.Argon2\lib\Isopoh.Cryptography.Argon2\Isopoh.Cryptography.Argon2.csproj" />
 </ItemGroup>
 ```
 
@@ -102,17 +101,13 @@ Setting everything:
 
 ```csharp
 using Isopoh.Cryptography.Argon2;
-using Isopoh.Cryptography.SecureArray;
+using System.Security.Cryptography;
 
 byte[] passwordBytes = "password1"u8.ToArray();
 byte[] secret = { 0x6b, 0xc0, 0x19, 0x4c, 0x11, 0x46, 0x35, 0x69, 0x89, 0xd6, 0x50, 0x19, 0x56, 0xac, 0x69, 0x0e };
 byte[] salt = new byte[16];
 byte[] associatedData = "My Associated Data"u8.ToArray();
-
-// somewhere in the class definition:
-//   private static readonly RandomNumberGenerator Rng =
-//       System.Security.Cryptography.RandomNumberGenerator.Create();
-new Random().NextBytes(salt);
+RandomNumberGenerator.Fill(salt);
 
 var config = new Argon2Config
 {
@@ -128,12 +123,7 @@ var config = new Argon2Config
     AssociatedData = associatedData, // from somewhere
     HashLength = 20, // >= 4
 };
-var argon2A = new Argon2(config);
-string hashString;
-using (SecureArray<byte> hashA = argon2A.Hash())
-{
-    hashString = config.EncodeString(hashA.Buffer);
-}
+string hashString = Argon2.Hash(config);
 
 //
 // Now pretend "passwordBytes" is what just came in and that it must be
@@ -142,29 +132,22 @@ using (SecureArray<byte> hashA = argon2A.Hash())
 // Note setting "Threads" to different values doesn't affect the result,
 // just the time it takes to get the result.
 //
-var configOfPasswordToVerify = new Argon2Config { Password = passwordBytes, Threads = 1 };
-SecureArray<byte>? hashB = null;
-try
+var configOfPasswordToVerify = new Argon2Config
 {
-    if (configOfPasswordToVerify.DecodeString(hashString, out hashB) && hashB != null)
-    {
-        var argon2ToVerify = new Argon2(configOfPasswordToVerify);
-        using SecureArray<byte>? hashToVerify = argon2ToVerify.Hash();
-        if (Argon2.FixedTimeEquals(hashB, hashToVerify))
-        {
-            // verified
-        }
-    }
-}
-finally
+    Password = passwordBytes,
+    Secret = secret,
+    Threads = 1,
+};
+
+if (Argon2.Verify(hashString, configOfPasswordToVerify))
 {
-    hashB?.Dispose();
+    // verified
 }
 
 //
 // Or, more simply (setting "Threads" to "5")
 //
-if (Argon2.Verify(hashString, passwordBytes, 5))
+if (Argon2.Verify(hashString, passwordBytes, secret, 5))
 {
     // verified
 }
@@ -173,8 +156,9 @@ if (Argon2.Verify(hashString, passwordBytes, 5))
 ## API
 [a]: #api 'Argon2\'s API description'
 
-The full API is at
-[https://mheyman.github.io/Isopoh.Cryptography.Argon2](https://mheyman.github.io/Isopoh.Cryptography.Argon2).
+The [documentation site](https://mheyman.github.io/Isopoh.Cryptography.Argon2/)
+contains the full API reference. Applications moving from an earlier release should
+also read the [version 1.x to 2.0 porting guide](PORTING.md).
 
 In particular, the various options for Argon2 hashing can be found in
 [Argon2Config](https://mheyman.github.io/Isopoh.Cryptography.Argon2/api/Isopoh.Cryptography.Argon2.Argon2Config.html#properties)
