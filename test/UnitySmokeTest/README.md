@@ -18,14 +18,11 @@ test, so generated DLLs are not committed.
 ## Licensing limitation
 
 Unity no longer officially supports manual activation for new Personal
-licenses. GameCI's activation-file action is consequently deprecated. The
-manual **Acquire Unity Activation File (legacy)** workflow is included so the
-remaining GameCI flow can be tried without affecting normal CI. Download its
-`.alf` artifact and submit it at `license.unity3d.com`; if Unity offers a
-license download, put the complete downloaded `.ulf` contents in the
-`UNITY_LICENSE` secret. An existing valid `.ulf` file may also work with
-GameCI, while Pro licenses can use GameCI's serial-number flow. Do not commit
-license files or credentials.
+licenses. GameCI's activation-file action is consequently deprecated and now
+fails without producing an `.alf`. An existing valid `.ulf` file may still
+work with GameCI; put its complete contents in the `UNITY_LICENSE` secret.
+Pro licenses can use GameCI's serial-number flow. Do not commit license files
+or credentials.
 
 For a new Personal account, use a Unity-supported licensing route such as an
 activated self-hosted runner or Unity Build Automation until Unity and GameCI
