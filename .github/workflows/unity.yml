@@ -1,0 +1,73 @@
+name: Unity compatibility smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  unity-linux-editor:
+    name: Unity 2022.3 Linux Editor
+    runs-on: ubuntu-latest
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - name: Check Unity credentials
+        shell: bash
+        run: |
+          if [[ -z "$UNITY_LICENSE" || -z "$UNITY_EMAIL" || -z "$UNITY_PASSWORD" ]]; then
+            echo "UNITY_LICENSE, UNITY_EMAIL, and UNITY_PASSWORD repository secrets are required."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build Unity plugin assemblies
+        run: dotnet build lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj -c Release -f netstandard2.0 -p:GeneratePackageOnBuild=false
+
+      - name: Stage Unity plugin assemblies
+        shell: bash
+        run: |
+          mkdir -p test/UnitySmokeTest/Assets/Plugins
+          cp lib/Isopoh.Cryptography.Argon2/bin/Release/netstandard2.0/Isopoh.Cryptography.Argon2.dll test/UnitySmokeTest/Assets/Plugins/
+          cp lib/Isopoh.Cryptography.Blake2b/bin/Release/netstandard2.0/Isopoh.Cryptography.Blake2b.dll test/UnitySmokeTest/Assets/Plugins/
+          cp lib/Isopoh.Cryptography.SecureArray/bin/Release/netstandard2.0/Isopoh.Cryptography.SecureArray.dll test/UnitySmokeTest/Assets/Plugins/
+
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: test/UnitySmokeTest/Library
+          key: UnitySmokeTest-2022.3.10f1-${{ hashFiles('test/UnitySmokeTest/Assets/**', 'test/UnitySmokeTest/Packages/**', 'test/UnitySmokeTest/ProjectSettings/**') }}
+          restore-keys: |
+            UnitySmokeTest-2022.3.10f1-
+
+      - name: Run Unity EditMode smoke test
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ env.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ env.UNITY_PASSWORD }}
+        with:
+          projectPath: test/UnitySmokeTest
+          unityVersion: 2022.3.10f1
+          testMode: EditMode
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Unity 2022.3 Linux Editor results
+
+      - name: Upload Unity test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-smoke-test-results
+          path: artifacts
+          if-no-files-found: ignore

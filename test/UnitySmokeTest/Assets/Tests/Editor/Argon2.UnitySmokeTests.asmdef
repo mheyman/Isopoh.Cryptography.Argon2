@@ -1,0 +1,9 @@
+{
+  "name": "Argon2.UnitySmokeTests",
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
