@@ -13,7 +13,14 @@ namespace Isopoh.Cryptography.UnitySmokeTests
             string hash = Argon2.Hash(Password, timeCost: 1, memoryCost: 1024, parallelism: 1);
 
             Assert.That(Argon2.Verify(hash, Password), Is.True);
-            Assert.That(SecureArray.DefaultCall.Os, Is.EqualTo("Linux"));
+#if UNITY_EDITOR_OSX
+            const string ExpectedOs = "OSX";
+#elif UNITY_EDITOR_WIN
+            const string ExpectedOs = "Windows";
+#else
+            const string ExpectedOs = "Linux";
+#endif
+            Assert.That(SecureArray.DefaultCall.Os, Is.EqualTo(ExpectedOs));
             Assert.That(SecureArray.DefaultCall.IsMemoryLockSupported, Is.True);
 
             using (SecureArray<byte> buffer = SecureArray<byte>.Create(

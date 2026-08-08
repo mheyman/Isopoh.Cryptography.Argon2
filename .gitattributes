@@ -15,6 +15,7 @@
 # Try to do the sensible thing by default for new file types. This is effectively the same as setting core.autocrlf to true by default,
 # which has the nice side-effect that all our configuration is contained in the repository. 
 *                    text=auto
+test/UnitySmokeTest/*.sh text eol=lf
 #
 # these are all text files and should be treated as such
 *.asax               text

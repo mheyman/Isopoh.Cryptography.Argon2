@@ -2,8 +2,32 @@
 
 This minimal Unity 2022.3 project verifies that the `netstandard2.0` Argon2,
 Blake2b, and SecureArray assemblies load in Unity, hash and verify a password,
-select the Linux native `SecureArray` implementation, and successfully lock a
+select the host's native `SecureArray` implementation, and successfully lock a
 small buffer into RAM.
+
+## Unity Build Automation
+
+Create a Build Automation configuration with these settings:
+
+- Repository: `https://github.com/mheyman/Isopoh.Cryptography.Argon2`
+- Branch: `main`
+- Project subfolder path: `test/UnitySmokeTest`
+- Auto detect Unity version: enabled
+- Platform: macOS for the first run
+- Builder OS: macOS Sequoia
+- Pre-build script path: `test/UnitySmokeTest/prepare-uba.sh`
+- Run my project's unit tests when building: enabled
+- Run EditMode tests: enabled
+- Mark build as failed if any test fails: enabled
+- Auto-build: disabled until the first manual build succeeds
+
+The pre-build script installs a private .NET 10 SDK in the build workspace,
+builds the current checkout's `netstandard2.0` assemblies, and copies them into
+`Assets/Plugins` before Unity starts. Generated DLLs are not committed.
+
+After the macOS test succeeds, add a Windows IL2CPP configuration. UBA can also
+create UWP builds, but an EditMode test runs on the builder host; executing the
+resulting player is a separate test.
 
 Run the **Unity compatibility smoke test** workflow manually after configuring
 these GitHub Actions repository secrets:
@@ -30,7 +54,7 @@ provide a supported headless Personal activation flow.
 
 ## Scope
 
-This first smoke test runs inside the Linux Unity Editor. It validates Unity's
-managed-assembly loading and the desktop P/Invoke memory-locking path. It does
-not yet produce or execute an IL2CPP player; that should be the next test after
-the licensing path is proven.
+This first smoke test runs inside the Unity Editor. It validates Unity's
+managed-assembly loading and the builder host's desktop P/Invoke memory-locking
+path. It does not yet execute an IL2CPP player; that should be the next test
+after the Build Automation path is proven.
