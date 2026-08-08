@@ -7,6 +7,7 @@
 namespace Isopoh.Cryptography.Argon2;
 
 using System;
+using System.Security.Cryptography;
 using Isopoh.Cryptography.SecureArray;
 
 /// <summary>
@@ -61,11 +62,22 @@ public sealed class Argon2Config : ICloneable
     public byte[]? Password { get; set; }
 
     /// <summary>
-    /// Gets or sets the salt used in the password hash. If non-null, must be at least 8 bytes.
+    /// Gets or sets the salt used in the password hash. If not set, a random 16-byte salt is generated.
+    /// A supplied salt must be at least 8 bytes.
     /// </summary>
     public byte[]? Salt
     {
-        get => this.salt;
+        get
+        {
+            if (this.salt == null)
+            {
+                this.salt = new byte[16];
+                using RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
+                randomNumberGenerator.GetBytes(this.salt);
+            }
+
+            return this.salt;
+        }
 
         set
         {

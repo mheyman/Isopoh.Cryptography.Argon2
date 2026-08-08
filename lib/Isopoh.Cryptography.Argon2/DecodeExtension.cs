@@ -395,6 +395,7 @@ public static class DecodeExtension
         out byte[]? associatedData)
     {
         const string check = ",data=";
+        associatedData = null;
         if (string.Compare(str, pos, check, 0, check.Length, StringComparison.Ordinal) == 0)
         {
             pos += check.Length;
@@ -405,7 +406,6 @@ public static class DecodeExtension
             }
         }
 
-        associatedData = null;
         return true;
     }
 
