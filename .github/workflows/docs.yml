@@ -1,0 +1,67 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - .github/workflows/docs.yml
+      - Doc/**
+      - PORTING.md
+      - lib/**/*.cs
+      - lib/**/*.csproj
+  pull_request:
+    paths:
+      - .github/workflows/docs.yml
+      - Doc/**
+      - PORTING.md
+      - lib/**/*.cs
+      - lib/**/*.csproj
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Docfx
+        run: dotnet tool install --tool-path ./.tools docfx --version 2.77.0
+
+      - name: Restore documented projects
+        run: dotnet restore lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj
+
+      - name: Build documentation
+        run: ./.tools/docfx Doc/docfx.json --warningsAsErrors
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: Doc/_site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
