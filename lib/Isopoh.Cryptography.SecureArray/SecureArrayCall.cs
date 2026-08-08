@@ -31,11 +31,32 @@ public class SecureArrayCall
         Func<IntPtr, nuint, string?> lockMemory,
         Action<IntPtr, nuint> unlockMemory,
         string os)
+        : this(zeroMemory, lockMemory, unlockMemory, os, true)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SecureArrayCall"/> class.
+    /// </summary>
+    /// <param name="zeroMemory">Call that reliably zeroes memory.</param>
+    /// <param name="lockMemory">Call that locks memory into RAM.</param>
+    /// <param name="unlockMemory">Call that unlocks memory.</param>
+    /// <param name="os">The operating system these calls support.</param>
+    /// <param name="isMemoryLockSupported">
+    /// Whether this environment can prevent a buffer from being swapped to disk.
+    /// </param>
+    public SecureArrayCall(
+        Action<IntPtr, nuint> zeroMemory,
+        Func<IntPtr, nuint, string?> lockMemory,
+        Action<IntPtr, nuint> unlockMemory,
+        string os,
+        bool isMemoryLockSupported)
     {
         this.ZeroMemory = zeroMemory;
         this.LockMemory = lockMemory;
         this.UnlockMemory = unlockMemory;
         this.Os = os;
+        this.IsMemoryLockSupported = isMemoryLockSupported;
     }
 
     /// <summary>
@@ -65,4 +86,9 @@ public class SecureArrayCall
     /// Gets or sets the operating system this <see cref="SecureArrayCall"/> works for.
     /// </summary>
     public string Os { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether this environment can prevent buffers from being swapped to disk.
+    /// </summary>
+    public bool IsMemoryLockSupported { get; }
 }

@@ -291,9 +291,17 @@ public sealed partial class Argon2
         Argon2Memory memoryToVerify)
     {
         memoryToVerify.Reset(encoded, Argon2Password.Keep);
-        using var hasherToVerify = new Argon2(memoryToVerify);
-        Span<byte> hashToVerify = hasherToVerify.Hash();
-        return FixedTimeEquals(hashToVerify, hashToVerify);
+        byte[] expectedHash = memoryToVerify.Hash.ToArray();
+        try
+        {
+            using var hasherToVerify = new Argon2(memoryToVerify);
+            Span<byte> hashToVerify = hasherToVerify.Hash();
+            return FixedTimeEquals(expectedHash, hashToVerify);
+        }
+        finally
+        {
+            CryptographicOperations.ZeroMemory(expectedHash);
+        }
     }
 
     /// <summary>

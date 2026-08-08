@@ -9,6 +9,8 @@
 
 namespace Isopoh.Cryptography.Test;
 
+using System;
+using System.Runtime.InteropServices;
 using Isopoh.Cryptography.Argon2;
 using Isopoh.Cryptography.SecureArray;
 using TestLib;
@@ -121,6 +123,28 @@ public class UnitTests
     {
         (bool passed, string text) = SecureArraySizing.Test(this.output);
         Assert.True(passed, text);
+    }
+
+    /// <summary>
+    /// A best-effort allocation falls back to accurately reported pinned memory when
+    /// the environment, such as a browser, cannot lock memory against swapping.
+    /// </summary>
+    [Fact]
+    public void BestEffortFallsBackWhenMemoryLockingIsUnsupported()
+    {
+        var call = new SecureArrayCall(
+            (pointer, length) => Marshal.Copy(new byte[(int)length], 0, pointer, (int)length),
+            (pointer, length) => "Memory locking is unavailable",
+            (pointer, length) => { },
+            "Test WebAssembly",
+            false);
+
+        using SecureArray<byte> buffer = SecureArray<byte>.Create(32, call);
+
+        Assert.False(call.IsMemoryLockSupported);
+        Assert.Equal(SecureArrayType.ZeroedAndPinned, buffer.ProtectionType);
+        Assert.Throws<LockFailException>(() =>
+            new SecureArray<byte>(32, SecureArrayType.ZeroedPinnedAndNoSwap, call));
     }
 
     /// <summary>

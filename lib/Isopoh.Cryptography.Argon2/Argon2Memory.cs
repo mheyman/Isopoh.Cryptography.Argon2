@@ -9,6 +9,7 @@ namespace Isopoh.Cryptography.Argon2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Isopoh.Cryptography.Blake2b;
 using Isopoh.Cryptography.SecureArray;
 
@@ -452,40 +453,42 @@ public sealed class Argon2Memory
     /// </exception>
     public void Reset(string hash, Argon2Password password)
     {
-        var (keyIdLength, associatedDataLength, saltLength, hashLength) = hash.Argon2RequiredBufferLengths();
         bool newPassword = password.Password.Length > 0;
         bool keepPassword = !newPassword && password.Policy == Argon2ExistingPasswordResetPolicy.Keep;
-        int passwordLength = newPassword ? password.Password.Length : (keepPassword ? this.configPassword.Length : 0);
-        var configLength = associatedDataLength + keyIdLength + hashLength + saltLength + passwordLength;
-        if (keepPassword)
-        {
-            var myPassword = this.Password;
-            Resize(configLength);
-            myPassword.CopyTo(this.Password);
-        }
-        else
-        {
-            Resize(configLength);
-        }
+        byte[] passwordBytes = newPassword
+            ? password.Password.ToArray()
+            : keepPassword
+                ? this.Password.ToArray()
+                : [];
 
-        void Resize(int i)
+        this.DecodeString(hash);
+        byte[] expectedHash = this.Hash.ToArray();
+        var config = new Argon2Config
         {
-            if (this.LockMemory.HasValue)
-            {
-                if (this.configSecureArray == null || this.configSecureArray.Buffer.Length < i || (this.configSecureArray.Buffer.Length > i && this.shrinkMemoryPolicy == Argon2MemoryPolicy.Shrink))
-                {
-                    this.configSecureArray = SecureArray<byte>.Create(i, this.secureArrayCall, this.LockMemory.Value);
-                }
+            Version = this.Version,
+            Type = this.Type,
+            HashLength = this.HashLength,
+            Password = passwordBytes,
+            Salt = this.Salt.ToArray(),
+            Secret = this.Secret.ToArray(),
+            AssociatedData = this.AssociatedData.ToArray(),
+            KeyIdentifier = this.KeyIdentifier.ToArray(),
+            TimeCost = this.TimeCost,
+            MemoryCost = this.MemoryCost,
+            Lanes = this.Lanes,
+            Threads = this.Threads,
+            SecureArrayCall = this.secureArrayCall,
+        };
 
-                this.configWorkingBuffer = new Memory<byte>(this.configSecureArray.Buffer);
-            }
-            else
-            {
-                if (this.configWorkingBuffer.Length < i || (this.configWorkingBuffer.Length > i && this.shrinkMemoryPolicy == Argon2MemoryPolicy.Shrink))
-                {
-                    this.configWorkingBuffer = new Memory<byte>(new byte[i]);
-                }
-            }
+        try
+        {
+            this.Reset(config);
+            expectedHash.CopyTo(this.Hash);
+        }
+        finally
+        {
+            CryptographicOperations.ZeroMemory(expectedHash);
+            CryptographicOperations.ZeroMemory(passwordBytes);
         }
     }
 

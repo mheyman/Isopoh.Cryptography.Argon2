@@ -38,6 +38,12 @@ using System;
 /// </para><para>
 /// <b><em>Always</em></b> dispose of your <c>SecureArray</c>s.
 /// </para>
+/// <para>
+/// Browsers and WebAssembly cannot lock memory against swapping. In those environments,
+/// <see cref="LockMemoryPolicy.BestEffort"/> falls back to a pinned buffer that is zeroed
+/// on disposal. Use <see cref="SecureArrayCall.IsMemoryLockSupported"/> and
+/// <see cref="SecureArray.ProtectionType"/> to inspect the available and actual protection.
+/// </para>
 /// </remarks>
 public sealed class SecureArray<T> : SecureArray, IDisposable
 {

@@ -353,6 +353,11 @@ public class SecureArray
             {
                 if (type == SecureArrayType.ZeroedPinnedAndNoSwap)
                 {
+                    if (!this.Call.IsMemoryLockSupported)
+                    {
+                        throw new LockFailException($"Memory locking is not supported by {this.Call.Os}.");
+                    }
+
                     int sizeInBytes = BuiltInTypeElementSize(buffer) * buffer.Length;
                     IntPtr bufPtr = tmpHandle.AddrOfPinnedObject();
                     var cnt = new UIntPtr((uint)sizeInBytes);
@@ -375,6 +380,11 @@ public class SecureArray
                     }
 
                     this.virtualLocked = true;
+                    this.handle = tmpHandle;
+                    tmpHandle = default;
+                }
+                else
+                {
                     this.handle = tmpHandle;
                     tmpHandle = default;
                 }

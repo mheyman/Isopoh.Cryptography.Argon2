@@ -22,7 +22,8 @@ public class DefaultWebSecureArrayCall : SecureArrayCall
             WebZero,
             WebLockMemory,
             WebUnlockMemory,
-            "Web")
+            "Web",
+            false)
     {
         if (RuntimeInformation.OSDescription != "web" && RuntimeInformation.OSDescription != "Browser")
         {
@@ -32,8 +33,7 @@ public class DefaultWebSecureArrayCall : SecureArrayCall
 
     private static string? WebLockMemory(IntPtr m, UIntPtr l)
     {
-        // cannot prevent memory from swapping within the browser.
-        return null;
+        return "Browsers and WebAssembly do not provide an API for locking memory into RAM";
     }
 
     private static void WebUnlockMemory(IntPtr m, UIntPtr l)

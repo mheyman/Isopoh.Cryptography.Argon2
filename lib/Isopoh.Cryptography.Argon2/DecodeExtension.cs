@@ -72,7 +72,7 @@ public static class DecodeExtension
         return (match.Groups["keyid"].Success ? Base64Length(match.Groups["keyid"].Value.ToCharArray()) : 0,
             match.Groups["data"].Success ? Base64Length(match.Groups["data"].Value.ToCharArray()) : 0,
             match.Groups["salt"].Success ? Base64Length(match.Groups["salt"].Value.ToCharArray()) : 0,
-            match.Groups["digest"].Success ? Base64Length(match.Groups["hash"].Value.ToCharArray()) : 0);
+            match.Groups["digest"].Success ? Base64Length(match.Groups["digest"].Value.ToCharArray()) : 0);
     }
 
     /// <summary>
@@ -163,10 +163,10 @@ public static class DecodeExtension
             Type = typeGroup.Value switch
             {
                 IndependentHashTag => Argon2Type.DataIndependentAddressing,
-                DependentHashTag => Argon2Type.DataIndependentAddressing,
+                DependentHashTag => Argon2Type.DataDependentAddressing,
                 _ => Argon2Type.HybridAddressing,
             },
-            HashLength = match.Groups["digest"].Success ? Base64Length(match.Groups["hash"].Value.ToCharArray()) : 0,
+            HashLength = match.Groups["digest"].Success ? Base64Length(match.Groups["digest"].Value.ToCharArray()) : 0,
             Salt = saltBytes,
             AssociatedData = associatedDataBytes,
             KeyIdentifier = keyIdBytes,

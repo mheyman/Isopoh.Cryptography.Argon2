@@ -20,6 +20,9 @@ public enum LockMemoryPolicy
     /// Attempt to lock buffers into RAM, but allow non-locked memory
     /// if the operating system doesn't allow the memory to be locked.
     /// </summary>
+    /// <remarks>
+    /// Browser and WebAssembly environments always use the zeroed-and-pinned fallback.
+    /// </remarks>
     BestEffort,
 
     // ReSharper disable once UnusedMember.Global

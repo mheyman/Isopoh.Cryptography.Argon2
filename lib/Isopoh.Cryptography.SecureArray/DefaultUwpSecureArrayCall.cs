@@ -23,7 +23,8 @@ public class DefaultUwpSecureArrayCall : SecureArrayCall
             (m, l) => UnsafeNativeMethods.UwpMemset(m, 0, l),
             UwpLockMemory,
             UwpUnlockMemory,
-            "UWP")
+            "UWP",
+            false)
     {
         var buffer = new byte[1];
         GCHandle bufHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -40,8 +41,7 @@ public class DefaultUwpSecureArrayCall : SecureArrayCall
 
     private static string? UwpLockMemory(IntPtr m, UIntPtr l)
     {
-        // cannot prevent memory from swapping within UWP.
-        return null;
+        return "UWP does not provide this implementation with an API for locking memory into RAM";
     }
 
     private static void UwpUnlockMemory(IntPtr m, UIntPtr l)
