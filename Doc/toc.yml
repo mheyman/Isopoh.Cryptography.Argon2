@@ -1,5 +1,5 @@
 - name: Porting to 2.0
-  href: articles/PORTING.md
+  href: articles/porting.md
 - name: Api Documentation
   href: api/
   homepage: api/index.md

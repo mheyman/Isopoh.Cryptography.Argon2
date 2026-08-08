@@ -184,7 +184,7 @@ public sealed class Argon2Memory
     public int FillMemoryBlocksWorkingBufferLength { get; private set; }
 
     /// <summary>
-    /// Gets the ulong-based working buffer sized to be used in <see cref="Argon2.FillMemoryBlocks"/>.
+    /// Gets the ulong-based working buffer sized for Argon2's internal memory-filling operation.
     /// </summary>
     /// <remarks>
     /// This gets used and overwritten on every hash.

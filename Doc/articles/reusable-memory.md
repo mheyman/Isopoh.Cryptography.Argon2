@@ -67,4 +67,4 @@ for steady workloads. `Shrink` releases excess capacity after a smaller reset, t
 lower retained memory for potentially more allocation churn.
 
 See [Server sizing and concurrency](server-sizing.md) before choosing a pool size, and
-[Porting from version 1.x to 2.0](PORTING.md) for all application-facing changes.
+[Porting from version 1.x to 2.0](porting.md) for all application-facing changes.

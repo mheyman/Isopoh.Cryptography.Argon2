@@ -27,7 +27,7 @@ public sealed partial class Argon2
     public const int PrehashDigestLength = 64;
 
     /// <summary>
-    /// Bytes required in the buffer passed into the <see cref="Argon2.FillFirstBlocks"/> method.
+    /// Bytes required in the buffer passed into the internal <c>FillFirstBlocks</c> method.
     /// </summary>
     public const int PrehashSeedLength = 72;
 

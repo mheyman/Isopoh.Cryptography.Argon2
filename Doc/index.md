@@ -30,7 +30,7 @@ AOT compatibility.
   capabilities and are documented separately.
 
 Applications upgrading from 1.x should begin with the
-[porting guide](articles/PORTING.md). Server applications should also review
+[porting guide](articles/porting.md). Server applications should also review
 [server sizing and concurrency](articles/server-sizing.md).
 
 ## Packages
