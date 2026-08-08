@@ -211,6 +211,6 @@ public class UnitTests
         TimeCost = 1,
         Lanes = 1,
         Threads = 1,
-        SecureArrayCall = new DefaultWebSecureArrayCall(),
+        SecureArrayCall = SecureArray.DefaultCall,
     };
 }
