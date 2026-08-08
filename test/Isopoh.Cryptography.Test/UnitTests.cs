@@ -159,6 +159,42 @@ public class UnitTests
     }
 
     /// <summary>
+    /// Regression test for issue 52: hashing a configuration without an explicit salt
+    /// must generate a valid encoded hash with a random salt.
+    /// </summary>
+    [Fact]
+    public void ConfigHashGeneratesSaltWhenMissing()
+    {
+        byte[] password = "issue-52-password"u8.ToArray();
+        var config = FastConfig(password);
+
+        string encoded = Argon2.Hash(config);
+
+        byte[] generatedSalt = Assert.IsType<byte[]>(config.Salt);
+        Assert.Equal(16, generatedSalt.Length);
+        Assert.True(Argon2.Verify(encoded, password, null, config.SecureArrayCall));
+    }
+
+    /// <summary>
+    /// Regression test for issue 56: associated data encoded with a hash must survive
+    /// decoding and participate in verification.
+    /// </summary>
+    [Fact]
+    public void AssociatedDataRoundTripsDuringVerification()
+    {
+        byte[] password = "issue-56-password"u8.ToArray();
+        byte[] associatedData = "issue-56-associated-data"u8.ToArray();
+        var hashConfig = FastConfig(password);
+        hashConfig.Salt = "issue-56-salt"u8.ToArray();
+        hashConfig.AssociatedData = associatedData;
+        string encoded = Argon2.Hash(hashConfig);
+
+        var verifyConfig = FastConfig(password);
+        Assert.True(Argon2.Verify(encoded, verifyConfig));
+        Assert.Equal(associatedData, verifyConfig.AssociatedData);
+    }
+
+    /// <summary>
     /// Make sure can work with more RAM than C# can allocate in a single chunk.
     /// </summary>
     [Fact]
@@ -167,4 +203,14 @@ public class UnitTests
         (bool passed, string text) = HighMemoryCost.Test(this.output);
         Assert.True(passed, text);
     }
+
+    private static Argon2Config FastConfig(byte[] password) => new()
+    {
+        Password = password,
+        MemoryCost = 32,
+        TimeCost = 1,
+        Lanes = 1,
+        Threads = 1,
+        SecureArrayCall = new DefaultWebSecureArrayCall(),
+    };
 }

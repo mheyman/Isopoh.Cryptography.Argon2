@@ -54,6 +54,9 @@ jobs:
       - name: Build .NET 10 libraries with AOT analysis
         run: dotnet build lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj -c Release -f net10.0 -p:GeneratePackageOnBuild=false
 
+      - name: Run fast correctness regression tests
+        run: dotnet test test/Isopoh.Cryptography.Test/Isopoh.Cryptography.Test.csproj -c Release --filter "ConfigHashGeneratesSaltWhenMissing|AssociatedDataRoundTripsDuringVerification" -p:GeneratePackageOnBuild=false
+
       - name: Publish Native AOT smoke test (Linux)
         if: runner.os == 'Linux'
         run: dotnet publish test/AotSmokeTest/AotSmokeTest.csproj -c Release -r linux-x64
