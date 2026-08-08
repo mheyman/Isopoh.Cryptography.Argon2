@@ -33,6 +33,13 @@
           "toc.yml",
           "*.md"
         ]
+      },
+      {
+        "src": "..",
+        "files": [
+          "PORTING.md"
+        ],
+        "dest": "articles"
       }
     ],
     "resource": [

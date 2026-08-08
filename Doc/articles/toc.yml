@@ -1,0 +1,16 @@
+- name: What's new in 2.0
+  href: PORTING.md
+- name: Reusing Argon2 memory
+  href: reusable-memory.md
+- name: Secure memory by platform
+  href: secure-memory.md
+- name: Native AOT and browser WebAssembly
+  href: aot-and-wasm.md
+- name: Server sizing and concurrency
+  href: server-sizing.md
+- name: Argon2 in WebAssembly
+  href: index.md
+- name: Blazor WebAssembly
+  href: blazor.md
+- name: Uno Platform WebAssembly
+  href: unoplatform.md

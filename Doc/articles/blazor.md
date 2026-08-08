@@ -1,81 +1,33 @@
-﻿# Argon2 with Blazor WebAssembly
+# Argon2 with Blazor WebAssembly
 
-You can use this library to calculate Argon2 hashes in the web browser.
-With the 6.0 dotnet SDK, the Blazor WebAssembly runs _a lot slower_ than
-on the host - taking on the order of 3-5 times longer for a default hash 
-on common hardware (this is the speed after publishing, it can take 10-20
-times longer when debugging). This should improve as both dotnet improves
-and WebAssembly improves.
+The managed Argon2 implementation can run in a Blazor WebAssembly application without
+a native Argon2 library. Browser performance varies substantially by runtime, browser,
+device, build mode, and Argon2 parameters, so publish the application and benchmark the
+actual devices you intend to support.
 
-Even with the poor hashing performance in the browser, there may be use cases
-that require the server to never see the secret so performing a hash with
-reduced protection on the browser will be more secure than the alternative.
-
-***Note:*** when running in the browser, running with parallelism anything but
-the default of `1` appears to hang in the hash calculation.
-
-With Blazor, you typically assemble your pages with components. The following
-is a simple example demonstrating Argon2 in the browser.
+Browser WebAssembly cannot provide the operating-system memory locking used by
+`SecureArray` on desktop and server platforms. Sensitive buffers are still pinned while
+in use and zeroed on disposal. See [Secure memory by platform](secure-memory.md) and
+[Native AOT and browser WebAssembly](aot-and-wasm.md).
 
 ## Example
 
-While you can call on Argon2 hashing and verifying directly from the razor
-code, this example tries to be a little more friendly in that it tells you
-when it is calculating the hash and disables the controls when it is doing
-so.
+The sample component disables its input while hashing so that the user cannot start
+overlapping operations:
 
-It builds a component that looks like this:
+> ![Blazor Argon2 sample](../images/HashComponent.PNG)
 
-> ![HashComponent](../images/HashComponent.PNG)
+The essential call remains the same as on other platforms:
 
-## Example Source
-
-`index.razor`:
-```razor
-@page "/"
-@using Isopoh.Cryptography.Argon2
-
-<PageTitle>Argon2</PageTitle>
-
-<h3>@hashValue</h3>
-<table>
-    <tr>
-        <td><input type="text" placeholder="hash text" disabled="@disabled" value="@secret" onchange="@(async (ChangeEventArgs args) => await Hash(args))"/></td>
-        <td>The &quot;secret&quot; to hash</td>
-    </tr>
-</table>
-
-@code {
-    private bool disabled;
-    private string? secret;
-    private string previousSecret = string.Empty;
-    private string hashValue = string.Empty;
-
-    private async Task Hash(ChangeEventArgs e)
-    {
-        try
-        {
-            disabled = true; // don't allow changes during hash calculation
-            this.secret =((string?)e.Value);
-            if (string.IsNullOrEmpty(this.secret) || this.secret == this.previousSecret)
-            {
-                this.secret = previousSecret;
-                return;
-            }
-
-            this.previousSecret = this.secret;
-            disabled = true;
-            hashValue = $"Calculating hash for \"{this.previousSecret}\"...";
-            this.hashValue = await Task.Run(() => Argon2.Hash(this.previousSecret));
-        }
-        finally
-        {
-            disabled = false;
-        }
-    }
-}
+```csharp
+string encodedHash = await Task.Run(() => Argon2.Hash(password));
+bool valid = Argon2.Verify(encodedHash, password);
 ```
 
-The source for this example can be found at:
+Avoid assuming that `Task.Run` creates a background thread in every browser runtime.
+Its scheduling behavior depends on the WebAssembly runtime and whether browser threads
+are enabled. Keep the UI responsive and prevent unbounded concurrent hashes regardless
+of the runtime's threading support.
 
-(github)[TestBlazor.Client](https://github.com/mheyman/Isopoh.Cryptography.Argon2/tree/master/test/TestBlazor/Wasm)
+The complete sample is in the
+[TestBlazor/Wasm project](https://github.com/mheyman/Isopoh.Cryptography.Argon2/tree/main/test/TestBlazor/Wasm).
