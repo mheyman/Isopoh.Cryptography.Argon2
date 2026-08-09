@@ -47,9 +47,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: test/UnitySmokeTest/Library
-          key: UnitySmokeTest-2022.3.10f1-${{ hashFiles('test/UnitySmokeTest/Assets/**', 'test/UnitySmokeTest/Packages/**', 'test/UnitySmokeTest/ProjectSettings/**') }}
+          key: UnitySmokeTest-2022.3.76f1-${{ hashFiles('test/UnitySmokeTest/Assets/**', 'test/UnitySmokeTest/Packages/**', 'test/UnitySmokeTest/ProjectSettings/**') }}
           restore-keys: |
-            UnitySmokeTest-2022.3.10f1-
+            UnitySmokeTest-2022.3.76f1-
 
       - name: Run Unity EditMode smoke test
         uses: game-ci/unity-test-runner@v4
@@ -59,7 +59,7 @@ jobs:
           UNITY_PASSWORD: ${{ env.UNITY_PASSWORD }}
         with:
           projectPath: test/UnitySmokeTest
-          unityVersion: 2022.3.10f1
+          unityVersion: 2022.3.76f1
           testMode: EditMode
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: Unity 2022.3 Linux Editor results
