@@ -7,9 +7,11 @@ sdk_dir="$repo_root/.uba-work/dotnet-argon2"
 installer="$sdk_dir/dotnet-install.sh"
 plugins="$script_dir/Assets/Plugins"
 dotnet_cmd="$sdk_dir/dotnet"
+install_args=(--channel 10.0 --install-dir "$sdk_dir")
 
 if [[ "${OSTYPE:-}" == cygwin* || "${OSTYPE:-}" == msys* ]]; then
   dotnet_cmd="$sdk_dir/dotnet.exe"
+  install_args+=(--os win --architecture x64)
 fi
 
 mkdir -p "$sdk_dir" "$plugins"
@@ -18,7 +20,7 @@ if [[ ! -x "$dotnet_cmd" ]]; then
   curl --fail --location --silent --show-error \
     https://dot.net/v1/dotnet-install.sh \
     --output "$installer"
-  bash "$installer" --channel 10.0 --install-dir "$sdk_dir"
+  bash "$installer" "${install_args[@]}"
 fi
 
 "$dotnet_cmd" build \
