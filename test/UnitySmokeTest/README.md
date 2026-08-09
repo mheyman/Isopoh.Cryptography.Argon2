@@ -15,7 +15,7 @@ Create a Build Automation configuration with these settings:
 - Auto detect Unity version: enabled
 - Platform: macOS for the first run
 - Builder OS: macOS Sequoia
-- Pre-build script path: `test/UnitySmokeTest/prepare-uba.sh`
+- Pre-build script path: `prepare-uba.sh` (relative to the project subfolder)
 - Run my project's unit tests when building: enabled
 - Run EditMode tests: enabled
 - Mark build as failed if any test fails: enabled

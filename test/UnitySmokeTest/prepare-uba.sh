@@ -3,20 +3,25 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "$script_dir/../.." && pwd)"
-sdk_dir="${WORKSPACE:-$repo_root/.uba-work}/dotnet-argon2"
+sdk_dir="$repo_root/.uba-work/dotnet-argon2"
 installer="$sdk_dir/dotnet-install.sh"
 plugins="$script_dir/Assets/Plugins"
+dotnet_cmd="$sdk_dir/dotnet"
+
+if [[ "${OSTYPE:-}" == cygwin* || "${OSTYPE:-}" == msys* ]]; then
+  dotnet_cmd="$sdk_dir/dotnet.exe"
+fi
 
 mkdir -p "$sdk_dir" "$plugins"
 
-if [[ ! -x "$sdk_dir/dotnet" ]]; then
+if [[ ! -x "$dotnet_cmd" ]]; then
   curl --fail --location --silent --show-error \
     https://dot.net/v1/dotnet-install.sh \
     --output "$installer"
   bash "$installer" --channel 10.0 --install-dir "$sdk_dir"
 fi
 
-"$sdk_dir/dotnet" build \
+"$dotnet_cmd" build \
   "$repo_root/lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj" \
   --configuration Release \
   --framework netstandard2.0 \
