@@ -72,12 +72,23 @@ jobs:
             fi
           done
 
-      - name: Build NuGet package
+      - name: Build package assemblies
+        run: >-
+          dotnet build
+          lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj
+          --configuration Release
+          -p:GeneratePackageOnBuild=false
+          -p:PackageVersion=${{ steps.package.outputs.version }}
+          -p:ContinuousIntegrationBuild=true
+
+      - name: Create NuGet package
         run: >-
           dotnet pack
           lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj
           --configuration Release
           --output artifacts
+          --no-build
+          -p:GeneratePackageOnBuild=false
           -p:PackageVersion=${{ steps.package.outputs.version }}
           -p:ContinuousIntegrationBuild=true
 
