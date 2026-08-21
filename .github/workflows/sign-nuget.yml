@@ -1,0 +1,117 @@
+name: Sign NuGet package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Package version to build (for example, 2.0.1)
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  build-and-sign:
+    name: Build and sign NuGet package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+
+      - name: Select package version
+        id: package
+        shell: bash
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="$REQUESTED_VERSION"
+          fi
+
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid package version: $version" >&2
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Validate SignPath settings
+        shell: bash
+        env:
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+          SIGNPATH_ORGANIZATION_ID: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          SIGNPATH_PROJECT_SLUG: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          SIGNPATH_SIGNING_POLICY_SLUG: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          SIGNPATH_ARTIFACT_CONFIGURATION_SLUG: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+        run: |
+          for setting in \
+            SIGNPATH_API_TOKEN \
+            SIGNPATH_ORGANIZATION_ID \
+            SIGNPATH_PROJECT_SLUG \
+            SIGNPATH_SIGNING_POLICY_SLUG \
+            SIGNPATH_ARTIFACT_CONFIGURATION_SLUG
+          do
+            if [[ -z "${!setting}" ]]; then
+              echo "Missing GitHub Actions setting: $setting" >&2
+              exit 1
+            fi
+          done
+
+      - name: Build NuGet package
+        run: >-
+          dotnet pack
+          lib/Isopoh.Cryptography.Argon2/Isopoh.Cryptography.Argon2.csproj
+          --configuration Release
+          --output artifacts
+          -p:PackageVersion=${{ steps.package.outputs.version }}
+          -p:ContinuousIntegrationBuild=true
+
+      - name: Upload unsigned NuGet package
+        id: upload-unsigned-package
+        uses: actions/upload-artifact@v7
+        with:
+          name: unsigned-nuget-${{ steps.package.outputs.version }}
+          path: artifacts/*.nupkg
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Submit package to SignPath
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ steps.upload-unsigned-package.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      - name: Upload signed NuGet package
+        uses: actions/upload-artifact@v7
+        with:
+          name: signed-nuget-${{ steps.package.outputs.version }}
+          path: signed/*.nupkg
+          if-no-files-found: error
+
+      - name: Upload symbol package
+        uses: actions/upload-artifact@v7
+        with:
+          name: symbols-${{ steps.package.outputs.version }}
+          path: artifacts/*.snupkg
+          if-no-files-found: error
